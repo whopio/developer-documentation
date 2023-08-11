@@ -1,6 +1,5 @@
 {
-  "$schema": "https://data.whop.com/api/v2/swagger_doc",
-  "openapi": "https://data.whop.com/api/v2/swagger_doc",
+  "$schema": "https://mintlify.com/schema.json",
   "name": "Whop Developers",
   "api": {
     "baseUrl": "https://api.whop.com/api",
@@ -68,10 +67,7 @@
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "api-reference/dashboard-apicheckout-sessions/create-a-checkout-session"
       ]
     }
   ],
