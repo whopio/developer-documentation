@@ -1,5 +1,5 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
+  "$schema": "https://www.jedpatterson.com/spec.json",
   "name": "Whop Developers",
   "api": {
     "baseUrl": "https://api.whop.com/api",
