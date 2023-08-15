@@ -3,20 +3,67 @@ title: "Authentication"
 description: "Example overview page before API endpoints"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas et eros iaculis tortor dapibus cursus. Curabitur quis sapien nec tortor dictum gravida.
+There are two ways to get access to the Whop API, API Keys and OAuth Credentials.
+
+All requests require an `Authorization` header. `TOKEN` in the example is either the API key or the OAuth access token.
 
 ```bash
-'Authorization': 'Token <team_token>'
+Authorization: Bearer {TOKEN}
 ```
 
-## API Tokens
+## API Keys
 
-Nullam convallis mauris at nunc consectetur, ac imperdiet leo rutrum. Maecenas cursus purus a pellentesque blandit. Pellentesque vitae lacinia libero, non mollis metus.
+API keys are an essential tool for accessing and integrating with Whop's API. An **API key** is a unique identifier that allows a developer to access Whop's API on behalf of a company and validate licenses, retrieve user information, and more.
 
-Nam id ullamcorper urna, at rutrum enim. [Maecenas vulputate](/introduction) vehicula libero, vitae sodales augue pretium nec. Quisque a magna tempor, semper risus vel, fermentum nunc. Pellentesque fermentum interdum ex, eu convallis massa blandit sed. Aliquam bibendum ipsum vel laoreet auctor.
+<Warning>
+  It's important that you keep your API keys safe and secure - if not properly
+  scoped, your API keys can be dangerous if they fall into the wrong hands.
+</Warning>
 
-### Permissions
+### Creating an API key
 
-Etiam lobortis ut odio ut fermentum. Nunc odio velit, sollicitudin at consectetur id, tristique eget turpis. Aliquam at risus vitae dolor sodales venenatis. In hac habitasse platea dictumst.
+1. Head to your Developers setting panel under your business
+2. Click **New API Key**
+3. Set a memorable name for your key.
+4. Copy the API key
 
-Aenean consequat diam eget mollis fermentum. [Quisque eu malesuada](/introduction) felis, non dignissim libero.
+### Scoped API keys
+
+Scoped API keys provide access to specific resources or endpoints within Whop's API, rather than providing access to the entire API. This helps to ensure that the client-side code is only able to perform the specific actions that it needs to, while also limiting the potential for security vulnerabilities.
+
+Scoped API keys are **the best way** for your company to use client-sided keys.
+
+![Scoped Key Setup](https://i.imgur.com/sbMzXjv.gif){{ className: 'rounded-lg w-full' }}
+
+### Instructions to create a scoped API key
+
+1. Create a new API key under the **Developers setting panel**
+2. Click the triple dots and click **Edit permissions**
+3. Add the permissions you want this key to have access to. If you are storing keys **client-side**, we recommend keeping your permissions as minimal as possible.
+4. Save!
+
+<Warning>
+  If you are altering any memberships, make sure this is done server-side,
+  client-side requests should only be used for validation.
+</Warning>
+
+### Recommended API key scopes
+
+- **Validate a license key**
+  - `Membership/Validate License`
+- **Retrieve a license key**
+  - `Membership/Retrieve Membership`
+
+---
+
+## OAuth Credentials
+
+Head to the [developer settings page](https://dash.whop.com/settings/developer) to obtain your Client ID and Client Secret. These keys will be used to identify your website/app and authenticate it in the Whop API.
+
+<Warning>
+  You will not be able to view your Client Secret again after you close the
+  modal. Make sure to store it somewhere safe. You can always generate a fresh
+  one, but your previous one will be invalidated.
+</Warning>
+
+![Auth Setup](https://i.imgur.com/Sqptcno.png){{ className: 'rounded-lg w-full' }}
