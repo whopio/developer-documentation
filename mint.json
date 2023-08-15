@@ -58,11 +58,11 @@
     },
     {
       "group": "OAuth",
-      "pages": ["oauth/guide"]
+      "pages": ["oauth"]
     },
     {
       "group": "License Keys",
-      "pages": ["license-keys/guide"]
+      "pages": ["license-keys"]
     },
     {
       "group": "Webhooks",
