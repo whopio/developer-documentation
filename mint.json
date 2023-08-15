@@ -8,14 +8,14 @@
     }
   },
   "logo": {
-    "dark": "/logo/whop.png",
+    "dark": "/logo/white.png",
     "light": "/logo/whop.png"
   },
   "favicon": "/favicon.png",
   "colors": {
     "primary": "#ff6423",
-    "light": "#AE87FF",
-    "dark": "#0D001D",
+    "light": "#ff6423",
+    "dark": "#ff6423",
     "background": {
       "dark": "#090014"
     },
