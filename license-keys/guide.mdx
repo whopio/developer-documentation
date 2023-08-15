@@ -1,0 +1,105 @@
+---
+title: License Keys
+description: "License Keys documentation guide"
+---
+
+---
+
+## Creating a License Keys
+
+If you haven't already [created your company](https://docs.whop.com/creating-company) or [made a product to sell](https://docs.whop.com/creating-company#creating-your-first-product), you'll want to start there.
+
+Once you've done that, head to the dashboard to add the license key capability to your product.
+
+![Create license key](https://i.imgur.com/77Bkxbl.gif)
+
+---
+
+## Metadata
+
+Metadata is a way to store information about a license key. The most common use case for this is to store information about the usrs device, HWID. **HWID** is a unique identifier for a device, and can be used to prevent users from sharing their license keys with others.
+
+<Warning>
+  The user can reset their metadata anytime by going to their dashboard and
+  clicking the `Reset Key` button.
+</Warning>
+
+#### How to get a users HWID
+
+<CodeGroup>
+    ```js JavaScript
+    const machineId = require('node-machine-id');
+
+    function generate_hwid() {
+        return machineId.machineIdSync();
+    }
+    ```
+
+```python Python
+import hashlib
+import platform
+
+def generate_hwid():
+    return hashlib.sha256(platform.node().encode()).hexdigest().strip()
+```
+
+</CodeGroup>
+
+---
+
+## Validating a License Key
+
+The metadata field in the body is **required**. If you do not wish to set any metadata, you can pass an empty object.
+
+```json
+{ "metadata": {} }
+```
+
+<CodeGroup>
+    ```js JavaScript
+    import axios from 'axios'
+
+    const validate_license = async (license_key, HWID) => {
+        const response = await axios.post(
+        `https://api.whop.com/api/v2/memberships/${license_key}/validate_license`,
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: {
+                metadata: {HWID: HWID},
+            },
+        }
+        )
+        return response
+    }
+    ```
+
+    ```python Python
+    import requests
+
+    def validate_license(license_key, HWID):
+
+        url = f"https://api.whop.com/api/v2/memberships/{license_key}/validate_license"
+
+        payload = {"metadata": {"HWID": HWID}}
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {API_KEY}",
+            "content-type": "application/json"
+        }
+        response = requests.post(url, json=payload, headers=headers)
+        return response
+    ```
+
+</CodeGroup>
+
+### Responses
+
+Here are the most common responses from this endpoint.
+
+| Status Code | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| **201**     | The license key is valid and the user can use the product     |
+| **400**     | The metadata did not match, the user needs to reset their key |
+| **404**     | The license key was not found                                 |

@@ -1,7 +1,36 @@
 ---
-title: Guide
-description: "Welcome to the home of your new documentation"
+title: OAuth
+description: "OAuth documentation guide"
 ---
+
+---
+
+<CardGroup cols={2}>
+  <Card
+    title="Next.js"
+    icon="react"
+    color="#ea5a0c"
+    href="https://github.com/whopio/next-template"
+  >
+    Whop OAuth in your Next.js app.
+  </Card>
+  <Card
+    title="Electron"
+    icon="react"
+    color="#0285c7"
+    href="https://github.com/denisulit/whop-electron-template"
+  >
+    Whop OAuth in your Electron desktop app.
+  </Card>
+</CardGroup>
+
+---
+
+## Adding a webapp to your product
+
+Before we start, you should add a **webapp** experience to your product. You can do this by going to your **product** and clicking the **Webapp** option. From here you can add the name and the **Callback URL**. We will cover this below.
+
+![Webapp video](https://dev-docs-weld.vercel.app/Webapp.gif)
 
 ---
 
@@ -9,11 +38,183 @@ description: "Welcome to the home of your new documentation"
 
 when your user tries to access your application from the Whop Hub, this is where they will be redirected.
 
-<RequestExample>
-
-```bash Request
-  curl --request POST \
-    --url https://dog-api.kinduff.com/api/facts
+```bash
+https://your-site.xyz/callback/whop?code=xxxxxxxx
 ```
 
-</RequestExample>
+---
+
+## Creating your callback
+
+This is where your user will be redirected to when they try to access your application from the Whop Hub. It will contain a URL parameter called `code`.
+
+<CodeGroup title="Callback" >
+    ```js JavaScript
+    export default function Callback() {
+      const params = new URLSearchParams(window.location.search)
+      const code = params.get('code')
+    }
+    ```
+
+```python Python
+from flask import Flask, request, redirect
+
+app = Flask(**name**)
+
+@app.route('/callback')
+def callback():
+code = request.args.get('code')
+// Use the code parameter to request an authorization token
+```
+
+```ruby Rails
+class CallbacksController < ApplicationController
+    def callback
+        code = params[:code]
+        # Use the code to request an authorization token
+    end
+end
+```
+
+</CodeGroup>
+
+---
+
+## Requesting an authorization token
+
+Once you have received the code from the URL, you can use it to request an authorization token.
+
+Here is the response, you will need the `access_token` to make requests to the API.
+
+<Note>
+  Once you have received the token, we advise you to store it in cookies or the
+  session so it can be accessed when needed.
+</Note>
+
+<CodeGroup>
+    ```js JavaScript
+    import axios from 'axios';
+
+    const getAuthToken = async (code, clientId, clientSecret) => {
+        try {
+            const response = await axios.post('https://api.whop.com/api/v2/oauth/token', {
+                code,
+                client_id: clientId,
+                client_secret: clientSecret,
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    export default getAuthToken;
+    ```
+
+```python Python
+import requests
+
+def get_auth_token(code, client_id, client_secret):
+    data = {
+        "code": code,
+        "client_id": client_id,
+        "client_secret": client_secret,
+    }
+    response = requests.post('https://api.whop.com/api/v2/oauth/token', data=data)
+    return response.json()
+```
+
+```ruby Rails
+require 'net/http'
+require 'uri'
+require 'json'
+
+def get_auth_token(code, client_id, client_secret)
+    uri = URI.parse('https://api.whop.com/api/v2/oauth/token')
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = 'application/json'
+    request.body = {
+        code: code,
+        client_id: client_id,
+        client_secret: client_secret,
+    }.to_json
+    req_options = {
+        use_ssl: uri.scheme == 'https',
+    }
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(request)
+    end
+    JSON.parse(response.body)
+end
+```
+
+</CodeGroup>
+
+---
+
+## Fetching the user
+
+Now that you have the authorization token, you can use it to fetch data about the user. To see more details about this endpoint, click [here](/api-reference/oauth/retrieve-user).
+
+<CodeGroup>
+
+```js JavaScript
+import axios from "axios";
+
+const checkAccess = async (accessToken) => {
+  try {
+    const response = await axios.get(`https://api.whop.com/api/v2/oauth/user`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export default checkAccess;
+```
+
+```python Python
+import requests
+
+def check_access(access_token):
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    response = requests.get('https://api.whop.com/api/v2/oauth/user', headers=headers)
+    return response.json()
+```
+
+```ruby Rails
+require 'net/http'
+require 'uri'
+require 'json'
+
+def check_access(access_token)
+    uri = URI.parse("https://api.whop.com/api/v2/oauth/user")
+    request = Net::HTTP::Get.new(uri)
+    request["Authorization"] = "Bearer #{access_token}"
+    req_options = {
+        use_ssl: uri.scheme == "https",
+    }
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(request)
+    end
+    JSON.parse(response.body)
+end
+```
+
+</CodeGroup>
+
+---
+
+## Error Codes
+
+| Code | Response Body                                                                                                                                                           | Description                                          |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| 400  | `The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.` | Check the code                                       |
+| 401  | `Your access token is invalid. Please make sure you are passing an access token, and that it is correctly formatted.`                                                   | Your access token is invalid, try generate a new one |
+| 404  | `Route {ROUTE} not found`                                                                                                                                               | Check the URL                                        |

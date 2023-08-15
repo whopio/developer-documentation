@@ -1,0 +1,162 @@
+---
+title: Python
+description: "This page contains examples of how to integrate Whop into your application."
+---
+
+---
+
+<Note>
+  You can use any Python framework, but this example uses **interactions.py**.
+</Note>
+
+## Preresiquites
+
+- Have a [Discord Bot Token](https://www.writebots.com/discord-bot-token/)
+- Install [**interactions.py**](https://pypi.org/project/discord-py-interactions/)
+
+```bash
+pip install -U discord-py-interactions
+```
+
+---
+
+## Project Structure
+
+For this example, we only have two files, `main.py` and `whop.py`.
+
+`main.py` is where we will be creating our Slash Commands and `whop.py` is where we will be adding our Whop API code.
+
+<Note>Your project structure does not matter, this is just our example.</Note>
+
+    ```bash
+    .
+    ├── main.py
+    └── whop.py
+    ```
+
+---
+
+## Creating your first Slash Command
+
+Once you have got your Discord Bot Token and installed the dependancies, you can start creating your first Slash Command.
+
+<Warning>
+  It is recommended that you make your bot token an environment variable and do
+  not hardcode it into your code.
+</Warning>
+
+    ```python main.py
+    import interactions
+
+    bot = interactions.Client(token="your_secret_bot_token")
+
+    @bot.command(
+    name="my_first_command",
+    description="This is the first command I made!",
+    scope=the_id_of_your_guild,
+    )
+    async def my_first_command(ctx: interactions.CommandContext):
+    await ctx.send("Hi there!")
+
+    bot.start()
+    ```
+
+---
+
+## Adding the Whop API
+
+For this step, you will need a Whop API key. If you haven't done so already, you can find details on how to do that [here](/authorization#api-keys).
+
+In your `whop.py` file, add the following code. This will check if if there are any memberships attached to that users Discord ID.
+
+If you want to check if they own a specific product, you can add `&product_id=your_product_id` to the end of the URL. This is great if you have multiple products that have different commands.
+
+<Note>
+  For more information on this endpoint, you can check it out
+  [here](https://dev.whop.com/reference/list_memberships).
+</Note>
+
+    ```python whop.py
+    import requests
+
+    class WhopUtilities:
+
+        def checkUserAccess(discord_id):
+
+            url = f"https://api.whop.com/api/v2/memberships?page=1&per=10&discord_id={discord_id}&hide_metadata=false"
+
+            headers = {
+                "accept": "application/json",
+                "Authorization": f"Bearer {LICENSE_KEY}"
+            }
+
+            response = requests.get(url, headers=headers)
+
+            if response.status_code != 200:
+                return False # We couldn't find a membership
+            else:
+                return True # There is a valid membership
+    ```
+
+---
+
+## Adding the Whop API to your Slash Command
+
+Now that we have a function that checks if a user has a membership, we can add it to our Slash Command.
+
+First, we need to import the `WhopUtilities` class from our `whop.py` file.
+
+Then, we can add an if statement to check if the user has a membership. If they do, we can send a message. If they don't, we can send a different message.
+
+<Warning>
+  The current import statement will only work if your `whop.py` file is in the
+  same directory as your `main.py` file. If it is not, you will need to change
+  the import statement to match the location of your `whop.py` file.
+</Warning>
+
+<CodeGroup>
+    ```python main.py
+    import interactions
+    from Whop imoprt WhopUtilities
+
+    bot = interactions.Client(token="your_secret_bot_token")
+
+    @bot.command(
+    name="my_first_command",
+    description="This is the first command I made!",
+    scope=the_id_of_your_guild,
+    )
+
+    async def my_first_command(ctx: interactions.CommandContext):
+
+        if WhopUtilities.checkUserAccess(ctx.author.id):
+            await ctx.send("Hi there!")
+        else:
+            await ctx.send("You don't have access to this command!")
+
+    bot.start()
+    ```
+
+    ```python whop.py
+    import requests
+
+    class WhopUtilities:
+
+        def checkUserAccess(discord_id):
+
+            url = f"https://api.whop.com/api/v2/memberships?page=1&per=10&discord_id={discord_id}&hide_metadata=false"
+
+            headers = {
+                "accept": "application/json",
+                "Authorization": f"Bearer {LICENSE_KEY}"
+            }
+
+            response = requests.get(url, headers=headers)
+
+            if response.status_code != 200:
+                return False # We couldn't find a membership
+            else:
+                return True # There is a valid membership
+    ```
+
+</CodeGroup>

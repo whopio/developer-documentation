@@ -1,0 +1,645 @@
+---
+title: Events
+description: "License Keys documentation guide"
+---
+
+---
+
+We send webhooks when key events happen for your company and users. These events are useful for knowing when a User has purchased your product and when they should be granted access to your software. We also send an event when the User should no longer have access.
+
+Thus, your application is simply responsible for accepting incoming requests from Whop and processing them as you see fit.
+
+Here are a list of webhooks that we send:
+
+- [membership.went_valid](/webhooks/events#membership-went-valid)
+- [membership.went_invalid](/webhooks/events#membership-went-invalid)
+- [membership.metadata_updated](/webhooks/events#membership-metadata-updated)
+- [payment.succeded](/webhooks/events#payment-succeded)
+- [payment.failed](/webhooks/events#payment-failed)
+- [payment.affiliate_reward_created](/webhooks/events#payment-affiliate-reward-created)
+
+---
+
+## `membership.went_valid`
+
+This webhook will fire when a membership becomes valid, typically when a membership is created or a user checks out.
+
+**Business Logic Example**: Mark a User's subscription as valid, which allows them to access a gated section of my app.
+
+**Important Attributes**: `id`, `valid`, `status`, `user.id`, `product.id`
+
+<CodeGroup>
+```json membership.went_valid
+{
+  "action": "membership.went_valid",
+  "body": {
+    "id": "mem_5l6nvhob7ALjRT",
+    "product": {
+      "id": "pass_m11FQfj0mJV3p",
+      "name": "Free Picks",
+      "visibility": "visible",
+      "created_at": 1655077534,
+      "experiences": ["exp_XJAAONIsvHkm6q"],
+      "plans": ["plan_0j8y5dfol03a3"]
+    },
+    "user": {
+      "id": "user_q61ixyl8cVGff",
+      "username": "whopinc",
+      "email": "hello@whop.com",
+      "profile_pic_url": "https://ui-avatars.com/api/?name=Whop&background=535961&color=fff",
+      "social_accounts": [],
+      "authorized_user": null
+    },
+    "plan": {
+      "id": "plan_nJUM2MyD9lX0Q",
+      "plan_type": "one_time",
+      "release_method": "buy_now",
+      "visibility": "hidden",
+      "billing_period": null,
+      "internal_notes": null,
+      "metadata": {},
+      "direct_link": "https://whop.com/checkout/plan_nJUM2MyD9lX0Q?d2c=true",
+      "renewal_price": "0.0",
+      "initial_price": "0.0",
+      "base_currency": "usd",
+      "requirements": {},
+      "release_method_settings": {},
+      "accepted_payment_methods": ["free"],
+      "stock": 0,
+      "unlimited_stock": true,
+      "created_at": 1675816590,
+      "card_payments": false
+    },
+    "email": "hello@whop.com",
+    "status": "completed",
+    "valid": true,
+    "cancel_at_period_end": false,
+    "payment_processor": "free",
+    "license_key": "U-A09280-647203B0-2C0A9EW",
+    "metadata": {},
+    "quantity": 1,
+    "wallet_address": null,
+    "custom_fields_responses": {},
+    "custom_fields_responses_v2": [],
+    "discord": null,
+    "nft_tokens": [],
+    "expires_at": null,
+    "renewal_period_start": null,
+    "renewal_period_end": null,
+    "created_at": 1675816599,
+    "manage_url": "https://whop.com/hub/mem_5l6nvhob7ALjRT/",
+    "affiliate_page_url": "https://whop.com/ultimatesportspicks/?a=whopinc",
+    "checkout_session": null,
+    "access_pass": {
+      "id": "pass_m11FQfj0mJV3p",
+      "name": "Free Picks",
+      "visibility": "visible",
+      "created_at": 1655077534
+    },
+    "deliveries": {},
+    "telegram_account_id": null
+  }
+}
+```
+</CodeGroup>
+---
+
+## `membership.went_invalid`
+
+This webhook will fire when a membership becomes invalid, typically when a subscription is canceled or the membership expires.
+
+**Business Logic Example**: Mark a User's subscription as invalid, which blocks them from accessing a gated section of my app.
+
+**Important Attributes**: `id`, `valid`, `status`, `user.id`, `product.id`
+
+<CodeGroup>
+```json membership.went_invalid
+{
+   "action":"membership.went_invalid",
+   "body":{
+      "id":"mem_awUmfLkcJotab0",
+      "product":{
+         "id":"pass_m11FQfj0mJV3p",
+         "name":"Free Picks",
+         "visibility":"visible",
+         "created_at":1655077534,
+         "experiences":[
+            "exp_XJAAONIsvHkm6q"
+         ],
+         "plans":[
+            "plan_0j8y5dfol03a3"
+         ]
+      },
+      "user":{
+         "id":"user_q61ixyl8cVGff",
+         "username":"whopinc",
+         "email":"hello@whop.com",
+         "profile_pic_url":"https://ui-avatars.com/api/?name=Whop&background=535961&color=fff",
+         "social_accounts":[
+            
+         ],
+         "authorized_user":null
+      },
+      "plan":{
+         "id":"plan_0j8y5dfol03a3",
+         "plan_type":"one_time",
+         "release_method":"buy_now",
+         "visibility":"visible",
+         "billing_period":null,
+         "internal_notes":"Free Picks",
+         "metadata":{
+            
+         },
+         "direct_link":"https://whop.com/checkout/plan_0j8y5dfol03a3?d2c=true",
+         "renewal_price":"0.0",
+         "initial_price":"0.0",
+         "base_currency":"usd",
+         "requirements":{
+            
+         },
+         "release_method_settings":{
+            
+         },
+         "accepted_payment_methods":[
+            "free"
+         ],
+         "stock":94,
+         "unlimited_stock":false,
+         "created_at":1641875680,
+         "card_payments":true
+      },
+      "email":"hello@whop.com",
+      "status":"canceled",
+      "valid":false,
+      "cancel_at_period_end":false,
+      "payment_processor":"free",
+      "license_key":"U-1EE960-C3F14028-4D101DW",
+      "metadata":{
+         
+      },
+      "quantity":1,
+      "wallet_address":null,
+      "custom_fields_responses":{
+         
+      },
+      "custom_fields_responses_v2":[
+         
+      ],
+      "discord":null,
+      "nft_tokens":[
+         
+      ],
+      "expires_at":null,
+      "renewal_period_start":1642834868,
+      "renewal_period_end":null,
+      "created_at":1642834868,
+      "manage_url":"https://whop.com/hub/mem_awUmfLkcJotab0/",
+      "affiliate_page_url":"https://whop.com/ultimatesportspicks/?a=whopinc",
+      "checkout_session":null,
+      "access_pass":{
+         "id":"pass_m11FQfj0mJV3p",
+         "name":"Free Picks",
+         "visibility":"visible",
+         "created_at":1655077534
+      },
+      "deliveries":{
+         
+      },
+      "telegram_account_id":null
+   }
+}
+```
+</CodeGroup>
+
+---
+
+## `membership.metadata_updated`
+
+This webhook will fire when a membership's metadata changes.
+
+**Business Logic Example**: Metadata changes could mean a license key is bound to a user's machine, or a license key being reset, etc.
+
+**Important Attributes**: `id`, `valid`, `status`, `user.id`, `product.id`, `metadata`
+
+<CodeGroup >
+```json membership.metadata_updated
+{
+   "action":"membership.metadata_updated",
+   "body":{
+      "id":"mem_awUmfLkcJotab0",
+      "product":{
+         "id":"pass_m11FQfj0mJV3p",
+         "name":"Free Picks",
+         "visibility":"visible",
+         "created_at":1655077534,
+         "experiences":[
+            "exp_XJAAONIsvHkm6q"
+         ],
+         "plans":[
+            "plan_0j8y5dfol03a3"
+         ]
+      },
+      "user":{
+         "id":"user_q61ixyl8cVGff",
+         "username":"whopinc",
+         "email":"hello@whop.com",
+         "profile_pic_url":"https://ui-avatars.com/api/?name=Whop&background=535961&color=fff",
+         "social_accounts":[
+            
+         ],
+         "authorized_user":null
+      },
+      "plan":{
+         "id":"plan_0j8y5dfol03a3",
+         "plan_type":"one_time",
+         "release_method":"buy_now",
+         "visibility":"visible",
+         "billing_period":null,
+         "internal_notes":"Free Picks",
+         "metadata":{
+            
+         },
+         "direct_link":"https://whop.com/checkout/plan_0j8y5dfol03a3?d2c=true",
+         "renewal_price":"0.0",
+         "initial_price":"0.0",
+         "base_currency":"usd",
+         "requirements":{
+            
+         },
+         "release_method_settings":{
+            
+         },
+         "accepted_payment_methods":[
+            "free"
+         ],
+         "stock":94,
+         "unlimited_stock":false,
+         "created_at":1641875680,
+         "card_payments":true
+      },
+      "email":"hello@whop.com",
+      "status":"canceled",
+      "valid":false,
+      "cancel_at_period_end":false,
+      "payment_processor":"free",
+      "license_key":"U-1EE960-C3F14028-4D101DW",
+      "metadata":{
+         
+      },
+      "quantity":1,
+      "wallet_address":null,
+      "custom_fields_responses":{
+         
+      },
+      "custom_fields_responses_v2":[
+         
+      ],
+      "discord":null,
+      "nft_tokens":[
+         
+      ],
+      "expires_at":null,
+      "renewal_period_start":1642834868,
+      "renewal_period_end":null,
+      "created_at":1642834868,
+      "manage_url":"https://whop.com/hub/mem_awUmfLkcJotab0/",
+      "affiliate_page_url":"https://whop.com/ultimatesportspicks/?a=whopinc",
+      "checkout_session":null,
+      "access_pass":{
+         "id":"pass_m11FQfj0mJV3p",
+         "name":"Free Picks",
+         "visibility":"visible",
+         "created_at":1655077534
+      },
+      "deliveries":{
+         
+      },
+      "telegram_account_id":null
+   }
+}
+```
+</CodeGroup>
+
+---
+
+## `payment.succeded`
+
+This webhook will fire when a payment is successful, for both new and existing memberships.
+
+**Business Logic Example**: Update a User's credit balance with the amount of the payment and send them a receipt via email.
+
+**Important Attributes**: `id`, `membership`, `status`, `final_amount`, `user.id`, `product.id`
+
+<CodeGroup>
+```json payment.succeded
+{
+   "action":"payment.succeeded",
+   "body":{
+      "id":"pay_6dWDN0kA5QW2hm",
+      "product":{
+         "id":"pass_nTBNZkZbvGII9",
+         "name":"1 GB",
+         "visibility":"visible",
+         "created_at":1655004106,
+         "experiences":[
+            
+         ],
+         "plans":[
+            "plan_zqw00TkN6zFGh",
+            "plan_hvYOAfuitb44D"
+         ]
+      },
+      "membership":"mem_nePhZvdqdLOKsZ",
+      "affiliate_reward":null,
+      "plan":{
+         "id":"plan_hvYOAfuitb44D",
+         "plan_type":"one_time",
+         "release_method":"buy_now",
+         "visibility":"visible",
+         "billing_period":null,
+         "internal_notes":"1 GB Monthly Expiration Plan",
+         "metadata":{
+            
+         },
+         "direct_link":"https://whop.com/checkout/plan_hvYOAfuitb44D?d2c=true",
+         "renewal_price":"0.0",
+         "initial_price":"10.5",
+         "base_currency":"usd",
+         "requirements":{
+            
+         },
+         "release_method_settings":{
+            "max_entries":null,
+            "nft_weighted_entries":null
+         },
+         "accepted_payment_methods":[
+            "stripe"
+         ],
+         "stock":0,
+         "unlimited_stock":false,
+         "created_at":1655004107,
+         "card_payments":true
+      },
+      "user":{
+         "id":"user_q61ixyl8cVGff",
+         "username":"whopinc",
+         "email":"hello@whop.com",
+         "profile_pic_url":"https://ui-avatars.com/api/?name=Whop&background=535961&color=fff",
+         "social_accounts":[
+            
+         ],
+         "authorized_user":null
+      },
+      "final_amount":10,
+      "subtotal":10,
+      "currency":"usd",
+      "last4":"9971",
+      "payments_failed":1,
+      "payment_processor":"stripe",
+      "refunded_amount":0,
+      "status":"paid",
+      "crypto_tx_hash":null,
+      "wallet_address":null,
+      "created_at":1658610330,
+      "paid_at":1658610330,
+      "refunded_at":null,
+      "last_payment_attempt":null,
+      "next_payment_attempt":null,
+      "access_pass":{
+         "id":"pass_nTBNZkZbvGII9",
+         "name":"1 GB",
+         "visibility":"visible",
+         "created_at":1655004106
+      }
+   }
+}
+```
+</CodeGroup>
+
+---
+
+## `payment.failed`
+
+This webhook will fire whenever a payment attempt fails. This is usually due to a card having insufficient funds, or a crypto payment not having a proper allowance or balance.
+
+**Business Logic Example**: Record the failed payment attempt so that you can remind the user with an overlay inside of your app to have them update their payment method.
+
+**Important Attributes**: `id`, `membership`, `status`, `final_amount`, `user.id`, `product.id`
+
+<CodeGroup>
+```json payment.failed
+{
+   "action":"payment.failed",
+   "body":{
+      "id":"pay_cJ5C52xzGQftKH",
+      "product":{
+         "id":"pass_0SdhdxmiNhQZb",
+         "name":"ResellerUnity Monthly Membership",
+         "visibility":"visible",
+         "created_at":1655076816,
+         "experiences":[
+            
+         ],
+         "plans":[
+            
+         ]
+      },
+      "membership":"mem_vi6Xw8ZDO8rjjR",
+      "affiliate_reward":null,
+      "plan":{
+         "id":"plan_ACoSACuzLHnrE",
+         "plan_type":"renewal",
+         "release_method":"buy_now",
+         "visibility":"hidden",
+         "billing_period":30,
+         "internal_notes":"ResellerUnity Monthly Membership",
+         "metadata":{
+            
+         },
+         "direct_link":"https://dashboard.resellerunity.group/checkout/plan_ACoSACuzLHnrE?d2c=true",
+         "renewal_price":"19.99",
+         "initial_price":"0.0",
+         "base_currency":"usd",
+         "requirements":{
+            
+         },
+         "release_method_settings":{
+            
+         },
+         "accepted_payment_methods":[
+            "stripe"
+         ],
+         "stock":49,
+         "unlimited_stock":false,
+         "created_at":1639526467,
+         "card_payments":true
+      },
+      "user":{
+         "id":"user_T1h3xycVulUVN",
+         "username":"stripetestt",
+         "email":"aa@aaa.com",
+         "profile_pic_url":"https://cdn.discordapp.com/avatars/724985127049887785/94d5a7ad87f0a1988d67526770559122",
+         "social_accounts":[
+            {
+               "service":"discord",
+               "username":"solbass#3675",
+               "id":"724985127049887785"
+            },
+            {
+               "service":"discord",
+               "username":"elitestingSomething#8859",
+               "id":"934508393719300156"
+            },
+            {
+               "service":"twitter",
+               "username":"ReactWhop",
+               "id":"1598032586709811201"
+            }
+         ],
+         "authorized_user":null
+      },
+      "final_amount":0,
+      "subtotal":19,
+      "currency":"usd",
+      "last4":"1006",
+      "payments_failed":4,
+      "payment_processor":"stripe",
+      "refunded_amount":0,
+      "status":"open",
+      "crypto_tx_hash":null,
+      "wallet_address":null,
+      "created_at":1642558479,
+      "paid_at":null,
+      "refunded_at":null,
+      "last_payment_attempt":1642558479,
+      "next_payment_attempt":null,
+      "access_pass":{
+         "id":"pass_0SdhdxmiNhQZb",
+         "name":"ResellerUnity Monthly Membership",
+         "visibility":"visible",
+         "created_at":1655076816
+      }
+   }
+}
+```
+</CodeGroup>
+
+---
+
+## `payment.affiliate_reward_created`
+
+This webhook will fire whenever a user refers someone to your product.
+
+**Business Logic Example**: Give the reffering user extra credits or display an overlay to thank them.
+
+**Important Attributes**: `id`, `user.id`, `product.id`, `affiliate_reward`
+
+<CodeGroup>
+```json payment.affiliate_reward_created
+{
+   "action":"payment.affiliate_reward_created",
+   "body":{
+      "id":"pay_kZMa60V4r2e1av",
+      "product":{
+         "id":"pass_mPTCDbFCVK0Qs",
+         "name":"Discord",
+         "visibility":"visible",
+         "created_at":1654974017,
+         "experiences":[
+            "exp_0WFrKE8Zct8K53",
+            "exp_CIOVa800fm5msp",
+            "exp_nDyKdkENAw29E1",
+            "exp_2nHwruDtGCZj1n",
+            "exp_vHH3jBfW5nyplC",
+            "exp_EwhSPULrd5mC7D",
+            "exp_cMLQHyU0xOrjIZ",
+            "exp_ummdtrOXjQZjUM"
+         ],
+         "plans":[
+            "plan_J4TNrShQRe8uD",
+            "plan_RintoTR8UIdnM",
+            "plan_IK1pccIIS7GxE",
+            "plan_KwVFPejeMZjTF",
+            "plan_ReWUueYfEVI5l",
+            "plan_MMZh7A7ByWXWt",
+            "plan_pI6jutsmIu5sc",
+            "plan_LrUwWu2LYm3Wd",
+            "plan_hzYTLZKPxgtT8",
+            "plan_GYrX9uwuLtto0"
+         ]
+      },
+      "membership":"mem_uBWomd0ieiEkuo",
+      "affiliate_reward":0,
+      "plan":{
+         "id":"plan_LrUwWu2LYm3Wd",
+         "plan_type":"one_time",
+         "release_method":"buy_now",
+         "visibility":"visible",
+         "billing_period":null,
+         "internal_notes":"Affiliate Parrot",
+         "metadata":{
+            
+         },
+         "direct_link":"https://whop.com/checkout/plan_LrUwWu2LYm3Wd?d2c=true",
+         "renewal_price":"0.0",
+         "initial_price":"0.0",
+         "base_currency":"usd",
+         "requirements":{
+            
+         },
+         "release_method_settings":{
+            "max_entries":null,
+            "nft_weighted_entries":null
+         },
+         "accepted_payment_methods":[
+            "free"
+         ],
+         "stock":0,
+         "unlimited_stock":true,
+         "created_at":1671941438,
+         "card_payments":true
+      },
+      "user":{
+         "id":"user_RgeaoISNPoSyD",
+         "username":"jackson",
+         "email":"jacksonhuether@gmail.com",
+         "profile_pic_url":"https://cdn.discordapp.com/avatars/316955885257752578/ef356dc9e3662c97a032a528405b245b",
+         "social_accounts":[
+            {
+               "service":"discord",
+               "username":"jacksonhuether",
+               "id":"316955885257752578"
+            },
+            {
+               "service":"twitter",
+               "username":"ariesaxial",
+               "id":"1149770450513190912"
+            }
+         ],
+         "authorized_user":null
+      },
+      "final_amount":0,
+      "subtotal":0,
+      "currency":null,
+      "last4":null,
+      "payments_failed":0,
+      "payment_processor":"free",
+      "refunded_amount":0,
+      "status":"paid",
+      "crypto_tx_hash":null,
+      "wallet_address":null,
+      "created_at":1671941499,
+      "paid_at":1671941499,
+      "refunded_at":null,
+      "last_payment_attempt":null,
+      "next_payment_attempt":null,
+      "access_pass":{
+         "id":"pass_mPTCDbFCVK0Qs",
+         "name":"Discord",
+         "visibility":"visible",
+         "created_at":1654974017
+      }
+   }
+}
+```
+</CodeGroup>

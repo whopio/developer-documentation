@@ -61,6 +61,22 @@
       "pages": ["oauth/guide"]
     },
     {
+      "group": "License Keys",
+      "pages": ["license-keys/guide"]
+    },
+    {
+      "group": "Webhooks",
+      "pages": ["webhooks", "webhooks/events"]
+    },
+    {
+      "group": "Examples",
+      "pages": ["examples"]
+    },
+    {
+      "group": "Discord Bots",
+      "pages": ["discord", "discord/python", "discord/node"]
+    },
+    {
       "group": "API Documentation",
       "pages": ["api-reference/authentication"]
     },
