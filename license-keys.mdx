@@ -13,24 +13,49 @@ License Keys are useful when you want to restrict access to desktop applications
 
 ---
 
-## Creating a License Keys
+## Creating a License Key
 
 If you haven't already [created your company](https://docs.whop.com/creating-company) or [made a product to sell](https://docs.whop.com/creating-company#creating-your-first-product), you'll want to start there.
 
-Once you've done that, head to the dashboard to add the license key capability to your product.
+Once you've done that, head to the dashboard to add the license key experience to your product.
 
 <Warning>
   A download link is required to add a **Software** experience. This is the link
-  that will appear in the users dashboard.
+  that will appear in the users dashboard to download the software.
 </Warning>
 
 ![Create license key](https://dev-docs-weld.vercel.app/newsoftware.gif)
 
 ---
 
+## Getting your API key
+
+For the endpoints below, you'll need to use your API key. You can find your API key in the dashboard under the `Developer` tab.
+
+<Warning>
+  It's important that you keep your API keys safe and secure - if not properly
+  scoped, your API keys can be dangerous if they fall into the wrong hands.
+</Warning>
+
+### Creating an API key
+
+1. Head to your [Developers settings](https://dash.whop.com/settings/developer) page
+2. Click **New API Key**
+3. Set a memorable name for your key.
+4. Copy the API key
+
+<Note>
+  We recommend you scope your API key for this use-case. For more details, click
+  [here](/api-reference/authentication#scoped-api-keys)
+</Note>
+
+![Create API key](https://dev-docs-weld.vercel.app/newapikey.gif)
+
+---
+
 ## Metadata
 
-Metadata is a way to store information about a license key. The most common use case for this is to store information about the users device, HWID. **HWID** is a unique identifier for a device, and can be used to prevent users from sharing their license keys with others.
+Metadata is a way to store information about a license key. The most common use case for this is to store information about the users device, HWID. **Hardware ID** is a unique identifier for a device, and can be used to prevent users from sharing their license keys with others.
 
 <Warning>
   The user can reset their metadata anytime by going to their dashboard and
@@ -111,8 +136,8 @@ The metadata field in the body is **required**. If you do not wish to set any me
 
 Here are the most common responses from this endpoint.
 
-| Status Code | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| **201**     | The license key is valid and the user can use the product     |
-| **400**     | The metadata did not match, the user needs to reset their key |
-| **404**     | The license key was not found                                 |
+| Status Code | Description                                                    |
+| ----------- | -------------------------------------------------------------- |
+| **201**     | The license key is valid and the user can use the product      |
+| **400**     | "The metadata did not match; the user needs to reset their key |
+| **404**     | The license key was not found                                  |

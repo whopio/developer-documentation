@@ -1,32 +1,29 @@
 ---
 title: Overview
-description: "Webhooks Guide"
+description: "A guide to using webhooks for real-time notifications and integrations"
 ---
 
 Webhooks are a way for an application to provide real-time notifications to other systems when certain events occur. They allow you to build integrations that respond to specific events in a more efficient and scalable way than constantly polling an API for updates.
 
-In this guide, we will walk you through the steps to set up and implement an integration with webhooks, including how to set up a webhook endpoint, configure your webhooks, and handle webhook notifications. We will also provide examples of how this can be done in JavaScript & Python.
-
----
+In this guide, we'll explore how to set up and implement webhooks, including establishing a webhook endpoint, configuring your webhooks, and handling webhook notifications. We'll also provide examples in both JavaScript and Python.
 
 ## Use-cases
 
-Here are a few popular use-cases you can use webhooks for:
+Webhooks can be utilized for various purposes, such as:
 
-- Automatically give credits to a user on your app when they purchase them.
-- Show a banner on your website when a user's subscription is about to expire.
-- Show a banner on your website when a user's card has been declined
-- Add new users to a custom mailing list when they sign up for a subscription.
+- Automatically crediting a user's account when they make a purchase.
+- Displaying a banner on your website when a user's subscription is nearing expiration.
+- Adding new subscribers to a custom mailing list when they sign up for a subscription.
 
 ---
 
 ## Creating a webhook
 
-The Whop Business dashboard has a dedicated developer settings page, where you'll be able to access, update, and manage all things related to Whop API. This is where you'll begin configuring your webhook endpoint URL.
+Access the Whop Business dashboard and navigate to the developer settings page. Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
 
 <Note>
-  When you add the webhook, it will send a `POST` request to your API, unless it
-  returns 200, the webhook will not be added.
+  Upon adding the webhook, it will send a `POST` request to your API. If the API
+  doesn't return a 200 status code, the webhook will not be added.
 </Note>
 
 ![Creating a webhook](https://dev-docs-weld.vercel.app/newwebhook.gif)
@@ -35,15 +32,15 @@ The Whop Business dashboard has a dedicated developer settings page, where you'l
 
 ## Setup a server
 
-To receive webhooks, you must setup a server that is capable of receiving POST requests. This can be done in any language.
+To receive webhooks, you need a server capable of handling POST requests. You can achieve this using any programming language.
 
-In this example, we are creating a server to receive data on the `/went-valid` endpoint. It then parses the relevant data from the JSON payload. From here, we can do what we want with the data, whether that is adding a user to our database or sending them a custom email.
+In the following example, we're creating a server to receive data at the /went-valid endpoint. The server parses the relevant information from the JSON payload, allowing you to take actions like adding a user to your database or sending a custom email.
 
 ### Hosting the server
 
-You can host the server anywhere you want, but we recommend using a free service like [**ngrok**](https://ngrok.com/) or [**Hop.io**](https://hop.io/). Both of these providers offer a free tier that is suitable for deploying an API.
+You can host the server anywhere you want, but we recommend using a free service like [**ngrok**](https://ngrok.com/) or [**Hop.io**](https://hop.io/). Both providers offer free tiers suitable for deploying an API.
 
-Once you have setup and deployed the server, you will need to fetch the URL you were given and add it to the webhook settings page. Make sure to add `/went-valid` to the end of the URL (or whatever the name of the endpoint is).
+After setting up and deploying your server, obtain the provided URL and add it to the webhook settings page. Remember to append `/went-valid` to the URL (or the appropriate endpoint name).
 
 <CodeGroup>
 
@@ -100,10 +97,11 @@ app.listen(3000, () => {
 
 ## Testing your API
 
-Enter your correct route into the modal and click the Send test webhook button. Our server will attempt to `POST` an example webhook event to the endpoint your provided. If your application accepts the request and returns a 200 HTTP response code, you'll see a green message saying "**Test successful**". Now, your endpoint will begin receiving events.
+Input the correct route into the modal and click the **"Send test webhook"** button. Our server will attempt to `POST` an example webhook event to the provided endpoint. If your application accepts the request and returns a 200 HTTP response code, you will see a green message indicating "**Test successful"** Your endpoint will now start receiving events.
 
 <Note>
-  To see all the webhook payloads, check out [**events**](/webhooks/events)
+  To view all webhook payloads, check the [**events**](/webhooks/events)
+  section.
 </Note>
 
 ![Test webhook](https://dev-docs-weld.vercel.app/TestWebhook.gif)

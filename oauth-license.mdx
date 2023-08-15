@@ -1,40 +1,42 @@
 ---
 title: OAuth vs License Keys
-description: "Compare the use of OAuth and License Keys"
+description: "Comparing the use of OAuth and License Keys for user authentication"
 ---
 
 ---
 
-OAuth and License Keys are two popular ways to authenticate a user and gate your application, however they both have their suitable use-cases. This article will help you decide which one is best for your application.
+Both OAuth and License Keys are popular methods for authenticating users and restricting access to your application. Each method has its own benefits and use-cases. This guide will help you decide which option is best for your application.
 
 ---
 
 ### OAuth
 
-OAuth is most commonly used with websites. You use it all the time without realising! When you sign-in to a website with **Google**, **Apple**, etc, that is **OAuth**. It is a way to authenticate a user without having to store their password or create accounts.
+OAuth is widely used for web-based applications. It is a protocol that allows users to authenticate and grant access without needing to create new accounts or share passwords. If you've ever signed into a website using your Google or Apple credentials, you've used OAuth.
 
 ### Popular use-cases
 
 - Websites
 - Mobile Apps
 
-<Tip>[Click here](/oauth) to learn how to use OAuth.</Tip>
+<Tip>[Click here](/oauth) to learn more about implementing OAuth.</Tip>
 
 ---
 
 ### License Keys
 
-License Keys are most commonly used with desktop applications. They are a way to authenticate a user without them needing to create an account. License keys are unique to each user so you know who is accessing your application.
+License Keys are commonly used for desktop applications. They offer a simple way to authenticate users without requiring them to create accounts. Each License Key is unique, allowing you to track who is accessing your application.
 
 ### Popular use-cases
 
 - CLI applications
 - GUI applications
 
-<Tip>[Click here](/license-keys) to learn how to use License Keys.</Tip>
+<Tip>
+  [Click here](/license-keys) to learn more about implementing License Keys.
+</Tip>
 
 ---
 
 ## Final Verdict
 
-We recommend that if you are building a website, or mobile app, you use OAuth. If you are building a desktop application, we recommend you use License Keys.
+For web and mobile applications, we recommend using OAuth for authentication. For desktop applications, we suggest using License Keys.
