@@ -5,11 +5,18 @@ description: "Webhooks Guide"
 
 Webhooks are a way for an application to provide real-time notifications to other systems when certain events occur. They allow you to build integrations that respond to specific events in a more efficient and scalable way than constantly polling an API for updates.
 
-To integrate with webhooks, you will need to set up an endpoint on your own server that will receive the webhook notifications. You will then configure your webhooks to send notifications to this endpoint, and implement handling for the webhook notifications on your server.
-
 In this guide, we will walk you through the steps to set up and implement an integration with webhooks, including how to set up a webhook endpoint, configure your webhooks, and handle webhook notifications. We will also provide examples of how this can be done in JavaScript & Python.
 
-If you aren't familiar, webhooks are a widely popular form of communication between web servers. Instead of having to constantly refetch data from an API, your server will be sent updates (aka webhooks) whenever an event happens on the providers end.
+---
+
+## Uses-cases
+
+Here are a few popular use-cases you can use webhooks for:
+
+- Automatically give credits to a user on your app when they purchase them.
+- Show a banner on your website when a user's subscription is about to expire.
+- Show a banner on your website when a user's card has been declined
+- Add new users to a custom mailing list when they sign up for a subscription.
 
 ---
 
