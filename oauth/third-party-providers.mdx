@@ -1,0 +1,22 @@
+---
+title: "Third Party Providers"
+description: "Learn how to use third party providers OAuth providers with Whop."
+---
+
+---
+
+## Setting up webhooks
+
+Webhooks are sent when a user performs an action. In this example, we are going to look at when a user subscribes to your company and when they churn/leave your company. These are the `membership.went_valid` and `membership.went_invalid` events.
+
+<Note>To learn how to setup webhooks, follow [this guide](/webhooks)</Note>
+
+---
+
+## Creating the user
+
+Once you have setup webhooks, you can now listen to the `membership.went_valid` event. Once you receive it, you can create a user with your external provider, such as **Firebase** or **Supabase**.
+
+## Removing the user
+
+When a user leaves your company, you can listen to the `membership.went_invalid` event. Once you receive it, you can remove the user from your external provider.
