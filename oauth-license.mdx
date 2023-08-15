@@ -1,0 +1,59 @@
+---
+title: OAuth vs License Keys
+description: "Compare the use of OAuth and License Keys"
+---
+
+---
+
+OAuth and License Keys are two popular ways to authenticate a user and gate your application, however they both have their pros and cons. This article will help you decide which one is best for your application.
+
+---
+
+### OAuth
+
+OAuth is most commonly used with websites. You use it all the time without realising! When you sign-in to a website with Google, Apple, etc, that is OAuth. It is a way to authenticate a user without having to store their password. It is also a way to give a third-party access to your account without giving them your password.
+
+### Popular use-cases
+
+- Websites
+- Mobile Apps
+
+#### Pros
+
+- No need to store passwords
+- No need to worry about password security
+- Users don't need to create accounts
+- Users don't need to remember passwords
+- You don't need to manually delete their account if they are no longer a member
+
+#### Cons
+
+- Only works with websites
+
+---
+
+### License Keys
+
+License Keys are most commonly used with desktop applications. They are a way to authenticate a user without them needing to create an account. License keys are unique to each user so you know who is accessing your application.
+
+### Popular use-cases
+
+- CLI applications
+- GUI applications
+
+#### Pros
+
+- Can be used with websites and desktop applications
+- Users don't need to create accounts
+- The license will no longer work if they user is no longer a member
+
+### Cons
+
+- They keys are hard to remember
+- They can be easily shared with other people
+
+---
+
+## Final Verdict
+
+If you are building a website, use OAuth. If you are building a desktop application, use License Keys. Altough you can use License Keys with websites, it is not recommended.

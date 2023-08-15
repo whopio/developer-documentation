@@ -3,6 +3,13 @@ title: Guide
 description: "OAuth documentation guide"
 ---
 
+OAuth is like a digital key that allows access to certain parts of your web application. It acts as a doorman, checking if the user has the right credentials (proof of purchase) before letting them in.
+
+<Note>
+  This guide covers the process when a user tries to access your webapp from the
+  **Whop Hub**. If you want to add in a **Login With Whop** button to your site,
+  follow [this guide](/oauth/sign-in-button).
+</Note>
 ---
 
 ## Integration Examples
@@ -28,9 +35,21 @@ description: "OAuth documentation guide"
 
 ---
 
+## OAuth Flow
+
+Here is the flow for how OAuth works:
+
+1. Your user clicks on a link to your application from the **Whop Hub**.
+2. Your user is redirected to your application with a code in the **URL**.
+3. Your application requests an **authorization token** from the Whop API using that code.
+4. The Whop API returns an **authorization token**.
+5. Your application uses the authorization token to request data about the user
+
+---
+
 ## Adding a webapp to your product
 
-Before we start, you should add a **webapp** experience to your product. You can do this by going to your **product** and clicking the **Webapp** option. From here you can add the name and the **Callback URL**. We will cover this below.
+Before we start, you should add a **webapp** experience to your product. You can do this by going to your **product** and clicking the **Webapp** option. From here you can add the name and the **Callback URL**. We will cover the steps to create one below.
 
 ![Webapp video](https://dev-docs-weld.vercel.app/Webapp.gif)
 
@@ -38,7 +57,7 @@ Before we start, you should add a **webapp** experience to your product. You can
 
 ## Receiving a code
 
-when your user tries to access your application from the Whop Hub, this is where they will be redirected.
+When your user tries to access your application from the Whop Hub, this is where they will be redirected.
 
 ```bash
 https://your-site.xyz/callback/whop?code=xxxxxxxx
