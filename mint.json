@@ -58,7 +58,7 @@
     },
     {
       "group": "OAuth",
-      "pages": ["oauth", "oauth/sign-in-button", "oauth/third-party-providers"]
+      "pages": ["oauth", "oauth/sign-in-button"]
     },
     {
       "group": "License Keys",

@@ -5,7 +5,7 @@ description: "Webhook Events"
 
 ---
 
-We send webhooks when key events happen for your company and users. These events are useful for knowing when a User has purchased your product and when they should be granted access to your software. We also send an event when the User should no longer have access.
+We send webhooks when key events happen for your company and users. These events are useful for knowing when a user has purchased your product and when they should be granted access to your software. We also send an event when the User should no longer have access.
 
 Thus, your application is simply responsible for accepting incoming requests from Whop and processing them as you see fit.
 
@@ -14,7 +14,7 @@ Here are a list of webhooks that we send:
 - [membership.went_valid](/webhooks/events#membership-went-valid)
 - [membership.went_invalid](/webhooks/events#membership-went-invalid)
 - [membership.metadata_updated](/webhooks/events#membership-metadata-updated)
-- [payment.succeded](/webhooks/events#payment-succeded)
+- [payment.succeeded](/webhooks/events#payment-succeeded)
 - [payment.failed](/webhooks/events#payment-failed)
 - [payment.affiliate_reward_created](/webhooks/events#payment-affiliate-reward-created)
 
@@ -322,16 +322,16 @@ This webhook will fire when a membership's metadata changes.
 
 ---
 
-## `payment.succeded`
+## `payment.succeeded`
 
 This webhook will fire when a payment is successful, for both new and existing memberships.
 
-**Business Logic Example**: Update a User's credit balance with the amount of the payment and send them a receipt via email.
+**Business Logic Example**: Update a user's credit balance with the amount of the payment and send them a receipt via email.
 
 **Important Attributes**: `id`, `membership`, `status`, `final_amount`, `user.id`, `product.id`
 
 <CodeGroup>
-```json payment.succeded
+```json payment.succeeded
 {
    "action":"payment.succeeded",
    "body":{
@@ -530,7 +530,7 @@ This webhook will fire whenever a payment attempt fails. This is usually due to 
 
 This webhook will fire whenever a user refers someone to your product.
 
-**Business Logic Example**: Give the reffering user extra credits or display an overlay to thank them.
+**Business Logic Example**: Give the referring user extra credits or display an overlay to thank them.
 
 **Important Attributes**: `id`, `user.id`, `product.id`, `affiliate_reward`
 

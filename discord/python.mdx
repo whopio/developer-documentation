@@ -56,7 +56,7 @@ Once you have got your Discord Bot Token and installed the dependancies, you can
     scope=the_id_of_your_guild,
     )
     async def my_first_command(ctx: interactions.CommandContext):
-    await ctx.send("Hi there!")
+        await ctx.send("Hi there!")
 
     bot.start()
     ```
@@ -117,14 +117,14 @@ Then, we can add an if statement to check if the user has a membership. If they 
 <CodeGroup>
     ```python main.py
     import interactions
-    from Whop imoprt WhopUtilities
+    from Whop import WhopUtilities
 
     bot = interactions.Client(token="your_secret_bot_token")
 
     @bot.command(
-    name="my_first_command",
-    description="This is the first command I made!",
-    scope=the_id_of_your_guild,
+        name="my_first_command",
+        description="This is the first command I made!",
+        scope=the_id_of_your_guild,
     )
 
     async def my_first_command(ctx: interactions.CommandContext):
