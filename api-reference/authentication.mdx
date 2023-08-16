@@ -9,9 +9,14 @@ Access to the Whop API can be granted through two methods: API Keys and OAuth Cr
 Authorization: Bearer {TOKEN}
 ```
 
+- [API Keys](/api-reference/authentication#api-keys)
+- [OAuth Credentials](/api-reference/authentication#oauth-credentials)
+
+---
+
 ## API Keys
 
-API keys are essential for accessing the Whop API. An **API key** is a unique identifier that allows developers to access Whop's API on behalf of a company to validate licenses, retrieve user information, and more.
+An **API key** is a unique identifier that allows developers to access Whop's API on behalf of a company to validate licenses, retrieve user information, and more. It is needed for most endpoints.
 
 <Warning>
   Protect your API keys to prevent unauthorized access. API keys can be a
@@ -58,7 +63,7 @@ Scoped API keys are **the best way** for your company to use client-sided keys.
 
 ## OAuth Credentials
 
-Head to the [developer settings page](https://dash.whop.com/settings/developer) to obtain your Client ID and Client Secret. These keys will be used to identify your website/app and authenticate it in the Whop API.
+Head to the [developer settings page](https://dash.whop.com/settings/developer) to obtain your Client ID and Client Secret. These keys will be used with the [**OAuth**](/oauth) endpoints to obtain an access token.
 
 <Warning>
   Once you close the modal, you cannot view your Client Secret again. Store it
