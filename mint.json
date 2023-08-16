@@ -68,7 +68,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["introduction", "oauth-license"]
+      "pages": ["introduction", "what-is-whop"]
     },
     {
       "group": "Selling your software",
