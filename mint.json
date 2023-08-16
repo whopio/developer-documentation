@@ -80,7 +80,7 @@
     },
     {
       "group": "More",
-      "pages": ["templates", "discord"]
+      "pages": ["templates", "discord", "docs"]
     },
     {
       "group": "Discord Bots",
