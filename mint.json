@@ -55,6 +55,14 @@
     {
       "source": "/docs",
       "destination": "https://docs.whop.com"
+    },
+    {
+      "source": "/dev-discord",
+      "destination": "https://discord.gg/xrgfRnVHgV"
+    },
+    {
+      "source": "/blog",
+      "destination": "https://whop.com/blog"
     }
   ],
   "navigation": [
@@ -67,25 +75,14 @@
       "pages": ["license-keys", "oauth"]
     },
     {
-      "group": "OAuth",
-      "pages": ["oauth", "oauth/sign-in-button"]
-    },
-    {
-      "group": "License Keys",
-      "pages": ["license-keys"]
-    },
-    {
       "group": "Webhooks",
       "pages": ["webhooks", "webhooks/examples"]
     },
     {
       "group": "More",
-      "pages": ["templates", "discord", "docs"]
+      "pages": ["templates", "discord", "docs", "dev-discord", "blog"]
     },
-    {
-      "group": "Discord Bots",
-      "pages": ["discord", "discord/python", "discord/node"]
-    },
+
     {
       "group": "API Documentation",
       "pages": ["api-reference/authentication"]
