@@ -34,23 +34,6 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-    {
-      "name": "Public Documentation",
-      "icon": "book-open-cover",
-      "url": "https://docs.whop.com"
-    },
-    {
-      "name": "Developer Support",
-      "icon": "discord",
-      "url": "https://discord.gg/xrgfRnVHgV"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://whop.com/blog"
-    }
-  ],
   "redirects": [
     {
       "source": "/docs",
@@ -68,7 +51,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["introduction", "what-is-whop"]
+      "pages": ["introduction", "how-whop-works"]
     },
     {
       "group": "Selling your software",
