@@ -51,10 +51,20 @@
       "url": "https://whop.com/blog"
     }
   ],
+  "redirects": [
+    {
+      "source": "/docs",
+      "destination": "https://docs.whop.com"
+    }
+  ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": ["introduction", "oauth-license"]
+    },
+    {
+      "group": "Selling your software",
+      "pages": ["license-keys", "oauth"]
     },
     {
       "group": "OAuth",
@@ -66,11 +76,11 @@
     },
     {
       "group": "Webhooks",
-      "pages": ["webhooks", "webhooks/events"]
+      "pages": ["webhooks", "webhooks/examples"]
     },
     {
-      "group": "Examples",
-      "pages": ["examples"]
+      "group": "More",
+      "pages": ["templates", "discord"]
     },
     {
       "group": "Discord Bots",

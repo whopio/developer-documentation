@@ -30,7 +30,7 @@ You should use OAuth if you have a website and want to allow users who have purc
 
 ---
 
-## Integration Examples
+## Whop OAuth Examples
 
 <CardGroup cols={2}>
   <Card
@@ -53,23 +53,24 @@ You should use OAuth if you have a website and want to allow users who have purc
 
 ---
 
-## OAuth Flow
-
-Here is the flow for how OAuth works:
-
-1. Your user clicks on a link to your application from the **Whop Hub**.
-2. Your user is redirected to your application with a code in the **URL**.
-3. Your application requests an **authorization token** from the Whop API by exchanging the code from the URL.
-4. The Whop API returns an **authorization token**.
-5. Your application uses the authorization token to request data about the authenticated user.
-
----
-
 ## Adding a webapp to your product
 
 Before we start, you should add a **webapp** experience to your product. You can do this by going to your **product** and clicking the **Webapp** option. From here you can add the name and the **Callback URL**. We will cover the steps to create one below.
 
 ![Webapp video](https://dev-docs-weld.vercel.app/Webapp.gif)
+
+---
+
+## OAuth Flow
+
+Here is the flow for how OAuth works:
+
+1. The user purchases your product
+2. Your user clicks on a link to your application from the **Whop Hub**.
+3. Your user is redirected to your application with a code in the **URL**.
+4. Your application requests an **authorization token** from the Whop API by exchanging the code from the URL.
+5. The Whop API returns an **authorization token**.
+6. Your application uses the authorization token to request data about the authenticated user.
 
 ---
 
