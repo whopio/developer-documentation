@@ -7,8 +7,6 @@ description: "Understanding the various webhook events available to you"
 
 Webhooks provide a powerful tool for keeping track of important events related to your company and its users. By setting up webhooks, you can be instantly notified when a user purchases your product, when they should be granted access to your software, or when their access should be revoked.
 
-Your application's role is simple - listen for incoming webhook requests from Whop and process them according to your needs.
-
 Here's an overview of the different webhook events that Whop sends:
 
 - [membership.went_valid](/webhooks/events#membership-went-valid)
@@ -24,7 +22,7 @@ Here's an overview of the different webhook events that Whop sends:
 
 This webhook will fire when a membership becomes valid, typically when a membership is created or a user checks out.
 
-**Business Logic Example**: Mark a User's subscription as valid, which allows them to access a gated section of my app.
+**Business Logic Example**: Mark a user's subscription as valid, which allows them to access a gated section of my app.
 
 **Important Attributes**: `id`, `valid`, `status`, `user.id`, `product.id`
 
@@ -108,7 +106,7 @@ This webhook will fire when a membership becomes valid, typically when a members
 
 This webhook will fire when a membership becomes invalid, typically when a subscription is canceled or the membership expires.
 
-**Business Logic Example**: Mark a User's subscription as invalid, which blocks them from accessing a gated section of my app.
+**Business Logic Example**: Mark a user's subscription as invalid, which blocks them from accessing a gated section of my app.
 
 **Important Attributes**: `id`, `valid`, `status`, `user.id`, `product.id`
 
