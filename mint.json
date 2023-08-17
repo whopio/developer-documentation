@@ -55,7 +55,7 @@
     },
     {
       "group": "Selling your software",
-      "pages": ["license-keys", "oauth"]
+      "pages": ["oauth-license", "license-keys", "oauth"]
     },
     {
       "group": "Webhooks",
