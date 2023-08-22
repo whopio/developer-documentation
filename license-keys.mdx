@@ -95,21 +95,28 @@ The metadata field in the body is **required**. If you do not wish to set any me
 
 <CodeGroup>
     ```js JavaScript
-    import axios from 'axios'
+    import fetch from "node-fetch";
 
-    const validate_license = async (license_key, HWID) => {
-        const response = await axios.post(
-        `https://api.whop.com/api/v2/memberships/${license_key}/validate_license`,
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
+    async function validateLicense(licenseKey, HWID) {
+        const url = `https://api.whop.com/api/v2/memberships/${licenseKey}/validate_license`;
+        const payload = {
+            metadata: {
+                HWID: HWID,
             },
-            body: {
-                metadata: {HWID: HWID},
-            },
-        }
-        )
-        return response
+        };
+        const headers = {
+            Accept: "application/json",
+            Authorization: `Bearer ${API_KEY}`,
+            "Content-Type": "application/json",
+        };
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(payload),
+        });
+
+        return response;
     }
     ```
 
