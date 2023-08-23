@@ -66,9 +66,7 @@
   "paths": {
     "/v2/oauth/token": {
       "post": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Obtain a user's access token",
         "description": "This is how you obtain an access token for a user. In the OAuth flow, your backend will receive a one time use \"code\" parameter. You will then exchange the code you received for a long lived access token by calling this endpoint.",
         "operationId": "oauth_token",
@@ -87,9 +85,7 @@
                   "grant_type": {
                     "type": "string",
                     "description": "This should always be \"authorization_code\".",
-                    "enum": [
-                      "authorization_code"
-                    ]
+                    "enum": ["authorization_code"]
                   },
                   "code": {
                     "type": "string",
@@ -130,9 +126,7 @@
     },
     "/v2/oauth/info": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve Info",
         "description": "Retrieve the company object, user object, and experiences objects that are available to the user. This endpoint is useful for gathering data about the customer using your software and the company selling your software.",
         "operationId": "oauth_info",
@@ -177,9 +171,7 @@
     },
     "/v2/oauth/user": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve User",
         "description": "Retrieves the user object that for the authenticated user.",
         "operationId": "oauth_user",
@@ -210,9 +202,7 @@
     },
     "/v2/oauth/user/experiences": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve User Experiences",
         "description": "Retrieves a list of experience objects that the authenticated user has access to.",
         "operationId": "oauth_user_experiences",
@@ -274,9 +264,7 @@
     },
     "/v2/oauth/user/memberships": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve User Memberships",
         "description": "Retrieve memberships possessed by the currently authenticated user as it relates to the company selling access to the specific software.",
         "operationId": "oauth_user_memberships",
@@ -346,9 +334,7 @@
     },
     "/v2/oauth/company/plans/{id}": {
       "post": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Update a plan using an experience access token",
         "description": "Update a plan using an experience access token",
         "operationId": "oauth_update_company_plan",
@@ -405,11 +391,9 @@
     },
     "/v2/oauth/company/products/{id}": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve a Product",
-        "description": "Returns a specific Product, using its unique ID. Products represent what the customer has purchased from your company. Therefore, the Product can be used to provide context to the user (and your application) on what they have purchased.",
+        "description": "Returns a specific Product, using its unique ID.",
         "operationId": "oauth_retrieve_product",
         "parameters": [
           {
@@ -447,9 +431,7 @@
     },
     "/v2/oauth/company/products": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve Company Products",
         "description": "Retrieves a list of product objects from the company using your software",
         "operationId": "oauth_company_products",
@@ -489,12 +471,7 @@
             "description": "The visibility of the Product",
             "schema": {
               "type": "string",
-              "enum": [
-                "visible",
-                "hidden",
-                "archived",
-                "quick_link"
-              ]
+              "enum": ["visible", "hidden", "archived", "quick_link"]
             }
           }
         ],
@@ -526,9 +503,7 @@
     },
     "/v2/oauth/company": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve Company",
         "description": "Retrieves the company object that is selling the software. For example, if the company is \"Larry's Newsletters\" and your software is a newsletter software, you can use this endpoint to pull attributes like company image, company description, etc from Larry's Newsletters.",
         "operationId": "oauth_company_retrieve",
@@ -559,9 +534,7 @@
     },
     "/v2/oauth/company/experiences": {
       "get": {
-        "tags": [
-          "OAuth"
-        ],
+        "tags": ["OAuth"],
         "summary": "Retrieve Company Experiences",
         "description": "Retrieves a list of experience objects from the company using your software.",
         "operationId": "oauth_company_experiences",
@@ -623,11 +596,9 @@
     },
     "/v2/products": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "List Products",
-        "description": "Returns a collection of Products, based on the supplied filters. If no filters are applied, all products (regardless of their currently availability) are accessible from this endpoint.",
+        "description": "Returns a collection of Products, based on the supplied filters.",
         "operationId": "list_products",
         "parameters": [
           {
@@ -664,12 +635,7 @@
             "description": "The visibility of the Product",
             "schema": {
               "type": "string",
-              "enum": [
-                "visible",
-                "hidden",
-                "archived",
-                "quick_link"
-              ]
+              "enum": ["visible", "hidden", "archived", "quick_link"]
             }
           },
           {
@@ -682,10 +648,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "experiences",
-                  "plans"
-                ]
+                "enum": ["experiences", "plans"]
               }
             }
           }
@@ -718,11 +681,9 @@
     },
     "/v2/products/{id}": {
       "get": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Retrieve a Product",
-        "description": "Returns a specific Product, using its unique ID. Products represent what the customer has purchased from your company. Therefore, the Product can be used to provide context to the user (and your application) on what they have purchased.",
+        "description": "Returns a specific Product, using its unique ID.",
         "operationId": "retrieve_product",
         "parameters": [
           {
@@ -752,10 +713,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "experiences",
-                  "plans"
-                ]
+                "enum": ["experiences", "plans"]
               }
             }
           }
@@ -775,9 +733,7 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "summary": "Update a Product",
         "description": "Update a Product's attributes, using its unique ID. Keep in mind, any changes made to the pass will be reflected on the User's account.",
         "operationId": "update_product",
@@ -809,10 +765,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "experiences",
-                  "plans"
-                ]
+                "enum": ["experiences", "plans"]
               }
             }
           }
@@ -930,11 +883,9 @@
     },
     "/v2/plans": {
       "get": {
-        "tags": [
-          "Plans"
-        ],
+        "tags": ["Plans"],
         "summary": "List Plans",
-        "description": "Returns a collection of Plans, based on the supplied filters. If no filters are applied, all plans (regardless of their currently availability) are accessible from this endpoint. Plans represent a pricing and release method configuration used to purchase a Product. Creating multiple Plans can be useful for offering different billing periods, discounts for certain user groups, and tracking specific releases.",
+        "description": "Returns a collection of Plans, based on the supplied filters. Plans represent a pricing and release method configuration used to purchase a Product.",
         "operationId": "list_plans",
         "parameters": [
           {
@@ -971,12 +922,7 @@
             "description": "The level of visibility of the Plan",
             "schema": {
               "type": "string",
-              "enum": [
-                "visible",
-                "hidden",
-                "archived",
-                "quick_link"
-              ]
+              "enum": ["visible", "hidden", "archived", "quick_link"]
             }
           },
           {
@@ -1005,9 +951,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -1038,9 +982,7 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Plans"
-        ],
+        "tags": ["Plans"],
         "summary": "Create a plan",
         "description": "Create a plan",
         "operationId": "create_plan",
@@ -1063,9 +1005,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -1098,11 +1038,9 @@
     },
     "/v2/plans/{id}": {
       "get": {
-        "tags": [
-          "Plans"
-        ],
+        "tags": ["Plans"],
         "summary": "Retrieve a Plan",
-        "description": "Returns a specific Plan, using its unique ID. Plans represent a pricing and release method configuration used to purchase a Product. Creating multiple Plans can be useful for offering different billing periods, discounts for certain user groups, or tracking specific releases.",
+        "description": "Returns a specific Plan, using its unique ID. Plans represent a pricing and release method configuration used to purchase a Product.",
         "operationId": "retrieve_plan",
         "parameters": [
           {
@@ -1132,9 +1070,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -1154,9 +1090,7 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Plans"
-        ],
+        "tags": ["Plans"],
         "summary": "Update a Plan",
         "description": "Updates a plans information/options",
         "operationId": "update_plan",
@@ -1213,9 +1147,7 @@
     },
     "/v2/plans/{mimic_plan_id}/create_quick_link": {
       "post": {
-        "tags": [
-          "Plans"
-        ],
+        "tags": ["Plans"],
         "summary": "Create a quick link",
         "description": "Create a quick link (or release link) for a plan. This will copy over all data from an existing plan and make a new plan with the same data that can be used as a one-time release link. You can change the stock and metadata on the new plan.",
         "operationId": "create_quick_link",
@@ -1247,9 +1179,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -1282,11 +1212,9 @@
     },
     "/v2/memberships": {
       "get": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "List Memberships",
-        "description": "Returns a collection of Memberships, based on the supplied filters. A Membership represents an instance of a User purchasing a Product. If a Membership is valid, the User has/should have access to the Experiences associated with the Product. If a Membership is invalid, the User will/should have their Product's Experiences unfulfilled. By default, results are returned 10 objects at a time.",
+        "description": "Returns a collection of Memberships, based on the supplied filters. If a Membership is valid, the User has/should have access to the Experiences associated with the Product. If a Membership is invalid, the User will/should have their Product's Experiences unfulfilled. By default, results are returned 10 objects at a time.",
         "operationId": "list_memberships",
         "parameters": [
           {
@@ -1400,6 +1328,16 @@
             }
           },
           {
+            "name": "direction",
+            "in": "query",
+            "description": "The direction to order the results by. Either 'desc' or 'asc'. Default is 'desc'.",
+            "schema": {
+              "type": "string",
+              "default": "desc",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
             "name": "expand",
             "in": "query",
             "description": "Whether or not to expand the User, Plan, Product, or Promo Code on the returned Membership(s). Pass an array with each object(s) you want to expand, e.g. `[product, plan, user, promo_code]`",
@@ -1409,12 +1347,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1447,11 +1380,9 @@
     },
     "/v2/memberships/{id}": {
       "get": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "Retrieve a Membership",
-        "description": "Returns a specific Membership, using its unique ID. A Membership represents an instance of a User purchasing a Product. If a Membership is valid, the User has/should have access to the Experiences associated with the Product. If a Membership is invalid, the User will/should have their Product's Experiences unfulfilled.",
+        "description": "Returns a specific Membership, using its unique ID. A Membership represents an instance of a User purchasing a Product.",
         "operationId": "retrieve_membership",
         "parameters": [
           {
@@ -1481,12 +1412,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1506,11 +1432,9 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "Update a Membership",
-        "description": "Use the update license endpoint to add metadata like hwid to an instance of the License. This can help you track things like user preferences and the device a user is using your software from.",
+        "description": "Use the update license endpoint to add metadata like hwid to an instance of the License.",
         "operationId": "update_membership",
         "parameters": [
           {
@@ -1540,12 +1464,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1578,11 +1497,9 @@
     },
     "/v2/memberships/{id}/add_free_days": {
       "post": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "Add Free Days to a Membership",
-        "description": "Extend a Membership's next renewal date or expiration date by a specified number of days. This is especially useful for promotions or to drive user engagement. Once the Membership's updated renewal/expiration date has been reached, it will renew or expire as normal.",
+        "description": "Extend a Membership's next renewal date or expiration date by a specified number of days. Once the Membership's updated renewal/expiration date has been reached, it will renew or expire as normal.",
         "operationId": "add_free_days_membership",
         "parameters": [
           {
@@ -1612,12 +1529,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1650,9 +1562,7 @@
     },
     "/v2/memberships/{id}/terminate": {
       "post": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "Terminate a Membership",
         "description": "Terminates a specific Membership, using its unique ID. It will immediately invalidate the Membership, and the User will/should have their Product's Experiences unfulfilled. Termination is irreversible, so a User will have to re-purchase if they wish to continue their access.",
         "operationId": "terminate_membership",
@@ -1684,12 +1594,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1711,9 +1616,7 @@
     },
     "/v2/memberships/{id}/cancel": {
       "post": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "Cancel a Membership",
         "description": "Cancels a specific Membership, using its unique ID. It will set the Membership to cancel at period end.",
         "operationId": "cancel_membership",
@@ -1745,12 +1648,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1772,9 +1670,7 @@
     },
     "/v2/memberships/{id}/validate_license": {
       "post": {
-        "tags": [
-          "Memberships"
-        ],
+        "tags": ["Memberships"],
         "summary": "Validate a License Key",
         "description": "Validate an instance of your software by sending metadata about the user.  For example, by sending metadata containing the HWID of the device most recently logged in,  you can ensure an instance of your software is only being used on one device at a time.",
         "operationId": "validate_license",
@@ -1806,12 +1702,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user",
-                  "plan",
-                  "promo_code"
-                ]
+                "enum": ["product", "user", "plan", "promo_code"]
               }
             }
           }
@@ -1844,11 +1735,9 @@
     },
     "/v2/company": {
       "get": {
-        "tags": [
-          "Companies"
-        ],
+        "tags": ["Companies"],
         "summary": "Retrieve a Company",
-        "description": "Returns the Company that is currently authenticated with the API. In simple terms, a company represents who is selling or offering Memberships. The company is the parent (either directly or indirectly) of all other resources across the API.",
+        "description": "Returns the Company that is attached the the API key.",
         "operationId": "retrieve_company",
         "parameters": [
           {
@@ -1877,11 +1766,9 @@
     },
     "/v2/experiences": {
       "get": {
-        "tags": [
-          "Experiences"
-        ],
+        "tags": ["Experiences"],
         "summary": "List Experiences",
-        "description": "Returns a collection of Experiences, based on the supplied filters. Experiences represent what the customer receives or unlocks when they purchase an Product. Products can have an unlimited number of Experiences, and Experiences can be shared between different products. By default, results are returned 10 objects at a time",
+        "description": "Returns a collection of Experiences, based on the supplied filters. Experiences represent what the customer receives or unlocks when they purchase an Product. By default, results are returned 10 objects at a time",
         "operationId": "list_experiences",
         "parameters": [
           {
@@ -1938,9 +1825,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -1973,11 +1858,9 @@
     },
     "/v2/experiences/{id}": {
       "get": {
-        "tags": [
-          "Experiences"
-        ],
+        "tags": ["Experiences"],
         "summary": "Retrieve an Experience",
-        "description": "Returns a specific Experience, using its unique ID. Experiences represent what the customer receives or unlocks when they purchase a Membership. Products can have an unlimited number of Experiences, and Experiences can be shared between different products.",
+        "description": "Returns a specific Experience, using its unique ID. Experiences represent what the customer receives or unlocks when they purchase a Membership.",
         "operationId": "retrieve_experience",
         "parameters": [
           {
@@ -2007,9 +1890,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -2029,11 +1910,9 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Experiences"
-        ],
+        "tags": ["Experiences"],
         "summary": "Update an Experience",
-        "description": "Returns a specific Experience, using its unique ID. Experiences represent what the customer receives or unlocks when they purchase a Membership. Products can have an unlimited number of Experiences, and Experiences can be shared between different products.",
+        "description": "Returns a specific Experience, using its unique ID. Experiences represent what the customer receives or unlocks when they purchase a Membership.",
         "operationId": "update_experience",
         "parameters": [
           {
@@ -2063,9 +1942,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product"
-                ]
+                "enum": ["product"]
               }
             }
           }
@@ -2096,11 +1973,9 @@
         "x-codegen-request-body-name": "update_experience"
       },
       "delete": {
-        "tags": [
-          "Experiences"
-        ],
+        "tags": ["Experiences"],
         "summary": "Delete an Experience",
-        "description": "Returns a specific Experience, using its unique ID. Experiences represent what the customer receives or unlocks when they purchase a Membership. Products can have an unlimited number of Experiences, and Experiences can be shared between different products.",
+        "description": "Returns a specific Experience, using its unique ID. Experiences represent what the customer receives or unlocks when they purchase a Membership.",
         "operationId": "delete_experience",
         "parameters": [
           {
@@ -2138,11 +2013,9 @@
     },
     "/v2/payments": {
       "get": {
-        "tags": [
-          "Payments"
-        ],
+        "tags": ["Payments"],
         "summary": "List Payments",
-        "description": "Returns a collection of Payments, based on the supplied filters. Payments represent a monetary transaction between a User and a Company. Only Payments with a status of paid have been successfully processed.",
+        "description": "Returns a collection of Payments, based on the supplied filters. Only Payments with a status of paid have been successfully processed.",
         "operationId": "list_payments",
         "parameters": [
           {
@@ -2179,13 +2052,7 @@
             "description": "The status of the Payment",
             "schema": {
               "type": "string",
-              "enum": [
-                "draft",
-                "open",
-                "paid",
-                "uncollectible",
-                "void"
-              ]
+              "enum": ["draft", "open", "paid", "uncollectible", "void"]
             }
           },
           {
@@ -2206,12 +2073,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "membership",
-                  "plan",
-                  "user"
-                ]
+                "enum": ["product", "membership", "plan", "user"]
               }
             }
           }
@@ -2244,11 +2106,9 @@
     },
     "/v2/payments/{id}": {
       "get": {
-        "tags": [
-          "Payments"
-        ],
+        "tags": ["Payments"],
         "summary": "Retrieve a Payment",
-        "description": "Returns a specific Payment, using its unique ID. Payments represent a monetary transaction between a User and a Company. Only Payments with a status of paid have been successfully processed.",
+        "description": "Returns a specific Payment, using its unique ID. Only Payments with a status of paid have been successfully processed.",
         "operationId": "retrieve_payment",
         "parameters": [
           {
@@ -2278,12 +2138,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "membership",
-                  "plan",
-                  "user"
-                ]
+                "enum": ["product", "membership", "plan", "user"]
               }
             }
           }
@@ -2305,11 +2160,9 @@
     },
     "/v2/checkout_sessions": {
       "get": {
-        "tags": [
-          "Checkout Sessions"
-        ],
+        "tags": ["Checkout Sessions"],
         "summary": "List Checkout Sessions",
-        "description": "Returns a collection of Checkout Sessions, based on the supplied filters. A Checkout Session allows specific data to be attached to a Membership upon purchase and customization of the checkout experience. By default, results are returned 10 objects at a time.",
+        "description": "Returns a collection of Checkout Sessions, based on the supplied filters. By default, results are returned 10 objects at a time.",
         "operationId": "list_checkout_sessions",
         "parameters": [
           {
@@ -2375,9 +2228,7 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Checkout Sessions"
-        ],
+        "tags": ["Checkout Sessions"],
         "summary": "Create a Checkout Session",
         "description": "Creates a new Checkout Session. A Checkout Session allows specific data to be attached to a Membership upon purchase and customization of the checkout experience.",
         "operationId": "create_checkout_session",
@@ -2419,11 +2270,9 @@
     },
     "/v2/checkout_sessions/{id}": {
       "get": {
-        "tags": [
-          "Checkout Sessions"
-        ],
+        "tags": ["Checkout Sessions"],
         "summary": "Retrieve a Checkout Session",
-        "description": "Returns a collection of Checkout Sessions, based on the supplied filters. A Checkout Session allows specific data to be attached to a Membership upon purchase and customization of the checkout experience. By default, results are returned 10 objects at a time.",
+        "description": "Returns a collection of Checkout Sessions, based on the supplied filters. By default, results are returned 10 objects at a time.",
         "operationId": "retrieve_checkout_session",
         "parameters": [
           {
@@ -2459,9 +2308,7 @@
         "deprecated": false
       },
       "delete": {
-        "tags": [
-          "Checkout Sessions"
-        ],
+        "tags": ["Checkout Sessions"],
         "summary": "Delete a Checkout Session",
         "description": "Deletes a specific Checkout Session, using its unique ID.",
         "operationId": "delete_checkout_session",
@@ -2501,9 +2348,7 @@
     },
     "/v2/members": {
       "get": {
-        "tags": [
-          "Members"
-        ],
+        "tags": ["Members"],
         "summary": "List Members",
         "description": "Returns a list of all your members. Members are users who have a currently active membership.",
         "operationId": "list_members",
@@ -2565,9 +2410,7 @@
     },
     "/v2/members/{search}": {
       "get": {
-        "tags": [
-          "Members"
-        ],
+        "tags": ["Members"],
         "summary": "Retrieve Member",
         "description": "Retrieves a member",
         "operationId": "retrieve_member",
@@ -2607,9 +2450,7 @@
     },
     "/v2/customers": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "List Customers",
         "description": "Returns a list of all your members. Members are users who have a currently active membership.",
         "operationId": "list_customers",
@@ -2671,9 +2512,7 @@
     },
     "/v2/customers/{search}": {
       "get": {
-        "tags": [
-          "Customers"
-        ],
+        "tags": ["Customers"],
         "summary": "Retrieve Customer",
         "description": "Retrieves a member",
         "operationId": "retrieve_customer",
@@ -2713,9 +2552,7 @@
     },
     "/v2/promo_codes": {
       "get": {
-        "tags": [
-          "Promo Codes"
-        ],
+        "tags": ["Promo Codes"],
         "summary": "List Promo Codes",
         "description": "List all promo codes.",
         "operationId": "list_promo_codes",
@@ -2754,11 +2591,7 @@
             "description": "Indicates if the Promo Code is live, disabled, or archived.",
             "schema": {
               "type": "string",
-              "enum": [
-                "active",
-                "inactive",
-                "archived"
-              ]
+              "enum": ["active", "inactive", "archived"]
             }
           },
           {
@@ -2771,10 +2604,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "plans",
-                  "promo_code"
-                ]
+                "enum": ["plans", "promo_code"]
               }
             }
           }
@@ -2805,11 +2635,9 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Promo Codes"
-        ],
+        "tags": ["Promo Codes"],
         "summary": "Create a promo code",
-        "description": "Creates a new promo code with the given parameters. A promo code can offer a discount or a free period for a specific set of plans or for all plans in your company. The promo code can be applied to either new users only or all users, and can be limited to a specific number of uses or have unlimited uses. If an expiration date is specified, the promo code will no longer be redeemable after that date.",
+        "description": "Creates a new promo code with the given parameters. A promo code can offer a discount or a free period for a specific set of plans or for all plans in your company.",
         "operationId": "create_promo_code",
         "parameters": [
           {
@@ -2830,10 +2658,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "plans",
-                  "promo_code"
-                ]
+                "enum": ["plans", "promo_code"]
               }
             }
           }
@@ -2866,9 +2691,7 @@
     },
     "/v2/promo_codes/{id}": {
       "get": {
-        "tags": [
-          "Promo Codes"
-        ],
+        "tags": ["Promo Codes"],
         "summary": "Retrieve a promo code",
         "description": "Retrieve a promo code",
         "operationId": "retrieve_promo_code",
@@ -2900,10 +2723,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "plans",
-                  "promo_code"
-                ]
+                "enum": ["plans", "promo_code"]
               }
             }
           }
@@ -2923,10 +2743,8 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Promo Codes"
-        ],
-        "summary": "Updates a promo code",
+        "tags": ["Promo Codes"],
+        "summary": "Update a promo code",
         "description": "Update a promo code's applicable plans",
         "operationId": "update_promo_code",
         "parameters": [
@@ -2957,10 +2775,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "plans",
-                  "promo_code"
-                ]
+                "enum": ["plans", "promo_code"]
               }
             }
           }
@@ -2977,7 +2792,7 @@
         },
         "responses": {
           "201": {
-            "description": "Updates a promo code",
+            "description": "Update a promo code",
             "content": {
               "application/json": {
                 "schema": {
@@ -2991,9 +2806,7 @@
         "x-codegen-request-body-name": "update_promo_code"
       },
       "delete": {
-        "tags": [
-          "Promo Codes"
-        ],
+        "tags": ["Promo Codes"],
         "summary": "Delete a promo code",
         "description": "Delete a promo code. You can only delete a promo code that has not been used yet. We recommend using the update endpoint and setting its status to 'archived' over this.",
         "operationId": "delete_promo_code",
@@ -3033,9 +2846,7 @@
     },
     "/v2/webhooks": {
       "get": {
-        "tags": [
-          "Webhooks"
-        ],
+        "tags": ["Webhooks"],
         "summary": "List Webhooks",
         "description": "List all Webhook URLs",
         "operationId": "list_webhooks",
@@ -3103,9 +2914,7 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Webhooks"
-        ],
+        "tags": ["Webhooks"],
         "summary": "Create a Webhook",
         "description": "Add a new Webhook URL",
         "operationId": "create_webhook",
@@ -3147,9 +2956,7 @@
     },
     "/v2/webhooks/{id}": {
       "get": {
-        "tags": [
-          "Webhooks"
-        ],
+        "tags": ["Webhooks"],
         "summary": "Retrieve a Webhook",
         "description": "Retrieve a specific Webhook URL",
         "operationId": "retrieve_webhook",
@@ -3187,10 +2994,8 @@
         "deprecated": false
       },
       "post": {
-        "tags": [
-          "Webhooks"
-        ],
-        "summary": "Update an Webhook",
+        "tags": ["Webhooks"],
+        "summary": "Update a Webhook",
         "description": "Retrieve a specific Webhook URL",
         "operationId": "update_webhook",
         "parameters": [
@@ -3224,7 +3029,7 @@
         },
         "responses": {
           "201": {
-            "description": "Update an Webhook",
+            "description": "Update a Webhook",
             "content": {
               "application/json": {
                 "schema": {
@@ -3238,9 +3043,7 @@
         "x-codegen-request-body-name": "update_webhook"
       },
       "delete": {
-        "tags": [
-          "Webhooks"
-        ],
+        "tags": ["Webhooks"],
         "summary": "Delete a Webhook",
         "description": "Delete a specific Webhook URL",
         "operationId": "delete_webhook",
@@ -3280,9 +3083,7 @@
     },
     "/v2/reviews": {
       "get": {
-        "tags": [
-          "Reviews"
-        ],
+        "tags": ["Reviews"],
         "summary": "List Reviews",
         "description": "Returns a list of all your reviews. Can be searched by User or by Product",
         "operationId": "list_reviews",
@@ -3349,10 +3150,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user"
-                ]
+                "enum": ["product", "user"]
               }
             }
           }
@@ -3385,9 +3183,7 @@
     },
     "/v2/reviews/{id}": {
       "get": {
-        "tags": [
-          "Reviews"
-        ],
+        "tags": ["Reviews"],
         "summary": "Retrieve a review",
         "description": "Retrieves a specific Review, using its unique ID.",
         "operationId": "retrieve_review",
@@ -3419,10 +3215,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "product",
-                  "user"
-                ]
+                "enum": ["product", "user"]
               }
             }
           }
@@ -3509,11 +3302,7 @@
           "role": {
             "type": "string",
             "description": "The Member's permission level",
-            "enum": [
-              "owner",
-              "admin",
-              "moderator"
-            ]
+            "enum": ["owner", "admin", "moderator"]
           },
           "permission_level": {
             "type": "string",
@@ -3620,12 +3409,7 @@
           "visibility": {
             "type": "string",
             "description": "The visibility of the Product",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "created_at": {
             "type": "integer",
@@ -3671,12 +3455,7 @@
           "visibility": {
             "type": "string",
             "description": "The level of visibility of the Plan",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "billing_period": {
             "type": "integer",
@@ -3766,12 +3545,7 @@
           "visibility": {
             "type": "string",
             "description": "The visibility of the Product",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "created_at": {
             "type": "integer",
@@ -3860,13 +3634,7 @@
           "payment_processor": {
             "type": "string",
             "description": "The payment processor used to pay for the Membership.",
-            "enum": [
-              "free",
-              "stripe",
-              "coinbase",
-              "crypto",
-              "paypal"
-            ]
+            "enum": ["free", "stripe", "coinbase", "crypto", "paypal"]
           },
           "license_key": {
             "type": "string",
@@ -4021,19 +3789,12 @@
           "promo_type": {
             "type": "string",
             "description": "Whether the Promo Code is a percentage or flat amount off.",
-            "enum": [
-              "percentage",
-              "flat_amount"
-            ]
+            "enum": ["percentage", "flat_amount"]
           },
           "status": {
             "type": "string",
             "description": "Indicates if the Promo Code is live, disabled, or archived.",
-            "enum": [
-              "active",
-              "inactive",
-              "archived"
-            ]
+            "enum": ["active", "inactive", "archived"]
           },
           "stock": {
             "type": "integer",
@@ -4067,11 +3828,7 @@
           "duration": {
             "type": "string",
             "description": "The duration setting for the promo code.",
-            "enum": [
-              "forever",
-              "once",
-              "repeating"
-            ]
+            "enum": ["forever", "once", "repeating"]
           },
           "existing_memberships_only": {
             "type": "boolean",
@@ -4151,12 +3908,7 @@
           "visibility": {
             "type": "string",
             "description": "The level of visibility of the Plan",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "allow_multiple_quantity": {
             "type": "boolean",
@@ -4251,12 +4003,7 @@
           "visibility": {
             "type": "string",
             "description": "The visibility of the Product",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "shuffleable": {
             "type": "boolean",
@@ -4297,10 +4044,7 @@
             "type": "string",
             "description": "Whether the Plan is a renewal or one-time purchase",
             "default": "one_time",
-            "enum": [
-              "renewal",
-              "one_time"
-            ]
+            "enum": ["renewal", "one_time"]
           },
           "allow_multiple_quantity": {
             "type": "boolean",
@@ -4396,11 +4140,7 @@
           "release_method": {
             "type": "string",
             "description": "The method the customer will use to gain access to this Plan's Product",
-            "enum": [
-              "buy_now",
-              "waitlist",
-              "raffle"
-            ]
+            "enum": ["buy_now", "waitlist", "raffle"]
           },
           "release_method_settings": {
             "type": "object",
@@ -4438,12 +4178,7 @@
           "visibility": {
             "type": "string",
             "description": "The level of visibility of the Plan",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "metadata": {
             "type": "object",
@@ -4507,12 +4242,7 @@
           "visibility": {
             "type": "string",
             "description": "The level of visibility of the Plan",
-            "enum": [
-              "visible",
-              "hidden",
-              "archived",
-              "quick_link"
-            ]
+            "enum": ["visible", "hidden", "archived", "quick_link"]
           },
           "allow_multiple_quantity": {
             "type": "boolean",
@@ -4582,9 +4312,7 @@
         "description": "Update a Plan"
       },
       "add_free_days_membership": {
-        "required": [
-          "days"
-        ],
+        "required": ["days"],
         "type": "object",
         "properties": {
           "days": {
@@ -4596,9 +4324,7 @@
         "description": "Add Free Days"
       },
       "update_membership": {
-        "required": [
-          "metadata"
-        ],
+        "required": ["metadata"],
         "type": "object",
         "properties": {
           "metadata": {
@@ -4610,9 +4336,7 @@
         "description": "Update a Membership"
       },
       "validate_license": {
-        "required": [
-          "metadata"
-        ],
+        "required": ["metadata"],
         "type": "object",
         "properties": {
           "metadata": {
@@ -4624,9 +4348,7 @@
         "description": "Validate a membership's license key"
       },
       "update_experience": {
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "type": "object",
         "properties": {
           "name": {
@@ -4772,9 +4494,7 @@
         "description": "CheckoutSession model"
       },
       "create_checkout_session": {
-        "required": [
-          "plan_id"
-        ],
+        "required": ["plan_id"],
         "type": "object",
         "properties": {
           "plan_id": {
@@ -4798,12 +4518,7 @@
         "description": "Create a Checkout Session"
       },
       "create_promo_code": {
-        "required": [
-          "amount_off",
-          "base_currency",
-          "code",
-          "promo_type"
-        ],
+        "required": ["amount_off", "base_currency", "code", "promo_type"],
         "type": "object",
         "properties": {
           "amount_off": {
@@ -4850,10 +4565,7 @@
           "promo_type": {
             "type": "string",
             "description": "Whether the Promo Code is a percentage or flat amount off.",
-            "enum": [
-              "percentage",
-              "flat_amount"
-            ]
+            "enum": ["percentage", "flat_amount"]
           },
           "expiration_datetime": {
             "type": "integer",
@@ -4917,11 +4629,7 @@
           "status": {
             "type": "string",
             "description": "Indicates if the Promo Code is live, disabled, or archived.",
-            "enum": [
-              "active",
-              "inactive",
-              "archived"
-            ]
+            "enum": ["active", "inactive", "archived"]
           },
           "metadata": {
             "type": "object",
@@ -4929,7 +4637,7 @@
             "description": "A key value pair of metadata. Whatever you put on here will be assigned to any memberships that are created on this plan"
           }
         },
-        "description": "Updates a promo code"
+        "description": "Update a promo code"
       },
       "Webhook": {
         "type": "object",
@@ -4954,9 +4662,7 @@
         "description": "Webhook model"
       },
       "create_webhook": {
-        "required": [
-          "url"
-        ],
+        "required": ["url"],
         "type": "object",
         "properties": {
           "url": {
@@ -5001,7 +4707,7 @@
             "description": "The URL where new Webhook events will be sent to (e.g. https://website.com/api/whop-webhook)"
           }
         },
-        "description": "Update an Webhook"
+        "description": "Update a Webhook"
       },
       "Review": {
         "type": "object",
