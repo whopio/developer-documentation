@@ -1,0 +1,138 @@
+---
+title: Create an App
+description: "Guide on how to create a Whop App"
+---
+
+In this guide, you will learn how to create a Whop App from scratch, using Next.js.
+
+---
+
+## Creating an app in Whop
+
+[THIS WILL BE A SECTION ON HOW TO CREATE AN APP IN THE DEVELOPER PAGE]
+
+---
+
+## Setting up your environment
+
+This guide uses Next.js, so you will need to setup a Next.js project.
+
+```bash
+yarn create next-app
+```
+
+<Note>
+  This guide uses the [**App Directory**](https://nextjs.org/docs/app), so we
+  recommend you to use the same name for your project.
+</Note>
+
+### Installing the Whop App SDK
+
+We have created our own package to make it easier to integrate Whop into your application. You will need to install the following package:
+
+```bash
+yarn add @whop/app-sdk
+```
+
+<Note>
+  For more information on what the Whop SDK can do, head to [**INSERT LINK
+  HERE**]
+</Note>
+
+### Installing Frosted UI (Optional)
+
+[**Frosted UI**](https://storybook.whop.com) is a UI library created by Whop, it contains all the components used to build [**Whop**](https://whop.com). Although it is not required, we recommend you use it to keep the same look and feel as Whop.
+
+```bash
+yarn add @whop/frosted-ui
+```
+
+### Environment Variables
+
+For the Whop SDK to work, you will need to add the following environment variables:
+
+- `WHOP_JWK_PK`: Public key used to verify JWTs. Encoded as a **JWK**. Exposed publicly on the [**Whop Dashboard**](https://dash.whop.com/settings/developer). TODO: actually expose this on the dashboard.
+- `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
+- `WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+
+<Note>
+  When deploying your app, make sure these **are not hard-coded**. We recommend
+  you use `.env.local` and to add it to your `.gitignore` file. This will
+  prevent you from accidentally exposing your keys.
+</Note>
+
+---
+
+## Setting up your pages
+
+Once you have got the project created and the preresiquites installed, you can start creating your pages.
+
+---
+
+### Page Variables
+
+To get context about the current company, and experience, these will be defined in the URL. For example:
+
+```
+https://domain.com/${company_id}/${experience_id}/hub
+```
+
+Currently, there are 3 variables that you can use:
+
+- `experienceId` - The ID of the current experience
+- `companyId` - The ID of the current company
+- `membershipId` - The ID of the current membership (only available on the consumers view)
+
+We need to set these variables in our paths on the settings page, you can do it like this:
+
+![Imgur](https://i.imgur.com/TB1Q8ja.png)
+
+<Note>
+  Make sure all variable names are formatted correctly. They should be pre-fixed
+  with `$`
+</Note>
+
+If you are using the App Directory, your project should like this:
+
+```bash
+cool-app/
+├─ app/
+│  ├─ admin/
+│  │  ├─ [companyId]/
+│  │  │  ├─ [experienceId]/
+│  │  │  │  ├─ page.tsx
+```
+
+<Note>In this example, we are using the Admin/Merchant view.</Note>
+
+---
+
+#### Accessing the variables in Next.js
+
+```typescript
+import { PageProps } from "@local/shared/src/utils/page-props";
+
+export default async function AdminPage({
+  params,
+}: PageProps<["companyId", "experienceId"]>) {
+  const companyId = params.companyId;
+  const experienceId = params.experienceId;
+}
+```
+
+---
+
+### Authenticating a user
+
+To ensure that the user is authenticated, we can add the following line of code:
+
+```typescript
+import { headers } from "next/headers";
+import { validateToken } from "@whop-apps/sdk/src/auth";
+
+export default async function AdminPage() {
+  await validateToken({ headers });
+}
+```
+
+This will validate the users token, and throw an error if the token is invalid.

@@ -161,7 +161,7 @@
       "pages": [
         "api-reference/promo-codes/list-promo-codes",
         "api-reference/promo-codes/retrieve-a-promo-code",
-        "api-reference/promo-codes/updates-a-promo-code",
+        "api-reference/promo-codes/update-a-promo-code",
         "api-reference/promo-codes/create-a-promo-code",
         "api-reference/promo-codes/delete-a-promo-code"
       ]
@@ -179,7 +179,7 @@
         "api-reference/webhooks/list-webhooks",
         "api-reference/webhooks/retrieve-a-webhook",
         "api-reference/webhooks/create-a-webhook",
-        "api-reference/webhooks/update-an-webhook",
+        "api-reference/webhooks/update-a-webhook",
         "api-reference/webhooks/delete-a-webhook"
       ]
     }
