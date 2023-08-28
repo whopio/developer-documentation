@@ -26,6 +26,8 @@ yarn create next-app
   recommend you to use the same name for your project.
 </Note>
 
+---
+
 ### Installing the Whop App SDK
 
 We have created our own package to make it easier to integrate Whop into your application. You will need to install the following package:
@@ -39,6 +41,8 @@ yarn add @whop/app-sdk
   HERE**]
 </Note>
 
+---
+
 ### Installing Frosted UI (Optional)
 
 [**Frosted UI**](https://storybook.whop.com) is a UI library created by Whop, it contains all the components used to build [**Whop**](https://whop.com). Although it is not required, we recommend you use it to keep the same look and feel as Whop.
@@ -46,6 +50,13 @@ yarn add @whop/app-sdk
 ```bash
 yarn add @whop/frosted-ui
 ```
+
+<Note>
+  We recommend using Frosted as it will sync color preferences with the user's
+  Whop preference.
+</Note>
+
+---
 
 ### Environment Variables
 
@@ -83,7 +94,7 @@ Currently, there are 3 variables that you can use:
 - `companyId` - The ID of the current company
 - `membershipId` - The ID of the current membership (only available on the consumers view)
 
-We need to set these variables in our paths on the settings page, you can do it like this:
+This path needs to be set in the Apps settings, you can do so [**here**](https://dash.whop.com/settings/developer):
 
 ![Imgur](https://i.imgur.com/TB1Q8ja.png)
 
@@ -92,7 +103,7 @@ We need to set these variables in our paths on the settings page, you can do it 
   with `$`
 </Note>
 
-If you are using the App Directory, your project should like this:
+Using the above example, the file structure would look like this:
 
 ```bash
 cool-app/
@@ -102,8 +113,6 @@ cool-app/
 │  │  │  ├─ [experienceId]/
 │  │  │  │  ├─ page.tsx
 ```
-
-<Note>In this example, we are using the Admin/Merchant view.</Note>
 
 ---
 
