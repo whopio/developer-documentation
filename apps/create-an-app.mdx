@@ -51,10 +51,10 @@ yarn add @whop/app-sdk
 yarn add @whop/frosted-ui
 ```
 
-<Note>
+<Tip>
   We recommend using Frosted as it will sync color preferences with the user's
   Whop preference.
-</Note>
+</Tip>
 
 ---
 
@@ -82,26 +82,26 @@ Once you have got the project created and the preresiquites installed, you can s
 
 ### Page Variables
 
-To get context about the current company, and experience, these will be defined in the URL. For example:
+You will need context about the **current company** and **experience ID**, this ensures that your app is **scoped** to the correct company and experience. These get passed as a **page prop**, defined dynamically in the URL. For example:
 
 ```
-https://domain.com/${company_id}/${experience_id}/hub
+https://domain.com/admin/${company_id}/${experience_id}/
 ```
 
-Currently, there are 3 variables that you can use:
+Currently, there are **3 variables** that you can use:
 
 - `experienceId` - The ID of the current experience
 - `companyId` - The ID of the current company
 - `membershipId` - The ID of the current membership (only available on the consumers view)
 
-This path needs to be set in the Apps settings, you can do so [**here**](https://dash.whop.com/settings/developer):
+This path needs to be set in the **Apps settings**, you can do so [**here**](https://dash.whop.com/settings/developer):
 
-![Imgur](https://i.imgur.com/TB1Q8ja.png)
-
-<Note>
-  Make sure all variable names are formatted correctly. They should be pre-fixed
-  with `$`
-</Note>
+<Frame
+  caption="Make sure all variable names are formatted correctly. They should be pre-fixed
+  with `$`"
+>
+  <img src="https://i.imgur.com/TB1Q8ja.png" />
+</Frame>
 
 Using the above example, the file structure would look like this:
 
