@@ -33,7 +33,7 @@ yarn create next-app
 We have created our own package to make it easier to integrate Whop into your application. You will need to install the following package:
 
 ```bash
-yarn add @whop-apps/core @whop-apps/auth
+yarn add @whop-apps/sdk
 ```
 
 <Note>
@@ -139,7 +139,7 @@ To ensure that the user is authenticated, we can add the following line of code:
 
 ```typescript
 import { headers } from "next/headers";
-import { validateToken } from "@whop-apps/auth";
+import { validateToken } from "@whop-apps/sdk";
 
 export default async function AdminPage() {
   await validateToken({ headers });
