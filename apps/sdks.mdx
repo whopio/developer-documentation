@@ -1,51 +1,39 @@
 ---
 title: App SDKs
-description: "Guide on how to use Whop's App SDKs"
+description: "Guide on how to use Whop's App SDK"
 ---
 
-[INSERT DESCRIPTION]
+## Installation
 
-### SDKs Available:
+<CodeGroup>
 
-- [@whop-apps/core](/sdks)
-- [@whop-apps/api](/sdks)
-- [@whop-apps/auth](/sdks)
-- [@whop-apps/sdk](/sdks)
-- [@whop-apps/iframe](/sdks)
+```bash npm
+npm install @whop-apps/sdk
+```
 
----
+```bash yarn
+yarn add @whop-apps/sdk
+```
 
-## Whop Core SDK
+```bash pnpm
+pnpm add @whop-apps/sdk
+```
 
-<Note>
-  View the NPM package [**here**](https://www.npmjs.com/package/@whop-apps/core)
-</Note>
-
-This SDK will gather all the environment variables and validate them, making them accessible to the other SDKs.
-
-### Required Variables
-
-The following variables are required for the SDK to work properly, otherwise it will throw an error
-
-- `WHOP_JWK_PK`: Public key used to verify JWTs. Encoded as a **JWK**. Exposed publicly on the [**Whop Dashboard**](https://dash.whop.com/settings/developer). TODO: actually expose this on the dashboard.
-- `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
-- `WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+</CodeGroup>
 
 ---
 
-## Whop Auth SDK
+## Usage
 
-<Note>
-  View the NPM package [**here**](https://www.npmjs.com/package/@whop-apps/auth)
-</Note>
+### validateToken
 
-This SDK will handle the authentication of the user. It uses the cookies stored in the request headers to ensure that only authenticated users can access the app.
+For this function, you need to get the user's token from the cookies, it is called `whop_user_token`. If you are using Next.js, you can use the `headers` object from `next/headers`
 
-### Usage
+You should use this on every page that you want to be gated.
 
 ```typescript
 import { headers } from "next/headers";
-import { validateToken } from "@whop-apps/auth";
+import { validateToken } from "@whop-apps/sdk";
 
 export default async function AdminPage() {
   await validateToken({ headers });
@@ -54,12 +42,17 @@ export default async function AdminPage() {
 
 ---
 
-## Whop iFrame SDK
+### getToken
 
-[WAITING TO SYNC WITH JORDAN]
+This function will get the users Whop Token from the headers. You must pass the `headers` object.
+
+```typescript
+import { getToken } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  const token = await getToken({ headers });
+}
+```
 
 ---
-
-## Whop API SDK
-
-[JED BLOCKING UNTIL SWAGGER SPEC COMPLETE]
