@@ -23,7 +23,7 @@ There are over 30 components, you can find more information about them [**here**
 
 - [React](https://react.dev/)
 - [TailwindCSS](https://tailwindcss.com/)
-- [FontAwesome (Free version works)](https://fontawesome.com/)
+- [FontAwesome](https://fontawesome.com/)
 
 ### Installing the package
 
@@ -45,6 +45,10 @@ pnpm add @whop/frosted-ui
 
 ### Configuring your Tailwind Config
 
+<AccordionGroup>
+
+<Accordion title="App Directory">
+
 ```javascript
 import preset from "@whop/frosted-ui/preset";
 
@@ -60,6 +64,28 @@ export const presets = [frostedPreset];
 
 export const plugins = [];
 ```
+
+</Accordion>
+
+<Accordion title="Pages" >
+```javascript
+import preset from '@whop/frosted-ui/preset';
+
+const frostedPreset = preset({
+content: [
+'./pages/**/*.{js,ts,jsx,tsx,mdx}',
+'./components/**/*.{js,ts,jsx,tsx,mdx}',
+],
+});
+
+/\*_ @type {import('tailwindcss').Config} _/
+export const presets = [frostedPreset];
+
+export const plugins = [];
+
+````
+</Accordion>
+</AccordionGroup>
 
 ---
 
@@ -86,7 +112,7 @@ export default function App({ Component, pageProps }: AppProps) {
     </TooltipProvider>
   );
 }
-```
+````
 
 </Accordion>
 
@@ -94,7 +120,21 @@ export default function App({ Component, pageProps }: AppProps) {
 
 When using `pages` in Next.js, you will need to configure your `_app.tsx`
 
-[INSERT APP CONTENT HERE]
+```javascript
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { TooltipProvider, Toaster } from "@whop/frosted-ui";
+import "@whop/frosted-ui/index.css";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <TooltipProvider>
+      <Component {...pageProps} />
+      <Toaster />
+    </TooltipProvider>
+  );
+}
+```
 
 </Accordion>
 
