@@ -33,23 +33,25 @@ yarn create next-app
 We have created our own package to make it easier to integrate Whop into your application. You will need to install the following package:
 
 ```bash
-yarn add @whop/app-sdk
+yarn add @whop-apps/core @whop-apps/auth
 ```
 
 <Note>
-  For more information on what the Whop SDK can do, head to [**INSERT LINK
-  HERE**]
+  For more information on what the Whop SDK can do, head to [**this
+  page**](/apps/sdks).
 </Note>
 
 ---
 
 ### Installing Frosted UI (Optional)
 
-[**Frosted UI**](https://storybook.whop.com) is a UI library created by Whop, it contains all the components used to build [**Whop**](https://whop.com). Although it is not required, we recommend you use it to keep the same look and feel as Whop.
+[**Frosted UI**](https://storybook.whop.com) is a UI library created by Whop, it contains all the components used to build [**Whop**](https://whop.com). Although it is not required, we recommend you use it to keep the same look and feel as the rest of the platform.
 
 ```bash
 yarn add @whop/frosted-ui
 ```
+
+For more information on how to install Frosted UI, click [**here**](/apps/frosted)
 
 <Tip>
   We recommend using Frosted as it will sync color preferences with the user's
@@ -119,11 +121,11 @@ cool-app/
 #### Accessing the variables in Next.js
 
 ```typescript
-import { PageProps } from "@local/shared/src/utils/page-props";
-
 export default async function AdminPage({
   params,
-}: PageProps<["companyId", "experienceId"]>) {
+}: {
+  params: { companyId: string; experienceId: string };
+}) {
   const companyId = params.companyId;
   const experienceId = params.experienceId;
 }
@@ -137,7 +139,7 @@ To ensure that the user is authenticated, we can add the following line of code:
 
 ```typescript
 import { headers } from "next/headers";
-import { validateToken } from "@whop-apps/sdk/src/auth";
+import { validateToken } from "@whop-apps/auth";
 
 export default async function AdminPage() {
   await validateToken({ headers });

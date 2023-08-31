@@ -1,0 +1,65 @@
+---
+title: App SDKs
+description: "Guide on how to use Whop's App SDKs"
+---
+
+[INSERT DESCRIPTION]
+
+### SDKs Available:
+
+- [@whop-apps/core](/sdks)
+- [@whop-apps/api](/sdks)
+- [@whop-apps/auth](/sdks)
+- [@whop-apps/sdk](/sdks)
+- [@whop-apps/iframe](/sdks)
+
+---
+
+## Whop Core SDK
+
+<Note>
+  View the NPM package [**here**](https://www.npmjs.com/package/@whop-apps/core)
+</Note>
+
+This SDK will gather all the environment variables and validate them, making them accessible to the other SDKs.
+
+### Required Variables
+
+The following variables are required for the SDK to work properly, otherwise it will throw an error
+
+- `WHOP_JWK_PK`: Public key used to verify JWTs. Encoded as a **JWK**. Exposed publicly on the [**Whop Dashboard**](https://dash.whop.com/settings/developer). TODO: actually expose this on the dashboard.
+- `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
+- `WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+
+---
+
+## Whop Auth SDK
+
+<Note>
+  View the NPM package [**here**](https://www.npmjs.com/package/@whop-apps/auth)
+</Note>
+
+This SDK will handle the authentication of the user. It uses the cookies stored in the request headers to ensure that only authenticated users can access the app.
+
+### Usage
+
+```typescript
+import { headers } from "next/headers";
+import { validateToken } from "@whop-apps/auth";
+
+export default async function AdminPage() {
+  await validateToken({ headers });
+}
+```
+
+---
+
+## Whop iFrame SDK
+
+[WAITING TO SYNC WITH JORDAN]
+
+---
+
+## Whop API SDK
+
+[JED BLOCKING UNTIL SWAGGER SPEC COMPLETE]
