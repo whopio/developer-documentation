@@ -1,4 +1,4 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
   title: Whop API (params in:body)
   description: |
@@ -6,301 +6,306 @@ info:
     <p>Another API description</p>
   version: v5
   x-copyright: null
-basePath: /
-consumes:
-  - application/json
+servers:
+  - url: localhost:3000/
 paths:
   /api/v5/companies/{id}:
     get:
       tags:
         - companies
-      consumes:
-        - application/json
       operationId: get_api_v5_companies_id
       summary: Retrieve Company Information
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                description: The ID of the Company, which will look like biz_*************
-              created_at:
-                type: number
-                description: The date the company was created
-              title:
-                type: string
-                description: The title of the company
-              image_url:
-                type: string
-                description: The URL of the company's image
-              authorized_user:
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
                   id:
                     type: string
-                    description: The ID of the user, which will look like user_*************
-                  name:
+                    description: The ID of the Company, which will look like biz_*************
+                  created_at:
+                    type: number
+                    description: The date the company was created
+                  title:
                     type: string
-                    description: The name of the authorized user
-                  email:
+                    description: The title of the company
+                  image_url:
                     type: string
-                    description: The email of the authorized user
-                  role:
-                    type: string
-                    description: The role of the user
+                    description: The URL of the company's image
+                  authorized_user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The ID of the user, which will look like user_*************
+                      name:
+                        type: string
+                        description: The name of the authorized user
+                      email:
+                        type: string
+                        description: The email of the authorized user
+                      role:
+                        type: string
+                        description: The role of the user
+                    additionalProperties: false
+                    required:
+                      - id
+                      - name
+                      - email
+                      - role
                 additionalProperties: false
                 required:
                   - id
-                  - name
-                  - email
-                  - role
-            additionalProperties: false
-            required:
-              - id
-              - created_at
-              - title
-              - image_url
+                  - created_at
+                  - title
+                  - image_url
       description: Returns information about the company
   /api/v5/companies/{id}/experiences:
     get:
       tags:
         - companies
-      consumes:
-        - application/json
       operationId: get_api_v5_companies_id_experiences
       summary: Retrieve a companies experiences
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the experience, which will look like exp_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              pagination:
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  current_page:
-                    type: number
-                    description: Current page number
-                  total_pages:
-                    type: number
-                    description: Total number of pages
-                  next_page:
-                    type: number
-                    description: Next page number
-                  prev_page:
-                    type: number
-                    description: Previous page number
-                  total_count:
-                    type: number
-                    description: Total number of records
-                additionalProperties: false
-                required:
-                  - current_page
-                  - total_pages
-                  - next_page
-                  - prev_page
-                  - total_count
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: The ID of the Company, which will look like biz_*************
-                    created_at:
-                      type: number
-                      description: The date the company was created
-                    title:
-                      type: string
-                      description: The title of the company
-                    image_url:
-                      type: string
-                      description: The URL of the company's image
-                    authorized_user:
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: number
+                        description: Current page number
+                      total_pages:
+                        type: number
+                        description: Total number of pages
+                      next_page:
+                        type: number
+                        description: Next page number
+                      prev_page:
+                        type: number
+                        description: Previous page number
+                      total_count:
+                        type: number
+                        description: Total number of records
+                    additionalProperties: false
+                    required:
+                      - current_page
+                      - total_pages
+                      - next_page
+                      - prev_page
+                      - total_count
+                  data:
+                    type: array
+                    items:
                       type: object
                       properties:
                         id:
                           type: string
-                          description: The ID of the user, which will look like user_*************
-                        name:
+                          description: The ID of the Company, which will look like biz_*************
+                        created_at:
+                          type: number
+                          description: The date the company was created
+                        title:
                           type: string
-                          description: The name of the authorized user
-                        email:
+                          description: The title of the company
+                        image_url:
                           type: string
-                          description: The email of the authorized user
-                        role:
-                          type: string
-                          description: The role of the user
+                          description: The URL of the company's image
+                        authorized_user:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: The ID of the user, which will look like user_*************
+                            name:
+                              type: string
+                              description: The name of the authorized user
+                            email:
+                              type: string
+                              description: The email of the authorized user
+                            role:
+                              type: string
+                              description: The role of the user
+                          additionalProperties: false
+                          required:
+                            - id
+                            - name
+                            - email
+                            - role
                       additionalProperties: false
                       required:
                         - id
-                        - name
-                        - email
-                        - role
-                  additionalProperties: false
-                  required:
-                    - id
-                    - created_at
-                    - title
-                    - image_url
-            additionalProperties: false
-            required:
-              - pagination
-              - data
+                        - created_at
+                        - title
+                        - image_url
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
       description: Returns a list of experiences for a company
   /api/v5/users/{id}:
     get:
       tags:
         - users
-      consumes:
-        - application/json
       operationId: get_api_v5_users_id
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the user, which will look like user_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                description: The ID of the user, which will look like user_*************
-              email:
-                type: string
-                description: The email of the user
-              username:
-                type: string
-                description: The name of the user
-              profile_pic_url:
-                type: string
-                description: The URL of the user's profile picture
-            additionalProperties: false
-            required:
-              - id
-              - email
-              - username
-              - profile_pic_url
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the user, which will look like user_*************
+                  email:
+                    type: string
+                    description: The email of the user
+                  username:
+                    type: string
+                    description: The name of the user
+                  profile_pic_url:
+                    type: string
+                    description: The URL of the user's profile picture
+                additionalProperties: false
+                required:
+                  - id
+                  - email
+                  - username
+                  - profile_pic_url
       description: Returns information about the user
   /api/v5/users/{id}/experiences:
     get:
       tags:
         - users
-      consumes:
-        - application/json
       operationId: get_api_v5_users_id_experiences
       summary: Retrieve a users experiences
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the user, which will look like user_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              pagination:
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  current_page:
-                    type: number
-                    description: Current page number
-                  total_pages:
-                    type: number
-                    description: Total number of pages
-                  next_page:
-                    type: number
-                    description: Next page number
-                  prev_page:
-                    type: number
-                    description: Previous page number
-                  total_count:
-                    type: number
-                    description: Total number of records
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: number
+                        description: Current page number
+                      total_pages:
+                        type: number
+                        description: Total number of pages
+                      next_page:
+                        type: number
+                        description: Next page number
+                      prev_page:
+                        type: number
+                        description: Previous page number
+                      total_count:
+                        type: number
+                        description: Total number of records
+                    additionalProperties: false
+                    required:
+                      - current_page
+                      - total_pages
+                      - next_page
+                      - prev_page
+                      - total_count
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the experience, which will look like exp_*************
+                        created_at:
+                          type: number
+                          description: The date the experience was created
+                        name:
+                          type: string
+                          description: The name of the experience
+                        company_id:
+                          type: string
+                          description: The ID of the Company, which will look like biz_*************
+                      additionalProperties: false
+                      required:
+                        - id
+                        - created_at
+                        - name
+                        - company_id
                 additionalProperties: false
                 required:
-                  - current_page
-                  - total_pages
-                  - next_page
-                  - prev_page
-                  - total_count
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: The ID of the experience, which will look like exp_*************
-                    created_at:
-                      type: number
-                      description: The date the experience was created
-                    name:
-                      type: string
-                      description: The name of the experience
-                    company_id:
-                      type: string
-                      description: The ID of the Company, which will look like biz_*************
-                  additionalProperties: false
-                  required:
-                    - id
-                    - created_at
-                    - name
-                    - company_id
-            additionalProperties: false
-            required:
-              - pagination
-              - data
+                  - pagination
+                  - data
       description: Returns a list of experiences for a user
   /api/v5/experiences:
     get:
       tags:
         - experiences
-      consumes:
-        - application/json
       operationId: get_api_v5_experiences
       summary: List Experiences
       parameters:
@@ -308,116 +313,119 @@ paths:
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              pagination:
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  current_page:
-                    type: number
-                    description: Current page number
-                  total_pages:
-                    type: number
-                    description: Total number of pages
-                  next_page:
-                    type: number
-                    description: Next page number
-                  prev_page:
-                    type: number
-                    description: Previous page number
-                  total_count:
-                    type: number
-                    description: Total number of records
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: number
+                        description: Current page number
+                      total_pages:
+                        type: number
+                        description: Total number of pages
+                      next_page:
+                        type: number
+                        description: Next page number
+                      prev_page:
+                        type: number
+                        description: Previous page number
+                      total_count:
+                        type: number
+                        description: Total number of records
+                    additionalProperties: false
+                    required:
+                      - current_page
+                      - total_pages
+                      - next_page
+                      - prev_page
+                      - total_count
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the experience, which will look like exp_*************
+                        created_at:
+                          type: number
+                          description: The date the experience was created
+                        name:
+                          type: string
+                          description: The name of the experience
+                        company_id:
+                          type: string
+                          description: The ID of the Company, which will look like biz_*************
+                      additionalProperties: false
+                      required:
+                        - id
+                        - created_at
+                        - name
+                        - company_id
                 additionalProperties: false
                 required:
-                  - current_page
-                  - total_pages
-                  - next_page
-                  - prev_page
-                  - total_count
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: The ID of the experience, which will look like exp_*************
-                    created_at:
-                      type: number
-                      description: The date the experience was created
-                    name:
-                      type: string
-                      description: The name of the experience
-                    company_id:
-                      type: string
-                      description: The ID of the Company, which will look like biz_*************
-                  additionalProperties: false
-                  required:
-                    - id
-                    - created_at
-                    - name
-                    - company_id
-            additionalProperties: false
-            required:
-              - pagination
-              - data
+                  - pagination
+                  - data
       description: Returns a list of experiences
   /api/v5/experiences/{id}:
     get:
       tags:
         - experiences
-      consumes:
-        - application/json
       operationId: get_api_v5_experiences_id
       summary: Retrieve an experience
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the experience, which will look like exp_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                description: The ID of the experience, which will look like exp_*************
-              created_at:
-                type: number
-                description: The date the experience was created
-              name:
-                type: string
-                description: The name of the experience
-              company_id:
-                type: string
-                description: The ID of the Company, which will look like biz_*************
-            additionalProperties: false
-            required:
-              - id
-              - created_at
-              - name
-              - company_id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the experience, which will look like exp_*************
+                  created_at:
+                    type: number
+                    description: The date the experience was created
+                  name:
+                    type: string
+                    description: The name of the experience
+                  company_id:
+                    type: string
+                    description: The ID of the Company, which will look like biz_*************
+                additionalProperties: false
+                required:
+                  - id
+                  - created_at
+                  - name
+                  - company_id
       description: Returns information about an experience
   /api/v5/products:
     get:
       tags:
         - products
-      consumes:
-        - application/json
       operationId: get_api_v5_products
       summary: List Products
       parameters:
@@ -425,215 +433,186 @@ paths:
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              pagination:
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  current_page:
-                    type: number
-                    description: Current page number
-                  total_pages:
-                    type: number
-                    description: Total number of pages
-                  next_page:
-                    type: number
-                    description: Next page number
-                  prev_page:
-                    type: number
-                    description: Previous page number
-                  total_count:
-                    type: number
-                    description: Total number of records
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: number
+                        description: Current page number
+                      total_pages:
+                        type: number
+                        description: Total number of pages
+                      next_page:
+                        type: number
+                        description: Next page number
+                      prev_page:
+                        type: number
+                        description: Previous page number
+                      total_count:
+                        type: number
+                        description: Total number of records
+                    additionalProperties: false
+                    required:
+                      - current_page
+                      - total_pages
+                      - next_page
+                      - prev_page
+                      - total_count
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the product, which will look like prod_************* or pass_*************
+                        created_at:
+                          type: number
+                          description: The date the product was created
+                        name:
+                          type: string
+                          description: The name of the product
+                      additionalProperties: false
+                      required:
+                        - id
+                        - created_at
+                        - name
                 additionalProperties: false
                 required:
-                  - current_page
-                  - total_pages
-                  - next_page
-                  - prev_page
-                  - total_count
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: The ID of the product, which will look like prod_************* or pass_*************
-                    created_at:
-                      type: number
-                      description: The date the product was created
-                    name:
-                      type: string
-                      description: The name of the product
-                  additionalProperties: false
-                  required:
-                    - id
-                    - created_at
-                    - name
-            additionalProperties: false
-            required:
-              - pagination
-              - data
+                  - pagination
+                  - data
       description: Returns a list of products
   /api/v5/products/{id}:
     get:
       tags:
         - products
-      consumes:
-        - application/json
       operationId: get_api_v5_products_id
       summary: Retrieve a product
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the product, which will look like prod_************* or pass_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                description: The ID of the product, which will look like prod_************* or pass_*************
-              created_at:
-                type: number
-                description: The date the product was created
-              name:
-                type: string
-                description: The name of the product
-            additionalProperties: false
-            required:
-              - id
-              - created_at
-              - name
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the product, which will look like prod_************* or pass_*************
+                  created_at:
+                    type: number
+                    description: The date the product was created
+                  name:
+                    type: string
+                    description: The name of the product
+                additionalProperties: false
+                required:
+                  - id
+                  - created_at
+                  - name
       description: Returns information about a product
   /api/v5/products/{id}/experiences:
     get:
       tags:
         - products
-      consumes:
-        - application/json
       operationId: get_api_v5_products_id_experiences
       summary: Retrieve all experiences for a product
       parameters:
         - name: id
-          type: string
           in: path
           required: true
           description: The ID of the product, which will look like prod_************* or pass_*************
+          schema:
+            type: string
         - name: Authorization
           in: header
           required: true
           description: The users authorization token or the API key
-          type: string
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
-          schema:
-            type: object
-            properties:
-              pagination:
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  current_page:
-                    type: number
-                    description: Current page number
-                  total_pages:
-                    type: number
-                    description: Total number of pages
-                  next_page:
-                    type: number
-                    description: Next page number
-                  prev_page:
-                    type: number
-                    description: Previous page number
-                  total_count:
-                    type: number
-                    description: Total number of records
+                  pagination:
+                    type: object
+                    properties:
+                      current_page:
+                        type: number
+                        description: Current page number
+                      total_pages:
+                        type: number
+                        description: Total number of pages
+                      next_page:
+                        type: number
+                        description: Next page number
+                      prev_page:
+                        type: number
+                        description: Previous page number
+                      total_count:
+                        type: number
+                        description: Total number of records
+                    additionalProperties: false
+                    required:
+                      - current_page
+                      - total_pages
+                      - next_page
+                      - prev_page
+                      - total_count
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the experience, which will look like exp_*************
+                        created_at:
+                          type: number
+                          description: The date the experience was created
+                        name:
+                          type: string
+                          description: The name of the experience
+                        company_id:
+                          type: string
+                          description: The ID of the Company, which will look like biz_*************
+                      additionalProperties: false
+                      required:
+                        - id
+                        - created_at
+                        - name
+                        - company_id
                 additionalProperties: false
                 required:
-                  - current_page
-                  - total_pages
-                  - next_page
-                  - prev_page
-                  - total_count
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: The ID of the experience, which will look like exp_*************
-                    created_at:
-                      type: number
-                      description: The date the experience was created
-                    name:
-                      type: string
-                      description: The name of the experience
-                    company_id:
-                      type: string
-                      description: The ID of the Company, which will look like biz_*************
-                  additionalProperties: false
-                  required:
-                    - id
-                    - created_at
-                    - name
-                    - company_id
-            additionalProperties: false
-            required:
-              - pagination
-              - data
+                  - pagination
+                  - data
       description: Returns the experiences attached to a product
-  /api/v5/notifications:
-    post:
-      tags:
-        - notifications
-      consumes:
-        - application/json
-      operationId: post_api_v5_notifications
-      parameters:
-        - name: body
-          in: body
-          schema:
-            type: object
-            properties:
-              topic_identifier:
-                type: string
-              targets:
-                type: array
-                items:
-                  type: string
-              notification_data:
-                type: object
-                additionalProperties: true
-            additionalProperties: false
-            required:
-              - topic_identifier
-              - targets
-              - notification_data
-      responses:
-        "200":
-          description: ok
-      description: ""
-definitions: {}
-schemes:
-  - https
-tags: []
-securityDefinitions: {}
-security: []
-host: localhost:3000
+components:
+  schemas: {}
