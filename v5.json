@@ -1,0 +1,429 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Whop API (params in:body)",
+    "description": "\n<p>Another API description</p>\n",
+    "version": "v5",
+    "x-copyright": null
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3000/"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/api/v5/companies/{id}": {
+      "get": {
+        "tags": ["companies"],
+        "summary": "Retrieve Company Information",
+        "description": "Returns information about the company",
+        "operationId": "get_api_v5_companies_id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the Company, which will look like biz_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/companies/{id}/experiences": {
+      "get": {
+        "tags": ["companies"],
+        "summary": "Retrieve a companies experiences",
+        "description": "Returns a list of experiences for a company",
+        "operationId": "get_api_v5_companies_id_experiences",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the experience, which will look like exp_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/users/{id}": {
+      "get": {
+        "tags": ["users"],
+        "description": "Returns information about the user",
+        "operationId": "get_api_v5_users_id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the user, which will look like user_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/users/{id}/experiences": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Retrieve a users experiences",
+        "description": "Returns a list of experiences for a user",
+        "operationId": "get_api_v5_users_id_experiences",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the user, which will look like user_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/experiences": {
+      "get": {
+        "tags": ["experiences"],
+        "summary": "List Experiences",
+        "description": "Returns a list of experiences",
+        "operationId": "get_api_v5_experiences",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/experiences/{id}": {
+      "get": {
+        "tags": ["experiences"],
+        "summary": "Retrieve an experience",
+        "description": "Returns information about an experience",
+        "operationId": "get_api_v5_experiences_id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the experience, which will look like exp_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/products": {
+      "get": {
+        "tags": ["products"],
+        "summary": "List Products",
+        "description": "Returns a list of products",
+        "operationId": "get_api_v5_products",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/products/{id}": {
+      "get": {
+        "tags": ["products"],
+        "summary": "Retrieve a product",
+        "description": "Returns information about a product",
+        "operationId": "get_api_v5_products_id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the product, which will look like prod_************* or pass_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/products/{id}/experiences": {
+      "get": {
+        "tags": ["products"],
+        "summary": "Retrieve all experiences for a product",
+        "description": "Returns the experiences attached to a product",
+        "operationId": "get_api_v5_products_id_experiences",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the product, which will look like prod_************* or pass_*************",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The users authorization token or the API key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v5/notifications": {
+      "post": {
+        "tags": ["notifications"],
+        "operationId": "post_api_v5_notifications",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "notification_data",
+                  "targets",
+                  "topic_identifier"
+                ],
+                "type": "object",
+                "properties": {
+                  "topic_identifier": {
+                    "type": "string"
+                  },
+                  "targets": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "notification_data": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    }
+  },
+  "components": {}
+}
