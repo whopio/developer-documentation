@@ -1,429 +1,773 @@
 {
-  "openapi": "3.0.1",
+  "swagger": "2.0",
   "info": {
     "title": "Whop API (params in:body)",
     "description": "\n<p>Another API description</p>\n",
     "version": "v5",
     "x-copyright": null
   },
-  "servers": [
-    {
-      "url": "https://localhost:3000/"
-    }
-  ],
-  "tags": [],
+  "basePath": "/",
+  "consumes": ["application/json"],
   "paths": {
     "/api/v5/companies/{id}": {
       "get": {
         "tags": ["companies"],
-        "summary": "Retrieve Company Information",
-        "description": "Returns information about the company",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_companies_id",
+        "summary": "Retrieve Company Information",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the Company, which will look like biz_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the Company, which will look like biz_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The ID of the Company, which will look like biz_*************"
+                },
+                "created_at": {
+                  "type": "number",
+                  "description": "The date the company was created"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "The title of the company"
+                },
+                "image_url": {
+                  "type": "string",
+                  "description": "The URL of the company's image"
+                },
+                "authorized_user": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the user, which will look like user_*************"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the authorized user"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "The email of the authorized user"
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role of the user"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["id", "name", "email", "role"]
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["id", "created_at", "title", "image_url"]
             }
           }
-        }
+        },
+        "description": "Returns information about the company"
       }
     },
     "/api/v5/companies/{id}/experiences": {
       "get": {
         "tags": ["companies"],
-        "summary": "Retrieve a companies experiences",
-        "description": "Returns a list of experiences for a company",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_companies_id_experiences",
+        "summary": "Retrieve a companies experiences",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the experience, which will look like exp_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the experience, which will look like exp_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pagination": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                  "properties": {
+                    "current_page": {
+                      "type": "number",
+                      "description": "Current page number"
+                    },
+                    "total_pages": {
+                      "type": "number",
+                      "description": "Total number of pages"
+                    },
+                    "next_page": {
+                      "type": "number",
+                      "description": "Next page number"
+                    },
+                    "prev_page": {
+                      "type": "number",
+                      "description": "Previous page number"
+                    },
+                    "total_count": {
+                      "type": "number",
+                      "description": "Total number of records"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "current_page",
+                    "total_pages",
+                    "next_page",
+                    "prev_page",
+                    "total_count"
+                  ]
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the Company, which will look like biz_*************"
+                      },
+                      "created_at": {
+                        "type": "number",
+                        "description": "The date the company was created"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "The title of the company"
+                      },
+                      "image_url": {
+                        "type": "string",
+                        "description": "The URL of the company's image"
+                      },
+                      "authorized_user": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The ID of the user, which will look like user_*************"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the authorized user"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The email of the authorized user"
+                          },
+                          "role": {
+                            "type": "string",
+                            "description": "The role of the user"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "required": ["id", "name", "email", "role"]
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["id", "created_at", "title", "image_url"]
                   }
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["pagination", "data"]
             }
           }
-        }
+        },
+        "description": "Returns a list of experiences for a company"
       }
     },
     "/api/v5/users/{id}": {
       "get": {
         "tags": ["users"],
-        "description": "Returns information about the user",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_users_id",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the user, which will look like user_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the user, which will look like user_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The ID of the user, which will look like user_*************"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email of the user"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The name of the user"
+                },
+                "profile_pic_url": {
+                  "type": "string",
+                  "description": "The URL of the user's profile picture"
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["id", "email", "username", "profile_pic_url"]
             }
           }
-        }
+        },
+        "description": "Returns information about the user"
       }
     },
     "/api/v5/users/{id}/experiences": {
       "get": {
         "tags": ["users"],
-        "summary": "Retrieve a users experiences",
-        "description": "Returns a list of experiences for a user",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_users_id_experiences",
+        "summary": "Retrieve a users experiences",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the user, which will look like user_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the user, which will look like user_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pagination": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                  "properties": {
+                    "current_page": {
+                      "type": "number",
+                      "description": "Current page number"
+                    },
+                    "total_pages": {
+                      "type": "number",
+                      "description": "Total number of pages"
+                    },
+                    "next_page": {
+                      "type": "number",
+                      "description": "Next page number"
+                    },
+                    "prev_page": {
+                      "type": "number",
+                      "description": "Previous page number"
+                    },
+                    "total_count": {
+                      "type": "number",
+                      "description": "Total number of records"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "current_page",
+                    "total_pages",
+                    "next_page",
+                    "prev_page",
+                    "total_count"
+                  ]
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the experience, which will look like exp_*************"
+                      },
+                      "created_at": {
+                        "type": "number",
+                        "description": "The date the experience was created"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the experience"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "description": "The ID of the Company, which will look like biz_*************"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["id", "created_at", "name", "company_id"]
                   }
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["pagination", "data"]
             }
           }
-        }
+        },
+        "description": "Returns a list of experiences for a user"
       }
     },
     "/api/v5/experiences": {
       "get": {
         "tags": ["experiences"],
-        "summary": "List Experiences",
-        "description": "Returns a list of experiences",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_experiences",
+        "summary": "List Experiences",
         "parameters": [
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pagination": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                  "properties": {
+                    "current_page": {
+                      "type": "number",
+                      "description": "Current page number"
+                    },
+                    "total_pages": {
+                      "type": "number",
+                      "description": "Total number of pages"
+                    },
+                    "next_page": {
+                      "type": "number",
+                      "description": "Next page number"
+                    },
+                    "prev_page": {
+                      "type": "number",
+                      "description": "Previous page number"
+                    },
+                    "total_count": {
+                      "type": "number",
+                      "description": "Total number of records"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "current_page",
+                    "total_pages",
+                    "next_page",
+                    "prev_page",
+                    "total_count"
+                  ]
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the experience, which will look like exp_*************"
+                      },
+                      "created_at": {
+                        "type": "number",
+                        "description": "The date the experience was created"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the experience"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "description": "The ID of the Company, which will look like biz_*************"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["id", "created_at", "name", "company_id"]
                   }
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["pagination", "data"]
             }
           }
-        }
+        },
+        "description": "Returns a list of experiences"
       }
     },
     "/api/v5/experiences/{id}": {
       "get": {
         "tags": ["experiences"],
-        "summary": "Retrieve an experience",
-        "description": "Returns information about an experience",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_experiences_id",
+        "summary": "Retrieve an experience",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the experience, which will look like exp_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the experience, which will look like exp_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The ID of the experience, which will look like exp_*************"
+                },
+                "created_at": {
+                  "type": "number",
+                  "description": "The date the experience was created"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the experience"
+                },
+                "company_id": {
+                  "type": "string",
+                  "description": "The ID of the Company, which will look like biz_*************"
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["id", "created_at", "name", "company_id"]
             }
           }
-        }
+        },
+        "description": "Returns information about an experience"
       }
     },
     "/api/v5/products": {
       "get": {
         "tags": ["products"],
-        "summary": "List Products",
-        "description": "Returns a list of products",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_products",
+        "summary": "List Products",
         "parameters": [
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pagination": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                  "properties": {
+                    "current_page": {
+                      "type": "number",
+                      "description": "Current page number"
+                    },
+                    "total_pages": {
+                      "type": "number",
+                      "description": "Total number of pages"
+                    },
+                    "next_page": {
+                      "type": "number",
+                      "description": "Next page number"
+                    },
+                    "prev_page": {
+                      "type": "number",
+                      "description": "Previous page number"
+                    },
+                    "total_count": {
+                      "type": "number",
+                      "description": "Total number of records"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "current_page",
+                    "total_pages",
+                    "next_page",
+                    "prev_page",
+                    "total_count"
+                  ]
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the product, which will look like prod_************* or pass_*************"
+                      },
+                      "created_at": {
+                        "type": "number",
+                        "description": "The date the product was created"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the product"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["id", "created_at", "name"]
                   }
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["pagination", "data"]
             }
           }
-        }
+        },
+        "description": "Returns a list of products"
       }
     },
     "/api/v5/products/{id}": {
       "get": {
         "tags": ["products"],
-        "summary": "Retrieve a product",
-        "description": "Returns information about a product",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_products_id",
+        "summary": "Retrieve a product",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the product, which will look like prod_************* or pass_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the product, which will look like prod_************* or pass_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The ID of the product, which will look like prod_************* or pass_*************"
+                },
+                "created_at": {
+                  "type": "number",
+                  "description": "The date the product was created"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the product"
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["id", "created_at", "name"]
             }
           }
-        }
+        },
+        "description": "Returns information about a product"
       }
     },
     "/api/v5/products/{id}/experiences": {
       "get": {
         "tags": ["products"],
-        "summary": "Retrieve all experiences for a product",
-        "description": "Returns the experiences attached to a product",
+        "consumes": ["application/json"],
         "operationId": "get_api_v5_products_id_experiences",
+        "summary": "Retrieve all experiences for a product",
         "parameters": [
           {
             "name": "id",
+            "type": "string",
             "in": "path",
-            "description": "The ID of the product, which will look like prod_************* or pass_*************",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The ID of the product, which will look like prod_************* or pass_*************"
           },
           {
             "name": "Authorization",
             "in": "header",
-            "description": "The users authorization token or the API key",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "description": "The users authorization token or the API key",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "A successful response",
-            "content": {
-              "*/*": {
-                "schema": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pagination": {
                   "type": "object",
-                  "additionalProperties": {
-                    "type": "object"
+                  "properties": {
+                    "current_page": {
+                      "type": "number",
+                      "description": "Current page number"
+                    },
+                    "total_pages": {
+                      "type": "number",
+                      "description": "Total number of pages"
+                    },
+                    "next_page": {
+                      "type": "number",
+                      "description": "Next page number"
+                    },
+                    "prev_page": {
+                      "type": "number",
+                      "description": "Previous page number"
+                    },
+                    "total_count": {
+                      "type": "number",
+                      "description": "Total number of records"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "current_page",
+                    "total_pages",
+                    "next_page",
+                    "prev_page",
+                    "total_count"
+                  ]
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The ID of the experience, which will look like exp_*************"
+                      },
+                      "created_at": {
+                        "type": "number",
+                        "description": "The date the experience was created"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the experience"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "description": "The ID of the Company, which will look like biz_*************"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["id", "created_at", "name", "company_id"]
                   }
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["pagination", "data"]
             }
           }
-        }
+        },
+        "description": "Returns the experiences attached to a product"
       }
     },
     "/api/v5/notifications": {
       "post": {
         "tags": ["notifications"],
+        "consumes": ["application/json"],
         "operationId": "post_api_v5_notifications",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "notification_data",
-                  "targets",
-                  "topic_identifier"
-                ],
-                "type": "object",
-                "properties": {
-                  "topic_identifier": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "topic_identifier": {
+                  "type": "string"
+                },
+                "targets": {
+                  "type": "array",
+                  "items": {
                     "type": "string"
-                  },
-                  "targets": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "notification_data": {
-                    "type": "object",
-                    "properties": {}
                   }
+                },
+                "notification_data": {
+                  "type": "object",
+                  "additionalProperties": true
                 }
-              }
+              },
+              "additionalProperties": false,
+              "required": ["topic_identifier", "targets", "notification_data"]
             }
-          },
-          "required": false
-        },
+          }
+        ],
         "responses": {
           "200": {
-            "description": "ok",
-            "content": {}
+            "description": "ok"
           }
         },
-        "x-codegen-request-body-name": "body"
+        "description": ""
       }
     }
   },
-  "components": {}
+  "definitions": {},
+  "schemes": ["https"],
+  "tags": [],
+  "securityDefinitions": {},
+  "security": [],
+  "host": "localhost:3000"
 }
