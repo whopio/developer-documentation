@@ -3,6 +3,8 @@ title: App SDKs
 description: "Guide on how to use Whop's App SDK"
 ---
 
+The Whop Apps SDK is a collection of tools that allow you to interact with the Whop API, authenticate users, and interact with the browser.
+
 ## Installation
 
 <CodeGroup>
@@ -23,7 +25,9 @@ pnpm add @whop-apps/sdk
 
 ---
 
-## Usage
+## Authentication
+
+This aspect of the SDK allows you to authenticate the people trying to access your app, and make sure only people who have purchased are able to use it.
 
 ### validateToken
 
@@ -56,3 +60,57 @@ export default async function Home() {
 ```
 
 ---
+
+## API
+
+The API SDK allows you to interact with the Whop API without having to manually write the requests. We handle the authorization, JSON responses, and errors.
+
+### Usage
+
+```typescript
+import { whopJson } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  // Using the users access token
+  const productsObjcet = await whopJson("/products", { headers });
+
+  // Using an API Key
+  const productsObject = await whopJson("/products", {
+    apiKey: process.env.WHOP_API_KEY,
+  });
+}
+```
+
+In the example, we are using the `/products` endpoint. There are two ways to authenticate with the API, using the users access token, or using an API Key. Access token's are scoped to that specific user, but API keys are on the experience level, suitable for endpoints such as `/experiences`.
+
+### Available routes
+
+Here is a list of available routes, and their responses:
+
+[THESE WILL LINK TO THEIR RESPECTIVE API PAGES]
+
+- [/companies/\{id\}](/)
+- [/companies/\{id\}/experiences]()
+- [/uses/\{id\}](/)
+- [/uses/\{id\}/experiences]()
+- [/experiences](/)
+- [/experiences/\{id\}](/)
+- [/products](/)
+- [/products/\{id\}](/)
+- [/products/\{id\}/experiences](/)
+
+---
+
+## iFrame
+
+The iFrame SDK allows you to interact with the browser and perform tasks such as opening a link in a new tab.
+
+### Usage
+
+```typescript
+import { createAppIframeSDK } from '@whop-apps/sdk';
+
+[ADD USAGE HERE]
+
+```

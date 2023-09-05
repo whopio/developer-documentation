@@ -13,6 +13,13 @@ In this guide, you will learn how to create a Whop App from scratch, using Next.
 
 ---
 
+<Tip>
+  Using Next.js? You can use our [**Next.js template**](/apps/next-template) to
+  get started building instantly.
+</Tip>
+
+---
+
 ## Setting up your environment
 
 This guide uses Next.js, so you will need to setup a Next.js project.
@@ -60,7 +67,7 @@ For more information on how to install Frosted UI, click [**here**](/apps/froste
 
 ---
 
-### Environment Variables - [NEEDS ATTENTION]
+### Environment Variables
 
 For the Whop SDK to work, you will need to add the following environment variables:
 
@@ -84,7 +91,7 @@ Once you have got the project created and the preresiquites installed, you can s
 
 ### Page Variables
 
-You will need context about the **current company** and **experience ID**, this ensures that your app is **scoped** to the correct company and experience. These get passed as a **page prop**, defined dynamically in the URL. For example:
+For the app to know who is accessing it, we have created a system that passes these details through the URL. This allows your app to be used by multiple companies, and multiple experiences. These are passed as a **page prop**, defined dynamically in the URL. For example:
 
 ```
 https://domain.com/admin/${company_id}/${experience_id}/
