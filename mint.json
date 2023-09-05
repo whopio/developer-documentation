@@ -34,6 +34,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "Apps",
+      "url": "apps"
     }
   ],
   "redirects": [
@@ -53,7 +57,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["introduction", "how-whop-works"]
+      "pages": ["introduction", "how-whop-works", "apps"]
     },
     {
       "group": "Selling your software",
@@ -178,6 +182,24 @@
         "api-reference/webhooks/create-a-webhook",
         "api-reference/webhooks/update-a-webhook",
         "api-reference/webhooks/delete-a-webhook"
+      ]
+    },
+    {
+      "group": "Getting Started",
+      "pages": ["apps/create-an-app", "apps/frosted", "apps/sdks"]
+    },
+    {
+      "group": "Companies",
+      "pages": [
+        "apps/api/companies/company-experiences",
+        "apps/api/companies/retrieve-a-companies-experiences"
+      ]
+    },
+    {
+      "group": "Experiences",
+      "pages": [
+        "apps/api/experiences/list-experiences",
+        "apps/api/experiences/retrieve-an-experience"
       ]
     }
   ],
