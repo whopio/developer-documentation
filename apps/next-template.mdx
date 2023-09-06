@@ -1,5 +1,5 @@
 ---
-title: Next.js App Template
+title: Next.js Template
 description: "Guide on how to use our Next.js template"
 ---
 
@@ -12,7 +12,23 @@ To make it easier for developers to get started building apps, we have created a
 
 ## Using the template
 
-There are currently 3 ways to use the template, you can clone the GitHub repository, use the `create-next-app` command, or use the Vercel Deploy Button and automatically deploy it on Vercel.
+There are currently 3 ways to use the template, you can [clone the GitHub repository](#cloning-the-github-repository), use the [`create-next-app`](#using-the-create-next-app-command) command, or use the [Vercel Deploy Button](#vercel-deploy-button) and automatically deploy it on Vercel.
+
+---
+
+These will create a project with the SDKs installed, and the basic project structure. There will be two pages created for you, the `app/admin/[companyId]/[experienceId]/page.tsx` and `app/user/[membershipId]/[experienceId]/page.tsx`.
+
+In these pages, you will see the `await validateToken()` function, this will ensure that only authenticated users are able to view the page. For more details on this function, click [**here**](/apps/sdks#validatetoken).
+
+You will also find that we have passed the page props into the page, this allows you to access them and use them accordingly. For more details on the page props, click [**here**](/apps/create-an-app#page-variables).
+
+Our in-house component library, **Frosted UI**, has also been installed. This library is optional however greatly recommended. For more details on Frosted UI, click [**here**](/apps/frosted).
+
+<Tip>
+  Once you have installed the template, we recommend you read our
+  [**documentation**](/apps/create-an-app) to get a deeper understanding on how
+  each aspect works.
+</Tip>
 
 ### Cloning the GitHub repository
 
@@ -44,18 +60,10 @@ pnpm create next-app --example https://github.com/whopio/whop-apps-template.git
 
 </CodeGroup>
 
-This will create a project with the SDKs installed, and the basic project structure. There will be two pages created for you, the `app/admin/[companyId]/[experienceId]/page.tsx` and `app/user/[membershipId]/[experienceId]/page.tsx`.
-
-In these pages, you will see the `await validateToken()` function, this will ensure that only authenticated users are able to view the page. For more details on this function, click [**here**](/apps/sdks#validatetoken).
-
-You will also find that we have passed the page props into the page, this allows you to access them and use them accordingly. For more details on the page props, click [**here**](/apps/create-an-app#page-variables).
-
-Our in-house component library, **Frosted UI**, has also been installed. This library is optional however greatly recommended. For more details on Frosted UI, click [**here**](/apps/frosted).
-
 ---
 
 ### Vercel Deploy Button
 
-To instantly deploy the template on Vercel, you can use the button below. This will create a new project on Vercel and deploy the template. There are 3 required environment variables that you will need to add, follow [**this guide**](/apps/create-an-app#environment-variables) to find out more about them.
+To instantly deploy the template on Vercel, you can use the button below. This will create a new project on Vercel and deploy the template.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwhopio%2Fwhop-apps-template&env=WHOP_JWK_PK,WHOP_API_KEY,NEXT_PUBLIC_WHOP_APP_ID&envDescription=These%20variables%20are%20required%20for%20the%20Whop%20Apps%20SDK%20to%20function%2C%20please%20follow%20the%20guide%20on%20how%20to%20get%20these&envLink=https%3A%2F%2Fdev.whop.com%2Fapps%2Fcreate-an-app%23environment-variables)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwhopio%2Fwhop-apps-template)

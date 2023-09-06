@@ -614,5 +614,54 @@ paths:
                   - pagination
                   - data
       description: Returns the experiences attached to a product
+  /api/v5/notifications:
+    post:
+      tags:
+        - notifications
+      operationId: post_api_v5_notifications
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              topic_identifier:
+                type: string
+              targets:
+                type: array
+                items:
+                  type: string
+              notification_data:
+                type: object
+                additionalProperties: true
+            additionalProperties: false
+            required:
+              - topic_identifier
+              - targets
+              - notification_data
+      responses:
+        "200":
+          description: ok
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topic_identifier:
+                  type: string
+                targets:
+                  type: array
+                  items:
+                    type: string
+                notification_data:
+                  type: object
+                  additionalProperties: true
+              additionalProperties: false
+              required:
+                - topic_identifier
+                - targets
+                - notification_data
 components:
   schemas: {}
