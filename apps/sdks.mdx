@@ -7,6 +7,11 @@ The Whop Apps SDK is a collection of tools that allow you to interact with the W
 
 ## Installation
 
+<Note>
+  If you are using one of our templates, the SDK is already installed and ready
+  to use.
+</Note>
+
 <CodeGroup>
 
 ```bash npm
@@ -56,6 +61,27 @@ import { headers } from "next/headers";
 
 export default async function Home() {
   const token = await getToken({ headers });
+}
+```
+
+---
+
+### isAuthError
+
+This function will check if the error that is thrown, is an authentication error.
+
+```typescript
+import { isAuthError, validateToken } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  try {
+    await validateToken({ headers });
+  } catch (error) {
+    if (isAuthError(error)) {
+      return <p>You are not allowed to access this page</p>;
+    }
+  }
 }
 ```
 
