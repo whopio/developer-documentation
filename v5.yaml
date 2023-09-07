@@ -9,7 +9,7 @@ info:
 servers:
   - url: localhost:3000/
 paths:
-  /api/v5/companies/{id}:
+  /v5/companies/{id}:
     get:
       tags:
         - companies
@@ -76,7 +76,7 @@ paths:
                   - title
                   - image_url
       description: Returns information about the company
-  /api/v5/companies/{id}/experiences:
+  /v5/companies/{id}/experiences:
     get:
       tags:
         - companies
@@ -177,7 +177,7 @@ paths:
                   - pagination
                   - data
       description: Returns a list of experiences for a company
-  /api/v5/users/{id}:
+  /v5/users/{id}:
     get:
       tags:
         - users
@@ -222,7 +222,7 @@ paths:
                   - username
                   - profile_pic_url
       description: Returns information about the user
-  /api/v5/users/{id}/experiences:
+  /v5/users/{id}/experiences:
     get:
       tags:
         - users
@@ -302,7 +302,7 @@ paths:
                   - pagination
                   - data
       description: Returns a list of experiences for a user
-  /api/v5/experiences:
+  /v5/experiences:
     get:
       tags:
         - experiences
@@ -376,7 +376,7 @@ paths:
                   - pagination
                   - data
       description: Returns a list of experiences
-  /api/v5/experiences/{id}:
+  /v5/experiences/{id}:
     get:
       tags:
         - experiences
@@ -422,7 +422,7 @@ paths:
                   - name
                   - company_id
       description: Returns information about an experience
-  /api/v5/products:
+  /v5/products:
     get:
       tags:
         - products
@@ -492,7 +492,7 @@ paths:
                   - pagination
                   - data
       description: Returns a list of products
-  /api/v5/products/{id}:
+  /v5/products/{id}:
     get:
       tags:
         - products
@@ -534,7 +534,7 @@ paths:
                   - created_at
                   - name
       description: Returns information about a product
-  /api/v5/products/{id}/experiences:
+  /v5/products/{id}/experiences:
     get:
       tags:
         - products
@@ -614,7 +614,7 @@ paths:
                   - pagination
                   - data
       description: Returns the experiences attached to a product
-  /api/v5/notifications:
+  /v5/notifications:
     post:
       tags:
         - notifications
