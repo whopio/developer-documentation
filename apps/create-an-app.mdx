@@ -67,6 +67,38 @@ For more information on how to install Frosted UI, click [**here**](/apps/froste
 
 ---
 
+### Developer Mode
+
+To make it easier to develop you app, we have created **developer mode**. This allows you to run you app locally, displaying real-time updates as you make changes.
+
+To get started using it, run the following command:
+
+<CodeGroup>
+
+```bash npm
+npm run whop-proxy
+```
+
+```bash yarn
+yarn whop-proxy
+```
+
+```bash pnpm
+pnpm whope-proxy
+```
+
+</CodeGroup>
+
+This will start a proxy server on port `3000`, and will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Developer Mode** field.
+
+![Developer Mode Guide](https://imgur.com/UnKVb6g.gif)
+
+You can now turn on developer mode on your app, and it will automatically update as you make changes. This toggle will only be shown to your team members, and will not be shown to your users.
+
+![Developer Mode Guide](https://imgur.com/w0MGzD0.gif)
+
+---
+
 ### Environment Variables
 
 For the Whop SDK to work, you will need to add the following environment variables:
