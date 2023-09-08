@@ -9,7 +9,9 @@ In this guide, you will learn how to create a Whop App from scratch, using Next.
 
 ## Creating an app in Whop
 
-[THIS WILL BE A SECTION ON HOW TO CREATE AN APP IN THE DEVELOPER PAGE - BLOCKED BY UX FLOWS]
+Your first step is to create an app in Whop. Head to the [**Developer Settings**](https://dash.whop.com/settings/developer) and follow the guide below. This step is important to do before development as it gives you the credentials you will need to access the [**Whop SDK**](/apps/sdks).
+
+![New App Guide](https://i.imgur.com/2LyCrYV.gif)
 
 ---
 
@@ -29,15 +31,17 @@ yarn create next-app
 ```
 
 <Note>
-  This guide uses the [**App Directory**](https://nextjs.org/docs/app), so we
-  recommend you to use the same name for your project.
+  This guide uses the [**Next.js App Directory**](https://nextjs.org/docs/app),
+  but everything you learn can be applied to any Framework
 </Note>
 
 ---
 
 ### Installing the Whop App SDK
 
-We have created our own package to make it easier to integrate Whop into your application. You will need to install the following package:
+<Tip>If you are using one of our templates, you can skip this step.</Tip>
+
+We have created an SDK to make it easier to build apps for Whop. This SDK handles all the authentication, and API requests. To install it, run the following command:
 
 ```bash
 yarn add @whop-apps/sdk
@@ -105,10 +109,34 @@ You can now turn on developer mode on your app, and it will automatically update
 
 ### Environment Variables
 
-For the Whop SDK to work, you will need to add the following environment variables:
+For the Whop SDK to work, you will need to add the following environment variables to your project:
 
 - `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
 - `NEXT_PUBLIC_WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+
+<AccordionGroup>
+
+<Accordion title="How to get WHOP_API_KEY" >
+
+Head to the [**Developer Settings Page**](https://dash.whop.com/settings/developer), and click on the applicable app you created. From here, you will see the `API Key` field. You need to click the `Copy` button to copy it to your clipboard.
+
+<Frame>
+  <img src="https://imgur.com/SPnZLIL.png" />
+</Frame>
+
+</Accordion>
+
+<Accordion title="How to get NEXT_PUBLIC_WHOP_APP_ID" >
+
+Head to the [**Developer Settings Page**](https://dash.whop.com/settings/developer), and click on the applicable app you created. From here, you will see the `App ID`. You need to click the `Copy` button to copy it to your clipboard.
+
+<Frame>
+  <img src="https://imgur.com/WhAhvNt.png" />
+</Frame>
+
+</Accordion>
+
+</AccordionGroup>
 
 <Note>
   When deploying your app, make sure these **are not hard-coded**. We recommend
