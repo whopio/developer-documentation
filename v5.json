@@ -791,65 +791,7 @@
         "tags": ["notifications"],
         "operationId": "post_api_v5_notifications",
         "summary": "Send a Notification",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "topic_identifier": {
-                  "type": "string"
-                },
-                "targets": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "notification_data": {
-                  "type": "object",
-                  "properties": {
-                    "in_app": {
-                      "type": "object",
-                      "properties": {
-                        "subject": {
-                          "type": "string",
-                          "description": "Subject for in-app notification"
-                        },
-                        "content": {
-                          "type": "string",
-                          "description": "Content for in-app notification"
-                        }
-                      },
-                      "additionalProperties": false,
-                      "required": ["subject", "content"]
-                    },
-                    "mobile": {
-                      "type": "object",
-                      "properties": {
-                        "subject": {
-                          "type": "string",
-                          "description": "Subject for mobile notification"
-                        },
-                        "content": {
-                          "type": "string",
-                          "description": "Content for mobile notification"
-                        }
-                      },
-                      "additionalProperties": false,
-                      "required": ["subject", "content"]
-                    }
-                  },
-                  "additionalProperties": false,
-                  "required": ["in_app", "mobile"]
-                }
-              },
-              "additionalProperties": false,
-              "required": ["topic_identifier", "targets", "notification_data"]
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "A successful response",
