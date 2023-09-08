@@ -190,12 +190,11 @@
     },
     {
       "group": "Building an App",
-      "pages": [
-        "apps/getting-started",
-        "apps/create-an-app",
-        "apps/sdks",
-        "apps/frosted"
-      ]
+      "pages": ["apps/getting-started", "apps/create-an-app"]
+    },
+    {
+      "group": "Whop Libraries",
+      "pages": ["apps/sdks", "apps/frosted"]
     },
     {
       "group": "Templates",
