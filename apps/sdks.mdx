@@ -112,11 +112,11 @@ There are two ways to authenticate with the API, you can either use the users ac
 
 ### Access Token
 
-The access token is the users token that is stored in the cookies. We recommend you use it to fetch information about the current user with the `/me` endpoint.
+The access token is the users token that gets passed into the iFrames cookies. We recommend you use it to fetch information about the current user with the `/me` endpoint.
 
 ### API Key
 
-The API key allows you to view information outside the scoped user/company. We recommend that you use this with all other endpoints.
+The API key allows you to view information outside the scoped user/company. We recommend that you use this with all other endpoints that are not `/me`. Make sure this API key is not exposed to the client side, as it can be used to access all of your companies data.
 
 ### Available routes
 
