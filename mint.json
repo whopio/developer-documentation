@@ -2,7 +2,7 @@
   "$schema": "https://www.jedpatterson.com/spec.json",
   "name": "Whop Developers",
   "api": {
-    "baseUrl": "https://api.whop.com/api"
+    "baseUrl": "https://api.whop.com"
   },
   "analytics": {
     "ga4": {
