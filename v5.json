@@ -791,7 +791,17 @@
         "tags": ["notifications"],
         "operationId": "post_api_v5_notifications",
         "summary": "Send a Notification",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Your Apps API Key",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "A successful response",
@@ -863,8 +873,7 @@
                         "required": ["subject", "content"]
                       }
                     },
-                    "additionalProperties": false,
-                    "required": ["in_app", "mobile"]
+                    "additionalProperties": false
                   }
                 },
                 "additionalProperties": false,
