@@ -160,11 +160,37 @@ For the app to know who is accessing it, we have created a system that passes th
 https://domain.com/admin/${company_id}/${experience_id}/
 ```
 
-There are **3 variables** that you can access:
+Here are the variables you can access when the user is accessing your app:
 
-- `experienceId` - The ID of the current experience
-- `companyId` - The ID of the current company
-- `membershipId` - The ID of the current membership (only available on the consumers view)
+<AccordionGroup>
+
+<Accordion title="Consumer Page" >
+
+Here are the variables you can access when the user is accessing your app after purchasing:
+
+| Variable Name    | Description                                          |
+| ---------------- | ---------------------------------------------------- |
+| **experienceId** | The ID of the experience the user is accessing.      |
+| **productId**    | The ID of the product the user is accessing.         |
+| **companyId**    | The ID of the company the experience belongs to.     |
+| **membershipId** | The ID of the membership attached to this experience |
+| **planId**       | The ID of the plan attached to the membership        |
+
+</Accordion>
+
+<Accordion title="Company Page">
+
+Here are the variables you can access from the dashboard once they have added the app to a product.
+
+| Variable Name    | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| **experienceId** | The ID of the experience the user is accessing.  |
+| **productId**    | The ID of the product the user is accessing.     |
+| **companyId**    | The ID of the company the experience belongs to. |
+
+</Accordion>
+
+</AccordionGroup>
 
 This path needs to be set in the **Apps settings**, you can do so [**here**](https://dash.whop.com/settings/developer):
 
