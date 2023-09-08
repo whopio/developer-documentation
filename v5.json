@@ -785,6 +785,153 @@
         },
         "description": "Returns the experiences attached to a product"
       }
+    },
+    "/api/v5/notifications": {
+      "post": {
+        "tags": ["notifications"],
+        "operationId": "post_api_v5_notifications",
+        "summary": "Send a Notification",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "topic_identifier": {
+                  "type": "string"
+                },
+                "targets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notification_data": {
+                  "type": "object",
+                  "properties": {
+                    "in_app": {
+                      "type": "object",
+                      "properties": {
+                        "subject": {
+                          "type": "string",
+                          "description": "Subject for in-app notification"
+                        },
+                        "content": {
+                          "type": "string",
+                          "description": "Content for in-app notification"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": ["subject", "content"]
+                    },
+                    "mobile": {
+                      "type": "object",
+                      "properties": {
+                        "subject": {
+                          "type": "string",
+                          "description": "Subject for mobile notification"
+                        },
+                        "content": {
+                          "type": "string",
+                          "description": "Content for mobile notification"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": ["subject", "content"]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["in_app", "mobile"]
+                }
+              },
+              "additionalProperties": false,
+              "required": ["topic_identifier", "targets", "notification_data"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["created"],
+                      "description": "Status of the request"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": ["status"]
+                }
+              }
+            }
+          }
+        },
+        "description": "Sends a notification to a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "topic_identifier": {
+                    "type": "string"
+                  },
+                  "targets": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "notification_data": {
+                    "type": "object",
+                    "properties": {
+                      "in_app": {
+                        "type": "object",
+                        "properties": {
+                          "subject": {
+                            "type": "string",
+                            "description": "Subject for in-app notification"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "Content for in-app notification"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "required": ["subject", "content"]
+                      },
+                      "mobile": {
+                        "type": "object",
+                        "properties": {
+                          "subject": {
+                            "type": "string",
+                            "description": "Subject for mobile notification"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "Content for mobile notification"
+                          }
+                        },
+                        "additionalProperties": false,
+                        "required": ["subject", "content"]
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": ["in_app", "mobile"]
+                  }
+                },
+                "additionalProperties": false,
+                "required": ["topic_identifier", "targets", "notification_data"]
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
