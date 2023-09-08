@@ -61,42 +61,6 @@ For more information on how to install Frosted UI, click [**here**](/apps/froste
 
 ---
 
-### Developer Mode
-
-To make it easier to develop you app, we have created **developer mode**. This allows you to run you app locally, displaying real-time updates as you make changes.
-
-<Tip>
-  Make sure nothing is running on port `3000` before starting the proxy.
-</Tip>
-
-To get started using it, run the following command:
-
-<CodeGroup>
-
-```bash npm
-npm run whop-proxy
-```
-
-```bash yarn
-yarn whop-proxy
-```
-
-```bash pnpm
-pnpm whope-proxy
-```
-
-</CodeGroup>
-
-This will start a proxy server on port `3000`, and will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Developer Mode** field.
-
-![Developer Mode Guide](https://imgur.com/UnKVb6g.gif)
-
-You can now turn on developer mode on your app, and it will automatically update as you make changes. This toggle will only be shown to your team members, and will not be shown to your users.
-
-![Developer Mode Guide](https://imgur.com/w0MGzD0.gif)
-
----
-
 ### Environment Variables
 
 For the Whop SDK to work, you will need to add the following environment variables to your project:
@@ -133,6 +97,42 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
   you use `.env.local` and to add it to your `.gitignore` file. This will
   prevent you from accidentally exposing your keys.
 </Note>
+
+---
+
+### Developer Mode
+
+To make it easier to develop you app, we have created **developer mode**. This allows you to run you app locally, displaying real-time updates as you make changes.
+
+<Tip>
+  Make sure nothing is running on port `3000` before starting the proxy.
+</Tip>
+
+To get started using it, run the following command:
+
+<CodeGroup>
+
+```bash npm
+npm run whop-proxy
+```
+
+```bash yarn
+yarn whop-proxy
+```
+
+```bash pnpm
+pnpm whop-proxy
+```
+
+</CodeGroup>
+
+This will start a proxy server on port `3000`, and will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Development URL** field.
+
+![Developer Mode Guide](https://imgur.com/UnKVb6g.gif)
+
+You can now turn on developer mode on your app, and it will automatically update as you make changes. This toggle will only be shown to your team members, and will not be shown to your users.
+
+![Developer Mode Guide](https://imgur.com/w0MGzD0.gif)
 
 ---
 
@@ -241,3 +241,14 @@ To use our API within your app, you can use our SDK. This will handle all the au
 For more information, visit the [**SDK page**](/apps/sdks#api).
 
 ---
+
+## Hosting your app
+
+Once your app is production ready, you will need to host it to get a URL. You can use any provider you like, but we recommend [**Vercel**](https://vercel.com).
+
+Once you have your domain, you can insert it in the `Website URL` field on the [**App Settings**](https://dash.whop.com/settings/developer) page.
+
+<Tip>
+  There is no need to spend money on a custom URL, the user will never get to
+  see it.
+</Tip>
