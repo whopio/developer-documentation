@@ -89,7 +89,7 @@ export default async function Home() {
 
 ## API
 
-The API SDK allows you to interact with the Whop API without having to manually write the requests. We handle the authorization, JSON responses, and errors.
+The API SDK allows you to interact with the Whop API without having to manually write the requests. All responses are typed which gives you type safety. The SDK will also handle authentication for you, automatically retrieving the users access token from the cookies.
 
 ### Usage
 
@@ -112,7 +112,7 @@ In the example, we are using the `/products` endpoint. There are two ways to aut
 
 ### Available routes
 
-Here is a list of available routes, and their responses:
+To view each endpoint in detail, and see the responses and parameters, click one of the options below:
 
 - [/companies/\{id\}](/apps/api/companies/retrieve)
 - [/companies/\{id\}/experiences](/apps/api/companies/company-experiences)
