@@ -1,0 +1,103 @@
+---
+title: Page Setup
+icon: "circle-3"
+description: "Guide on how to setup your pages"
+---
+
+Once you have got the project created and the preresiquites installed, you can start creating your pages. This section will cover how to pass information about the user to your app, and how to authenticate the user.
+
+---
+
+### Page Variables
+
+To give the app information about the user accessing it, and details about the company, product, etc, we have added the ability to pass variables to the page through the URL. This allows you to create dynamic pages, and to access the data you need. For example, getting information about the membership attached to the user. An example of a URL would be:
+
+```
+https://domain.com/admin/${company_id}/${experience_id}/
+```
+
+Here are the variables you can access when the user is accessing your app:
+
+<AccordionGroup>
+
+<Accordion title="Consumer Page" >
+
+Here are the variables you can access when the user is accessing your app after purchasing:
+
+| Variable Name    | Description                                          |
+| ---------------- | ---------------------------------------------------- |
+| **experienceId** | The ID of the experience the user is accessing.      |
+| **productId**    | The ID of the product the user is accessing.         |
+| **companyId**    | The ID of the company the experience belongs to.     |
+| **membershipId** | The ID of the membership attached to this experience |
+| **planId**       | The ID of the plan attached to the membership        |
+
+</Accordion>
+
+<Accordion title="Company Page">
+
+Here are the variables you can access from the dashboard once the app has been added to a product.
+
+| Variable Name    | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| **experienceId** | The ID of the experience the user is accessing.  |
+| **productId**    | The ID of the product the user is accessing.     |
+| **companyId**    | The ID of the company the experience belongs to. |
+
+</Accordion>
+
+</AccordionGroup>
+
+To build your URLs, visit the settings page for your app [**here**](https://dash.whop.com/settings/developer)
+
+<Frame
+  caption="Make sure all variable names are formatted correctly. They should be pre-fixed
+  with `$`"
+>
+  <img src="https://i.imgur.com/TB1Q8ja.png" />
+</Frame>
+
+For instance, the file structure based on the earlier example would appear like:
+
+```bash
+cool-app/
+├─ app/
+│  ├─ admin/
+│  │  ├─ [companyId]/
+│  │  │  ├─ [experienceId]/
+│  │  │  │  ├─ page.tsx
+```
+
+Once we have setup the correct structure in our project, we now need to retrieve the variables from the URL. In Next.js, this can be achieved with the following code:
+
+```typescript
+export default async function AdminPage({
+  params,
+}: {
+  params: { companyId: string; experienceId: string };
+}) {
+  const companyId = params.companyId;
+  const experienceId = params.experienceId;
+}
+```
+
+---
+
+### Authenticating a user
+
+To ensure that the user is authenticated, we can add the following line of code:
+
+```typescript
+import { headers } from "next/headers";
+import { validateToken } from "@whop-apps/sdk";
+
+export default async function AdminPage() {
+  await validateToken({ headers });
+}
+```
+
+This will validate the users token, and throw an error if the token is invalid.
+
+---
+
+You have now learnt how to setup your project, the next step is learn how to use our API, and deploy your app to production.

@@ -1,0 +1,115 @@
+---
+title: Setting up your project
+icon: "circle-2"
+description: "Guide on how to use our Next.js template"
+---
+
+This page will teach you how to set up your project and install all the recommended and required dependencies.
+
+```bash
+yarn create next-app
+```
+
+<Note>
+  This guide uses the [**Next.js App Directory**](https://nextjs.org/docs/app),
+  but everything you learn can be applied to any Framework
+</Note>
+
+---
+
+### Installing the Whop App SDK
+
+<Tip>If you are using one of our templates, you can skip this step.</Tip>
+
+We have created an SDK to make it easier to build apps for Whop. This SDK handles all the authentication, and API requests. To install it, run the following command:
+
+```bash
+yarn add @whop-apps/sdk
+```
+
+<Note>
+  For more information on what the Whop SDK can do, head to [**this
+  page**](/apps/sdks).
+</Note>
+
+---
+
+### Installing Frosted UI (Optional)
+
+[**Frosted UI**](https://storybook.whop.com) is a UI library created by Whop, it contains all the components used to build [**Whop**](https://whop.com). Although it is not required, we recommend you use it to keep the same look and feel as the rest of the platform.
+
+```bash
+yarn add @whop/frosted-ui
+```
+
+For more information on how to install Frosted UI, click [**here**](/apps/frosted)
+
+<Tip>
+  We recommend using Frosted as it will sync color preferences with the user's
+  Whop preference.
+</Tip>
+
+---
+
+### Environment Variables
+
+For the Whop SDK to work, you will need to add the following environment variables to your project:
+
+- `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
+- `NEXT_PUBLIC_WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+
+<AccordionGroup>
+
+<Accordion title="How to get WHOP_API_KEY" >
+
+Head to the [**Developer Settings Page**](https://dash.whop.com/settings/developer), and click on the applicable app you created. From here, you will see the `API Key` field. You need to click the `Copy` button to copy it to your clipboard.
+
+<Frame>
+  <img src="https://imgur.com/SPnZLIL.png" />
+</Frame>
+
+</Accordion>
+
+<Accordion title="How to get NEXT_PUBLIC_WHOP_APP_ID" >
+
+Head to the [**Developer Settings Page**](https://dash.whop.com/settings/developer), and click on the applicable app you created. From here, you will see the `App ID`. You need to click the `Copy` button to copy it to your clipboard.
+
+<Frame>
+  <img src="https://imgur.com/WhAhvNt.png" />
+</Frame>
+
+</Accordion>
+
+</AccordionGroup>
+
+<Note>
+  When deploying your app, make sure these **are not hard-coded**. We recommend
+  you use `.env.local` and to add it to your `.gitignore` file. This will
+  prevent you from accidentally exposing your keys.
+</Note>
+
+---
+
+### Developer Mode
+
+To make it easier to develop your app, we have created **developer mode**. This allows you to run your app locally, displaying real-time updates as you make changes.
+
+<Tip>
+  Make sure nothing is running on port `3000` before starting the proxy.
+</Tip>
+
+To get started using it, run the following command:
+
+```bash
+yarn whop-proxy
+```
+
+This will start a proxy server on port `3000`, and will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Development URL** field.
+
+![Developer Mode Guide](https://imgur.com/UnKVb6g.gif)
+
+You can now turn on developer mode on your app, and it will automatically update as you make changes. This toggle will only be shown to your team members, and will not be shown to your users.
+
+![Developer Mode Guide](https://imgur.com/w0MGzD0.gif)
+
+---

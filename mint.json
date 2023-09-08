@@ -190,7 +190,18 @@
     },
     {
       "group": "Building an App",
-      "pages": ["apps/getting-started", "apps/create-an-app"]
+      "pages": [
+        "apps/create-an-app",
+        {
+          "group": "Building an App",
+          "pages": [
+            "apps/getting-started",
+            "apps/environment",
+            "apps/page-setup",
+            "apps/final-steps"
+          ]
+        }
+      ]
     },
     {
       "group": "Whop Libraries",
