@@ -34,6 +34,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "Apps",
+      "url": "apps"
     }
   ],
   "redirects": [
@@ -179,6 +183,50 @@
         "api-reference/webhooks/update-a-webhook",
         "api-reference/webhooks/delete-a-webhook"
       ]
+    },
+    {
+      "group": "Introduction",
+      "pages": ["apps/overview"]
+    },
+    {
+      "group": "Building an App",
+      "pages": [
+        "apps/getting-started",
+        "apps/create-an-app",
+        "apps/sdks",
+        "apps/frosted"
+      ]
+    },
+    {
+      "group": "Templates",
+      "pages": ["apps/next-template"]
+    },
+    {
+      "group": "Companies",
+      "pages": [
+        "apps/api/companies/retrieve",
+        "apps/api/companies/company-experiences"
+      ]
+    },
+    {
+      "group": "Products",
+      "pages": [
+        "apps/api/products/list",
+        "apps/api/products/retrieve",
+        "apps/api/products/retrieve-experiences"
+      ]
+    },
+    {
+      "group": "Experiences",
+      "pages": ["apps/api/experiences/list", "apps/api/experiences/retrieve"]
+    },
+    {
+      "group": "Users",
+      "pages": ["apps/api/users/retrieve", "apps/api/users/get-experiences"]
+    },
+    {
+      "group": "Notifications",
+      "pages": ["apps/api/notifications/send"]
     }
   ],
   "footerSocials": {

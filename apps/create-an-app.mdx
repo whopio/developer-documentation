@@ -1,5 +1,5 @@
 ---
-title: Create an App
+title: Development Guide
 description: "Guide on how to create a Whop App"
 ---
 
@@ -144,7 +144,7 @@ Once you have got the project created and the preresiquites installed, you can s
 
 ### Page Variables
 
-For the app to know who is accessing it, we have created a system that passes these details through the URL. This allows your app to be used by multiple companies, and multiple experiences. These are passed as a **page prop**, defined dynamically in the URL. For example:
+To give the app information about the user accessing it, and details about the company, product, etc, we have added the ability to pass variables to the page through the URL. This allows you to create dynamic pages, and to access the data you need. For example, getting information about the membership attached to the user. An example of a URL would be:
 
 ```
 https://domain.com/admin/${company_id}/${experience_id}/
@@ -170,7 +170,7 @@ Here are the variables you can access when the user is accessing your app after 
 
 <Accordion title="Company Page">
 
-Here are the variables you can access from the dashboard once they have added the app to a product.
+Here are the variables you can access from the dashboard once the app has been added to a product.
 
 | Variable Name    | Description                                      |
 | ---------------- | ------------------------------------------------ |
@@ -182,7 +182,7 @@ Here are the variables you can access from the dashboard once they have added th
 
 </AccordionGroup>
 
-This path needs to be set in the **Apps settings**, you can do so [**here**](https://dash.whop.com/settings/developer):
+To build your URLs, visit the settings page for your app [**here**](https://dash.whop.com/settings/developer)
 
 <Frame
   caption="Make sure all variable names are formatted correctly. They should be pre-fixed
@@ -202,9 +202,7 @@ cool-app/
 │  │  │  │  ├─ page.tsx
 ```
 
----
-
-#### Accessing the variables in Next.js
+Once we have setup the correct structure in our project, we now need to retrieve the variables from the URL. In Next.js, this can be achieved with the following code:
 
 ```typescript
 export default async function AdminPage({
