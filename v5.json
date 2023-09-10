@@ -31,7 +31,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -114,7 +114,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -239,7 +239,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -299,7 +299,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -393,7 +393,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -496,7 +496,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -547,7 +547,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -646,7 +646,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -702,7 +702,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "The users authorization token or the API key",
+            "description": "The users authorization token or the API key, which can be found on the settings page for you app. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
@@ -796,7 +796,7 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "Your Apps API Key",
+            "description": "Your API key, which can be found on the settings page for your App. You must prepend your key with the word 'Bearer', which will look like `Bearer ***************************`",
             "schema": {
               "type": "string"
             }
