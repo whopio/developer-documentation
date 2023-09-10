@@ -125,6 +125,8 @@ Once you have received the code from the URL, you can use it to request an autho
 
 Here is the response, you will need the `access_token` to make requests to the API.
 
+You will need to pass the `redirect_uri` value as part of the payload. This is the same URL as the **Callback URL** you set when creating your webapp.
+
 <Note>
   Once you have received the token, we advise you to store it in cookies or the
   session so it can be accessed when needed.
@@ -134,12 +136,13 @@ Here is the response, you will need the `access_token` to make requests to the A
     ```js JavaScript
     import axios from 'axios';
 
-    const getAuthToken = async (code, clientId, clientSecret) => {
+    const getAuthToken = async (code, clientId, clientSecret, redirect_uri) => {
         try {
             const response = await axios.post('https://api.whop.com/api/v2/oauth/token', {
                 code,
                 client_id: clientId,
                 client_secret: clientSecret,
+                redirect_uri: redirect_uri
             });
             return response.data;
         } catch (error) {
@@ -153,11 +156,12 @@ Here is the response, you will need the `access_token` to make requests to the A
 ```python Python
 import requests
 
-def get_auth_token(code, client_id, client_secret):
+def get_auth_token(code, client_id, client_secret, redirect_uri):
     data = {
         "code": code,
         "client_id": client_id,
         "client_secret": client_secret,
+        "redirect_uri": redirect_uri
     }
     response = requests.post('https://api.whop.com/api/v2/oauth/token', data=data)
     return response.json()
@@ -168,7 +172,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-def get_auth_token(code, client_id, client_secret)
+def get_auth_token(code, client_id, client_secret, redirect_uri)
     uri = URI.parse('https://api.whop.com/api/v2/oauth/token')
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'application/json'
@@ -176,6 +180,7 @@ def get_auth_token(code, client_id, client_secret)
         code: code,
         client_id: client_id,
         client_secret: client_secret,
+        redirect_uri: redirect_uri
     }.to_json
     req_options = {
         use_ssl: uri.scheme == 'https',
