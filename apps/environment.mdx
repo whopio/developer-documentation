@@ -94,15 +94,15 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 
 To make it easier to develop your app, we have created **developer mode**. This allows you to run your app locally, displaying real-time updates as you make changes.
 
-<Tip>
-  Make sure nothing is running on port `3000` before starting the proxy.
-</Tip>
-
 To get started using it, run the following command:
 
 ```bash
 yarn whop-proxy
 ```
+
+<Tip>
+This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`
+</Tip>
 
 This will start a proxy server on port `3000`, and will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Development URL** field.
 

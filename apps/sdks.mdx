@@ -141,9 +141,31 @@ The iFrame SDK allows you to interact with the browser and perform tasks such as
 
 ### Usage
 
+To interact with the browser, we need to setup background listeners that are required to communicate over [**Post Message**](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). To do this, you need to export a declare a function using the `createAppIframeSDK` function.
+
+```typescript lib/utils/iframe.ts
+import { createAppIframeSDK } from "@whop-apps/sdk";
+
+export const WhopApp = createAppIframeSDK({
+  onMessage: {
+    appPing: () => "app_pong",
+  },
+});
+```
+
+Once you have set this up, you can call the function anywhere in your app. You will need to import the function from the file you added it to. From there, you can use the `openExternalUrl` function to open a link in a new tab.
+
 ```typescript
-import { createAppIframeSDK } from '@whop-apps/sdk';
+"use client";
+import { WhopApp } from "@/lib/utils/iframe";
 
-[ADD USAGE HERE]
-
+export default function Home() {
+  return (
+    <button
+      onClick={() => WhopApp.openExternalUrl({ url: "https://google.com" })}
+    >
+      Open Whop.com
+    </button>
+  );
+}
 ```
