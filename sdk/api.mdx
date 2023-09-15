@@ -1,0 +1,64 @@
+---
+title: "Whop JSON"
+description: Use the SDK to use our API and return it in a formatted JSON response
+---
+
+The API SDK allows you to interact with the Whop API without having to manually write the requests. All responses are typed which gives you type safety.
+
+### Usage
+
+```typescript
+import { whopJson } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  // Using the users access token
+  const productsObject = await whopJson("/products", { headers });
+
+  // Using an API Key
+  const productsObject = await whopJson("/products", {
+    apiKey: process.env.WHOP_API_KEY,
+  });
+}
+```
+
+You need to swap out `/products` with the endpoint you want to use. There are a list of all available endpoints below.
+
+---
+
+## Authentication Methods
+
+There are two ways to authenticate with the API, you can either use the users access token, or you can use an API Key. If you are using the users access token, you must pass the `headers` object from `next/headers`. If you are using an API Key, you must pass the API Key as a string.
+
+### Access Token
+
+The access token is the users token that gets passed into the iFrames cookies. We recommend you use it to fetch information about the current user with the `/me` endpoint.
+
+### API Key
+
+The API key allows you to view information outside the scoped user/company. We recommend that you use this with all other endpoints that are not `/me`. Make sure this API key is not exposed to the client side, as it can be used to access all of your companies data.
+
+<Accordion title="How to get your API Key">
+
+To get the API key for your app, head to your [**app's settings page**](https://dash.whop.com/settings/developer). You will then see the API Key card, where you can copy or reset your key.
+
+<Frame>
+  <img src="https://imgur.com/q23TKtQ.png" />
+</Frame>
+
+</Accordion>
+
+### Available routes
+
+To view each endpoint in detail, and see the responses and parameters, click one of the options below:
+
+- [/companies/\{id\}](/apps/api/companies/retrieve)
+- [/companies/\{id\}/experiences](/apps/api/companies/company-experiences)
+- [/users/\{id\}](/apps/api/users/retrieve)
+- [/users/\{id\}/experiences](/apps/api/users/get-experiences)
+- [/experiences](/apps/api/experiences/list)
+- [/experiences/\{id\}](/apps/api/experiences/retrieve)
+- [/products](/apps/api/products/list)
+- [/products/\{id\}](/apps/api/products/retrieve)
+- [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)
+- [/notifications](/apps/api/notifications/send)

@@ -132,11 +132,19 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/overview"]
+      "pages": ["sdk/overview", "sdk/installation"]
     },
     {
       "group": "Authentication",
       "pages": ["sdk/validate-token", "sdk/fetch-token", "sdk/auth-error"]
+    },
+    {
+      "group": "API",
+      "pages": ["sdk/api"]
+    },
+    {
+      "group": "iFrame",
+      "pages": ["sdk/iframe"]
     }
   ],
   "footerSocials": {

@@ -1,0 +1,21 @@
+---
+title: "Auth Error Handling"
+description: "How to handle authentication errors"
+---
+
+This function will check if the error that is thrown, is an authentication error. You can use this to ensure the correct error is thrown.
+
+```typescript
+import { isAuthError, validateToken } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  try {
+    await validateToken({ headers });
+  } catch (error) {
+    if (isAuthError(error)) {
+      return <p>You are not allowed to access this page</p>;
+    }
+  }
+}
+```

@@ -1,0 +1,19 @@
+---
+title: Validate Token
+description: "Authenticate the user"
+---
+
+For this function, you need to get the user's token from the cookies, it is called `whop_user_token`.
+
+If you are using Next.js, you can use the `headers` object from `next/headers`
+
+You should use this on every page that you want to be gated.
+
+```typescript
+import { headers } from "next/headers";
+import { validateToken } from "@whop-apps/sdk";
+
+export default async function AdminPage() {
+  await validateToken({ headers });
+}
+```
