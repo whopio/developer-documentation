@@ -99,7 +99,7 @@ import { headers } from "next/headers";
 
 export default async function Home() {
   // Using the users access token
-  const productsObjcet = await whopJson("/products", { headers });
+  const productsObject = await whopJson("/products", { headers });
 
   // Using an API Key
   const productsObject = await whopJson("/products", {
