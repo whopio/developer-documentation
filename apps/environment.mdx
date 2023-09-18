@@ -90,11 +90,39 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 
 To make it easier to develop your app, we have created **developer mode**. This allows you to run your app locally, displaying real-time updates as you make changes.
 
-To get started using it, run the following command:
+To get started using it, install the package:
+
+<CodeGroup>
+```bash npm
+npm install @whop-apps/dev-proxy
+```
+
+```bash yarn
+yarn add @whop-apps/dev-proxy
+```
+
+```bash pnpm
+pnpm add @whop-apps/dev-proxy
+```
+
+</CodeGroup>
+
+Once you have installed the package, you can run the following command:
+
+<CodeGroup>
+```bash
+npx whop-proxy
+```
 
 ```bash
 yarn whop-proxy
 ```
+
+```bash
+pnpm whop-proxy
+```
+
+</CodeGroup>
 
 <Tip>
 This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`
