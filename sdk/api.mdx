@@ -5,11 +5,27 @@ description: Use the SDK to use our API and return it in a formatted JSON respon
 
 The API SDK allows you to interact with the Whop API without having to manually write the requests. All responses are typed which gives you type safety.
 
-The API SDK supports 2 modes, **user** and **server**.
+## Syntax
+
+The SDK has two main functions, `user` and `server`. These dictate if it uses the API key or access token. From here, you will be able to select which type of request you are sending, such as `GET` or `POST`. You will then need to pass the route you are requesting, and the parameters.
+
+The parameters object is typed, so you will be able to see what parameters are available for each endpoint.
+
+For example, if you wanted to use the `/companies/{id}` endpoint, you would pass the following parameters object:
+
+```
+{
+    params: { path: { id: "biz_XXXX" } },
+  }
+```
+
+---
 
 ## User Mode
 
-Use User Mode to make requests on behalf of the user. This will use the users access token to make requests. This is useful for getting information about the user, such as their name, email, and experiences. You will need to either pass the users access token, or the `headers` object from `next/headers`.
+Use User Mode to make requests on behalf of the user. This will use the users access token to make requests. This is useful for accessing information about the user, such as their username, or email.
+
+You will need to pass the `headers` object so the SDK can extract the access token.
 
 ### Usage
 
@@ -18,8 +34,7 @@ import { WhopAPI } from "@whop-apps/sdk";
 import { headers } from "next/headers";
 
 export default async function Home() {
-  // Using the users access token
-  const me = await WhopAPI.user({ headers }).GET("/me", {});
+  const me = WhopAPI.user({ headers }).GET("/me", {});
 }
 ```
 
@@ -38,8 +53,8 @@ import { WhopAPI } from "@whop-apps/sdk";
 
 export default async function Home() {
   // Using the users access token
-  const user = await WhopAPI.server().GET("/users/{id}", {
-    params: { path: { id: "user_XXXXXX" } },
+  const user = WhopAPI.server({ apiKey: "API_KEY" }).GET("/companies/{id}", {
+    params: { path: { id: "biz_XXXX" } },
   });
 }
 ```
@@ -70,35 +85,3 @@ To view each endpoint in detail, and see the responses and parameters, click one
 - [/products/\{id\}](/apps/api/products/retrieve)
 - [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)
 - [/notifications](/apps/api/notifications/send)
-
-### Code Examples
-
-Below are code examples for each endpoint. You can copy and paste these into your project to get started.
-
-<AccordionGroup>
-
-<Accordion title="/companies/{id}" >
-```typescript
-WhopAPI.server().GET("/companies/{id}", {
-  params: { path: { id: "biz_XXXX" } },
-});
-```
-</Accordion>
-
-<Accordion title="/companies/{id}/experiences" >
-```typescript
-WhopAPI.server().GET("/companies/{id}/experiences", {
-    params: { path: { id: "biz_XXXX" } },
-  });
-```
-</Accordion>
-
-<Accordion title="/users/{id}" >
-```typescript
-WhopAPI.server().GET("/users/{id}", {
-    params: { path: { id: "user_XXXX" } },
-  });
-```
-</Accordion>
-
-</AccordionGroup>
