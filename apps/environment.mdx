@@ -53,6 +53,7 @@ For the Whop SDK to work, you will need to add the following environment variabl
 
 - `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
 - `NEXT_PUBLIC_WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+- `WHOP_WEBHOOK_KEY`: Key used to verify **webhook signatures**. Get this from the webhooks section on the [**developer dashboard**](https://dash.whop.com/settings/developer).
 
 <AccordionGroup>
 
@@ -110,19 +111,21 @@ pnpm add @whop-apps/dev-proxy
 Once you have installed the package, you can run the following command:
 
 <CodeGroup>
-```bash
+```bash npm
 npx whop-proxy
 ```
 
-```bash
+```bash yarn
 yarn whop-proxy
 ```
 
-```bash
+```bash pnpm
 pnpm whop-proxy
 ```
 
 </CodeGroup>
+
+<br />
 
 <Tip>
 This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`
