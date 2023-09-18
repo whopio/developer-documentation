@@ -23,9 +23,21 @@ npx create-next-app@latest
 
 We have created an SDK to make it easier to build apps for Whop. This SDK handles all the authentication, and API requests. To install it, run the following command:
 
-```bash
+<CodeGroup>
+
+```bash npm
 npm install @whop-apps/sdk
 ```
+
+```bash yarn
+yarn add @whop-apps/sdk
+```
+
+```bash pnpm
+pnpm add @whop-apps/sdk
+```
+
+</CodeGroup>
 
 <Note>
   For more information on what the Whop SDK can do, head to [**this
@@ -91,24 +103,7 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 
 To make it easier to develop your app, we have created **developer mode**. This allows you to run your app locally, displaying real-time updates as you make changes.
 
-To get started using it, install the package:
-
-<CodeGroup>
-```bash npm
-npm install @whop-apps/dev-proxy
-```
-
-```bash yarn
-yarn add @whop-apps/dev-proxy
-```
-
-```bash pnpm
-pnpm add @whop-apps/dev-proxy
-```
-
-</CodeGroup>
-
-Once you have installed the package, you can run the following command:
+To get started, run the following command:
 
 <CodeGroup>
 ```bash npm
@@ -128,10 +123,10 @@ pnpm whop-proxy
 <br />
 
 <Tip>
-This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`
+This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `npx whop-proxy --proxyPort <port>`
 </Tip>
 
-This will start a proxy server on port `3000`, and will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Development URL** field.
+This will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Development URL** field.
 
 ![Developer Mode Guide](https://imgur.com/UnKVb6g.gif)
 
