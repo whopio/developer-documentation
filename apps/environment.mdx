@@ -7,7 +7,7 @@ description: "Guide on how to use our Next.js template"
 This page will teach you how to set up your project and install all the recommended and required dependencies.
 
 ```bash
-yarn create next-app
+npx create-next-app@latest
 ```
 
 <Note>
@@ -24,7 +24,7 @@ yarn create next-app
 We have created an SDK to make it easier to build apps for Whop. This SDK handles all the authentication, and API requests. To install it, run the following command:
 
 ```bash
-yarn add @whop-apps/sdk
+npm install @whop-apps/sdk
 ```
 
 <Note>
@@ -34,15 +34,11 @@ yarn add @whop-apps/sdk
 
 ---
 
-### Installing Frosted UI (Optional)
+### Installing Frosted UI
 
 [**Frosted UI**](https://storybook.whop.com) is a UI library created by Whop, it contains all the components used to build [**Whop**](https://whop.com). Although it is not required, we recommend you use it to keep the same look and feel as the rest of the platform.
 
-```bash
-yarn add @whop/frosted-ui
-```
-
-For more information on how to install Frosted UI, click [**here**](/apps/frosted)
+For information on how to install Frosted UI, click [**here**](https://github.com/whopio/frosted-ui)
 
 <Tip>
   We recommend using Frosted as it will sync color preferences with the user's
