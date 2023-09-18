@@ -68,10 +68,10 @@
           "group": "Whop Apps",
           "pages": [
             "apps/overview",
-            "apps/getting-started",
             "apps/environment",
             "apps/page-setup",
-            "apps/final-steps"
+            "apps/final-steps",
+            "apps/testing"
           ]
         }
       ]
