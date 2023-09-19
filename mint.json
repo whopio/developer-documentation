@@ -132,7 +132,7 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/overview", "sdk/installation"]
+      "pages": ["sdk/overview", "sdk/installation", "sdk/whop-proxy"]
     },
     {
       "group": "Authentication",

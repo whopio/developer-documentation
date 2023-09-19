@@ -1,0 +1,67 @@
+---
+title: Whop Proxy
+icon: globe
+description: How to use Whop Proxy
+---
+
+This proxy is designed to proxy traffic (ie requests) from an iframe to the localhost developer url of the developers local development server.
+In the proxy we fetch a user token and forward it to the app mimicking the behaviour of the cloudflare proxy in production.
+
+## Usage
+
+### Install
+
+This package is already included in the `@whop-apps/sdk` package. However, if you would like to install it on its own, you can run the following command:
+
+<CodeGroup>
+
+```bash npm
+npm install @whop-apps/dev-proxy
+```
+
+```bash yarn
+yarn add @whop-apps/dev-proxy
+```
+
+```bash pnpm
+pnpm add @whop-apps/dev-proxy
+```
+
+</CodeGroup>
+
+### Run
+
+<Note>
+  If you are using **NPM**, you need to add ```"whop-proxy": "whop-proxy"``` to
+  the **scripts** section of your `package.json` file.
+</Note>
+
+<CodeGroup>
+```bash npm
+npm run whop-proxy
+```
+
+```bash yarn
+yarn whop-proxy
+```
+
+```bash pnpm
+pnpm whop-proxy
+```
+
+</CodeGroup>
+
+### Configure
+
+The proxy can be configured using the following command line options:
+
+```bash
+Usage: npm whop-proxy [options]
+
+Options:
+
+--proxyPort <port>      The port the proxy should listen on (3000 by default)
+--upstreamPort <port>   The port the upstream server is listening on (set automatically by default)
+ --npmCommand <command>  The npm command to run to start the upstream server (dev by default)
+--command <command>     The command to run to start the upstream server (npm run dev by default)
+```
