@@ -1,0 +1,58 @@
+---
+title: Send a notification
+icon: envelope
+description: Send a notification to your users using the Notifications API.
+---
+
+There are 2 ways to notify members through Whop, either by sending a push notification to our mobile app or through the notifications tab on the website.
+
+---
+
+## Usage
+
+To send a notification, you need to make a `POST` request to the [**/notifications**](/apps/api/notifications/send) endpoint.
+
+If you are using our SDK, you can do it easily through the WhopAPI function. Here is an example:
+
+```typescript
+WhopAPI.server().POST("/notifications", {
+  body: {
+    topic_identifier: "string",
+    notification_data: {
+      all: {
+        subject: "string",
+        content: "string",
+      },
+    },
+    targets: [
+      {
+        experiences: ["string"],
+      },
+    ],
+  },
+});
+```
+
+### Topic Identifier
+
+The `topic_identifier` is a unique identifier for the notification you want to send. You can set that up in the Developer Dashboard:
+
+[INSERT GUIDE HERE ONCE FLOW IS DONE]
+
+### Notification data
+
+In this object, there are 3 keys: `all`, `in_app`, and `mobile`.
+
+The `in_app` key is used to send a notification to the users notification feed either on the Whop website, or mobile app. This is useful for less important notifications, such as XXX
+
+The `mobile` key is used to send a push notification to the users mobile device. This is useful for important and time sensitive notifications, such as alerting a user to a sneaker restock.
+
+The `all` key is used to send a notification to both the users notification feed and mobile device.
+
+In each of these, there are the `subject` and `content` keys. The `subject` key is used to specify the subject of the notification, while the `content` key is used to specify the description of the notification.
+
+### Targets
+
+The targets array is used to specify who should receive the notification. There are 2 ways to specify who should receive the notification, either by specifying the `experiences` key, or the `users` key.
+
+Each are an array, of either the `experience_id` or `user_id` respectively. Using `experiences` is the easiest way to send to all users of a specific experience, while using `users` is the easiest way to send to a specific user.

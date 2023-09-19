@@ -65,11 +65,21 @@ For information on how to install Frosted UI, click [**here**](https://github.co
 
 For the Whop SDK to work, you will need to add the following environment variables to your project:
 
-- `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app developer page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
-- `NEXT_PUBLIC_WHOP_APP_ID`: **APP ID** of the current app. Get this from the app developer page on whop dashboard. Looks like: `app_XXXXXXXX`
+- `WHOP_API_KEY`: **API key** used to access the Whop API. Get this from the app's settings page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
+- `NEXT_PUBLIC_WHOP_APP_ID`: **APP ID** of the current app. Get this from the apps' settings page on whop dashboard. Looks like: `app_XXXXXXXX`
 - `WHOP_WEBHOOK_KEY`: Key used to verify **webhook signatures**. Get this from the webhooks section on the [**developer dashboard**](https://dash.whop.com/settings/developer). You only need this if you are using our [**Webhook SDK**](/sdk/webhooks)
 
 <AccordionGroup>
+
+<Accordion title="Example ENV file" >
+
+```env
+WHOP_API_KEY=
+NEXT_PUBLIC_WHOP_APP_ID=
+WHOP_WEBHOOK_KEY=
+```
+
+</Accordion>
 
 <Accordion title="How to get WHOP_API_KEY" >
 

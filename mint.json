@@ -140,7 +140,7 @@
     },
     {
       "group": "API",
-      "pages": ["sdk/api"]
+      "pages": ["sdk/api", "sdk/notifications"]
     },
     {
       "group": "iFrame",
