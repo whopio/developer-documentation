@@ -143,6 +143,10 @@
       "pages": ["sdk/api", "sdk/notifications"]
     },
     {
+      "group": "Webhooks",
+      "pages": ["sdk/webhooks"]
+    },
+    {
       "group": "iFrame",
       "pages": ["sdk/iframe"]
     }
