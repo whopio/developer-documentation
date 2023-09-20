@@ -8,11 +8,6 @@ Once you have got the project created and the preresiquites installed, you can s
 
 ---
 
-<Note>
-  Sharkey wants to know which product the user owns, so he can show the correct
-  files. To get this information, he needs to use **page variables**.
-</Note>
-
 ### Page Variables
 
 To give the app information about the user accessing it, and details about the company, product, etc, we have added the ability to pass variables to the page through the URL. This allows you to create dynamic pages, and to access the data you need. For example, getting information about the membership attached to the user. An example of a URL would be:
@@ -87,12 +82,6 @@ export default async function HomePage({
 ```
 
 ---
-
-<Note>
-  Now that Sharkey knows which product the user is accessing, we need to ensure
-  they actually own it. To do this, we need to authenticate the user. This will
-  stop any bad actors from downloading his files.
-</Note>
 
 ### Authenticating a user
 
