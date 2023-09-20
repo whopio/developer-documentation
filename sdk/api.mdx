@@ -75,13 +75,18 @@ To get the API key for your app, head to your [**app's settings page**](https://
 
 To view each endpoint in detail, and see the responses and parameters, click one of the options below:
 
-- [/companies/\{id\}](/apps/api/companies/retrieve)
-- [/companies/\{id\}/experiences](/apps/api/companies/company-experiences)
-- [/users/\{id\}](/apps/api/users/retrieve)
-- [/users/\{id\}/experiences](/apps/api/users/get-experiences)
-- [/experiences](/apps/api/experiences/list)
-- [/experiences/\{id\}](/apps/api/experiences/retrieve)
-- [/products](/apps/api/products/list)
-- [/products/\{id\}](/apps/api/products/retrieve)
-- [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)
-- [/notifications](/apps/api/notifications/send)
+This table will help you find out which endpoint can be used for each mode.
+
+| Endpoint                                                                 | User Mode | Server Mode |
+| ------------------------------------------------------------------------ | --------- | ----------- |
+| [/companies/\{id\}](/apps/api/companies/retrieve)                        | YES       | YES         |
+| [/companies/\{id\}/experiences](/apps/api/companies/company-experiences) | YES       | YES         |
+| [/users/\{id\}](/apps/api/users/retrieve)                                | YES       | YES         |
+| [/users/\{id\}/experiences](/apps/api/users/get-experiences)             | YES       | YES         |
+| [/experiences](/apps/api/experiences/list)                               | YES       | YES         |
+| [/experiences/\{id\}](/apps/api/experiences/retrieve)                    | YES       | YES         |
+| [/products](/apps/api/products/list)                                     | YES       | YES         |
+| [/products/\{id\}](/apps/api/products/retrieve)                          | YES       | YES         |
+| [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)  | YES       | YES         |
+| [/notifications](/apps/api/notifications/send)                           | YES       | YES         |
+| [/me](/apps/api/users/me)                                                | YES       | NO          |

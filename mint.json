@@ -104,6 +104,10 @@
       "pages": ["apps/next-template"]
     },
     {
+      "group": "Me",
+      "pages": ["apps/api/me"]
+    },
+    {
       "group": "Companies",
       "pages": [
         "apps/api/companies/retrieve",
