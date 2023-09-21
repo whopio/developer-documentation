@@ -34,7 +34,9 @@ import { WhopAPI } from "@whop-apps/sdk";
 import { headers } from "next/headers";
 
 export default async function Home() {
-  const me = WhopAPI.user({ headers }).GET("/me", {});
+  const user = await WhopAPI.user({ headers }).GET("/me", {});
+
+  const username = user.data?.username;
 }
 ```
 
@@ -42,9 +44,7 @@ export default async function Home() {
 
 ## Server Mode
 
-Use Server Mode to make requests on behalf of the company. This will use the API key to make requests. This is useful for getting information about the company, such as the company name, email, and experiences. You will need to pass the API key as a string.
-
-You can either manually provide the API key, or the SDK will automatically fetch it from the **WHOP_API_KEY** environment variable.
+Use Server Mode to make requests on behalf of the app. This will use the API key to make requests. This is useful for getting information about the company, such as the company name, email, and experiences. The API will automatically be fetched from the environment variables.
 
 ### Usage
 
@@ -53,7 +53,7 @@ import { WhopAPI } from "@whop-apps/sdk";
 
 export default async function Home() {
   // Using the users access token
-  const user = WhopAPI.server({ apiKey: "API_KEY" }).GET("/companies/{id}", {
+  const user = await WhopAPI.server().GET("/companies/{id}", {
     params: { path: { id: "biz_XXXX" } },
   });
 }

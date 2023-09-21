@@ -136,11 +136,11 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/overview", "sdk/installation", "sdk/whop-proxy"]
+      "pages": ["sdk/installation", "sdk/whop-proxy"]
     },
     {
       "group": "Authentication",
-      "pages": ["sdk/validate-token", "sdk/fetch-token", "sdk/auth-error"]
+      "pages": ["sdk/validate-token", "sdk/fetch-token"]
     },
     {
       "group": "API",

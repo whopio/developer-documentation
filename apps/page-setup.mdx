@@ -6,6 +6,8 @@ description: "Guide on how to setup your pages"
 
 Once you have the project created and the preresiquites installed, you can start creating your pages. This section will cover how to pass information about the user to your app, and how to authenticate the user.
 
+Your app can have two different views, one for the company, and the other for the consumer. The **consumer view** is the page that the user will see when they are accessing your app from their **orders page**. The **company view** is the page that the company will see when they are accessing your app from the **dashboard**.
+
 ---
 
 ### Page Variables
@@ -13,7 +15,7 @@ Once you have the project created and the preresiquites installed, you can start
 TODO To give the app information about the signed in user, and details about the company, product, etc, we have added the ability to pass variables to the page through the URL. This allows you to create dynamic pages, and to access the data you need. For example, getting information about the membership attached to the user. An example of a URL would be:
 
 ```
-https://domain.com/hub/{companyId}/{productId}
+https://domain.com/user/{productId}
 ```
 
 Here are the variables you can access when the user is accessing your app:
@@ -24,12 +26,12 @@ Here are the variables you can access when the user is accessing your app:
 
 Here are the variables you can access when the user is accessing your app after purchasing:
 
-| Variable Name    | Description                                          |
-| ---------------- | ---------------------------------------------------- |
-| **productId**    | The ID of the product.            |
-| **companyId**    | The ID of the company     |
+| Variable Name    | Description              |
+| ---------------- | ------------------------ |
+| **productId**    | The ID of the product.   |
+| **companyId**    | The ID of the company    |
 | **membershipId** | The ID of the membership |
-| **planId**       | The ID of the plan         |
+| **planId**       | The ID of the plan       |
 
 </Accordion>
 
@@ -37,10 +39,10 @@ Here are the variables you can access when the user is accessing your app after 
 
 Here are the variables you can access from the dashboard once the app has been added to a product.
 
-| Variable Name    | Description                                      |
-| ---------------- | ------------------------------------------------ |
-| **productId**    | The ID of the product the user is accessing.     |
-| **companyId**    | The ID of the company the experience belongs to. |
+| Variable Name | Description                                      |
+| ------------- | ------------------------------------------------ |
+| **productId** | The ID of the product the user is accessing.     |
+| **companyId** | The ID of the company the experience belongs to. |
 
 </Accordion>
 
@@ -60,10 +62,9 @@ For instance, the file structure based on the earlier example would appear like:
 ```bash
 cool-app/
 ├─ app/
-│  ├─ hub/
-│  │  ├─ [companyId]/
-│  │  │  ├─ [productId]/
-│  │  │  │  ├─ page.tsx
+│  ├─ user/
+│  │  ├─ [productId]/
+│  │  │  ├─ page.tsx
 ```
 
 Once we have setup the correct structure in our project, we now need to retrieve the variables from the URL. In Next.js, this can be achieved with the following code:
@@ -72,9 +73,8 @@ Once we have setup the correct structure in our project, we now need to retrieve
 export default async function HomePage({
   params,
 }: {
-  params: { companyId: string; productId: string };
+  params: { productId: string };
 }) {
-  const companyId = params.companyId;
   const productId = params.productId;
 }
 ```
@@ -94,7 +94,7 @@ export default async function HomePage() {
 }
 ```
 
-This will validate the users token, and throw an error if the token is invalid.
+This will validate the users token, and throw an error if the token is invalid. We strongly recommend that you add this to all pages of your app.
 
 ---
 

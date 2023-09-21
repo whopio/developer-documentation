@@ -25,12 +25,12 @@ We have created an SDK to make it easier to build apps for Whop. This SDK handle
 
 <CodeGroup>
 
-```bash npm
-npm install @whop-apps/sdk
-```
-
 ```bash yarn
 yarn add @whop-apps/sdk
+```
+
+```bash npm
+npm install @whop-apps/sdk
 ```
 
 ```bash pnpm
@@ -111,7 +111,7 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 
 ---
 
-### Developer Mode
+### Running your app
 
 As the app is ran in an iFrame and proxied through Whop, localhost development will not work. To get around this, we have created **developer mode**. This allows you to run your app locally, displaying real-time updates as you make changes.
 
@@ -123,12 +123,13 @@ To get started, run the following command:
 </Note>
 
 <CodeGroup>
-```bash npm
-npm run whop-proxy
-```
 
 ```bash yarn
 yarn whop-proxy
+```
+
+```bash npm
+npm run whop-proxy
 ```
 
 ```bash pnpm
@@ -140,7 +141,7 @@ pnpm whop-proxy
 <br />
 
 <Tip>
-This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `npx whop-proxy --proxyPort <port>`
+This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`
 </Tip>
 
 This will allow you to access your app on `http://localhost:3000`. Head to the [**App Settings**](https://dash.whop.com/settings/developer) and add that into the **Development URL** field.
@@ -150,10 +151,5 @@ This will allow you to access your app on `http://localhost:3000`. Head to the [
 You can now turn on developer mode on your app, and it will automatically update as you make changes. This toggle will only be shown to your team members, and will not be shown to your users.
 
 ![Developer Mode Guide](https://imgur.com/w0MGzD0.gif)
-
-<Tip>
-  To get more information on how to use Developer Mode and the additional
-  commands, head to the [**Whop Proxy Page**](/sdk/whop-proxy).
-</Tip>
 
 ---
