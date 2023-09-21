@@ -1,0 +1,42 @@
+---
+title: Apps Monorepo Guide
+description: A guide on how to use the Apps Monorepo to build a new app.
+---
+
+To centralize all internal apps, we use a monorepo. This allows us to share code between apps and to have a single place to manage them all.
+
+## Getting Started
+
+To get started, you'll need to clone the repository and install the dependencies.
+
+```bash
+git clone https://github.com/whopio/apps-monorepo.git
+cd apps-monorepo
+pnpm i
+```
+
+## Creating a New App
+
+Now that you have cloned the repository, you need to create a new app. To do this, run the following command:
+
+```bash
+pnpm turbo gen
+```
+
+1. This will open a prompt, click the `new app` option
+2. Enter the name of your app when prompted
+3. If you would like to use Neon as your database, select `yes`. This will setup the database for you.
+4. Your app will now be created in the `apps` folder.
+5. CD into your app and run `pnpm run dev` to start the app. The name of the folder will be the same as the name you entered in step 2.
+
+Now that you have setup your project workspace, you will need to create your app in Whop to get the values required for the SDK to work. You can find the guide on how to do this [**here**](/apps/testing).
+
+Before you can run your app locally, you will need to populate the `.env` file with the correct values. You can learn how to get these [**here**](/apps/environment#environment-variables).
+
+Once the `.env` file is populated, you can run `pnpm whop-proxy` to start the proxy server. This will allow you to run your app locally and see real-time changes in Whop. For more details, click [**here**](/apps/environment#running-your-app).
+
+---
+
+## Next steps
+
+You now have everything you need to get started creating an app. We recommend you read through the [**Apps Guide**](/apps/page-setup) to learn how to use the SDK and how to structure your project.
