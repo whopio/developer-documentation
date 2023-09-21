@@ -6,22 +6,20 @@ description: "Guide on how to use our Next.js template"
 
 This page will teach you how to set up your project and install all the recommended and required dependencies.
 
+<Note>
+  If you are using one of our templates, you can skip the first 2 steps as they
+  are already installed.
+</Note>
+
 ```bash
 npx create-next-app@latest
 ```
 
-<Note>
-  This guide uses the [**Next.js App Directory**](https://nextjs.org/docs/app),
-  but everything you learn can be applied to any Framework
-</Note>
-
----
-
 ### Installing the Whop App SDK
 
-<Tip>If you are using one of our templates, you can skip this step.</Tip>
+We have created a SDK to make it easier to build apps on Whop, it allows you to easily make requests to the Whop API, interact with the browser, and more.
 
-We have created a SDK to make it easier to build apps on Whop. This SDK handles all the authentication, and API requests. To install it, run the following command:
+To install it, run the following command:
 
 <CodeGroup>
 
@@ -113,7 +111,7 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 
 ### Running your app
 
-As the app is ran in an iFrame and proxied through Whop, localhost development will not work. To get around this, we have created **developer mode**. This allows you to run your app locally, displaying real-time updates in the browser as you make changes.
+Since the app operates within an iFrame and is proxied via Whop, local development on localhost isn't possible. To address this, we've introduced **developer mode**. This mode enables you to run your app locally, reflecting immediate updates in the iFrame as you modify your code.
 
 To get started, run the following command:
 
