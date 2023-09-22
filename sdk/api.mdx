@@ -5,9 +5,9 @@ description: Use the SDK to use our API and return it in a formatted JSON respon
 
 The API SDK allows you to interact with the Whop API without having to manually write the requests. All responses are typed which gives you type safety.
 
-## Syntax
+---
 
-The SDK has two main functions, `user` and `server`. These dictate if it uses the API key or access token. From here, you will be able to select which type of request you are sending, such as `GET` or `POST`. You will then need to pass the route you are requesting, and the parameters.
+The SDK has two main functions, `user` and `server`. These dictate if it uses the API key or access token, and what sort of response you will get. From here, you will be able to select which type of request you are sending, such as `GET` or `POST`. You will then need to pass the route you are requesting, and the parameters.
 
 The parameters object is typed, so you will be able to see what parameters are available for each endpoint.
 
@@ -75,18 +75,16 @@ To get the API key for your app, head to your [**app's settings page**](https://
 
 To view each endpoint in detail, and see the responses and parameters, click one of the options below:
 
-This table will help you find out which endpoint can be used for each mode.
+- [/companies/\{id\}](/apps/api/companies/retrieve)
+- [/companies/\{id\}/experiences](/apps/api/companies/company-experiences)
+- [/users/\{id\}](/apps/api/users/retrieve)
+- [/users/\{id\}/experiences](/apps/api/users/get-experiences)
+- [/experiences](/apps/api/experiences/list)
+- [/experiences/\{id\}](/apps/api/experiences/retrieve)
+- [/products](/apps/api/products/list)
+- [/products/\{id\}](/apps/api/products/retrieve)
+- [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)
+- [/notifications](/apps/api/notifications/send)
+- [/me](/apps/api/users/me)
 
-| Endpoint                                                                 | User Mode | Server Mode |
-| ------------------------------------------------------------------------ | --------- | ----------- |
-| [/companies/\{id\}](/apps/api/companies/retrieve)                        | YES       | YES         |
-| [/companies/\{id\}/experiences](/apps/api/companies/company-experiences) | YES       | YES         |
-| [/users/\{id\}](/apps/api/users/retrieve)                                | YES       | YES         |
-| [/users/\{id\}/experiences](/apps/api/users/get-experiences)             | YES       | YES         |
-| [/experiences](/apps/api/experiences/list)                               | YES       | YES         |
-| [/experiences/\{id\}](/apps/api/experiences/retrieve)                    | YES       | YES         |
-| [/products](/apps/api/products/list)                                     | YES       | YES         |
-| [/products/\{id\}](/apps/api/products/retrieve)                          | YES       | YES         |
-| [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)  | YES       | YES         |
-| [/notifications](/apps/api/notifications/send)                           | YES       | YES         |
-| [/me](/apps/api/users/me)                                                | YES       | NO          |
+You can also view all of the endpoints by clicking on the [**API Reference**](/apps/api) tab.

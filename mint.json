@@ -96,14 +96,6 @@
     },
 
     {
-      "group": "Additional Resources",
-      "pages": ["apps/sdks", "apps/frosted", "apps/webhooks"]
-    },
-    {
-      "group": "Templates",
-      "pages": ["apps/next-template"]
-    },
-    {
       "group": "Me",
       "pages": ["apps/api/me"]
     },

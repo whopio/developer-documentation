@@ -12,7 +12,19 @@ Your app can have two different views, one for the company, and the other for th
 
 ### Page Variables
 
-TODO To give the app information about the signed in user, and details about the company, product, etc, we have added the ability to pass variables to the page through the URL. This allows you to create dynamic pages, and to access the data you need. For example, getting information about the membership attached to the user. An example of a URL would be:
+To allow for your app to get information about the product and company, we have built a system that passes these bits of data to your app through the URL. For example, if an app wants to generate a code for all its users, it won't know which business is using it, so they will need format their URL like this to get that information:
+
+```
+https://domain.com/admin/{companyId}
+```
+
+When a user now access your app, this will be the URL that is used, with the company ID being passed in:
+
+```
+https://domain.com/admin/biz_XXX
+```
+
+Another example would be that if the app needs to know the ID of the product, so it can fetch the correct data from its database, they will format their URL like this:
 
 ```
 https://domain.com/user/{productId}
@@ -83,7 +95,7 @@ export default async function HomePage({
 
 ### Authenticating a user
 
-To ensure that the user is authenticated, we can add the following line of code:
+To ensure that the user is authenticated and is allowed to access your app, you will need to validate their authentication cookie. This can be done with the following code using the SDK:
 
 ```typescript
 import { headers } from "next/headers";
@@ -95,6 +107,10 @@ export default async function HomePage() {
 ```
 
 This will validate the users token, and throw an error if the token is invalid. We strongly recommend that you add this to all pages of your app.
+
+If you are not using the SDK, you can still implement this functionality.
+
+[TODO ADD STEP BY STEP GUIDE]
 
 ---
 
