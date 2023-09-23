@@ -6,6 +6,122 @@ info:
 servers:
   - url: https://api.whop.com
 paths:
+  "/companies/{company_id}/line_items/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: get_api_v5_companies_id_line_items_id
+      summary: Retrieve a line item
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LineItemResponse"
+
+      description: Returns information about the line item
+    delete:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: delete_api_v5_companies_id_line_items_id
+      summary: Delete a line item
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+
+      description: Deletes a line item
+  "/companies/{company_id}/line_items":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: post_api_v5_companies_id_line_items
+      summary: Create a line item
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LineItemBody"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LineItemBody"
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: get_api_v5_companies_id_line_items
+      summary: Retrieve a companies line items
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LineItemResponse"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+
   "/companies/{id}":
     get:
       security:
@@ -86,7 +202,6 @@ paths:
         - me
       operationId: get_api_v5_me
       summary: Fetch the current user
-
       responses:
         "200":
           description: A successful response
@@ -112,7 +227,6 @@ paths:
           description: The ID of the user, which will look like user_*************
           schema:
             type: string
-
       responses:
         "200":
           description: A successful response
@@ -142,7 +256,6 @@ paths:
           description: The ID of the user, which will look like user_*************
           schema:
             type: string
-
       responses:
         "200":
           description: A successful response
@@ -176,7 +289,6 @@ paths:
         - experiences
       operationId: get_api_v5_experiences
       summary: List Experiences
-
       responses:
         "200":
           description: A successful response
@@ -213,7 +325,6 @@ paths:
           description: The ID of the experience, which will look like exp_*************
           schema:
             type: string
-
       responses:
         "200":
           description: A successful response
@@ -235,7 +346,6 @@ paths:
         - products
       operationId: get_api_v5_products
       summary: List Products
-
       responses:
         "200":
           description: A successful response
@@ -274,7 +384,6 @@ paths:
             or pass_*************
           schema:
             type: string
-
       responses:
         "200":
           description: A successful response
@@ -304,7 +413,6 @@ paths:
             or pass_*************
           schema:
             type: string
-
       responses:
         "200":
           description: A successful response
@@ -404,6 +512,55 @@ components:
       properties:
         message:
           type: string
+    LineItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        base_currency:
+          type: string
+        description:
+          type: string
+        allow_multiple_quantity:
+          type: boolean
+        metadata:
+          type: object
+        name:
+          type: string
+        created_at:
+          type: integer
+      required:
+        - id
+        - amount
+        - base_currency
+        - description
+        - allow_multiple_quantity
+        - metadata
+        - name
+        - created_at
+    LineItemBody:
+      type: object
+      properties:
+        amount:
+          type: integer
+        base_currency:
+          type: string
+        description:
+          type: string
+        allow_multiple_quantity:
+          type: boolean
+        metadata:
+          type: object
+        name:
+          type: string
+      required:
+        - amount
+        - base_currency
+        - description
+        - allow_multiple_quantity
+        - metadata
     NotificationBody:
       type: object
       properties:

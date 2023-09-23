@@ -123,6 +123,15 @@
       "pages": ["apps/api/users/retrieve", "apps/api/users/get-experiences"]
     },
     {
+      "group": "Line Items",
+      "pages": [
+        "apps/api/lineitems/list",
+        "apps/api/lineitems/retrieve",
+        "apps/api/lineitems/create",
+        "apps/api/lineitems/delete"
+      ]
+    },
+    {
       "group": "Notifications",
       "pages": ["apps/api/notifications/send"]
     },
