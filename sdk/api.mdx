@@ -1,0 +1,90 @@
+---
+title: "Whop API"
+description: Use the SDK to use our API and return it in a formatted JSON response
+---
+
+The API SDK allows you to interact with the Whop API without having to manually write the requests. All responses are typed which gives you type safety.
+
+---
+
+The SDK has two main functions, `user` and `server`. These dictate if it uses the API key or access token, and what sort of response you will get. From here, you will be able to select which type of request you are sending, such as `GET` or `POST`. You will then need to pass the route you are requesting, and the parameters.
+
+The parameters object is typed, so you will be able to see what parameters are available for each endpoint.
+
+For example, if you wanted to use the `/companies/{id}` endpoint, you would pass the following parameters object:
+
+```
+{
+  params: { path: { id: "biz_XXXX" } },
+}
+```
+
+---
+
+## User Mode
+
+Use User Mode to make requests on behalf of the user. This will use the users access token to make requests. This is useful for accessing information about the user, such as their username, or email.
+
+You will need to pass the `headers` object so the SDK can extract the access token.
+
+### Usage
+
+```typescript
+import { WhopAPI } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  const user = await WhopAPI.user({ headers }).GET("/me", {});
+
+  const username = user.data?.username;
+}
+```
+
+---
+
+## Server Mode
+
+Use Server Mode to make requests on behalf of the app. This will use the API key to make requests. This is useful for getting information about the company, such as the company name, email, and experiences. The API will automatically be fetched from the environment variables.
+
+### Usage
+
+```typescript
+import { WhopAPI } from "@whop-apps/sdk";
+
+export default async function Home() {
+  // Using the users access token
+  const companyInformation = await WhopAPI.server().GET("/companies/{id}", {
+    params: { path: { id: "biz_XXXX" } },
+  });
+}
+```
+
+<Accordion title="How to get your API Key">
+
+To get the API key for your app, head to your [**app's settings page**](https://dash.whop.com/settings/developer). You will then see the API Key card, where you can copy or reset your key.
+
+<Frame>
+  <img src="https://imgur.com/q23TKtQ.png" />
+</Frame>
+
+</Accordion>
+
+---
+
+## Available routes
+
+To view each endpoint in detail, and see the responses and parameters, click one of the options below:
+
+- [/companies/\{id\}](/apps/api/companies/retrieve)
+- [/companies/\{id\}/experiences](/apps/api/companies/company-experiences)
+- [/users/\{id\}](/apps/api/users/retrieve)
+- [/users/\{id\}/experiences](/apps/api/users/get-experiences)
+- [/experiences](/apps/api/experiences/list)
+- [/experiences/\{id\}](/apps/api/experiences/retrieve)
+- [/products](/apps/api/products/list)
+- [/products/\{id\}](/apps/api/products/retrieve)
+- [/products/\{id\}/experiences](/apps/api/products/retrieve-experiences)
+- [/notifications](/apps/api/notifications/send)
+- [/me](/apps/api/users/me)
+
+You can also view all of the endpoints by clicking on the [**API Reference**](/apps/api) tab.

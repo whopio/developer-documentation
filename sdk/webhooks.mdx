@@ -1,0 +1,73 @@
+---
+title: "Receiving Webhooks"
+description: "How to receive webhooks in your app"
+---
+
+Webhooks are a way for your app to receive notifications from Whop when certain events occur, such as when a company purchases your app, or a user cancels.
+
+<Note>
+  To learn more about what events we send, and the data we send with them, see
+  [Webhook Events](/webhooks).
+</Note>
+
+This guide will walk you through how to use the SDK to handle webhooks events in your app.
+
+---
+
+### Preresiquites
+
+For enhanced security, the SDK validates the webhooks signature. This is a string that gets sent in the headers, and is used to allow your server to verify that the request is coming from Whop. To get the signature, you need to get the webhook secret from the Apps Dashboard.
+
+![Getting the webhook Secret](https://imgur.com/6AY16BV.gif)
+
+Once you have the secret, you need to add it to your environment variables. The name of the variable should be `WHOP_WEBHOOK_KEY`.
+
+---
+
+### Usage
+
+In your Route Handler / API Endpoint, you need to import the following:
+
+```js
+import { makeWebhookHandler } from "@whop-apps/sdk";
+```
+
+Once you have imported `makeWebhookHandler`, you can use it to create a webhook handler function. This should be done at the module level of the file, so that it is only created once.
+
+```js
+const handleWebhook = makeWebhookHandler();
+```
+
+Now, you can create your normal route handler. In this example, we are using Next.js in the App Directory.
+
+```js
+import { makeWebhookHandler } from "@whop-apps/sdk";
+import { NextRequest } from "next/server";
+
+const handleWebhook = makeWebhookHandler();
+
+export async function POST(req: NextRequest) {
+  return handleWebhook(req, {
+    membershipWentValid({ action, data }) {
+      // Handle the event
+    },
+  });
+}
+```
+
+In this example, we are creating a function to handle `POST` requests. We then return the `handleWebhook` function that we created earlier, passing in the `req` object we got from the request, and an object containing the event we want to handle.
+
+Inside of `membershipWentValid`, we can now handle the event. You will see that `action` and `data` have been passed in. `action` is a string and is the name of the event, and `data` is the data that was sent with the event. Data is also typed, so you can see what data is available for each event.
+
+There are currently 4 events that you can handle:
+
+- membershipWentValid
+- membershipWentInvalid
+- paymentSucceeded
+- paymentFailed
+
+---
+
+### Responses
+
+The Whop server does not read any response bodies, it only checks for a **200** status code. If you do not send a **200** status code, the server will retry the webhook up to 3 times. This SDK will automatically send a successful response for you, so you do not need to worry about it.

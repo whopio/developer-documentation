@@ -1,0 +1,1015 @@
+openapi: 3.1.0
+info:
+  title: Whop Apps API
+  description: The Whop Apps API
+  version: v5
+servers:
+  - url: https://api.whop.com
+paths:
+  "/companies/{company_id}/line_items/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: get_api_v5_companies_id_line_items_id
+      summary: Retrieve a line item
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LineItemResponse"
+
+      description: Returns information about the line item
+    delete:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: delete_api_v5_companies_id_line_items_id
+      summary: Delete a line item
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+
+      description: Deletes a line item
+  "/companies/{company_id}/line_items":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: post_api_v5_companies_id_line_items
+      summary: Create a line item
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LineItemBody"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LineItemBody"
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - line_items
+      operationId: get_api_v5_companies_id_line_items
+      summary: Retrieve a companies line items
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LineItemResponse"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+
+  "/companies/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - companies
+      operationId: get_api_v5_companies_id
+      summary: Retrieve Company Information
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Experience"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns information about the company
+  "/companies/{id}/experiences":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - companies
+      operationId: get_api_v5_companies_id_experiences
+      summary: Retrieve a companies experiences
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the experience, which will look like exp_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Experience"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns a list of experiences for a company
+  "/me":
+    get:
+      security:
+        - ApiAuth: [user]
+      tags:
+        - me
+      operationId: get_api_v5_me
+      summary: Fetch the current user
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      description: Returns information about the user
+  "/users/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - users
+      operationId: get_api_v5_users_id
+      summary: Fetch a user by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user, which will look like user_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns information about the user
+  "/users/{id}/experiences":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - users
+      operationId: get_api_v5_users_id_experiences
+      summary: Retrieve a users experiences
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the user, which will look like user_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyExperience"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns a list of experiences for a user
+  "/experiences":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - experiences
+      operationId: get_api_v5_experiences
+      summary: List Experiences
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyExperience"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns a list of experiences
+  "/experiences/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - experiences
+      operationId: get_api_v5_experiences_id
+      summary: Retrieve an experience
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the experience, which will look like exp_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyExperience"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+      description: Returns information about an experience
+  "/products":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - products
+      operationId: get_api_v5_products
+      summary: List Products
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns a list of products
+  "/products/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - products
+      operationId: get_api_v5_products_id
+      summary: Retrieve a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description:
+            The ID of the product, which will look like prod_*************
+            or pass_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns information about a product
+  "/products/{id}/experiences":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - products
+      operationId: get_api_v5_products_id_experiences
+      summary: Retrieve all experiences for a product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description:
+            The ID of the product, which will look like prod_*************
+            or pass_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyExperience"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns the experiences attached to a product
+  "/notifications":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - notifications
+      operationId: post_api_v5_notifications
+      summary: Send a Notification
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          description:
+            Your API key, which can be found on the settings page for your
+            App. You must prepend your key with the word 'Bearer', which will look like
+            `Bearer ***************************`
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      description: Sends a notification to a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationBody"
+components:
+  securitySchemes:
+    WebhookSignature:
+      type: apiKey
+      in: header
+      name: x-whop-signature
+    ApiAuth:
+      type: http
+      scheme: bearer
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InvalidParameters:
+      description: Invalid Parameters
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    LineItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        base_currency:
+          type: string
+        description:
+          type: string
+        allow_multiple_quantity:
+          type: boolean
+        metadata:
+          type: object
+        name:
+          type: string
+        created_at:
+          type: integer
+      required:
+        - id
+        - amount
+        - base_currency
+        - description
+        - allow_multiple_quantity
+        - metadata
+        - name
+        - created_at
+    LineItemBody:
+      type: object
+      properties:
+        amount:
+          type: integer
+        base_currency:
+          type: string
+        description:
+          type: string
+        allow_multiple_quantity:
+          type: boolean
+        metadata:
+          type: object
+        name:
+          type: string
+      required:
+        - amount
+        - base_currency
+        - description
+        - allow_multiple_quantity
+        - metadata
+    NotificationBody:
+      type: object
+      properties:
+        topic_identifier:
+          type: string
+        targets:
+          type: array
+          items:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  type: string
+              experiences:
+                type: array
+                items:
+                  type: string
+        notification_data:
+          type: object
+          properties:
+            in_app:
+              $ref: "#/components/schemas/NotificationContent"
+            mobile:
+              $ref: "#/components/schemas/NotificationContent"
+            all:
+              $ref: "#/components/schemas/NotificationContent"
+      required:
+        - topic_identifier
+        - targets
+        - notification_data
+
+    NotificationContent:
+      type: object
+      properties:
+        subject:
+          type: string
+        content:
+          type: string
+      required:
+        - subject
+        - content
+
+    NotificationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "created"
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the product, which will look like
+            prod_************* or pass_*************
+        created_at:
+          type: number
+          description: The date the product was created
+        name:
+          type: string
+          description: The name of the product
+      additionalProperties: false
+      required:
+        - id
+        - created_at
+        - name
+    CompanyExperience:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the experience, which will look like
+            exp_*************
+        created_at:
+          type: number
+          description: The date the experience was created
+        name:
+          type: string
+          description: The name of the experience
+        company_id:
+          type: string
+          description: The ID of the Company, which will look like
+            biz_*************
+      additionalProperties: false
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        email:
+          type: string
+          description: The email of the user
+        username:
+          type: string
+          description: The name of the user
+        profile_pic_url:
+          type: string
+          description: The URL of the user's profile picture
+      additionalProperties: false
+      required:
+        - id
+        - email
+        - username
+        - profile_pic_url
+    Pagination:
+      type: object
+      properties:
+        current_page:
+          type: number
+          description: Current page number
+        total_pages:
+          type: number
+          description: Total number of pages
+        next_page:
+          type: number
+          description: Next page number
+        prev_page:
+          type: number
+          description: Previous page number
+        total_count:
+          type: number
+          description: Total number of records
+      additionalProperties: false
+      required:
+        - current_page
+        - total_pages
+        - next_page
+        - prev_page
+        - total_count
+
+    Experience:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the Company, which will look like biz_*************
+        created_at:
+          type: number
+          description: The date the company was created
+        title:
+          type: string
+          description: The title of the company
+        image_url:
+          type: string
+          description: The URL of the company's image
+        authorized_user:
+          $ref: "#/components/schemas/AuthorizedUser"
+      additionalProperties: false
+      required:
+        - id
+        - created_at
+        - title
+        - image_url
+
+    AuthorizedUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the authorized user
+        email:
+          type: string
+          description: The email of the authorized user
+        role:
+          type: string
+          description: The role of the user
+      additionalProperties: false
+      required:
+        - id
+        - username
+        - email
+        - role
+
+    WebhookMembership:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        created_at:
+          type: number
+          description: The time at which the Membership was created. Measured in seconds since the Unix epoch.
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        status:
+          type: string
+          enum:
+            - trialing
+            - active
+            - past_due
+            - completed
+            - canceled
+            - expired
+            - unresolved
+          description: The status of the membership
+        valid:
+          type: boolean
+          description: Whether or not the membership is valid
+        cancel_at_period_end:
+          type: boolean
+          description: Whether or not this membership is scheduled to cancel at the end of the renewal period.
+        license_key:
+          type: string
+          description: The license key for the membership
+        metadata:
+          type: object
+          description: The metadata for the membership
+        quantity:
+          type: number
+          description: The quantity purchased
+        expires_at:
+          type: number
+          description: The time of when the Membership is set to go expired
+        renewal_period_start:
+          type: number
+          description: The UTC timestamp of when the Membership will begin
+        renewal_period_end:
+          type: number
+          description: The UTC timestamp of when the Membership will end
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to first purchase / generate the membership.
+      required:
+        - id
+        - created_at
+        - product_id
+        - plan_id
+        - status
+        - valid
+        - quantity
+
+    WebhookPayment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the payment, which will look like pay_*************
+        created_at:
+          type: number
+          description: The time at which the Payment was created. Measured in seconds since the Unix epoch. Does not necessarily reflect the time the Payment was successful.
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        status:
+          type: string
+          enum:
+            - succeeded
+            - past_due
+            - refunded
+            - partially_refunded
+            - failed
+          description: The status of the payment
+        subtotal:
+          type: number
+          description: The amount paid by the User, before any discounts or taxes
+        final_amount:
+          type: number
+          description: The total amount paid by the User, including any discounts or taxes
+        currency:
+          type: string
+          description: The three letter currency the Payment was made in
+        refunded_amount:
+          type: number
+          description: The amount that was refunded to the User (if applicable)
+        line_item_id:
+          type: string
+          description: The line item this receipt was purchased with. This is for in-app purchases.
+        last_payment_attempt:
+          type: string
+          description: The UTC timestamp of the last time the Payment was attempted
+        paid_at:
+          type: number
+          description: The time at which the Payment was successfully paid at. Measured in seconds since the Unix epoch.
+        refunded_at:
+          type: number
+          description: The UTC timestamp of the date the Payment was refunded (if applicable)
+        payments_failed:
+          type: number
+          description: The number of times the Payment has failed
+        next_payment_attempt:
+          type: number
+          description: The UTC timestamp of the next time the Payment will be attempted
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to process the payment.
+      required:
+        - id
+        - created_at
+        - product_id
+        - membership_id
+        - status
+        - subtotal
+        - final_amount
+        - currency
+        - payments_failed
+
+webhooks:
+  membership-went-valid:
+    post:
+      operationId: membership-went-valid
+      security:
+        - WebhookSignature: []
+      summary: When a membership is purchased and goes valid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - membership.went_valid
+                  example: "membership.went_valid"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/WebhookMembership"
+              required:
+                - action
+                - version
+                - data
+        required: true
+  membership-went-invalid:
+    post:
+      operationId: membership-went-invalid
+      security:
+        - WebhookSignature: []
+      summary: When a membership goes invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - membership.went_invalid
+                  example: "membership.went_invalid"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/WebhookMembership"
+              required:
+                - action
+                - version
+                - data
+        required: true
+  payment-succeeded:
+    post:
+      operationId: payment-succeeded
+      security:
+        - WebhookSignature: []
+      summary: When a payment is successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - payment.succeeded
+                  example: "payment.succeeded"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/WebhookPayment"
+              required:
+                - action
+                - version
+                - data
+        required: true
+  payment-failed:
+    post:
+      operationId: payment-failed
+      security:
+        - WebhookSignature: []
+      summary: When a payment fails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - payment.failed
+                  example: "payment.failed"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/WebhookPayment"
+              required:
+                - action
+                - version
+                - data
+        required: true

@@ -102,7 +102,7 @@ When using the App Directory in Next.js, you will need to configure your `layout
 ```javascript
 "use client";
 import { Toaster, TooltipProvider } from "@whop/frosted-ui";
-import "@whop/frosted-ui/index.css";
+import "@whop/frosted-ui/disz/index.css";
 
 export default function RootLayout({
   children,
@@ -128,7 +128,7 @@ When using `pages` in Next.js, you will need to configure your `_app.tsx`
 ```javascript
 import type { AppProps } from "next/app";
 import { TooltipProvider, Toaster } from "@whop/frosted-ui";
-import "@whop/frosted-ui/index.css";
+import "@whop/frosted-ui/disz/index.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

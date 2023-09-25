@@ -33,7 +33,11 @@
   "tabs": [
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "apps/api"
+    },
+    {
+      "name": "SDK Reference",
+      "url": "sdk"
     }
   ],
   "redirects": [
@@ -53,11 +57,24 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["introduction", "how-whop-works"]
+      "pages": ["introduction", "what-can-i-sell"]
     },
     {
-      "group": "Selling your software",
-      "pages": ["oauth-license", "license-keys", "oauth"]
+      "group": "What can I sell with Whop?",
+      "pages": [
+        "license-keys",
+        "oauth",
+        {
+          "group": "Whop Apps",
+          "pages": [
+            "apps/overview",
+            "apps/environment",
+            "apps/page-setup",
+            "apps/final-steps",
+            "apps/testing"
+          ]
+        }
+      ]
     },
     {
       "group": "Webhooks",
@@ -70,115 +87,73 @@
 
     {
       "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
+      "pages": ["apps/api/authentication"]
+    },
+
+    {
+      "group": "Introduction",
+      "pages": ["apps/overview"]
+    },
+
+    {
+      "group": "Me",
+      "pages": ["apps/api/me"]
     },
     {
-      "group": "OAuth",
+      "group": "Companies",
       "pages": [
-        "api-reference/oauth/obtain-a-users-access-token",
-        "api-reference/oauth/retrieve-user",
-        "api-reference/oauth/retrieve-user-memberships"
-      ]
-    },
-    {
-      "group": "Memberships",
-      "pages": [
-        "api-reference/memberships/list-memberships",
-        "api-reference/memberships/validate-a-license-key",
-        "api-reference/memberships/retrieve-a-membership",
-        "api-reference/memberships/terminate-a-membership",
-        "api-reference/memberships/update-a-membership",
-        "api-reference/memberships/cancel-a-membership",
-        "api-reference/memberships/add-free-days-to-a-membership"
+        "apps/api/companies/retrieve",
+        "apps/api/companies/company-experiences"
       ]
     },
     {
       "group": "Products",
       "pages": [
-        "api-reference/products/list-products",
-        "api-reference/products/retrieve-a-product",
-        "api-reference/products/update-a-product"
-      ]
-    },
-    {
-      "group": "Plans",
-      "pages": [
-        "api-reference/plans/list-plans",
-        "api-reference/plans/retrieve-a-plan",
-        "api-reference/plans/update-a-plan",
-        "api-reference/plans/create-a-plan",
-        "api-reference/plans/create-a-quick-link"
+        "apps/api/products/list",
+        "apps/api/products/retrieve",
+        "apps/api/products/retrieve-experiences"
       ]
     },
     {
       "group": "Experiences",
+      "pages": ["apps/api/experiences/list", "apps/api/experiences/retrieve"]
+    },
+    {
+      "group": "Users",
+      "pages": ["apps/api/users/retrieve", "apps/api/users/get-experiences"]
+    },
+    {
+      "group": "Line Items",
       "pages": [
-        "api-reference/experiences/list-experiences",
-        "api-reference/experiences/retrieve-an-experience",
-        "api-reference/experiences/update-an-experience",
-        "api-reference/experiences/delete-an-experience"
+        "apps/api/lineitems/list",
+        "apps/api/lineitems/retrieve",
+        "apps/api/lineitems/create",
+        "apps/api/lineitems/delete"
       ]
     },
     {
-      "group": "Checkout Sessions",
-      "pages": [
-        "api-reference/checkout-sessions/create-a-checkout-session",
-        "api-reference/checkout-sessions/retrieve-a-checkout-session",
-        "api-reference/checkout-sessions/list-checkout-sessions",
-        "api-reference/checkout-sessions/delete-a-checkout-session"
-      ]
+      "group": "Notifications",
+      "pages": ["apps/api/notifications/send"]
     },
     {
-      "group": "Companies",
-      "pages": ["api-reference/companies/retrieve-a-company"]
+      "group": "Getting started",
+      "pages": ["sdk/installation", "sdk/whop-proxy"]
     },
     {
-      "group": "Customers",
-      "pages": [
-        "api-reference/customers/list-customers",
-        "api-reference/customers/retrieve-customer"
-      ]
+      "group": "Authentication",
+      "pages": ["sdk/validate-token", "sdk/fetch-token"]
     },
     {
-      "group": "Members",
-      "pages": [
-        "api-reference/members/list-members",
-        "api-reference/members/retrieve-member"
-      ]
-    },
-    {
-      "group": "Payments",
-      "pages": [
-        "api-reference/payments/list-payments",
-        "api-reference/payments/retrieve-a-payment"
-      ]
-    },
-    {
-      "group": "Promo Codes",
-      "pages": [
-        "api-reference/promo-codes/list-promo-codes",
-        "api-reference/promo-codes/retrieve-a-promo-code",
-        "api-reference/promo-codes/update-a-promo-code",
-        "api-reference/promo-codes/create-a-promo-code",
-        "api-reference/promo-codes/delete-a-promo-code"
-      ]
-    },
-    {
-      "group": "Reviews",
-      "pages": [
-        "api-reference/reviews/list-reviews",
-        "api-reference/reviews/retrieve-a-review"
-      ]
+      "group": "API",
+      "pages": ["sdk/api", "sdk/notifications"]
     },
     {
       "group": "Webhooks",
-      "pages": [
-        "api-reference/webhooks/list-webhooks",
-        "api-reference/webhooks/retrieve-a-webhook",
-        "api-reference/webhooks/create-a-webhook",
-        "api-reference/webhooks/update-a-webhook",
-        "api-reference/webhooks/delete-a-webhook"
-      ]
+      "pages": ["sdk/webhooks"]
+    },
+    {
+      "group": "iFrame",
+      "pages": ["sdk/iframe"]
     }
   ],
   "footerSocials": {
