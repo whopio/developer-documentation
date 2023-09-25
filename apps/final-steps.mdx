@@ -1,30 +1,117 @@
 ---
-title: Accessing the API
+title: Build your customer page
 icon: "circle-3"
-description: "A guide on how to use the Whop API in your app."
+description: "If your app is built for businesses to sell to customers, then it's time to build your customer page"
 ---
 
-This page will guide you through the final steps of creating and selling your App on Whop.
+## What you'll learn
 
----
+In this tutorial, you’ll learn how to do the following tasks:
 
-## Using our API
+- Use the Whop API to check more advanced permissions
+- Build a page that is shown to all customers
+- Use Frosted components to style your app
 
-We have created an API that allows you to interact with the Whop platform. It allows you to fetch information about the user, company, products, experiences, and more! To get started, head to the [**API Reference**](/apps/api). Each endpoint also has an API Playground that allows you to test out the API and see what data is returned without having to write out the code.
+## Prerequisites
 
----
+In order to view the iFrame as a customer, you will need to own a membership to this app. To do this, make a free pricing option for your product and purchase a membership. Then open the app from your orders page.
 
-## Hosting your app
+## 1. Create your customer page
 
-Once your app is ready to be distributed to users, you will need to deploy it. We recommend using [Vercel](https://vercel.com) to host your app, but you can use any hosting provider you want.
+We will start by building the **customer page.**
 
-Once you have your domain, you can insert it in the `Website URL` field on the [**App Settings**](https://dash.whop.com/settings/developer) page.
+The **customer page** is a specific page URL your app defines. Everytime a Whop user purchases a membership that contains your app, they will view the customer page within the iFrame whenever viewing your app.
 
-<Frame>
-  <img src="https://imgur.com/MRFJYg2.png" />
+1. Create a page to match this URL `/customer/$productId`. To do this, create this file: `/app/customer/[productId]/page.tsx`
+
+```bash
+mkdir app/customer && mkdir "app/customer/[productId]" && touch "app/customer/[productId]/page.tsx"
+```
+
+In order to know which product the user purchased, Whop will pass the ID as a **path parameter**.
+
+2. Add the following code to your file to read and display the product ID
+
+```typescript
+export default async function CustomerPage({
+  params,
+}: {
+  params: { productId: string };
+}) {
+  const productId = params.productId;
+  return <h1>The ID of the product the user is viewing is {productId}</h1>;
+}
+```
+
+3. Update the Customer Path in your [app configuration](https://dash.whop.com/settings/developer) to be `/customer/$productId`
+
+   <Frame caption="Update the customer path to be /customer/$productId ">
+     <img src="https://cdn.discordapp.com/attachments/841805896156839936/1155689821805744219/Manage_App_-_Whop_Dashboard_-_httpsdash.whop.comsettingsdeveloperapp_soLLJMDkBhQDtz_2023-09-24_at_22.18.342x.png" />
+   </Frame>
+
+4. Navigate to your iFrame URL (this should be easily found from your orders page), ensure you're in developer mode, and you should see your page!
+
+<Frame caption="You will now see the productId from within the iFrame">
+  <img src="https://media.discordapp.net/attachments/841805896156839936/1155690453472129167/Communities_Software_Courses__More_-_httpswhop.comordersmem_terpu2R4mJAu4q_2023-09-24_at_22.21.102x.png?width=2168&height=1402" />
 </Frame>
 
-<Tip>
-  There is no need to purchase a custom domain, the user will never get to see
-  it.
-</Tip>
+## 2. Authenticate the user
+
+Once the user is viewing your page, we will want to make sure they are a valid Whop user with permissions to view this company. Let's begin.
+
+1. Add two imports to the top of your page
+
+```typescript
+import { headers } from "next/headers";
+import { validateToken } from "@whop-apps/sdk";
+```
+
+2. Use the `validateToken` function from the Whop SDK to ensure the user's access token is valid
+
+```typescript
+export default async function AdminPage() {
+  await validateToken({ headers });
+}
+```
+
+<Warning>
+  You should **always** call `validateToken` on every page you define. This will
+  ensure the user is not being malicious.
+</Warning>
+
+At this point the user is authenticated and we have their Whop User ID
+
+## 3. Check if the user owns the product
+
+We now want to check to make sure this user is an authorized team member of the company they are browsing. To do this, we will use the **Whop API.**
+
+The Whop SDK comes pre-installed with functions to interact with the Whop API.
+
+1. Retrieve the company using the Whop API
+
+```typescript
+const result = await WhopAPI.user({ headers }).GET("/products/{id}", {
+  params: { path: { id: params.productId } },
+});
+```
+
+This code snippet says to use the Whop API, authenticated as the user (we pass in the user's auth token through `headers`), and fetch the product with the ID passed from the **path parameter.** If the user does not hold an active membership to this product, an error will be returned.
+
+2. Handle the error case if the user does not have access
+
+```typescript
+if (result.isErr) {
+  return <h1>You do not have access to view this.</h1>;
+}
+```
+
+If you `result.isErr` is false, the user holds an active membership. At this point, you have confirmed with the Whop API that the user has access to view this page.
+
+Now we have confirmed the user has access to this product
+
+
+## Next steps
+- Launching in production
+- Set up webhooks to get notified in real time
+- Interact with the Whop API using your App's authentication
+- Understanding constraints of the iFrame, like opening links
