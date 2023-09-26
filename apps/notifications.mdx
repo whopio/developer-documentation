@@ -3,6 +3,12 @@ title: Send a notification
 description: Send a notification to your users using the Notifications API.
 ---
 
+<Note>
+  The dashboard for this feature is not complete, we expect it to be complete
+  October 4th. If you would like to use it, please reach out to us and we can
+  manually set it up for you.
+</Note>
+
 There are 2 ways to notify members through Whop, either by sending a push notification to our mobile app or through the notifications tab on the website.
 
 ---
@@ -13,7 +19,9 @@ To send a notification, you need to make a `POST` request to the [**/notificatio
 
 If you are using our SDK, you can do it easily through the WhopAPI function. Here is an example:
 
-```typescript
+<CodeGroup>
+
+```typescript SDK
 WhopAPI.server().POST("/notifications", {
   body: {
     topic_identifier: "string",
@@ -25,12 +33,37 @@ WhopAPI.server().POST("/notifications", {
     },
     targets: [
       {
-        experiences: ["string"],
+        users: ["string"],
       },
     ],
   },
 });
 ```
+
+```bash cURL
+curl --request POST \
+  --url https://api.whop.com/v5/notifications \
+  --header 'Authorization: <authorization>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "notification_data": {
+    "all": {
+      "content": "string",
+      "subject": "string"
+    }
+  },
+  "targets": [
+    {
+      "users": [
+        "string"
+      ]
+    }
+  ],
+  "topic_identifier": "string"
+}'
+```
+
+</CodeGroup>
 
 ### Topic Identifier
 
