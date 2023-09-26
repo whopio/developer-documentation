@@ -444,16 +444,6 @@ paths:
         - notifications
       operationId: post_api_v5_notifications
       summary: Send a Notification
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            Your API key, which can be found on the settings page for your
-            App. You must prepend your key with the word 'Bearer', which will look like
-            `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response

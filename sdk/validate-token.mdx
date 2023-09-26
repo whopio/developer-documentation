@@ -14,6 +14,6 @@ import { headers } from "next/headers";
 import { validateToken } from "@whop-apps/sdk";
 
 export default async function AdminPage() {
-  const userId = await validateToken({ headers });
+  const { userId } = await validateToken({ headers });
 }
 ```

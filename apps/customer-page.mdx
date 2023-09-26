@@ -70,7 +70,7 @@ import { validateToken } from "@whop-apps/sdk";
 
 ```typescript
 export default async function AdminPage() {
-  await validateToken({ headers });
+  const { userID } = await validateToken({ headers });
 }
 ```
 
@@ -83,7 +83,7 @@ At this point the user is authenticated and we have their Whop User ID
 
 ## 3. Check if the user owns the product
 
-We now want to check to make sure this user is an authorized team member of the company they are browsing. To do this, we will use the **Whop API.**
+We now want to check to make sure this user owns the correct product. To do this, we will use the **Whop API.**
 
 The Whop SDK comes pre-installed with functions to interact with the Whop API.
 
@@ -109,8 +109,8 @@ If you `result.isErr` is false, the user holds an active membership. At this poi
 
 Now we have confirmed the user has access to this product
 
-
 ## Next steps
+
 - Launching in production
 - Set up webhooks to get notified in real time
 - Interact with the Whop API using your App's authentication
