@@ -36,7 +36,13 @@ export default async function AdminPage({
   params: { companyId: string; productId: string };
 }) {
   const companyId = params.companyId;
-  return <h1>The ID of the company using my app is {companyId}</h1>;
+  const productId = params.productId;
+  return (
+    <div>
+      <p>The company ID is: {companyId}</p>
+      <p>The product ID is: {productId}</p>
+    </div>
+  );
 }
 ```
 
