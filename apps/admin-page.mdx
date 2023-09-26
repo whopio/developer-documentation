@@ -22,7 +22,7 @@ The **admin page** is a specific page URL your app defines. Everytime a company 
 1. Create a page to match this URL `/admin/$companyId/$productId`. To do this, create this file: `/app/admin/[companyId]/[productId]/page.tsx`
 
 ```bash
-mkdir app/admin && mkdir "app/admin/[companyId]" && mkdir "app/admin/[companyId]/[productId]" touch "app/admin/[companyId]/[productId]/page.tsx"
+mkdir app/admin && mkdir "app/admin/[companyId]" && mkdir "app/admin/[companyId]/[productId]" && touch "app/admin/[companyId]/[productId]/page.tsx"
 ```
 
 In order to know which company is viewing the page, Whop will pass the ID as a **path parameter**
