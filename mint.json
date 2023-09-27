@@ -62,8 +62,6 @@
     {
       "group": "What can I sell with Whop?",
       "pages": [
-        "license-keys",
-        "oauth",
         {
           "group": "Whop Apps",
           "pages": [
@@ -73,7 +71,9 @@
             "apps/customer-page",
             "apps/deploying"
           ]
-        }
+        },
+        "license-keys",
+        "oauth"
       ]
     },
     {
