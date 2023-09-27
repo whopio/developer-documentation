@@ -1012,7 +1012,7 @@ paths:
       tags:
         - me
       operationId: get_api_v5_me
-      summary: Retrieve the User for the currently authenticated token
+      summary: Retrieve the current user
       responses:
         "200":
           description: A successful response
