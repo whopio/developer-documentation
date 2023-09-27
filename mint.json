@@ -88,10 +88,9 @@
       "group": "More",
       "pages": ["templates", "docs", "dev-discord", "blog"]
     },
-
     {
       "group": "API Documentation",
-      "pages": ["apps/api/authentication"]
+      "pages": ["api-reference/authentication"]
     },
     {
       "group": "App - Companies",
