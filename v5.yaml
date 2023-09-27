@@ -14,16 +14,6 @@ paths:
         - app/companies
       operationId: get_api_v5_app_companies
       summary: List Companies
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -66,15 +56,6 @@ paths:
           description: The ID of the Company, which will look like biz_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -101,15 +82,6 @@ paths:
       operationId: get_api_v5_app_experiences
       summary: List Experiences
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -156,15 +128,6 @@ paths:
           description: The ID of the Experience, which will look like exp_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -187,16 +150,6 @@ paths:
         - app/line_items
       operationId: post_api_v5_app_line_items
       summary: Create a Line Item
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "201":
           description: A successful response
@@ -218,15 +171,6 @@ paths:
       operationId: get_api_v5_app_line_items
       summary: List Line Items
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -266,15 +210,6 @@ paths:
           description: The ID of the line item, which will look like li_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -297,15 +232,6 @@ paths:
           description: The ID of the line item, which will look like li_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "204":
           description: A successful response
@@ -320,15 +246,6 @@ paths:
       operationId: get_api_v5_app_memberships
       summary: List Memberships
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -400,15 +317,6 @@ paths:
           description: The ID of the Membership, which will look like mem_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -434,16 +342,6 @@ paths:
         - app/notifications
       operationId: post_api_v5_app_notifications
       summary: Send a Notification
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            Your API key, which can be found on the settings page for your
-            App. You must prepend your key with the word 'Bearer', which will look like
-            `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -471,15 +369,6 @@ paths:
       operationId: get_api_v5_app_payments
       summary: List Payments
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -529,15 +418,6 @@ paths:
           description: The ID of the Payment, which will look like pay_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -564,15 +444,6 @@ paths:
       operationId: get_api_v5_app_products
       summary: List Products
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -622,15 +493,6 @@ paths:
           description: The ID of the Product, which will look like prod_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -663,15 +525,6 @@ paths:
           description: The ID of the User, which will look like user_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -699,15 +552,6 @@ paths:
       operationId: get_api_v5_company_memberships
       summary: List Memberships
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: statuses
           in: query
           required: false
@@ -773,15 +617,6 @@ paths:
           description: The ID of the Membership, which will look like mem_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -807,16 +642,6 @@ paths:
         - company/payments
       operationId: get_api_v5_company_payments
       summary: List Payments
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -860,15 +685,6 @@ paths:
           description: The ID of the Payment, which will look like pay_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -894,16 +710,6 @@ paths:
         - company/products
       operationId: get_api_v5_company_products
       summary: List Products
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -947,15 +753,6 @@ paths:
           description: The ID of the Product, which will look like prod_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -983,15 +780,6 @@ paths:
       operationId: get_api_v5_me_experiences
       summary: List Experiences
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -1038,15 +826,6 @@ paths:
           description: The ID of the Experience, which will look like exp_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -1069,16 +848,6 @@ paths:
         - me
       operationId: get_api_v5_me
       summary: Retrieve the User for the currently authenticated token
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -1098,15 +867,6 @@ paths:
       operationId: get_api_v5_me_memberships
       summary: List Memberships
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -1178,15 +938,6 @@ paths:
           description: The ID of the Membership, which will look like mem_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -1213,15 +964,6 @@ paths:
       operationId: get_api_v5_me_payments
       summary: List Payments
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -1271,15 +1013,6 @@ paths:
           description: The ID of the Payment, which will look like pay_*************
           schema:
             type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -1306,15 +1039,6 @@ paths:
       operationId: get_api_v5_me_products
       summary: List Products
       parameters:
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
-          schema:
-            type: string
         - name: company_id
           in: query
           required: false
@@ -1362,15 +1086,6 @@ paths:
           in: path
           required: true
           description: The ID of the Product, which will look like prod_*************
-          schema:
-            type: string
-        - name: Authorization
-          in: header
-          required: false
-          description:
-            The users authorization token or the API key, which can be found
-            on the settings page for you app. You must prepend your key with the word
-            'Bearer', which will look like `Bearer ***************************`
           schema:
             type: string
       responses:
