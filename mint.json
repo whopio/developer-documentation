@@ -176,7 +176,12 @@
         },
         {
           "group": "Billing Items",
-          "pages": ["api-reference/company/billing_items/billing_items"]
+          "pages": [
+            "api-reference/company/billing-items/create",
+            "api-reference/company/billing-items/list",
+            "api-reference/company/billing-items/retrieve",
+            "api-reference/company/billing-items/update"
+          ]
         },
         "api-reference/company"
       ]
