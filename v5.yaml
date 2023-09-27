@@ -6,6 +6,24 @@ info:
 servers:
   - url: https://api.whop.com/api/v5
 paths:
+  "/app":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app
+      operationId: get_api_v5_app
+      summary: Retrieve the current app
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppApp"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      description: Returns an App
   "/app/companies":
     get:
       security:
@@ -40,7 +58,7 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "400":
           $ref: "#/components/responses/InvalidParameters"
-      description: Returns information about the company
+      description: Returns a collection of companies
   "/app/companies/{id}":
     get:
       security:
@@ -72,7 +90,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the company
+      description: Returns a company
   "/app/experiences":
     get:
       security:
@@ -112,7 +130,7 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "401":
           $ref: "#/components/responses/Unauthorized"
-      description: Returns a list of experiences for a company
+      description: Returns a collection of experiences
   "/app/experiences/{id}":
     get:
       security:
@@ -141,7 +159,7 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "401":
           $ref: "#/components/responses/Unauthorized"
-      description: Returns a specific experience object
+      description: Returns an experience
   "/app/line_items":
     post:
       security:
@@ -162,7 +180,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AppLineItem"
+              $ref: "#/components/schemas/AppLineItemCreateBody"
+      description: Create a line item for a company
     get:
       security:
         - ApiAuth: [api_key]
@@ -195,6 +214,7 @@ paths:
                 required:
                   - pagination
                   - data
+      description: Returns a collection of line items
   "/app/line_items/{id}":
     get:
       security:
@@ -217,7 +237,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AppLineItem"
-      description: Returns information about the line item
+      description: Returns a line item
     delete:
       security:
         - ApiAuth: [api_key]
@@ -301,7 +321,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the membership
+      description: Returns a collection of memberships
   "/app/memberships/{id}":
     get:
       security:
@@ -333,7 +353,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the membership
+      description: Returns a membership
   "/app/notifications":
     post:
       security:
@@ -402,7 +422,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the payment
+      description: Returns a collection of payments
   "/app/payments/{id}":
     get:
       security:
@@ -434,7 +454,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the payment
+      description: Returns a payment
   "/app/products":
     get:
       security:
@@ -477,7 +497,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the product
+      description: Returns a collection of products
   "/app/products/{id}":
     get:
       security:
@@ -509,7 +529,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the product
+      description: Returns a product
   "/app/users/{id}":
     get:
       security:
@@ -541,8 +561,135 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the user
+      description: Returns a user
 
+  "/company/billing_items":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: post_api_v5_company_billing_items
+      summary: Create a Billing Item
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBillingItem"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyBillingItemCreateBody"
+      description: Create a billing item
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: get_api_v5_company_billing_items
+      summary: List Billing Items
+      parameters:
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: app_id
+          in: query
+          required: false
+          description: An ID of an app to filter by, which will look like app_*************
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: A status to filter by.
+          schema:
+            type: string
+            enum:
+              - active
+              - archived
+        - name: identifier
+          in: query
+          required: false
+          description: An identifier to filter by.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyBillingItem"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of billing items
+  "/company/billing_items/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: get_api_v5_company_billing_items_id
+      summary: Retrieve a Billing Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing item, which will look like bi_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBillingItem"
+      description: Returns a billing item
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: update_api_v5_company_billing_items_id
+      summary: Update a Billing Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing item, which will look like bi_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBillingItem"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyBillingItemUpdateBody"
+      description: Updates a billing item
   "/company/memberships":
     get:
       security:
@@ -601,7 +748,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the membership
+      description: Returns a collection of memberships
   "/company/memberships/{id}":
     get:
       security:
@@ -633,7 +780,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the membership
+      description: Returns a membership
   "/company/payments":
     get:
       security:
@@ -669,7 +816,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the payment
+      description: Returns a collection of payments
   "/company/payments/{id}":
     get:
       security:
@@ -701,7 +848,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the payment
+      description: Returns a payment
   "/company/products":
     get:
       security:
@@ -737,7 +884,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the product
+      description: Returns a collection of products
   "/company/products/{id}":
     get:
       security:
@@ -769,7 +916,25 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the product
+      description: Returns a product
+  "/company":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company
+      operationId: get_api_v5_company
+      summary: Retrieve the current company
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyCompany"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      description: Returns a company
 
   "/me/experiences":
     get:
@@ -810,7 +975,7 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "401":
           $ref: "#/components/responses/Unauthorized"
-      description: Returns a list of experiences for a user
+      description: Returns a collection of experiences
   "/me/experiences/{id}":
     get:
       security:
@@ -839,7 +1004,7 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "401":
           $ref: "#/components/responses/Unauthorized"
-      description: Returns a specific experience object
+      description: Returns an experience
   "/me":
     get:
       security:
@@ -847,7 +1012,7 @@ paths:
       tags:
         - me
       operationId: get_api_v5_me
-      summary: Retrieve the current user
+      summary: Retrieve the User for the currently authenticated token
       responses:
         "200":
           description: A successful response
@@ -857,7 +1022,7 @@ paths:
                 $ref: "#/components/schemas/MeUser"
         "403":
           $ref: "#/components/responses/Forbidden"
-      description: Returns information about the user
+      description: Returns a user
   "/me/memberships":
     get:
       security:
@@ -922,7 +1087,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the membership
+      description: Returns a collection of memberships
   "/me/memberships/{id}":
     get:
       security:
@@ -954,7 +1119,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the membership
+      description: Returns a membership
   "/me/payments":
     get:
       security:
@@ -997,7 +1162,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the payment
+      description: Returns a collection of payments
   "/me/payments/{id}":
     get:
       security:
@@ -1029,7 +1194,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the payment
+      description: Returns a payment
   "/me/products":
     get:
       security:
@@ -1072,7 +1237,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the product
+      description: Returns a collection of products
   "/me/products/{id}":
     get:
       security:
@@ -1104,7 +1269,39 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns information about the product
+      description: Returns a product
+  "/me/companies/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/companies
+      operationId: get_api_v5_me_companies_id
+      summary: Retrieve a Company
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeCompany"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a company
 
 components:
   securitySchemes:
@@ -1221,6 +1418,26 @@ components:
           type: string
           example: "created"
 
+    AppApp:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        created_at:
+          type: number
+          description: The date the app was created as a unix timestamp.
+        name:
+          type: string
+          description: The name of the app
+        company_id:
+          type: string
+          description: The ID of the company that owns this app, which will look like biz_*************
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
     AppProduct:
       type: object
       properties:
@@ -1361,6 +1578,32 @@ components:
         - allow_multiple_quantity
         - name
         - created_at
+    AppLineItemCreateBody:
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount (price) for the line item.
+        base_currency:
+          type: string
+          description: A three letter currency code for the line item.
+        description:
+          type: string
+          description: A textual description for the line item.
+        allow_multiple_quantity:
+          type: boolean
+          description: Whether or not the line item can be purchased as multiple quantity.
+        metadata:
+          type: object
+          description: A JSON object containing any additional metadata for the line item.
+        name:
+          type: string
+          description: The name of the line item.
+      required:
+        - amount
+        - base_currency
+        - allow_multiple_quantity
+        - name
     AppMembership:
       type: object
       properties:
@@ -1525,6 +1768,106 @@ components:
         - id
         - username
 
+    CompanyBillingItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the billing item, which will look like bi_*************
+        identifier:
+          type: string
+          description: An identifier for the billing item that is unique across all billing items for the product in respect to the app.
+        name:
+          type: string
+          description: The name of the billing item.
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+          description: The status of the billing item.
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        app_id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        billing_type:
+          type: string
+          enum:
+            - structured
+            - variable
+          description: The billing type of the billing item.
+        created_at:
+          type: integer
+          description: The date the billing item was created as a unix timestamp.
+        currency:
+          type: string
+          description: The three letter currency code for the billing item.
+        unit_name:
+          type: string
+          description: The name of the unit for the billing item.
+        unit_amount:
+          type: integer
+          description: The unit amount for the billing item.
+        unit_price:
+          type: string
+          description: The unit price for the billing item.
+      required:
+        - id
+        - name
+        - status
+        - product_id
+        - app_id
+        - billing_type
+        - created_at
+        - currency
+    CompanyBillingItemCreateBody:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: An identifier for the billing item that is unique across all billing items for the product in respect to the app.
+        name:
+          type: string
+          description: The name of the billing item.
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        billing_type:
+          type: string
+          enum:
+            - structured
+            - variable
+          description: The billing type of the billing item.
+        currency:
+          type: string
+          description: The three letter currency code for the billing item.
+        unit_name:
+          type: string
+          description: The name of the unit for the billing item. Only for structured billing items.
+        unit_amount:
+          type: integer
+          description: The unit amount for the billing item. Only for structured billing items.
+        unit_price:
+          type: string
+          description: The unit price for the billing item. Only for structured billing items.
+      required:
+        - name
+        - product_id
+        - billing_type
+        - currency
+    CompanyBillingItemUpdateBody:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+          description: The status of the billing item.
+      required:
+        - status
     CompanyProduct:
       type: object
       properties:

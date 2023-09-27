@@ -146,7 +146,8 @@
         {
           "group": "Users",
           "pages": ["api-reference/apps/users/retrieve"]
-        }
+        },
+        "api-reference/apps/app"
       ]
     },
     {
@@ -172,7 +173,12 @@
             "api-reference/company/payments/list",
             "api-reference/company/payments/retrieve"
           ]
-        }
+        },
+        {
+          "group": "Billing Items",
+          "pages": ["api-reference/company/billing_items/billing_items"]
+        },
+        "api-reference/company"
       ]
     },
     {
@@ -205,6 +211,10 @@
             "api-reference/me/experiences/list",
             "api-reference/me/experiences/retrieve"
           ]
+        },
+        {
+          "group": "Companies",
+          "pages": ["api-reference/me/companies/retrieve"]
         },
         "api-reference/me/user"
       ]
