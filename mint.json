@@ -33,7 +33,7 @@
   "tabs": [
     {
       "name": "API Reference",
-      "url": "apps/api"
+      "url": "api-reference"
     },
     {
       "name": "SDK Reference",
@@ -94,44 +94,105 @@
       "pages": ["apps/api/authentication"]
     },
     {
-      "group": "Me",
-      "pages": ["apps/api/me"]
-    },
-    {
-      "group": "Companies",
+      "group": "App - Companies",
       "pages": [
-        "apps/api/companies/retrieve",
-        "apps/api/companies/company-experiences"
+        "api-reference/app/companies/list",
+        "api-reference/app/companies/retrieve"
       ]
     },
     {
-      "group": "Products",
+      "group": "App - Experiences",
       "pages": [
-        "apps/api/products/list",
-        "apps/api/products/retrieve",
-        "apps/api/products/retrieve-experiences"
+        "api-reference/app/experiences/list",
+        "api-reference/app/experiences/retrieve"
       ]
     },
     {
-      "group": "Experiences",
-      "pages": ["apps/api/experiences/list", "apps/api/experiences/retrieve"]
-    },
-    {
-      "group": "Users",
-      "pages": ["apps/api/users/retrieve", "apps/api/users/get-experiences"]
-    },
-    {
-      "group": "Line Items",
+      "group": "App - Memberships",
       "pages": [
-        "apps/api/lineitems/list",
-        "apps/api/lineitems/retrieve",
-        "apps/api/lineitems/create",
-        "apps/api/lineitems/delete"
+        "api-reference/app/memberships/list",
+        "api-reference/app/memberships/retrieve"
       ]
     },
     {
-      "group": "Notifications",
-      "pages": ["apps/api/notifications/send"]
+      "group": "App - Products",
+      "pages": [
+        "api-reference/app/products/list",
+        "api-reference/app/products/retrieve"
+      ]
+    },
+    {
+      "group": "App - Payments",
+      "pages": [
+        "api-reference/app/payments/list",
+        "api-reference/app/payments/retrieve"
+      ]
+    },
+    {
+      "group": "App - Notifications",
+      "pages": ["api-reference/app/notifications/send"]
+    },
+    {
+      "group": "App - Line Items",
+      "pages": [
+        "api-reference/app/line-items/list",
+        "api-reference/app/line-items/retrieve",
+        "api-reference/app/line-items/create",
+        "api-reference/app/line-items/delete"
+      ]
+    },
+    {
+      "group": "App - Users",
+      "pages": ["api-reference/app/users/retrieve"]
+    },
+    {
+      "group": "Company - Memberships",
+      "pages": [
+        "api-reference/company/memberships/list",
+        "api-reference/company/memberships/retrieve"
+      ]
+    },
+    {
+      "group": "Company - Payments",
+      "pages": [
+        "api-reference/company/payments/list",
+        "api-reference/company/payments/retrieve"
+      ]
+    },
+    {
+      "group": "Company - Products",
+      "pages": [
+        "api-reference/company/products/list",
+        "api-reference/company/products/retrieve"
+      ]
+    },
+    {
+      "group": "Me - Memberships",
+      "pages": [
+        "api-reference/me/memberships/list",
+        "api-reference/me/memberships/retrieve"
+      ]
+    },
+    {
+      "group": "Me - Experiences",
+      "pages": [
+        "api-reference/me/experiences/list",
+        "api-reference/me/experiences/retrieve"
+      ]
+    },
+    {
+      "group": "Me - Products",
+      "pages": [
+        "api-reference/me/products/list",
+        "api-reference/me/products/retrieve"
+      ]
+    },
+    {
+      "group": "Me - Payments",
+      "pages": [
+        "api-reference/me/payments/list",
+        "api-reference/me/payments/retrieve"
+      ]
     },
     {
       "group": "Getting started",
