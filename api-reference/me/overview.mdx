@@ -1,0 +1,19 @@
+---
+title: Overview
+icon: circle-info
+description: Overview of the Me endpoints
+---
+
+The **/me** endpoints returns data scoped to the current user. This allows you to retrieve information such as their memberships, products, payments, and more. It is recommended that you use these in your webapps / Whop Apps when requesting information about the current user.
+
+### Common Use Cases
+
+- Fetching the users details, such as email, username, and profile picture URL
+- Fetching the users memberships
+
+### Requirements
+
+There are two different tokens that you can use to authorize these requests. Either:
+
+1. `whop_user_token` - This is stored in the cookies when for apps. If you are not building a Whop App, you will not need this.
+2. OAuth token - This is used in our standard OAuth flow. You can read more about this in our [OAuth documentation](/oauth).

@@ -95,6 +95,7 @@
     {
       "group": "Apps",
       "pages": [
+        "api-reference/apps/overview",
         {
           "group": "Companies",
           "pages": [
@@ -153,6 +154,7 @@
     {
       "group": "Company",
       "pages": [
+        "api-reference/company/overview",
         {
           "group": "Memberships",
           "pages": [
@@ -189,6 +191,7 @@
     {
       "group": "Me",
       "pages": [
+        "api-reference/me/overview",
         {
           "group": "Memberships",
           "pages": [
