@@ -4,17 +4,19 @@ icon: circle-info
 description: Overview of the Company API routes
 ---
 
-The company API routes allow companies to directly access information about their business. This means that the API can return sensitive data such as Stripe IDs, and revenue figures.
+The company API routes allow companies to directly access information about their business.
 
-### Common Use Cases
+If you manage a business on Whop, this API is for you. You can use this API to retrieve data about your business.
 
-- Querying memberships
-- Fetching products
+## Common Use Cases
 
-### Requirements
+- Retrieving a single membership
+- Listing your payments
+- Creating line items for in app purchases
 
-1. **Company API Key**
-   > This can be found in the [**developer settings page**](https://dash.whop.com/settings/developer). For more information on company API keys, click [**here**](/api-reference/authentication#api-keys)
+## Authentication
+
+All requests will need your **company API Key**. This can be found on your [**developer settings page**](https://dash.whop.com/settings/developer). Be sure not to expose this API key on the client side. For more information on company API keys, click [**here**](/api-reference/authentication#api-keys)
 
 <Tip>
   If you have used the **V2 API**, this will be the same API key you used there.

@@ -4,16 +4,24 @@ icon: circle-info
 description: Overview of the Me endpoints
 ---
 
-The **/me** endpoints returns data scoped to the current user. This allows you to retrieve information such as their memberships, products, payments, and more. It is recommended that you use these in your webapps / Whop Apps when requesting information about the current user.
+The endpoints in the **me** section are designed to return data about the current authenticated user. You will authenticate using the user's access token.
 
-### Common Use Cases
+These endpoints allows you to retrieve data that scoped to the current user and your app. You can use these endpoints to pull the user's memberships, products, payments, and more.
 
-- Fetching the users details, such as email, username, and profile picture URL
-- Fetching the users memberships
+It is recommended that you use these endpoints in your app to personalize the user's exerience. You can also use these endpoints to confirm a user has access to your app. However, if you just want to check access, we recommend you use our [prebuilt access checking API](/hi).
 
-### Requirements
+## Common Use Cases
 
-There are two different tokens that you can use to authorize these requests. Either:
+- Fetching the user's details, such as their email, username, or profile picture
+- Fetching the user's memberships for your app
+- Fetching a user's orders for their in-app purchases
 
-1. `whop_user_token` - This is stored in the cookies of your app. If you are not building a Whop App, you will not need this.
-2. OAuth token - This is used in our standard OAuth flow. You can read more about this in our [OAuth documentation](/oauth).
+## Authentication
+
+There are two different access tokens that you can use to authorize these requests. This depends on if you're building a **Whop App** or gating your web app with **OAuth**
+
+### If you're building a **Whop App**
+Pass the user's access token that is stored as the `whop_user_token` cookie. If you're using the JS SDK, this can easily be sent through the headers. [Read more about the SDK authentication here](/sdk/api).
+
+### If you're gating your web app with **OAuth**
+Pass the user's access token that you receieve from the OAuth flow. You can read more about this in our [OAuth documentation](/oauth).
