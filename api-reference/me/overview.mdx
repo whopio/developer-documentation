@@ -21,9 +21,11 @@ It is recommended that you use these endpoints in your app to personalize the us
 There are two different access tokens that you can use to authorize these requests. This depends on if you're building a **Whop App** or gating your web app with **OAuth**
 
 ### If you're building a **Whop App**
+
 Pass the user's access token that is stored as the `whop_user_token` cookie. If you're using the JS SDK, this can easily be sent through the headers. [Read more about the SDK authentication here](/sdk/api).
 
 ### If you're gating your web app with **OAuth**
+
 Pass the user's access token that you receieve from the OAuth flow. You can read more about this in our [OAuth documentation](/oauth).
 
 To obtain your OAuth credentials, head to the [developer settings page](https://dash.whop.com/settings/developer) to obtain your Client ID and Client Secret. These keys will be used with the [**OAuth**](/oauth) endpoints to obtain an access token.
