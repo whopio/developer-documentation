@@ -42,6 +42,10 @@
   ],
   "redirects": [
     {
+      "source": "/metered-billing",
+      "destination": "/api-reference/metered-billing"
+    },
+    {
       "source": "/docs",
       "destination": "https://docs.whop.com"
     },
@@ -78,7 +82,7 @@
     },
     {
       "group": "Whop App Guides",
-      "pages": ["apps/notifications"]
+      "pages": ["apps/notifications","/metered-billing"]
     },
     {
       "group": "Webhooks",
