@@ -30,14 +30,17 @@ In this tutorial, you'll learn how to do the following tasks:
 ---
 
 ## Step 1: Create a Whop company
-In order to build an app, you must have made a company. To make a company, [go to our business dashboard  ](https://whop.com/sell/) and click **start selling.**
+
+In order to build an app, you must have made a company. To make a company, [go to our business dashboard ](https://whop.com/sell/) and click **start selling.**
 
 <Check>**If you already have a company**, you can skip this step.</Check>
 
 ## Step 2: Join the App Developer Alpha
+
 Once you are signed in to our business dashboard with your company, you will need to enroll in our App Developer Alpha. You can join by clicking [**here**](https://dash.whop.com/enable?name=experiencesV2&redirect=/settings/developer).
 
 ## Step 3: Create a new app
+
 Now that you are part of the App Developer Alpha, you can create a new app. You can do this by clicking [**here**](https://dash.whop.com/settings/developer). You can also watch the video below for a step by step guide.
 
 ![Create an app](https://imgur.com/LBTHQie.gif)
@@ -47,8 +50,11 @@ Now that you are part of the App Developer Alpha, you can create a new app. You 
 Follow the guide to create a Whop App using Next.js
 
 <Note>
-  If you are using our [pre-built app template](https://github.com/whopio/whop-apps-template), you can skip this step and go
-  directly to [**Step 6**](/apps/create-an-app#step-6-setup-your-environment-variables) to set up your ENV
+  If you are using our [pre-built app
+  template](https://github.com/whopio/whop-apps-template), you can skip this
+  step and go directly to [**Step
+  6**](/apps/create-an-app#step-6-setup-your-environment-variables) to set up
+  your ENV
 </Note>
 
 1. Navigate to the directory where you want to create your app. Your app will be created in a new subdirectory.
@@ -110,7 +116,7 @@ Please add the following environment variables to your project. These are needed
 
 **Example ENV file**
 
-```env
+```env .env.local
 WHOP_API_KEY=YOUR_API_KEY
 NEXT_PUBLIC_WHOP_APP_ID=YOUR_APP_ID
 ```
@@ -138,6 +144,13 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 </Frame>
 
 </Accordion>
+
+<br />
+
+<Tip>
+  Make sure not to commit your API key to a public repository, this could lead
+  to your app being compromised.
+</Tip>
 
 ---
 
