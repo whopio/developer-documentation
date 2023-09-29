@@ -155,6 +155,7 @@
       "group": "Company",
       "pages": [
         "api-reference/company/overview",
+        "api-reference/metered-billing",
         {
           "group": "Memberships",
           "pages": [
