@@ -1,0 +1,96 @@
+---
+title: hasAccess
+description: How to use the hasAccess function
+---
+
+This function allows you to control access to your apps by checking if a user has access to specific products, experiences, memberships, or is an authorized user of a specific company.
+
+For example, you can:
+
+- Ensure that a user is an authorized user of the correct company before allowing them to access a page
+- Ensure that a user owns a specific product before allowing them to access a page
+
+---
+
+## Usage
+
+These steps will guide you through using the `hasAccess` function to ensure only people who have purchased a specific product, are allowed to access a page.
+
+1. **Import the functions**
+
+Add these two imports to the top of your page:
+
+```js
+import { hasAccess } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+```
+
+2. **Check if the user has access**
+
+Use the `hasAccess` function to check if the user has access to a a specific product. To do this, we need to pass in an access string and the headers object.
+
+Access strings are a way of specifying what the user needs to have access to in order to access the page. Check out the [**Expressions**](/sdk/has-access#expressions) section to learn more about access strings and what they can contain.
+
+In this example, we are just checking if the user owns a specific product.
+
+```js
+const access = await hasAccess({ to: "prod_XXXX", headers });
+```
+
+3. **Handle the result**
+
+If the user is authorzied, `access` will return true, and if they are not, `access` will return false.
+
+We can then show a message to the user based on whether or not they have access.
+
+```js
+if (!access) {
+  return <p>You do not have access to view this page</p>;
+}
+```
+
+<Note>
+  If you want to use the **Company ID**, you will need to prefix it with
+  `authorized-`. To make this easier, we have created a helper function called
+  `authorizedUserOn`. This function will return the correct access string for
+  you, all you need to do is pass in the company ID.
+
+For example:
+
+`authorizedUserOn("biz_XXXX");`
+
+will return:
+
+`authorized-biz_XXXX`
+
+</Note>
+
+---
+
+## Expressions
+
+An access string is an `<expression-list>`
+
+an `<expression-list>` is a list of `<expression>`s separated by a `-`
+
+When evaluating the access string, the entity (user) must satisfy at least one of the expressions in the list. Ie: it is evaluated as an implicit `or` expression.
+
+An `<expression>` is either:
+
+- a single access control term (or primitive) EG:
+  - `prod_123` meaning the user owns access to this product
+  - `user_123` meaning the user is user_123
+  - `authorized-biz_123` (meaning the user is an authorized user on biz_123)
+  - `exp_123` meaning the user has access to this experience
+  - `mem_123` meaning this membership is active and valid for the user
+- a `not-` operator followed by a single `<expression>` and terminated with an underscore `_`
+  - eg: `not-prod_123_` meaning the user does not own access to this product
+- an `and-` operator followed by an `<expression-list>` and terminated with an underscore `_`
+  - eg: `and-prod_123-user_123_` meaning the user owns access to this product _and_ is user_123
+- an `or-` operator followed by an `<expression-list>` and terminated with an underscore `_`
+  - eg: `or-prod_123-user_123_` meaning the user owns access to this product _or_ is user_123
+
+This structure is recursive meaning you can nest `and` and `or` operators as well as `not` operators. For example:
+`and-prod_123-or-not-user_123_-authorized-biz_123__`
+would parse to:
+`and(prod_123, or(not(user_123), authorized-biz_123))`

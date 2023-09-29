@@ -82,7 +82,7 @@
     },
     {
       "group": "Whop App Guides",
-      "pages": ["apps/notifications","/metered-billing"]
+      "pages": ["apps/notifications", "/metered-billing"]
     },
     {
       "group": "Webhooks",
@@ -238,7 +238,7 @@
     },
     {
       "group": "Authentication",
-      "pages": ["sdk/validate-token", "sdk/fetch-token"]
+      "pages": ["sdk/has-access", "sdk/validate-token", "sdk/fetch-token"]
     },
     {
       "group": "API",

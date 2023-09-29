@@ -29,11 +29,11 @@ In order to know which company is viewing the page, Whop will pass the ID as a *
 
 2. Add the following code to your file to read and display the company ID and product ID
 
-```typescript
+```javascript
 export default async function AdminPage({
   params,
 }: {
-  params: { companyId: string; productId: string };
+  params: { companyId: string, productId: string },
 }) {
   const companyId = params.companyId;
   const productId = params.productId;
@@ -64,14 +64,14 @@ Once the user is viewing your page, we will want to make sure they are a valid W
 
 1. Add two imports to the top of your page
 
-```typescript
+```javascript
 import { headers } from "next/headers";
 import { validateToken } from "@whop-apps/sdk";
 ```
 
 2. Use the `validateToken` function from the Whop SDK to obtain the user's ID
 
-```typescript
+```javascript
 export default async function AdminPage() {
   const { userId } = await validateToken({ headers });
 }
@@ -85,90 +85,97 @@ export default async function AdminPage() {
 
 At this point the user is authenticated and we have their Whop User ID
 
-## 3. Check the user's roles
+## 3. Make sure the user has access to this company
 
-We now want to check to make sure this user is an authorized team member of the company they are browsing. To do this, we will use the **Whop API.**
+We now want to check to make sure this user is an authorized team member of the company they are browsing. To do this, we will use the `hasAccess` function from the **Whop SDK**.
 
-The Whop SDK comes pre-installed with functions to interact with the Whop API.
+1. **Update the Whop SDK imports**
 
-1. Retrieve the company using the Whop API
+```js
+import { validateToken, hasAccess, authorizedUserOn } from "@whop-apps/sdk";
+```
 
-```typescript
-const result = await WhopAPI.user({ headers }).GET("/companies/{id}", {
-  params: { path: { id: params.companyId } },
+2. **Check if the user is an authorized user of the company**
+
+To check if the user should be able to access this page, we will use the `hasAccess` function. This function takes in an object with two properties:
+
+- `to`: The resource the user is trying to access. In this case, it will be the company ID
+- `headers`: The headers of the request - this allows the SDK to get information about the user.
+
+<Note>
+  As we are checking a company ID, we need to use the `authorizedUserOn`
+  function. This prefixes the company ID with `authorized-`. If you are not
+  using company ID, you can pass the ID directly to `to`
+</Note>
+
+```js
+const access = await hasAccess({
+  to: authorizedUserOn(params.companyId),
+  headers,
 });
 ```
 
-This code snippet says to use the Whop API, authenticated as the user (we pass in the user's auth token through `headers`), and fetch the company with the ID passed from the **path parameter**
+3. **Handle the result**
 
-2. Handle the error case
+If the user is not authorized, `access` will be `false`. If the user is authorized, `access` will be `true`. Now, we are going to throw an error if the user is not authorized.
 
-```typescript
-if (result.isErr) {
-  // This shouldn't really happen :)
-  console.log(result.error.message);
-  return <h1>Something went wrong</h1>;
-}
-```
-
-3. Access the company object and look for `company.authorizedUser`
-   If `company.authorizedUser` is present, we know the user is an **authorized user** of the company. This means they have access.
-
-```typescript
-const company = result.data;
-const authorizedUser = company.authorized_user;
-```
-
-4. Throw an error if authorizedUser is null
-
-```typescript
-const company = result.data;
-const authorizedUser = company.authorized_user;
-
-if (!authorizedUser) {
+```js
+if (!access) {
   return <h1>You do not have access to view this company</h1>;
 }
 ```
 
-At this point, you have checked with the Whop API to ensure this user has access to view this page.
+At this point, you have checked with the Whop SDK to ensure this user has access to view this page.
 
 ## 4. Display specific company info
 
 Now that we can gurantee the user has access to view information about this company, let's display some info
 
-1. Retrieve the company's title
-   We can obtain the company's title from the API call we just did. Let's just assign it to a variable
+1. **Update the Whop SDK imports**
 
-```typescript
-const companyTitle = company.title;
+We can use the Whop API to get information about the current company. To do this, you will need to import the `WhopAPI` function.
+
+```javascript
+import {
+  validateToken,
+  hasAccess,
+  authorizedUserOn,
+  WhopAPI,
+} from "@whop-apps/sdk";
 ```
 
-2. Retrieve the user's username
-   We can use the Whop API again to collect the user's username. Let's do so.
+2. **Fetch the company information**
 
-```typescript
-const { data } = await WhopAPI.user({ headers }).GET("/me", {});
-const username = data?.username;
+Now that we have imported the Whop API function, we can use it to fetch the companies information. We are passing in the company ID we got from the path parameters.
+
+```javascript
+const companyInformation = await WhopAPI.app().GET("/app/companies/{id}", {
+  params: { path: { id: params.companyId } },
+});
 ```
 
-<Tip>
-  We are going to skip error handling here because we just used this user's
-  access token when retrieving the company. However, we recommend always
-  handling errors. Handling the error will remove the `?`
-</Tip>
+3. **Handle potential errors**
 
-3. Say hello to the user
-   Replace your returning code with:
+To make sure that we can retrieve the data we want from the result, we first need to check if the request was successful. If the request was not successful, we will throw an error.
 
-```typescript
-return (
-  <h1>
-    Hello {username}. You are currently looking at my app from {companyTitle}
-  </h1>
-);
+```javascript
+if (companyInformation.isErr) {
+  console.log(companyInformation.error.message);
+  return <p>Could not fetch company information</p>;
+}
 ```
 
-Voila! Go reload your iFrame view and you should see your username and the company title!
+4. **Display the information**
+
+Now that we have the company information, we can parse it and display the information
+
+```javascript
+const { title } = companyInformation.data;
+
+return <h1>You are currently looking at my app from {title}</h1>;
+```
+
+Voila! Go reload your iFrame view and you should see the company title!
 
 ## Next steps
 
