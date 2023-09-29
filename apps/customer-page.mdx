@@ -70,7 +70,7 @@ import { validateToken } from "@whop-apps/sdk";
 
 ```javascript
 export default async function AdminPage() {
-  const { userID } = await validateToken({ headers });
+  const { userId } = await validateToken({ headers });
 }
 ```
 
@@ -121,9 +121,51 @@ if (!access) {
 
 Now we have confirmed the user has access to this product
 
+## 4. Display specific company info
+
+Now that we know the user is allowed to access the product, let's display some information about them.
+
+1. **Update the Whop SDK imports**
+
+We can use the Whop API to get information about the current user. To do this, you will need to import the `WhopAPI` function.
+
+```js
+import { validateToken, hasAccess, WhopAPI } from "@whop-apps/sdk";
+```
+
+2. **Fetch the user**
+
+Now that we have imported the WhopAPI function, we can use it to fetch information about the user.
+
+```js
+const user = await WhopAPI.me({ headers }).GET("/me", {});
+```
+
+3. **Handle potential errors**
+
+To make sure that we can retrieve the data we want from the API, we first need to check if the request was successful. If it wasn't, we will throw an error.
+
+```js
+if (user.isErr) {
+  console.log(user.error.message);
+  return <p>Could not fetch information about the user</p>;
+}
+```
+
+4. **Display the information**
+
+Now that we have information about the user, we can display it on the page.
+
+```js
+const { username, email } = user.data;
+
+return <p>Hey {username}, welcome to your new Whop App!</p>;
+```
+
+Voila! Go reload your iFrame view and you should see the message!
+
+---
+
 ## Next steps
 
 - Launching in production
-- Set up webhooks to get notified in real time
-- Interact with the Whop API using your App's authentication
-- Understanding constraints of the iFrame, like opening links
