@@ -1,3 +1,11 @@
 ---
 openapi: get /app/companies/{id}
 ---
+
+## SDK Usage
+
+```javascript
+WhopAPI.app().GET("/app/companies/{id}", {
+  params: { path: { id: "biz_XXXX" } },
+});
+```
