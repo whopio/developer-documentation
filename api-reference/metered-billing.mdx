@@ -21,11 +21,11 @@ description: "Metered billing allows an app developer to charge a seller. This i
 # Getting started
 
 <Info>
-  We are going to configured Metered Billing using the API while our UI is under
+  We are going to configure Metered Billing using the API while our UI is under
   construction.
 </Info>
 
-In this example, we will be charging a Seller for videos uploaded. It is very expensive for us, so we want to charge the Seller for howvever much they upload.
+In this example, we will be charging a Seller for videos uploaded. It is very expensive for us, so we want to charge the Seller for however much they upload.
 
 We are going to charge them $10 per every 5GB uploaded.
 
@@ -38,7 +38,7 @@ The _Basic_ product has no up front cost (free to install) whereas the _Enterpri
 We are going to use the [**List Products**](/api-reference/company/products/list) endpoint to find our product ID. I am going to use the SDK, like so:
 
 ```typescript
-TODO
+TODO;
 ```
 
 Now that you have the list of products, choose which product you want to set your metered billing pricing for. We automatically make one product for you when you sign up.
@@ -46,7 +46,7 @@ Now that you have the list of products, choose which product you want to set you
 Here's how I set `productId` using the SDK:
 
 ```typescript
-TODO
+TODO;
 ```
 
 ## 2. Create your Billing items
@@ -74,7 +74,7 @@ In this model you will specify the unit name, unit price, and how many units are
 Here is how to create it using the SDK
 
 ```typescript
-TODO
+TODO;
 ```
 
 ### Variable Billing items
@@ -99,7 +99,7 @@ Here is an example JSON body to pass up:
 Here is how to create it using the SDK
 
 ```typescript
-TODO
+TODO;
 ```
 
 <Check>
@@ -120,7 +120,10 @@ Now you need to tell Whop how much the seller has used. To do this, we are going
 
 Let's say the seller uploaded 69 GB of video today. You will create a billing usage object with the following JSON body:
 
-<Info>We are following the **structured** billing usage flow. A code snippet for variable billing usage is below</Info>
+<Info>
+  We are following the **structured** billing usage flow. A code snippet for
+  variable billing usage is below
+</Info>
 
 ```json
 {
@@ -132,12 +135,12 @@ Let's say the seller uploaded 69 GB of video today. You will create a billing us
 
 Here is how to create it using the SDK:
 
-
 ```typescript
-TODO
+TODO;
 ```
 
 ### Variable Billing Item
+
 Here is an example of how to charge the user $127.41
 
 ```json
@@ -148,14 +151,11 @@ Here is an example of how to charge the user $127.41
 }
 ```
 
-
 Here is how to create it using the SDK:
 
-
 ```typescript
-TODO
+TODO;
 ```
-
 
 ## 4. Get Paid
 
@@ -163,6 +163,7 @@ Every Friday, Whop will aggregate all usage submitted the prior week and charge 
 
 This will be automatically to your balance for withdrawal.
 
-
-<Check>Congratulations. You have set up metered billing with Whop. You can now generate revenue.</Check>
-
+<Check>
+  Congratulations. You have set up metered billing with Whop. You can now
+  generate revenue.
+</Check>
