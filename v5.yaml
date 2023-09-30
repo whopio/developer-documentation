@@ -272,6 +272,12 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
         - name: statuses
           in: query
           required: false
