@@ -24,6 +24,120 @@ paths:
         "403":
           $ref: "#/components/responses/Forbidden"
       description: Returns an App
+  "/app/billing_usages":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: post_api_v5_app_billing_usages
+      summary: Create a Billing Usage
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppBillingUsage"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppBillingUsageCreateBody"
+      description: Create a billing usage for a company
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: get_api_v5_app_billing_usages
+      summary: List Billing Usages
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: membership_id
+          in: query
+          required: false
+          description: An ID of a membership to filter by, which will look like mem_*************
+          schema:
+            type: string
+        - name: billing_item_id
+          in: query
+          required: false
+          description: An ID of a billing item to filter by, which will look like bi_*************
+          schema:
+            type: string
+        - name: billing_item_identifier
+          in: query
+          required: false
+          description: An identifier of a billing item to filter by.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppBillingUsage"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of billing usages
+  "/app/billing_usages/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: get_api_v5_app_billing_usages_id
+      summary: Retrieve a Billing Usage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing usage, which will look like bu_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppBillingUsage"
+      description: Returns a billing usage
+    delete:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: delete_api_v5_app_billing_usages_id
+      summary: Delete a Billing Usage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing usage, which will look like bu_*************
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+      description: Deletes a billing usage
   "/app/companies":
     get:
       security:
@@ -1550,6 +1664,64 @@ components:
         - name
         - company_id
         - product_ids
+    AppBillingUsage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the billing usage, which will look like bu_*************
+        created_at:
+          type: number
+          description: The date the billing usage was created as a unix timestamp.
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        app_id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        billing_item_id:
+          type: string
+          description: The ID of the billing item, which will look like bi_*************
+        quantity:
+          type: number
+          description: The quantity to charge for the billing item, if the billing item is structured.
+        amount:
+          type: string
+          description: The amount to charge, if the billing item is variable.
+        receipt_id:
+          type: string
+          description: The ID of the receipt, which will look like rec_*************
+      required:
+        - id
+        - created_at
+        - company_id
+        - app_id
+        - membership_id
+        - billing_item_id
+    AppBillingUsageCreateBody:
+      type: object
+      properties:
+        billing_item_id:
+          type: string
+          description: The ID of the billing item, which will look like bi_*************. Supply this or the billing_item_identifier.
+        billing_item_identifier:
+          type: string
+          description: The identifier of the billing item, which will be a string. Supply this or the billing_item_id.
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************. Supply this or the membership_id.
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************. Supply this or the company_id.
+        amount:
+          type: number
+          description: The amount to charge, if the billing item is variable.
+        quantity:
+          type: number
+          description: The quantity to charge for the billing item, if the billing item is structured.
     AppLineItem:
       type: object
       properties:
@@ -1587,12 +1759,43 @@ components:
     AppLineItemCreateBody:
       type: object
       properties:
+        company_id:
+          type: string
+          description: The ID of the company to create the line item for, which will look like biz_*************
         amount:
           type: integer
           description: The amount (price) for the line item.
         base_currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
           description: A three letter currency code for the line item.
+        name:
+          type: string
+          description: The name of the line item.
         description:
           type: string
           description: A textual description for the line item.
@@ -1602,10 +1805,8 @@ components:
         metadata:
           type: object
           description: A JSON object containing any additional metadata for the line item.
-        name:
-          type: string
-          description: The name of the line item.
       required:
+        - company_id
         - amount
         - base_currency
         - allow_multiple_quantity
