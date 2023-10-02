@@ -30,6 +30,16 @@ mkdir app/customer && mkdir "app/customer/[productId]" && touch "app/customer/[p
 
 In order to know which product the user purchased, Whop will pass the ID as a **path parameter**.
 
+These are all the options for the path parameters in the Consumer Path, but for now we will only use `productId`:
+
+| Parameter      | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| `productId`    | The ID of the product the user purchased                  |
+| `companyId`    | The ID of the company the user purchased the product from |
+| `experienceId` | The ID of the experience                                  |
+| `membershipId` | The ID of the users membership                            |
+| `planId`       | The ID of the plan the user purchased                     |
+
 2. Add the following code to your file to read and display the product ID
 
 ```javascript

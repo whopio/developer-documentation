@@ -25,7 +25,15 @@ The **admin page** is a specific page URL your app defines. Everytime a company 
 mkdir app/admin && mkdir "app/admin/[companyId]" && mkdir "app/admin/[companyId]/[productId]" && touch "app/admin/[companyId]/[productId]/page.tsx"
 ```
 
-In order to know which company is viewing the page, Whop will pass the ID as a **path parameter**
+In order to know which company is viewing the page, Whop will pass the ID as a **path parameter**. These are defined in the URL on the app settings page, which we will do later.
+
+These are all the options that you can use in the Admin Path, but for now we will only use `companyId` and `productId`:
+
+| Parameter      | Description              |
+| -------------- | ------------------------ |
+| `companyId`    | The ID of the company    |
+| `productId`    | The ID of the product    |
+| `experienceId` | The ID of the experience |
 
 2. Add the following code to your file to read and display the company ID and product ID
 
