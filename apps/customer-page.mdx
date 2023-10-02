@@ -143,7 +143,7 @@ const user = await WhopAPI.me({ headers }).GET("/me", {});
 
 3. **Handle potential errors**
 
-To make sure that we can retrieve the data we want from the API, we first need to check if the request was successful. If it wasn't, we will throw an error.
+To make sure that we can retrieve the data we want from the result, we first need to check if the request was successful. If the request was not successful, we will display an error message.
 
 ```js
 if (user.isErr) {

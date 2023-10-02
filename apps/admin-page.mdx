@@ -156,7 +156,7 @@ const companyInformation = await WhopAPI.app().GET("/app/companies/{id}", {
 
 3. **Handle potential errors**
 
-To make sure that we can retrieve the data we want from the result, we first need to check if the request was successful. If the request was not successful, we will throw an error.
+To make sure that we can retrieve the data we want from the result, we first need to check if the request was successful. If the request was not successful, we will display an error message.
 
 ```javascript
 if (companyInformation.isErr) {
