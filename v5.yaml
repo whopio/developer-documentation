@@ -60,6 +60,12 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
         - name: membership_id
           in: query
           required: false
@@ -220,6 +226,12 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -371,6 +383,145 @@ paths:
           description: A successful response
 
       description: Deletes a line item
+  "/app/notification_topics":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notification_topics
+      operationId: post_api_v5_app_notification_topics
+      summary: Create a Notification Topic
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppNotificationTopic"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppNotificationTopicCreateBody"
+      description: Create a notification topic for a company
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notification_topics
+      operationId: get_api_v5_app_notification_topics
+      summary: List Notification Topics
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: A status to filter by.
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+        - name: topic_type
+          in: query
+          required: false
+          description: A topic type to filter by.
+          schema:
+            type: string
+            enum:
+              - company
+              - user
+        - name: send_once
+          in: query
+          required: false
+          description: A boolean to filter by send_once
+          schema:
+            type: boolean
+        - name: notification_channel_identifiers
+          in: query
+          required: false
+          description: An array of notification channel identifiers to filter by.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - email
+                - sms
+                - in_app
+                - discord_dm
+                - mobile
+              description: The possible notification channel identifiers.
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppNotificationTopic"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of notification topics
+  "/app/notification_topics/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notification_topics
+      operationId: get_api_v5_app_notification_topics_id
+      summary: Retrieve a Notification Topic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The topic_identifier of the notification topic, which will be a string.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppNotificationTopic"
+      description: Returns a notification topic
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notification_topics
+      operationId: update_api_v5_app_notification_topics_id
+      summary: Update a Notification Topic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The topic_identifier of the notification topic, which will be a string.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppNotificationTopicUpdateBody"
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppNotificationTopic"
+      description: Updates a notification topic
   "/app/memberships":
     get:
       security:
@@ -513,6 +664,12 @@ paths:
           in: query
           required: false
           description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
       responses:
@@ -682,7 +839,108 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a user
+  "/app/users/{user_id}/social_accounts":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/users
+      operationId: get_api_v5_app_users_id_social_accounts
+      summary: List a User's social accounts
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the User, which will look like user_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AppSocialAccount"
+                additionalProperties: false
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
 
+      description: Returns a User's social accounts
+  "/company/users/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/users
+      operationId: get_api_v5_company_users_id
+      summary: Retrieve a User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the User, which will look like user_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyUser"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a user
+  "/company/users/{user_id}/social_accounts":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/users
+      operationId: get_api_v5_company_users_id_social_accounts
+      summary: List a User's social accounts
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the User, which will look like user_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CompanySocialAccount"
+                additionalProperties: false
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a User's social accounts
   "/company/billing_items":
     post:
       security:
@@ -841,6 +1099,12 @@ paths:
           description: A boolean to filter by valid memberships
           schema:
             type: boolean
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -909,6 +1173,13 @@ paths:
         - company/payments
       operationId: get_api_v5_company_payments
       summary: List Payments
+      parameters:
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -1071,6 +1342,12 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -1143,6 +1420,33 @@ paths:
         "403":
           $ref: "#/components/responses/Forbidden"
       description: Returns a user
+  "/me/social_accounts":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me
+      operationId: get_api_v5_me_social_accounts
+      summary: List a User's social accounts
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MeSocialAccount"
+                additionalProperties: false
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      description: Returns a User's social accounts
   "/me/memberships":
     get:
       security:
@@ -1180,6 +1484,12 @@ paths:
           description: A boolean to filter by valid memberships
           schema:
             type: boolean
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -1253,6 +1563,12 @@ paths:
           in: query
           required: false
           description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
       responses:
@@ -1664,6 +1980,31 @@ components:
         - name
         - company_id
         - product_ids
+    AppSocialAccount:
+      type: object
+      properties:
+        service:
+          type: string
+          enum:
+            - discord
+            - twitter
+          description: The type of social account that it is.
+        username:
+          type: string
+          description: The username of the social account
+        default:
+          type: boolean
+          description: Whether or not this is the default social account for the user's account for the provider.
+        account_id:
+          type: string
+          description: The ID of the social account from the provider, like a discord ID or twitter ID.
+        image_url:
+          type: string
+          description: A URL for the image of the social account.
+      required:
+        - service
+        - default
+        - account_id
     AppBillingUsage:
       type: object
       properties:
@@ -1811,6 +2152,149 @@ components:
         - base_currency
         - allow_multiple_quantity
         - name
+    AppNotificationTopic:
+      type: object
+      properties:
+        app_id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        created_at:
+          type: number
+          description: The date the notification topic was created as a unix timestamp.
+        name:
+          type: string
+          description: The name of the notification topic
+        topic_identifier:
+          type: string
+          description: The identifier of the notification topic
+        description:
+          type: string
+          description: The description of the notification topic
+        notification_channel_identifiers:
+          type: array
+          items:
+            type: string
+            enum:
+              - email
+              - sms
+              - in_app
+              - discord_dm
+              - mobile
+            description: The identifier of the notification channel
+        send_once:
+          type: boolean
+          description: Whether or not the notification topic should only be sent once
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+          description: The status of the notification topic
+        topic_type:
+          type: string
+          enum:
+            - company
+            - user
+          description: The type of the notification topic
+        urgent:
+          type: boolean
+          description: Whether or not the notification topic is urgent
+        visibility:
+          type: string
+          enum:
+            - visible
+            - hidden
+          description: The visibility of the notification topic
+      required:
+        - created_at
+        - name
+        - status
+        - visibility
+        - topic_type
+        - send_once
+        - topic_identifier
+        - urgent
+    AppNotificationTopicCreateBody:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the notification topic
+        topic_identifier:
+          type: string
+          description: The identifier of the notification topic
+        description:
+          type: string
+          description: The description of the notification topic
+        notification_channel_identifiers:
+          type: array
+          items:
+            type: string
+            enum:
+              - email
+              - sms
+              - in_app
+              - discord_dm
+              - mobile
+            description: The identifier of the notification channel
+        send_once:
+          type: boolean
+          description: Whether or not the notification topic should only be sent once
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+          description: The status of the notification topic
+        topic_type:
+          type: string
+          enum:
+            - company
+            - user
+          description: The type of the notification topic
+      required:
+        - name
+        - topic_type
+        - notification_channel_identifiers
+        - topic_identifier
+    AppNotificationTopicUpdateBody:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the notification topic
+        topic_identifier:
+          type: string
+          description: The identifier of the notification topic
+        description:
+          type: string
+          description: The description of the notification topic
+        notification_channel_identifiers:
+          type: array
+          items:
+            type: string
+            enum:
+              - email
+              - sms
+              - in_app
+              - discord_dm
+              - mobile
+            description: The identifier of the notification channel
+        send_once:
+          type: boolean
+          description: Whether or not the notification topic should only be sent once
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+          description: The status of the notification topic
+        topic_type:
+          type: string
+          enum:
+            - company
+            - user
+          description: The type of the notification topic
     AppMembership:
       type: object
       properties:
@@ -2010,31 +2494,6 @@ components:
           description: The date the billing item was created as a unix timestamp.
         currency:
           type: string
-          enum:
-            - usd
-            - sgd
-            - inr
-            - aud
-            - brl
-            - cad
-            - dkk
-            - eur
-            - nok
-            - gbp
-            - sek
-            - chf
-            - hkd
-            - huf
-            - jpy
-            - mxn
-            - myr
-            - pln
-            - czk
-            - nzd
-            - aed
-            - cop
-            - ron
-            - thb
           description: The three letter currency code for the billing item.
         unit_name:
           type: string
@@ -2074,31 +2533,6 @@ components:
           description: The billing type of the billing item.
         currency:
           type: string
-          enum:
-            - usd
-            - sgd
-            - inr
-            - aud
-            - brl
-            - cad
-            - dkk
-            - eur
-            - nok
-            - gbp
-            - sek
-            - chf
-            - hkd
-            - huf
-            - jpy
-            - mxn
-            - myr
-            - pln
-            - czk
-            - nzd
-            - aed
-            - cop
-            - ron
-            - thb
           description: The three letter currency code for the billing item.
         unit_name:
           type: string
@@ -2242,31 +2676,6 @@ components:
           description: The amount (price) for the line item.
         base_currency:
           type: string
-          enum:
-            - usd
-            - sgd
-            - inr
-            - aud
-            - brl
-            - cad
-            - dkk
-            - eur
-            - nok
-            - gbp
-            - sek
-            - chf
-            - hkd
-            - huf
-            - jpy
-            - mxn
-            - myr
-            - pln
-            - czk
-            - nzd
-            - aed
-            - cop
-            - ron
-            - thb
           description: A three letter currency code for the line item.
         description:
           type: string
@@ -2414,31 +2823,6 @@ components:
           description: The total amount paid by the User, including any discounts or taxes
         currency:
           type: string
-          enum:
-            - usd
-            - sgd
-            - inr
-            - aud
-            - brl
-            - cad
-            - dkk
-            - eur
-            - nok
-            - gbp
-            - sek
-            - chf
-            - hkd
-            - huf
-            - jpy
-            - mxn
-            - myr
-            - pln
-            - czk
-            - nzd
-            - aed
-            - cop
-            - ron
-            - thb
           description: The three letter currency the Payment was made in
         refunded_amount:
           type: number
@@ -2478,7 +2862,31 @@ components:
       required:
         - id
         - username
-
+    CompanySocialAccount:
+      type: object
+      properties:
+        service:
+          type: string
+          enum:
+            - discord
+            - twitter
+          description: The type of social account that it is.
+        username:
+          type: string
+          description: The username of the social account
+        default:
+          type: boolean
+          description: Whether or not this is the default social account for the user's account for the provider.
+        account_id:
+          type: string
+          description: The ID of the social account from the provider, like a discord ID or twitter ID.
+        image_url:
+          type: string
+          description: A URL for the image of the social account.
+      required:
+        - service
+        - default
+        - account_id
     MeProduct:
       type: object
       properties:
@@ -2596,31 +3004,6 @@ components:
           description: The amount (price) for the line item.
         base_currency:
           type: string
-          enum:
-            - usd
-            - sgd
-            - inr
-            - aud
-            - brl
-            - cad
-            - dkk
-            - eur
-            - nok
-            - gbp
-            - sek
-            - chf
-            - hkd
-            - huf
-            - jpy
-            - mxn
-            - myr
-            - pln
-            - czk
-            - nzd
-            - aed
-            - cop
-            - ron
-            - thb
           description: A three letter currency code for the line item.
         description:
           type: string
@@ -2644,6 +3027,31 @@ components:
         - allow_multiple_quantity
         - name
         - created_at
+    MeSocialAccount:
+      type: object
+      properties:
+        service:
+          type: string
+          enum:
+            - discord
+            - twitter
+          description: The type of social account that it is.
+        username:
+          type: string
+          description: The username of the social account
+        default:
+          type: boolean
+          description: Whether or not this is the default social account for the user's account for the provider.
+        account_id:
+          type: string
+          description: The ID of the social account from the provider, like a discord ID or twitter ID.
+        image_url:
+          type: string
+          description: A URL for the image of the social account.
+      required:
+        - service
+        - default
+        - account_id
     MeMembership:
       type: object
       properties:
@@ -2768,31 +3176,6 @@ components:
           description: The total amount paid by the User, including any discounts or taxes
         currency:
           type: string
-          enum:
-            - usd
-            - sgd
-            - inr
-            - aud
-            - brl
-            - cad
-            - dkk
-            - eur
-            - nok
-            - gbp
-            - sek
-            - chf
-            - hkd
-            - huf
-            - jpy
-            - mxn
-            - myr
-            - pln
-            - czk
-            - nzd
-            - aed
-            - cop
-            - ron
-            - thb
           description: The three letter currency the Payment was made in
         refunded_amount:
           type: number
