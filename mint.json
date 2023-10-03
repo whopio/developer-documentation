@@ -133,7 +133,12 @@
         },
         {
           "group": "Notifications",
-          "pages": ["api-reference/apps/notifications/send"]
+          "pages": [
+            "api-reference/apps/notifications/send",
+            "api-reference/apps/notifications/topics",
+            "api-reference/apps/notifications/get-topics",
+            "api-reference/apps/notifications/retrieve-topic"
+          ]
         },
         {
           "group": "Line Items",
@@ -146,7 +151,10 @@
         },
         {
           "group": "Users",
-          "pages": ["api-reference/apps/users/retrieve"]
+          "pages": [
+            "api-reference/apps/users/retrieve",
+            "api-reference/apps/users/accounts"
+          ]
         },
         "api-reference/apps/app"
       ]
@@ -184,6 +192,13 @@
             "api-reference/company/billing-items/list",
             "api-reference/company/billing-items/retrieve",
             "api-reference/company/billing-items/update"
+          ]
+        },
+        {
+          "group": "Users",
+          "pages": [
+            "api-reference/company/users/retrieve",
+            "api-reference/company/users/accounts"
           ]
         },
         "api-reference/company"
@@ -225,7 +240,8 @@
           "group": "Companies",
           "pages": ["api-reference/me/companies/retrieve"]
         },
-        "api-reference/me/user"
+        "api-reference/me/user",
+        "api-reference/me/accounts"
       ]
     },
     {
