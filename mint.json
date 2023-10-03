@@ -86,7 +86,7 @@
     },
     {
       "group": "More",
-      "pages": ["templates", "docs", "dev-discord", "blog"]
+      "pages": ["templates"]
     },
     {
       "group": "API Documentation",
