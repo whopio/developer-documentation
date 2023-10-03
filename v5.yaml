@@ -1,0 +1,2964 @@
+openapi: 3.1.0
+info:
+  title: Whop Apps API
+  description: The Whop Apps API
+  version: v5
+servers:
+  - url: https://api.whop.com/api/v5
+paths:
+  "/app":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app
+      operationId: get_api_v5_app
+      summary: Retrieve the current app
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppApp"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      description: Returns an App
+  "/app/billing_usages":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: post_api_v5_app_billing_usages
+      summary: Create a Billing Usage
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppBillingUsage"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppBillingUsageCreateBody"
+      description: Create a billing usage for a company
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: get_api_v5_app_billing_usages
+      summary: List Billing Usages
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: membership_id
+          in: query
+          required: false
+          description: An ID of a membership to filter by, which will look like mem_*************
+          schema:
+            type: string
+        - name: billing_item_id
+          in: query
+          required: false
+          description: An ID of a billing item to filter by, which will look like bi_*************
+          schema:
+            type: string
+        - name: billing_item_identifier
+          in: query
+          required: false
+          description: An identifier of a billing item to filter by.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppBillingUsage"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of billing usages
+  "/app/billing_usages/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: get_api_v5_app_billing_usages_id
+      summary: Retrieve a Billing Usage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing usage, which will look like bu_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppBillingUsage"
+      description: Returns a billing usage
+    delete:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/billing_usages
+      operationId: delete_api_v5_app_billing_usages_id
+      summary: Delete a Billing Usage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing usage, which will look like bu_*************
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+      description: Deletes a billing usage
+  "/app/companies":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/companies
+      operationId: get_api_v5_app_companies
+      summary: List Companies
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppCompany"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      description: Returns a collection of companies
+  "/app/companies/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/companies
+      operationId: get_api_v5_app_companies_id
+      summary: Retrieve a Company
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppCompany"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a company
+  "/app/experiences":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/experiences
+      operationId: get_api_v5_app_experiences
+      summary: List Experiences
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppExperience"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns a collection of experiences
+  "/app/experiences/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/experiences
+      operationId: get_api_v5_app_experiences_id
+      summary: Retrieve an Experience
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Experience, which will look like exp_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppExperience"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns an experience
+  "/app/line_items":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/line_items
+      operationId: post_api_v5_app_line_items
+      summary: Create a Line Item
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppLineItem"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppLineItemCreateBody"
+      description: Create a line item for a company
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/line_items
+      operationId: get_api_v5_app_line_items
+      summary: List Line Items
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppLineItem"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of line items
+  "/app/line_items/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/line_items
+      operationId: get_api_v5_app_line_items_id
+      summary: Retrieve a Line Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppLineItem"
+      description: Returns a line item
+    delete:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/line_items
+      operationId: delete_api_v5_app_line_items_id
+      summary: Delete a Line Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+
+      description: Deletes a line item
+  "/app/memberships":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/memberships
+      operationId: get_api_v5_app_memberships
+      summary: List Memberships
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: statuses
+          in: query
+          required: false
+          description: An array of statuses to filter by.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - active
+                - trialing
+                - past_due
+                - completed
+                - canceled
+                - expired
+                - unresolved
+        - name: valid
+          in: query
+          required: false
+          description: A boolean to filter by valid memberships
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppMembership"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of memberships
+  "/app/memberships/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/memberships
+      operationId: get_api_v5_app_memberships_id
+      summary: Retrieve a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppMembership"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a membership
+  "/app/notifications":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notifications
+      operationId: post_api_v5_app_notifications
+      summary: Send a Notification
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      description: Sends a notification to a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationBody"
+  "/app/payments":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/payments
+      operationId: get_api_v5_app_payments
+      summary: List Payments
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppPayment"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of payments
+  "/app/payments/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/payments
+      operationId: get_api_v5_app_payments_id
+      summary: Retrieve a Payment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Payment, which will look like pay_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppPayment"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a payment
+  "/app/products":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/products
+      operationId: get_api_v5_app_products
+      summary: List Products
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppProduct"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of products
+  "/app/products/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/products
+      operationId: get_api_v5_app_products_id
+      summary: Retrieve a Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Product, which will look like prod_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppProduct"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a product
+  "/app/users/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/users
+      operationId: get_api_v5_app_users_id
+      summary: Retrieve a User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the User, which will look like user_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppUser"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a user
+
+  "/company/billing_items":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: post_api_v5_company_billing_items
+      summary: Create a Billing Item
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBillingItem"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyBillingItemCreateBody"
+      description: Create a billing item
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: get_api_v5_company_billing_items
+      summary: List Billing Items
+      parameters:
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: app_id
+          in: query
+          required: false
+          description: An ID of an app to filter by, which will look like app_*************
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: A status to filter by.
+          schema:
+            type: string
+            enum:
+              - active
+              - archived
+        - name: identifier
+          in: query
+          required: false
+          description: An identifier to filter by.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyBillingItem"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of billing items
+  "/company/billing_items/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: get_api_v5_company_billing_items_id
+      summary: Retrieve a Billing Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing item, which will look like bi_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBillingItem"
+      description: Returns a billing item
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/billing_items
+      operationId: update_api_v5_company_billing_items_id
+      summary: Update a Billing Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the billing item, which will look like bi_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyBillingItem"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyBillingItemUpdateBody"
+      description: Updates a billing item
+  "/company/memberships":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/memberships
+      operationId: get_api_v5_company_memberships
+      summary: List Memberships
+      parameters:
+        - name: statuses
+          in: query
+          required: false
+          description: An array of statuses to filter by.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - active
+                - trialing
+                - past_due
+                - completed
+                - canceled
+                - expired
+                - unresolved
+        - name: valid
+          in: query
+          required: false
+          description: A boolean to filter by valid memberships
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyMembership"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of memberships
+  "/company/memberships/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/memberships
+      operationId: get_api_v5_company_memberships_id
+      summary: Retrieve a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyMembership"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a membership
+  "/company/payments":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/payments
+      operationId: get_api_v5_company_payments
+      summary: List Payments
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyPayment"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of payments
+  "/company/payments/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/payments
+      operationId: get_api_v5_company_payments_id
+      summary: Retrieve a Payment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Payment, which will look like pay_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyPayment"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a payment
+  "/company/products":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/products
+      operationId: get_api_v5_company_products
+      summary: List Products
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CompanyProduct"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of products
+  "/company/products/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/products
+      operationId: get_api_v5_company_products_id
+      summary: Retrieve a Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Product, which will look like prod_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyProduct"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a product
+  "/company":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company
+      operationId: get_api_v5_company
+      summary: Retrieve the current company
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyCompany"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      description: Returns a company
+
+  "/me/experiences":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/experiences
+      operationId: get_api_v5_me_experiences
+      summary: List Experiences
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MeExperience"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns a collection of experiences
+  "/me/experiences/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/experiences
+      operationId: get_api_v5_me_experiences_id
+      summary: Retrieve an Experience
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Experience, which will look like exp_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeExperience"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Returns an experience
+  "/me":
+    get:
+      security:
+        - ApiAuth: [user]
+      tags:
+        - me
+      operationId: get_api_v5_me
+      summary: Retrieve the current user
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeUser"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      description: Returns a user
+  "/me/memberships":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/memberships
+      operationId: get_api_v5_me_memberships
+      summary: List Memberships
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: statuses
+          in: query
+          required: false
+          description: An array of statuses to filter by.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - active
+                - trialing
+                - past_due
+                - completed
+                - canceled
+                - expired
+                - unresolved
+        - name: valid
+          in: query
+          required: false
+          description: A boolean to filter by valid memberships
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MeMembership"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of memberships
+  "/me/memberships/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/memberships
+      operationId: get_api_v5_me_memberships_id
+      summary: Retrieve a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeMembership"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a membership
+  "/me/payments":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/payments
+      operationId: get_api_v5_me_payments
+      summary: List Payments
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MePayment"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of payments
+  "/me/payments/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/payments
+      operationId: get_api_v5_me_payments_id
+      summary: Retrieve a Payment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Payment, which will look like pay_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MePayment"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a payment
+  "/me/products":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/products
+      operationId: get_api_v5_me_products
+      summary: List Products
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MeProduct"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of products
+  "/me/products/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/products
+      operationId: get_api_v5_me_products_id
+      summary: Retrieve a Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Product, which will look like prod_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeProduct"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a product
+  "/me/companies/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - me/companies
+      operationId: get_api_v5_me_companies_id
+      summary: Retrieve a Company
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Company, which will look like biz_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeCompany"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a company
+
+components:
+  securitySchemes:
+    WebhookSignature:
+      type: apiKey
+      in: header
+      name: x-whop-signature
+    ApiAuth:
+      type: http
+      scheme: bearer
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InvalidParameters:
+      description: Invalid Parameters
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        current_page:
+          type: number
+          description: Current page number
+        total_pages:
+          type: number
+          description: Total number of pages
+        next_page:
+          type: number
+          description: Next page number
+        prev_page:
+          type: number
+          description: Previous page number
+        total_count:
+          type: number
+          description: Total number of records
+      additionalProperties: false
+      required:
+        - current_page
+        - total_pages
+        - next_page
+        - prev_page
+        - total_count
+
+    NotificationBody:
+      type: object
+      properties:
+        topic_identifier:
+          type: string
+        targets:
+          type: array
+          items:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  type: string
+              experiences:
+                type: array
+                items:
+                  type: string
+        notification_data:
+          type: object
+          properties:
+            in_app:
+              $ref: "#/components/schemas/NotificationContent"
+            mobile:
+              $ref: "#/components/schemas/NotificationContent"
+            all:
+              $ref: "#/components/schemas/NotificationContent"
+      required:
+        - topic_identifier
+        - targets
+        - notification_data
+    NotificationContent:
+      type: object
+      properties:
+        subject:
+          type: string
+        content:
+          type: string
+      required:
+        - subject
+        - content
+    NotificationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "created"
+
+    AppApp:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        created_at:
+          type: number
+          description: The date the app was created as a unix timestamp.
+        name:
+          type: string
+          description: The name of the app
+        company_id:
+          type: string
+          description: The ID of the company that owns this app, which will look like biz_*************
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+    AppProduct:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        created_at:
+          type: number
+          description: The date the product was created
+        name:
+          type: string
+          description: The name of the product
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        description:
+          type: string
+          description: The description of the product
+        page_id:
+          type: string
+          description: The ID of the page, which will look like page_*************
+        visibility:
+          type: string
+          enum:
+            - visible
+            - hidden
+            - archived
+            - quick_link
+          description: The visibility of the product
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+        - page_id
+        - visibility
+    AppAuthorizedUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the authorized user
+        email:
+          type: string
+          description: The email of the authorized user
+        role:
+          type: string
+          description: The role of the user
+      required:
+        - id
+        - username
+        - email
+        - role
+    AppCompany:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the company object, which will look like biz_*************
+        created_at:
+          type: number
+          description: The date the company was created as a unix timestamp.
+        title:
+          type: string
+          description: The title of the company
+        image_url:
+          type: string
+          description: The URL of the company's image
+        authorized_user:
+          $ref: "#/components/schemas/AppAuthorizedUser"
+      required:
+        - id
+        - created_at
+        - title
+    AppExperience:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+        created_at:
+          type: number
+          description: The date the experience was created as a unix timestamp.
+        name:
+          type: string
+          description: The name of the experience
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        product_ids:
+          type: array
+          items:
+            type: string
+            description: The ID of the product, which will look like prod_*************
+        app_id:
+          type: string
+          description: The ID of the app that created the experience, which will look like app_*************
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+        - product_ids
+    AppBillingUsage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the billing usage, which will look like bu_*************
+        created_at:
+          type: number
+          description: The date the billing usage was created as a unix timestamp.
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        app_id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        billing_item_id:
+          type: string
+          description: The ID of the billing item, which will look like bi_*************
+        quantity:
+          type: number
+          description: The quantity to charge for the billing item, if the billing item is structured.
+        amount:
+          type: string
+          description: The amount to charge, if the billing item is variable.
+        receipt_id:
+          type: string
+          description: The ID of the receipt, which will look like rec_*************
+      required:
+        - id
+        - created_at
+        - company_id
+        - app_id
+        - membership_id
+        - billing_item_id
+    AppBillingUsageCreateBody:
+      type: object
+      properties:
+        billing_item_id:
+          type: string
+          description: The ID of the billing item, which will look like bi_*************. Supply this or the billing_item_identifier.
+        billing_item_identifier:
+          type: string
+          description: The identifier of the billing item, which will be a string. Supply this or the billing_item_id.
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************. Supply this or the membership_id.
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************. Supply this or the company_id.
+        amount:
+          type: number
+          description: The amount to charge, if the billing item is variable.
+        quantity:
+          type: number
+          description: The quantity to charge for the billing item, if the billing item is structured.
+    AppLineItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the line item, which will look like li_*************
+        amount:
+          type: integer
+          description: The amount (price) for the line item.
+        base_currency:
+          type: string
+          description: A three letter currency code for the line item.
+        description:
+          type: string
+          description: A textual description for the line item.
+        allow_multiple_quantity:
+          type: boolean
+          description: Whether or not the line item can be purchased as multiple quantity.
+        metadata:
+          type: object
+          description: A JSON object containing any additional metadata for the line item.
+        name:
+          type: string
+          description: The name of the line item.
+        created_at:
+          type: integer
+          description: The date the line item was created as a unix timestamp.
+      required:
+        - id
+        - amount
+        - base_currency
+        - allow_multiple_quantity
+        - name
+        - created_at
+    AppLineItemCreateBody:
+      type: object
+      properties:
+        company_id:
+          type: string
+          description: The ID of the company to create the line item for, which will look like biz_*************
+        amount:
+          type: integer
+          description: The amount (price) for the line item.
+        base_currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: A three letter currency code for the line item.
+        name:
+          type: string
+          description: The name of the line item.
+        description:
+          type: string
+          description: A textual description for the line item.
+        allow_multiple_quantity:
+          type: boolean
+          description: Whether or not the line item can be purchased as multiple quantity.
+        metadata:
+          type: object
+          description: A JSON object containing any additional metadata for the line item.
+      required:
+        - company_id
+        - amount
+        - base_currency
+        - allow_multiple_quantity
+        - name
+    AppMembership:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        page_id:
+          type: string
+          description: The ID of the page, which will look like page_*************
+        created_at:
+          type: number
+          description: The time at which the Membership was created. Measured in seconds since the Unix epoch.
+        expires_at:
+          type: number
+          description: The time of when the Membership is set to go expired
+        renewal_period_start:
+          type: number
+          description: The UTC timestamp of when the Membership will begin
+        renewal_period_end:
+          type: number
+          description: The UTC timestamp of when the Membership will end
+        quantity:
+          type: number
+          description: The quantity purchased
+        status:
+          type: string
+          enum:
+            - trialing
+            - active
+            - past_due
+            - completed
+            - canceled
+            - expired
+            - unresolved
+          description: The status of the membership
+        valid:
+          type: boolean
+          description: Whether or not the membership is valid
+        cancel_at_period_end:
+          type: boolean
+          description: Whether or not this membership is scheduled to cancel at the end of the renewal period.
+        license_key:
+          type: string
+          description: The license key for the membership
+        metadata:
+          type: object
+          description: The metadata for the membership
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to first purchase / generate the membership.
+      required:
+        - id
+        - product_id
+        - plan_id
+        - page_id
+        - created_at
+        - quantity
+        - status
+        - valid
+    AppPayment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the payment, which will look like pay_*************
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        line_item_id:
+          type: string
+          description: The line item this receipt was purchased with. This is for in-app purchases.
+        created_at:
+          type: number
+          description: The time at which the Payment was created. Measured in seconds since the Unix epoch. Does not necessarily reflect the time the Payment was successful.
+        paid_at:
+          type: number
+          description: The time at which the Payment was successful. Measured in seconds since the Unix epoch.
+        refunded_at:
+          type: number
+          description: The time at which the Payment was refunded. Measured in seconds since the Unix epoch.
+        last_payment_attempt:
+          type: number
+          description: The UTC timestamp of the last time the Payment was attempted
+        next_payment_attempt:
+          type: number
+          description: The UTC timestamp of the next time the Payment will be attempted
+        status:
+          type: string
+          enum:
+            - paid
+            - open
+            - void
+            - draft
+            - uncollectible
+          description: The status of the payment
+        subtotal:
+          type: number
+          description: The amount paid by the User, before any discounts or taxes
+        final_amount:
+          type: number
+          description: The total amount paid by the User, including any discounts or taxes
+        currency:
+          type: string
+          description: The three letter currency the Payment was made in
+        refunded_amount:
+          type: number
+          description: The amount that was refunded to the User (if applicable)
+        payments_failed:
+          type: number
+          description: The number of times the Payment has failed
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to execute this payment, if applicable.
+      required:
+        - id
+        - membership_id
+        - product_id
+        - company_id
+        - created_at
+        - status
+        - subtotal
+        - final_amount
+        - currency
+        - payments_failed
+    AppUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the user
+        email:
+          type: string
+          description: The email of the user
+        profile_pic_url:
+          type: string
+          description: The URL of the user's profile picture
+      required:
+        - id
+        - username
+
+    CompanyBillingItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the billing item, which will look like bi_*************
+        identifier:
+          type: string
+          description: An identifier for the billing item that is unique across all billing items for the product in respect to the app.
+        name:
+          type: string
+          description: The name of the billing item.
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+          description: The status of the billing item.
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        app_id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        billing_type:
+          type: string
+          enum:
+            - structured
+            - variable
+          description: The billing type of the billing item.
+        created_at:
+          type: integer
+          description: The date the billing item was created as a unix timestamp.
+        currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: The three letter currency code for the billing item.
+        unit_name:
+          type: string
+          description: The name of the unit for the billing item.
+        unit_amount:
+          type: integer
+          description: The unit amount for the billing item.
+        unit_price:
+          type: string
+          description: The unit price for the billing item.
+      required:
+        - id
+        - name
+        - status
+        - product_id
+        - app_id
+        - billing_type
+        - created_at
+        - currency
+    CompanyBillingItemCreateBody:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: An identifier for the billing item that is unique across all billing items for the product in respect to the app.
+        name:
+          type: string
+          description: The name of the billing item.
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        billing_type:
+          type: string
+          enum:
+            - structured
+            - variable
+          description: The billing type of the billing item.
+        currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: The three letter currency code for the billing item.
+        unit_name:
+          type: string
+          description: The name of the unit for the billing item. Only for structured billing items.
+        unit_amount:
+          type: integer
+          description: The unit amount for the billing item. Only for structured billing items.
+        unit_price:
+          type: string
+          description: The unit price for the billing item. Only for structured billing items.
+      required:
+        - name
+        - product_id
+        - billing_type
+        - currency
+    CompanyBillingItemUpdateBody:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+          description: The status of the billing item.
+      required:
+        - status
+    CompanyProduct:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        created_at:
+          type: number
+          description: The date the product was created
+        name:
+          type: string
+          description: The name of the product
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        description:
+          type: string
+          description: The description of the product
+        page_id:
+          type: string
+          description: The ID of the page, which will look like page_*************
+        visibility:
+          type: string
+          enum:
+            - visible
+            - hidden
+            - archived
+            - quick_link
+          description: The visibility of the product
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+        - page_id
+        - visibility
+    CompanyAuthorizedUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the authorized user
+        email:
+          type: string
+          description: The email of the authorized user
+        role:
+          type: string
+          description: The role of the user
+      required:
+        - id
+        - username
+        - email
+        - role
+    CompanyCompany:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the company object, which will look like biz_*************
+        created_at:
+          type: number
+          description: The date the company was created as a unix timestamp.
+        title:
+          type: string
+          description: The title of the company
+        image_url:
+          type: string
+          description: The URL of the company's image
+        authorized_user:
+          $ref: "#/components/schemas/CompanyAuthorizedUser"
+      required:
+        - id
+        - created_at
+        - title
+    CompanyExperience:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+        created_at:
+          type: number
+          description: The date the experience was created as a unix timestamp.
+        name:
+          type: string
+          description: The name of the experience
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        product_ids:
+          type: array
+          items:
+            type: string
+            description: The ID of the product, which will look like prod_*************
+        app_id:
+          type: string
+          description: The ID of the app that created the experience, which will look like app_*************
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+        - product_ids
+    CompanyLineItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the line item, which will look like li_*************
+        amount:
+          type: integer
+          description: The amount (price) for the line item.
+        base_currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: A three letter currency code for the line item.
+        description:
+          type: string
+          description: A textual description for the line item.
+        allow_multiple_quantity:
+          type: boolean
+          description: Whether or not the line item can be purchased as multiple quantity.
+        metadata:
+          type: object
+          description: A JSON object containing any additional metadata for the line item.
+        name:
+          type: string
+          description: The name of the line item.
+        created_at:
+          type: integer
+          description: The date the line item was created as a unix timestamp.
+      required:
+        - id
+        - amount
+        - base_currency
+        - allow_multiple_quantity
+        - name
+        - created_at
+    CompanyMembership:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        page_id:
+          type: string
+          description: The ID of the page, which will look like page_*************
+        created_at:
+          type: number
+          description: The time at which the Membership was created. Measured in seconds since the Unix epoch.
+        expires_at:
+          type: number
+          description: The time of when the Membership is set to go expired
+        renewal_period_start:
+          type: number
+          description: The UTC timestamp of when the Membership will begin
+        renewal_period_end:
+          type: number
+          description: The UTC timestamp of when the Membership will end
+        quantity:
+          type: number
+          description: The quantity purchased
+        status:
+          type: string
+          enum:
+            - trialing
+            - active
+            - past_due
+            - completed
+            - canceled
+            - expired
+            - unresolved
+          description: The status of the membership
+        valid:
+          type: boolean
+          description: Whether or not the membership is valid
+        cancel_at_period_end:
+          type: boolean
+          description: Whether or not this membership is scheduled to cancel at the end of the renewal period.
+        license_key:
+          type: string
+          description: The license key for the membership
+        metadata:
+          type: object
+          description: The metadata for the membership
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to first purchase / generate the membership.
+      required:
+        - id
+        - product_id
+        - plan_id
+        - page_id
+        - created_at
+        - quantity
+        - status
+        - valid
+    CompanyPayment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the payment, which will look like pay_*************
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        line_item_id:
+          type: string
+          description: The line item this receipt was purchased with. This is for in-app purchases.
+        created_at:
+          type: number
+          description: The time at which the Payment was created. Measured in seconds since the Unix epoch. Does not necessarily reflect the time the Payment was successful.
+        paid_at:
+          type: number
+          description: The time at which the Payment was successful. Measured in seconds since the Unix epoch.
+        refunded_at:
+          type: number
+          description: The time at which the Payment was refunded. Measured in seconds since the Unix epoch.
+        last_payment_attempt:
+          type: number
+          description: The UTC timestamp of the last time the Payment was attempted
+        next_payment_attempt:
+          type: number
+          description: The UTC timestamp of the next time the Payment will be attempted
+        status:
+          type: string
+          enum:
+            - paid
+            - open
+            - void
+            - draft
+            - uncollectible
+          description: The status of the payment
+        subtotal:
+          type: number
+          description: The amount paid by the User, before any discounts or taxes
+        final_amount:
+          type: number
+          description: The total amount paid by the User, including any discounts or taxes
+        currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: The three letter currency the Payment was made in
+        refunded_amount:
+          type: number
+          description: The amount that was refunded to the User (if applicable)
+        payments_failed:
+          type: number
+          description: The number of times the Payment has failed
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to execute this payment, if applicable.
+      required:
+        - id
+        - membership_id
+        - product_id
+        - company_id
+        - created_at
+        - status
+        - subtotal
+        - final_amount
+        - currency
+        - payments_failed
+    CompanyUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the user
+        email:
+          type: string
+          description: The email of the user
+        profile_pic_url:
+          type: string
+          description: The URL of the user's profile picture
+      required:
+        - id
+        - username
+
+    MeProduct:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        created_at:
+          type: number
+          description: The date the product was created
+        name:
+          type: string
+          description: The name of the product
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        description:
+          type: string
+          description: The description of the product
+        page_id:
+          type: string
+          description: The ID of the page, which will look like page_*************
+        visibility:
+          type: string
+          enum:
+            - visible
+            - hidden
+            - archived
+            - quick_link
+          description: The visibility of the product
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+        - page_id
+        - visibility
+    MeAuthorizedUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the authorized user
+        email:
+          type: string
+          description: The email of the authorized user
+        role:
+          type: string
+          description: The role of the user
+      required:
+        - id
+        - username
+        - email
+        - role
+    MeCompany:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the company object, which will look like biz_*************
+        created_at:
+          type: number
+          description: The date the company was created as a unix timestamp.
+        title:
+          type: string
+          description: The title of the company
+        image_url:
+          type: string
+          description: The URL of the company's image
+        authorized_user:
+          $ref: "#/components/schemas/MeAuthorizedUser"
+      required:
+        - id
+        - created_at
+        - title
+    MeExperience:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+        created_at:
+          type: number
+          description: The date the experience was created as a unix timestamp.
+        name:
+          type: string
+          description: The name of the experience
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        product_ids:
+          type: array
+          items:
+            type: string
+            description: The ID of the product, which will look like prod_*************
+        app_id:
+          type: string
+          description: The ID of the app that created the experience, which will look like app_*************
+      required:
+        - id
+        - created_at
+        - name
+        - company_id
+        - product_ids
+    MeLineItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the line item, which will look like li_*************
+        amount:
+          type: integer
+          description: The amount (price) for the line item.
+        base_currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: A three letter currency code for the line item.
+        description:
+          type: string
+          description: A textual description for the line item.
+        allow_multiple_quantity:
+          type: boolean
+          description: Whether or not the line item can be purchased as multiple quantity.
+        metadata:
+          type: object
+          description: A JSON object containing any additional metadata for the line item.
+        name:
+          type: string
+          description: The name of the line item.
+        created_at:
+          type: integer
+          description: The date the line item was created as a unix timestamp.
+      required:
+        - id
+        - amount
+        - base_currency
+        - allow_multiple_quantity
+        - name
+        - created_at
+    MeMembership:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        page_id:
+          type: string
+          description: The ID of the page, which will look like page_*************
+        created_at:
+          type: number
+          description: The time at which the Membership was created. Measured in seconds since the Unix epoch.
+        expires_at:
+          type: number
+          description: The time of when the Membership is set to go expired
+        renewal_period_start:
+          type: number
+          description: The UTC timestamp of when the Membership will begin
+        renewal_period_end:
+          type: number
+          description: The UTC timestamp of when the Membership will end
+        quantity:
+          type: number
+          description: The quantity purchased
+        status:
+          type: string
+          enum:
+            - trialing
+            - active
+            - past_due
+            - completed
+            - canceled
+            - expired
+            - unresolved
+          description: The status of the membership
+        valid:
+          type: boolean
+          description: Whether or not the membership is valid
+        cancel_at_period_end:
+          type: boolean
+          description: Whether or not this membership is scheduled to cancel at the end of the renewal period.
+        license_key:
+          type: string
+          description: The license key for the membership
+        metadata:
+          type: object
+          description: The metadata for the membership
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to first purchase / generate the membership.
+      required:
+        - id
+        - product_id
+        - plan_id
+        - page_id
+        - created_at
+        - quantity
+        - status
+        - valid
+    MePayment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the payment, which will look like pay_*************
+        membership_id:
+          type: string
+          description: The ID of the membership, which will look like mem_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        plan_id:
+          type: string
+          description: The ID of the plan, which will look like plan_*************
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        line_item_id:
+          type: string
+          description: The line item this receipt was purchased with. This is for in-app purchases.
+        created_at:
+          type: number
+          description: The time at which the Payment was created. Measured in seconds since the Unix epoch. Does not necessarily reflect the time the Payment was successful.
+        paid_at:
+          type: number
+          description: The time at which the Payment was successful. Measured in seconds since the Unix epoch.
+        refunded_at:
+          type: number
+          description: The time at which the Payment was refunded. Measured in seconds since the Unix epoch.
+        last_payment_attempt:
+          type: number
+          description: The UTC timestamp of the last time the Payment was attempted
+        next_payment_attempt:
+          type: number
+          description: The UTC timestamp of the next time the Payment will be attempted
+        status:
+          type: string
+          enum:
+            - paid
+            - open
+            - void
+            - draft
+            - uncollectible
+          description: The status of the payment
+        subtotal:
+          type: number
+          description: The amount paid by the User, before any discounts or taxes
+        final_amount:
+          type: number
+          description: The total amount paid by the User, including any discounts or taxes
+        currency:
+          type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+          description: The three letter currency the Payment was made in
+        refunded_amount:
+          type: number
+          description: The amount that was refunded to the User (if applicable)
+        payments_failed:
+          type: number
+          description: The number of times the Payment has failed
+        checkout_id:
+          type: string
+          description: The ID of the checkout used to execute this payment, if applicable.
+      required:
+        - id
+        - membership_id
+        - product_id
+        - company_id
+        - created_at
+        - status
+        - subtotal
+        - final_amount
+        - currency
+        - payments_failed
+    MeUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        username:
+          type: string
+          description: The username of the user
+        email:
+          type: string
+          description: The email of the user
+        profile_pic_url:
+          type: string
+          description: The URL of the user's profile picture
+      required:
+        - id
+        - username
+
+webhooks:
+  membership-went-valid:
+    post:
+      operationId: membership-went-valid
+      security:
+        - WebhookSignature: []
+      summary: When a membership is purchased and goes valid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - membership.went_valid
+                  example: "membership.went_valid"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppMembership"
+              required:
+                - action
+                - version
+                - data
+        required: true
+  membership-went-invalid:
+    post:
+      operationId: membership-went-invalid
+      security:
+        - WebhookSignature: []
+      summary: When a membership goes invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - membership.went_invalid
+                  example: "membership.went_invalid"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppMembership"
+              required:
+                - action
+                - version
+                - data
+        required: true
+  payment-succeeded:
+    post:
+      operationId: payment-succeeded
+      security:
+        - WebhookSignature: []
+      summary: When a payment is successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - payment.succeeded
+                  example: "payment.succeeded"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppPayment"
+              required:
+                - action
+                - version
+                - data
+        required: true
+  payment-failed:
+    post:
+      operationId: payment-failed
+      security:
+        - WebhookSignature: []
+      summary: When a payment fails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - payment.failed
+                  example: "payment.failed"
+                version:
+                  type: string
+                  enum:
+                    - v5
+                  example: "v5"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppPayment"
+              required:
+                - action
+                - version
+                - data
+        required: true

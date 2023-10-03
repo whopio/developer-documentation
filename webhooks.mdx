@@ -17,6 +17,34 @@ Webhooks can be utilized for various purposes, such as:
 
 ---
 
+## Webhook Types
+
+<Note>If you are not developing an app, you can skip this section.</Note>
+
+For [**apps**](/apps/overview), there will be two types of webhooks. One being for when a business signs up and purcahses your app, and the second being when a user performs an action on a product that uses your app.
+
+To differentiate, we have added an extra value into the webhook payload. If the webhook is to do with a user performing an action, you will see this a **company ID**:
+
+```json
+{
+  "action": "",
+  "company": "biz_id",
+  "data": {}
+}
+```
+
+However, if it is trigged by a business that owns your app, it will be `null`.
+
+```json
+{
+  "action": "",
+  "company": null,
+  "data": {}
+}
+```
+
+---
+
 ## Creating a webhook
 
 Access the Whop Business dashboard and navigate to the developer settings page. Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
@@ -100,7 +128,7 @@ app.listen(3000, () => {
 Input the correct route into the modal and click the **"Send test webhook"** button. Our server will attempt to `POST` an example webhook event to the provided endpoint. If your application accepts the request and returns a 200 HTTP response code, you will see a green message indicating "**Test successful"** Your endpoint will now start receiving events.
 
 <Note>
-  To view all webhook payloads, check the [**events**](/webhooks/events)
+  To view all webhook payloads, check the [**events**](/webhooks/examples)
   section.
 </Note>
 

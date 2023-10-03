@@ -1,0 +1,15 @@
+---
+title: Fetch Token
+description: Fetch the users authentication token
+---
+
+This function will get the users Whop Token from the headers. You must pass the `headers` object.
+
+```typescript
+import { getToken } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function Home() {
+  const token = await getToken({ headers });
+}
+```
