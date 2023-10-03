@@ -1,9 +1,5 @@
 <p align="center">
   <a href="https://apps.whop.com">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://mintlify.s3-us-west-1.amazonaws.com/whop-75/logo/white.png" />
-      <img src="https://mintlify.s3-us-west-1.amazonaws.com/whop-75/logo/white.png" height="128" />
-    </picture>
     <h1 align="center">Whop Developer Documentation</h1>
   </a>
 </p>
