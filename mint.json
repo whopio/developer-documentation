@@ -65,7 +65,7 @@
     },
     {
       "group": "More",
-      "pages": ["templates", "discord", "docs", "dev-discord", "blog"]
+      "pages": ["templates"]
     },
 
     {
