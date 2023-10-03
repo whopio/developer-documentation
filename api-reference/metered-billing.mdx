@@ -65,7 +65,7 @@ In this model you will specify the unit name, unit price, and how many units are
   "billing_type": "structured",
   "unit_name": "GBs",
   "unit_amount": 5,
-  "unit_price": 10,
+  "unit_price": "10.00",
   "currency": "usd",
   "identifier": "video_usage"
 }
@@ -73,8 +73,19 @@ In this model you will specify the unit name, unit price, and how many units are
 
 Here is how to create it using the SDK
 
-```typescript
-TODO;
+```javascript
+WhopAPI.company().POST("/company/billing_items", {
+  body: {
+    name: "Video Usage",
+    product_id: "prod_xxxxxxxxxxxxx",
+    billing_type: "structured",
+    unit_name: "GBs",
+    unit_amount: 5,
+    unit_price: "10,00",
+    currency: "usd",
+    identifier: "video_usage",
+  },
+});
 ```
 
 ### Variable Billing items
@@ -98,8 +109,16 @@ Here is an example JSON body to pass up:
 
 Here is how to create it using the SDK
 
-```typescript
-TODO;
+```javascript
+WhopAPI.company().POST("/company/billing_items", {
+  body: {
+    name: "Video Usage",
+    product_id: "prod_xxxxxxxxxxxxx",
+    billing_type: "variable",
+    currency: "usd",
+    identifier: "video_usage",
+  },
+});
 ```
 
 <Check>
