@@ -34,6 +34,4 @@ To learn more about navigation, head to the [Mintlify Documentation](https://min
 
 ## Review Process
 
-Once you've submitted your contribution, the Whop team will review your changes, provide feedback, and merge the pull request when it's ready.
-
-Please let us know if you have any questions or need further assistance in your PR's comments.
+Once you've submitted your contribution, the Whop team will review your changes, provide feedback, and merge the pull request when it's ready. If your change were merged, you will also be added to our [Contributors](/contribution) page.
