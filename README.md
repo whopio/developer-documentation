@@ -26,7 +26,9 @@ mintlify dev
 
 This will run the documentation on `localhost:3000`, head there and you will see the documentation!
 
-### Adding new pages
+### Making changes
+
+This documentation uses Markdown (MDX) and Mintlify's custom components. It is not possible to use custom React components, only native Mintlify ones. You can find more details about the ones available to you [here](https://mintlify.com/docs/content/components/accordion)
 
 If you are creating new pages, you will also need to add them to the navigation. To do this, head to the `mint.json` file. This is where all the navigation configuration lives.Find the relevant group, and add in the path of your new page.
 
