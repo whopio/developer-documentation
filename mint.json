@@ -86,7 +86,7 @@
     },
     {
       "group": "More",
-      "pages": ["templates"]
+      "pages": ["templates", "contribution"]
     },
     {
       "group": "API Documentation",
