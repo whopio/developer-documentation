@@ -37,8 +37,8 @@ The _Basic_ product has no up front cost (free to install) whereas the _Enterpri
 
 We are going to use the [**List Products**](/api-reference/company/products/list) endpoint to find our product ID. I am going to use the SDK, like so:
 
-```typescript
-TODO;
+```javascript
+const products = await WhopAPI.company().GET("/company/products", {});
 ```
 
 Now that you have the list of products, choose which product you want to set your metered billing pricing for. We automatically make one product for you when you sign up.
@@ -46,7 +46,11 @@ Now that you have the list of products, choose which product you want to set you
 Here's how I set `productId` using the SDK:
 
 ```typescript
-TODO;
+if (products.isErr) {
+  return <p>Could not fetch products</p>;
+}
+
+const productId = products.data.data[0].id;
 ```
 
 ## 2. Create your Billing items
@@ -74,7 +78,7 @@ In this model you will specify the unit name, unit price, and how many units are
 Here is how to create it using the SDK
 
 ```javascript
-WhopAPI.company().POST("/company/billing_items", {
+await WhopAPI.company().POST("/company/billing_items", {
   body: {
     name: "Video Usage",
     product_id: "prod_xxxxxxxxxxxxx",
@@ -90,7 +94,7 @@ WhopAPI.company().POST("/company/billing_items", {
 
 ### Variable Billing items
 
-If you do not know the price of your billing item (or costs) beforehand, such as when shipping a package, you will use \*_variable_ billing items.
+If you do not know the price of your billing item (or costs) beforehand, such as when shipping a package, you will use _variable_ billing items.
 These will allow you to charge different rates on demand.
 
 Create a variable billing item using the [**Create a billing item** endpoint.](/api-reference/company/billing-items/create).
@@ -110,7 +114,7 @@ Here is an example JSON body to pass up:
 Here is how to create it using the SDK
 
 ```javascript
-WhopAPI.company().POST("/company/billing_items", {
+await WhopAPI.company().POST("/company/billing_items", {
   body: {
     name: "Video Usage",
     product_id: "prod_xxxxxxxxxxxxx",
@@ -154,8 +158,14 @@ Let's say the seller uploaded 69 GB of video today. You will create a billing us
 
 Here is how to create it using the SDK:
 
-```typescript
-TODO;
+```javascript
+await WhopAPI.app().POST("/app/billing_usages", {
+  body: {
+    company_id: "biz_xxxxxxxxxxxxxx",
+    billing_item_identifier: "video_usage",
+    quantity: 69,
+  },
+});
 ```
 
 ### Variable Billing Item
@@ -166,14 +176,20 @@ Here is an example of how to charge the user $127.41
 {
   "company_id": "biz_xxxxxxxxxxxxxx",
   "billing_item_identifier": "video_usage",
-  "amount": 127.41
+  "amount": "127.41"
 }
 ```
 
 Here is how to create it using the SDK:
 
-```typescript
-TODO;
+```javascript
+await WhopAPI.app().POST("/app/billing_usages", {
+  body: {
+    company_id: "biz_xxxxxxxxxxxxxx",
+    billing_item_identifier: "video_usage",
+    amount: 127.41,
+  },
+});
 ```
 
 ## 4. Get Paid

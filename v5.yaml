@@ -6,6 +6,36 @@ info:
 servers:
   - url: https://api.whop.com/api/v5
 paths:
+  "/oauth/token":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - oauth
+      operationId: post_api_v5_oauth_token
+      summary: Create an OAuth Token
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OauthToken"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OauthTokenCreateBody"
+      description: Exchange a code for a token
   "/app":
     get:
       security:
@@ -672,6 +702,12 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: in_app_payments
+          in: query
+          required: false
+          description: A boolean of whether or not to return only payments made with a line item created by the app. If false, returns all payments without a line item.
+          schema:
+            type: boolean
       responses:
         "200":
           description: A successful response
@@ -1854,6 +1890,40 @@ components:
           type: string
           example: "created"
 
+    OauthTokenCreateBody:
+      type: object
+      properties:
+        grant_type:
+          type: string
+          enum:
+            - authorization_code
+          description: The grant type
+        code:
+          type: string
+          description: The authorization code
+        client_id:
+          type: string
+          description: The client ID of your oAuth application.
+        client_secret:
+          type: string
+          description: The client secret of your oAuth application.
+        redirect_uri:
+          type: string
+          description: The redirect URI
+      required:
+        - grant_type
+        - code
+        - client_id
+        - client_secret
+        - redirect_uri
+    OauthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The access token of the user
+      required:
+        - access_token
     AppApp:
       type: object
       properties:

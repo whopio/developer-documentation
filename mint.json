@@ -82,7 +82,7 @@
     },
     {
       "group": "Webhooks",
-      "pages": ["webhooks", "webhooks/examples"]
+      "pages": ["webhooks", "webhooks/events"]
     },
     {
       "group": "More",
@@ -90,7 +90,7 @@
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
+      "pages": ["api-reference/authentication", "api-reference/rate-limits"]
     },
     {
       "group": "Apps",
@@ -154,6 +154,15 @@
           "pages": [
             "api-reference/apps/users/retrieve",
             "api-reference/apps/users/accounts"
+          ]
+        },
+        {
+          "group": "Billing Usages",
+          "pages": [
+            "api-reference/apps/billing-usages/list",
+            "api-reference/apps/billing-usages/retrieve",
+            "api-reference/apps/billing-usages/create",
+            "api-reference/apps/billing-usages/delete"
           ]
         },
         "api-reference/apps/app"
@@ -240,6 +249,7 @@
           "group": "Companies",
           "pages": ["api-reference/me/companies/retrieve"]
         },
+        "api-reference/me/token",
         "api-reference/me/user",
         "api-reference/me/accounts"
       ]
@@ -262,7 +272,7 @@
     },
     {
       "group": "iFrame",
-      "pages": ["sdk/iframe"]
+      "pages": ["sdk/iframe", "sdk/deeplinking"]
     }
   ],
   "footerSocials": {
