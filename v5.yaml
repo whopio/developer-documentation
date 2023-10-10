@@ -2144,6 +2144,31 @@ components:
           description: The amount (price) for the line item.
         base_currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
           description: A three letter currency code for the line item.
         description:
           type: string
@@ -2489,6 +2514,32 @@ components:
           description: The total amount paid by the User, including any discounts or taxes
         currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+            - eth
           description: The three letter currency the Payment was made in
         refunded_amount:
           type: number
@@ -2564,6 +2615,31 @@ components:
           description: The date the billing item was created as a unix timestamp.
         currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
           description: The three letter currency code for the billing item.
         unit_name:
           type: string
@@ -2603,6 +2679,31 @@ components:
           description: The billing type of the billing item.
         currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
           description: The three letter currency code for the billing item.
         unit_name:
           type: string
@@ -2746,6 +2847,31 @@ components:
           description: The amount (price) for the line item.
         base_currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
           description: A three letter currency code for the line item.
         description:
           type: string
@@ -2893,6 +3019,32 @@ components:
           description: The total amount paid by the User, including any discounts or taxes
         currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+            - eth
           description: The three letter currency the Payment was made in
         refunded_amount:
           type: number
@@ -3074,6 +3226,31 @@ components:
           description: The amount (price) for the line item.
         base_currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
           description: A three letter currency code for the line item.
         description:
           type: string
@@ -3246,6 +3423,32 @@ components:
           description: The total amount paid by the User, including any discounts or taxes
         currency:
           type: string
+          enum:
+            - usd
+            - sgd
+            - inr
+            - aud
+            - brl
+            - cad
+            - dkk
+            - eur
+            - nok
+            - gbp
+            - sek
+            - chf
+            - hkd
+            - huf
+            - jpy
+            - mxn
+            - myr
+            - pln
+            - czk
+            - nzd
+            - aed
+            - cop
+            - ron
+            - thb
+            - eth
           description: The three letter currency the Payment was made in
         refunded_amount:
           type: number
