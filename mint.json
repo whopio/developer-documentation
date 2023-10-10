@@ -26,7 +26,7 @@
       "to": "#ff6423"
     }
   },
-  "versions": ["V5 API", "V2 API"],
+  "versions": ["V5 API (Recommended)", "V2 API (Legacy)"],
   "topbarCtaButton": {
     "name": "Start Building",
     "url": "https://whop.com/sell"
@@ -39,7 +39,7 @@
     {
       "name": "SDK Reference",
       "url": "sdk",
-      "version": "V5 API"
+      "version": "V5 API (Recommended)"
     }
   ],
   "redirects": [
@@ -96,11 +96,11 @@
         "api-reference/v5/authentication",
         "api-reference/v5/rate-limits"
       ],
-      "version": "V5 API"
+      "version": "V5 API (Recommended)"
     },
     {
       "group": "Apps",
-      "version": "V5 API",
+      "version": "V5 API (Recommended)",
       "pages": [
         "api-reference/v5/apps/overview",
         {
@@ -177,7 +177,7 @@
     },
     {
       "group": "Company",
-      "version": "V5 API",
+      "version": "V5 API (Recommended)",
       "pages": [
         "api-reference/v5/company/overview",
         "api-reference/v5/metered-billing",
@@ -223,7 +223,7 @@
     },
     {
       "group": "Me",
-      "version": "V5 API",
+      "version": "V5 API (Recommended)",
       "pages": [
         "api-reference/v5/me/overview",
         {
@@ -289,11 +289,11 @@
         "api-reference/v2/authentication",
         "api-reference/v2/rate-limits"
       ],
-      "version": "V2 API"
+      "version": "V2 API (Legacy)"
     },
     {
       "group": "Memberships",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/memberships/list-memberships",
         "api-reference/v2/memberships/validate-a-license-key",
@@ -306,7 +306,7 @@
     },
     {
       "group": "Products",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/products/list-products",
         "api-reference/v2/products/retrieve-a-product",
@@ -315,7 +315,7 @@
     },
     {
       "group": "Plans",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/plans/list-plans",
         "api-reference/v2/plans/retrieve-a-plan",
@@ -326,7 +326,7 @@
     },
     {
       "group": "Experiences",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/experiences/list-experiences",
         "api-reference/v2/experiences/retrieve-an-experience",
@@ -336,7 +336,7 @@
     },
     {
       "group": "Checkout Sessions",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/checkout-sessions/create-a-checkout-session",
         "api-reference/v2/checkout-sessions/retrieve-a-checkout-session",
@@ -346,12 +346,12 @@
     },
     {
       "group": "Companies",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": ["api-reference/v2/companies/retrieve-a-company"]
     },
     {
       "group": "Members",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/members/list-members",
         "api-reference/v2/members/retrieve-member"
@@ -359,6 +359,7 @@
     },
     {
       "group": "Payments",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/payments/list-payments",
         "api-reference/v2/payments/retrieve-a-payment"
@@ -366,7 +367,7 @@
     },
     {
       "group": "Promo Codes",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/promo-codes/list-promo-codes",
         "api-reference/v2/promo-codes/retrieve-a-promo-code",
@@ -377,7 +378,7 @@
     },
     {
       "group": "Reviews",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/reviews/list-reviews",
         "api-reference/v2/reviews/retrieve-a-review"
@@ -385,7 +386,7 @@
     },
     {
       "group": "Webhooks",
-      "version": "V2 API",
+      "version": "V2 API (Legacy)",
       "pages": [
         "api-reference/v2/webhooks/list-webhooks",
         "api-reference/v2/webhooks/retrieve-a-webhook",
