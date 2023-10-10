@@ -35,7 +35,7 @@ Whop allows you to sell access to different pricing tiers. For example, you can 
 
 The _Basic_ product has no up front cost (free to install) whereas the _Enterprise_ product is $100 / month. The _Enterprise_ product is built for power Sellers, as it gives them access to less expensive video costs.
 
-We are going to use the [**List Products**](/api-reference/company/products/list) endpoint to find our product ID. I am going to use the SDK, like so:
+We are going to use the [**List Products**](/api-reference/v5/company/products/list) endpoint to find our product ID. I am going to use the SDK, like so:
 
 ```javascript
 const products = await WhopAPI.company().GET("/company/products", {});
@@ -97,7 +97,7 @@ await WhopAPI.company().POST("/company/billing_items", {
 If you do not know the price of your billing item (or costs) beforehand, such as when shipping a package, you will use _variable_ billing items.
 These will allow you to charge different rates on demand.
 
-Create a variable billing item using the [**Create a billing item** endpoint.](/api-reference/company/billing-items/create).
+Create a variable billing item using the [**Create a billing item** endpoint.](/api-reference/v5/company/billing-items/create).
 
 Here is an example JSON body to pass up:
 
