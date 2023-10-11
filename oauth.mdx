@@ -126,7 +126,7 @@ You will need to pass the `redirect_uri` value as part of the payload. This is t
 
     const getAuthToken = async (code, clientId, clientSecret, redirect_uri) => {
         try {
-            const response = await axios.post('https://api.whop.com/api/v2/oauth/token', {
+            const response = await axios.post('https://api.whop.com/v5/oauth/token', {
                 code,
                 client_id: clientId,
                 client_secret: clientSecret,
@@ -151,7 +151,7 @@ def get_auth_token(code, client_id, client_secret, redirect_uri):
         "client_secret": client_secret,
         "redirect_uri": redirect_uri
     }
-    response = requests.post('https://api.whop.com/api/v2/oauth/token', data=data)
+    response = requests.post('https://api.whop.com/v5/oauth/token', data=data)
     return response.json()
 ```
 
@@ -161,7 +161,7 @@ require 'uri'
 require 'json'
 
 def get_auth_token(code, client_id, client_secret, redirect_uri)
-    uri = URI.parse('https://api.whop.com/api/v2/oauth/token')
+    uri = URI.parse('https://api.whop.com/v5/oauth/token')
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'application/json'
     request.body = {
@@ -195,7 +195,7 @@ import axios from "axios";
 
 const checkAccess = async (accessToken) => {
   try {
-    const response = await axios.get(`https://api.whop.com/api/v2/oauth/user`, {
+    const response = await axios.get(`https://api.whop.com/v5/me`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -216,7 +216,7 @@ def check_access(access_token):
     headers = {
         "Authorization": f"Bearer {access_token}"
     }
-    response = requests.get('https://api.whop.com/api/v2/oauth/user', headers=headers)
+    response = requests.get('https://api.whop.com/v5/me', headers=headers)
     return response.json()
 ```
 
@@ -226,7 +226,7 @@ require 'uri'
 require 'json'
 
 def check_access(access_token)
-    uri = URI.parse("https://api.whop.com/api/v2/oauth/user")
+    uri = URI.parse("https://api.whop.com/v5/me")
     request = Net::HTTP::Get.new(uri)
     request["Authorization"] = "Bearer #{access_token}"
     req_options = {
