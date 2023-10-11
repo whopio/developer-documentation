@@ -81,7 +81,7 @@
     },
     {
       "group": "Whop App Guides",
-      "pages": ["apps/notifications"]
+      "pages": ["apps/notifications", "apps/inapp-purchases"]
     },
     {
       "group": "Webhooks",
@@ -275,7 +275,7 @@
     },
     {
       "group": "iFrame",
-      "pages": ["sdk/iframe", "sdk/deeplinking"]
+      "pages": ["sdk/iframe-setup", "sdk/iframe", "sdk/deeplinking"]
     }
   ],
   "footerSocials": {
