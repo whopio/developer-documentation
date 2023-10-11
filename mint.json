@@ -9,6 +9,9 @@
       "measurementId": "G-NGD3HKQGSV"
     }
   },
+  "feedback": {
+    "thumbsRating": true
+  },
   "logo": {
     "dark": "/logo/white.png",
     "light": "/logo/whop.png"
