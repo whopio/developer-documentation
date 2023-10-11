@@ -47,89 +47,27 @@ However, if it is trigged by a business that owns your app, it will be `null`.
 
 ## Creating a webhook
 
-Access the Whop Business dashboard and navigate to the developer settings page. Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
+Depending on your use-case, you can create a webhook for a company or an app.
 
-<Note>
-  Upon adding the webhook, it will send a `POST` request to your API. If the API
-  doesn't return a 200 status code, the webhook will not be added.
-</Note>
+<AccordionGroup>
+
+<Accordion title="Creating a webhook for a company">
+Access the Whop Business dashboard and navigate to the [**developer settings page**](https://dash.whop.com/settings/developer). Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
 
 ![Creating a webhook](https://dev-docs-weld.vercel.app/newwebhook.gif)
 
----
+</Accordion>
 
-## Setup a server
+<Accordion title="Creating a webhook for an app">
 
-To receive webhooks, you need a server capable of handling POST requests. You can achieve this using any programming language.
+Access the Whop Business dashboard and navigate to the [**developer settings page**](https://dash.whop.com/settings/developer), and then select your app. Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
 
-In the following example, we're creating a server to receive data at the `/went-valid` endpoint. The server parses the relevant information from the JSON payload, allowing you to take actions like adding a user to your database or sending a custom email.
+![Creating a webhook for an app](https://imgur.com/od2oML7.gif)
 
-### Hosting the server
+</Accordion>
 
-You can host the server anywhere you want, but we recommend using a free service like [**ngrok**](https://ngrok.com/) or [**Hop.io**](https://hop.io/). Both providers offer free tiers suitable for deploying an API.
-
-After setting up and deploying your server, obtain the provided URL and add it to the webhook settings page. Remember to append `/went-valid` to the URL (or the appropriate endpoint name).
-
-<CodeGroup>
-
-```python Flask
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route('/went-valid', methods=['POST'])
-def went_valid():
-    data = request.json # Get the JSON payload
-
-    membership_id = data['data']['id'] # This value is unique per membership
-    user_id = payload['data']['user']['id'] # This is their Whop user ID
-    user_email = payload['data']['user']['email']
-    product_id = payload['data']['product']['id']
-    plan_id = payload['data']['plan']['id']
-
-    return jsonify(data)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-```
-
-```javascript Express.js
-const express = require("express");
-const bodyParser = require("body-parser");
-
-const app = express();
-
-// Use body-parser middleware to parse JSON data
-app.use(bodyParser.json());
-
-app.post("/went-valid", (req, res) => {
-  const data = req.body;
-
-  const membership_id = data.data.id;
-  const user_id = data.data.user.id;
-  const user_email = data.data.user.email;
-  const product_id = data.data.product.id;
-  const plan_id = data.data.plan.id;
-
-  res.json(data);
-});
-
-app.listen(3000, () => {
-  console.log(`Server is running on port 3000`);
-});
-```
-
-</CodeGroup>
+</AccordionGroup>
 
 ---
 
-## Testing your API
-
-Input the correct route into the modal and click the **"Send test webhook"** button. Our server will attempt to `POST` an example webhook event to the provided endpoint. If your application accepts the request and returns a 200 HTTP response code, you will see a green message indicating "**Test successful"** Your endpoint will now start receiving events.
-
-<Note>
-  To view all webhook payloads, check the [**events**](/webhooks/events)
-  section.
-</Note>
-
-![Test webhook](https://dev-docs-weld.vercel.app/TestWebhook.gif)
+You have now setup webhooks! Check out the [**events**](/webhooks/events) page to check out all the events you can listen to.
