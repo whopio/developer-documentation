@@ -3,7 +3,7 @@ title: In-App Purchases
 description: Learn how to add in-app purchases to your app.
 ---
 
-In-App purchases allow your app to charge users within it. For example, if you are building a game, you can charge users for extra lives, or if you are building a social media app, you can charge users to unlock premium features.
+In-app purchases allow your app to charge users within it. For example, if you are building a game, you can charge users for extra lives, or if you are building a social media app, you can charge users to unlock premium features.
 
 <Frame>
   <img src="https://imgur.com/YeSEgXy.png" />
@@ -42,7 +42,7 @@ We are going to charge $29.99 per T-shirt.
 
 ### 2. Create a Line Item
 
-To offer in-app purchases, you first need to create a Line Item. These are purchasable entities that you can create / update / delete using the Whop API. It stores the price, name, and currency of your in-app purchase. They are also **scoped** to a company.
+To offer in-app purchases, you first need to create a Line Item. These are purchasable entities that you can create / update / delete using the Whop API. It stores the price, name, and currency of your in-app purchase.
 
 This means that you must ensure the `line_item_id` you are using is scoped to the company you are trying to charge. E.g:
 
@@ -75,7 +75,7 @@ const lineItemId = lineItem.data?.id;
 
 ### 3. Opening the checkout modal
 
-Now that we have created a line item for our T-Shirt, we can create and open the checkout modal. This is where the user will enter their payment details and complete the purchase.
+Now that we have created a line item for our T-shirt, we can create and open the checkout modal. This is where the user will enter their payment details and complete the purchase.
 
 To do this, we are going to use the Whop SDK. This component will need to be client-side, as it has to access the browser.
 
