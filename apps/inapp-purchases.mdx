@@ -3,7 +3,7 @@ title: In-App Purchases
 description: Learn how to add in-app purchases to your app.
 ---
 
-In-App purchases allows your app to charge users within it. For example, if you are building a game, you can charge users for extra lives, or if you are building a social media app, you can charge users to unlock premium features.
+In-App purchases allow your app to charge users within it. For example, if you are building a game, you can charge users for extra lives, or if you are building a social media app, you can charge users to unlock premium features.
 
 <Frame>
   <img src="https://imgur.com/YeSEgXy.png" />
@@ -14,18 +14,18 @@ In-App purchases allows your app to charge users within it. For example, if you 
 1. You create a `Line Item` for your in-app purchase, this is scoped to a company
 2. You open the checkout modal, passing in the `line_item_id`
 3. The user enters their payment details and completes the purchase
-4. The company who has installed your app receives the payment
+4. The company that has installed your app receives the payment
 
 <Note>
-  The company must have Stripe setup in order to accept payments. If they do
-  not, the purchase will fail.
+  The company must have Stripe set up to accept payments. If they do not, the
+  purchase will fail.
 </Note>
 
 ## Getting started
 
-In this example, we will be creating an app that allows users to buy T-Shirts. Instead of making each T-Shirt a seperate product on Whop, we will be doing it under one app, and allowing them to purchase it through the app.
+In this example, we will be creating an app that allows users to buy T-shirts. Instead of making each T-shirt a separate product on Whop, we will be doing it under one app, and allowing them to purchase it through the app.
 
-We are going to charge $29.99 per T-Shirt.
+We are going to charge $29.99 per T-shirt.
 
 <Warning>
   Currently, this only works on the `customer_product_view` and the
@@ -33,16 +33,16 @@ We are going to charge $29.99 per T-Shirt.
   throw an error.
 </Warning>
 
-### 1. Pre-requisites
+### 1. Prerequisites
 
 - The company must have Stripe setup
-- You must have initialsed the Whop iFrame SDK. See [**Initialising the iFrame SDK**](/sdk/iframe-setup)
+- You must have initialized the Whop iFrame SDK. See [**Initialising the iFrame SDK**](/sdk/iframe-setup)
 
 ---
 
 ### 2. Create a Line Item
 
-In order to offer in-app purchases, you first need to create a Line Item. These are purchasible entities that you can create / update / delete using the Whop API. It stores the price, name, and currency of your in-app purchase. They are also **scoped** to a comapny.
+To offer in-app purchases, you first need to create a Line Item. These are purchasable entities that you can create / update / delete using the Whop API. It stores the price, name, and currency of your in-app purchase. They are also **scoped** to a company.
 
 This means that you must ensure the `line_item_id` you are using is scoped to the company you are trying to charge. E.g:
 
@@ -54,7 +54,7 @@ This means that you must ensure the `line_item_id` you are using is scoped to th
 - When creating the in-app purchase, you must use `li_1` as the `line_item_id`, that way the charge is scoped to `biz_1`
 - If you pass in `li_2` as the `line_item_id`, the charge will fail and throw an error
 
-We are going to create a line item for our T-Shirt using the `Whop SDK`:
+We are going to create a line item for our T-shirt using the `Whop SDK`:
 
 ```javascript
 const lineItem = await WhopAPI.app().POST("/app/line_items", {
@@ -75,7 +75,7 @@ const lineItemId = lineItem.data?.id;
 
 ### 3. Opening the checkout modal
 
-Now that we have created a line item for our T-Shirt, we can create open the checkout modal. This is where the user will enter their payment details and complete the purchase.
+Now that we have created a line item for our T-Shirt, we can create and open the checkout modal. This is where the user will enter their payment details and complete the purchase.
 
 To do this, we are going to use the Whop SDK. This component will need to be client-side, as it has to access the browser.
 
