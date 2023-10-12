@@ -86,7 +86,7 @@ import { WhopApp } from "@/lib/iframe";
 export default function PurchaseComponent() {
   const handleOpenModal = useCallback(async () => {
     const result = await WhopApp.inAppPurchase({
-      line_item_id: "li_v0bc6JBS4lv26J3",
+      line_item_id: "li_xxx",
     });
     console.log(result);
   }, []);
