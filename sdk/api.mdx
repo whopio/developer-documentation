@@ -52,7 +52,7 @@ Use Server Mode to make requests on behalf of the app. This will use the API key
 import { WhopAPI } from "@whop-apps/sdk";
 
 export default async function Home() {
-  // Using the users access token
+  // Using the user's access token
   const companyInformation = await WhopAPI.server().GET("/companies/{id}", {
     params: { path: { id: "biz_XXXX" } },
   });

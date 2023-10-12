@@ -11,7 +11,7 @@ Since this package relies on `window.postMessage`, it only works in **Client Com
 
 ## Setup
 
-The main function exported from this package is the `createAppIframeSDK` function. When called, this function sets up a listener for messages form the main Whop site, using `window.on('message', ...)`.
+The main function exported from this package is the `createAppIframeSDK` function. When called, this function sets up a listener for messages from the main Whop site, using `window.on('message', ...)`.
 
 ### Next.js Setup
 
@@ -57,7 +57,7 @@ export const ClientLayout: FC<PropsWithChildren> = ({ children }) => {
 };
 ```
 
-We declare the SDK in a seperate file, such that we can import it in throughout the rest of the app.
+We declare the SDK in a separate file, such that we can import it throughout the rest of the app.
 
 ```javascript lib/iframe.ts
 import { createAppIframeSDK } from "@whop-apps/sdk";

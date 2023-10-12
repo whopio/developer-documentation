@@ -32,7 +32,7 @@ We are going to charge them $10 per every 5GB uploaded.
 
 Whop allows you to sell access to different pricing tiers. For example, you can charge a "Basic" and an "Enterprise" plan, which each different pricing structures.
 
-The _Basic_ product has no up front cost (free to install) whereas the _Enterprise_ product is $100 / month. The _Enterprise_ product is built for power Sellers, as it gives them access to less expensive video costs.
+The _Basic_ product has no upfront cost (free to install) whereas the _Enterprise_ product is $100 / month. The _Enterprise_ product is built for power Sellers, as it gives them access to less expensive video costs.
 
 We are going to use the [**List Products**](/api-reference/company/products/list) endpoint to find our product ID. I am going to use the SDK, like so:
 
@@ -58,8 +58,8 @@ There are two types of billing items.
 
 ### Structured Billing items
 
-When you know the exact cost per unit, and want to display to the seller, you will create a **structured** billing item beforehand.
-In this model you will specify the unit name, unit price, and how many units are included. For example, here is how we'd charge $10 for every 5 GB of videos uploaded:
+When you know the exact cost per unit and want to display to the seller, you will create a **structured** billing item beforehand.
+In this model, you will specify the unit name, unit price, and how many units are included. For example, here is how we'd charge $10 for every 5 GB of videos uploaded:
 
 ```json
 {
@@ -134,8 +134,8 @@ await WhopAPI.company().POST("/company/billing_items", {
 Now you need to tell Whop how much the seller has used. To do this, we are going to use the Billing Usage API
 
 <Warning>
-  You are going to need the Company's ID in order to charge them. You should
-  save this in your database or you can retrieve it from the API{" "}
+  You are going to need the Company's ID to charge them. You should save this in
+  your database or you can retrieve it from the API
 </Warning>
 
 ### Structured Billing Item

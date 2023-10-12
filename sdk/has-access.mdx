@@ -3,7 +3,7 @@ title: hasAccess
 description: How to use the hasAccess function
 ---
 
-This function allows you to control access to your apps by checking if a user has access to specific products, experiences, memberships, or is an authorized user of a specific company.
+This function allows you to control access to your apps by checking if a user has access to specific products, experiences, and memberships, or is an authorized user of a specific company.
 
 For example, you can:
 
@@ -20,30 +20,30 @@ These steps will guide you through using the `hasAccess` function to ensure only
 
 Add these two imports to the top of your page:
 
-```js
+```javascript
 import { hasAccess } from "@whop-apps/sdk";
 import { headers } from "next/headers";
 ```
 
 2. **Check if the user has access**
 
-Use the `hasAccess` function to check if the user has access to a a specific product. To do this, we need to pass in an access string and the headers object.
+Use the `hasAccess` function to check if the user has access to a specific product. To do this, we need to pass in an access string and the headers object.
 
-Access strings are a way of specifying what the user needs to have access to in order to access the page. Check out the [**Expressions**](/sdk/has-access#expressions) section to learn more about access strings and what they can contain.
+Access strings are a way of specifying what the user needs to have access to, to access the page. Check out the [**Expressions**](/sdk/has-access#expressions) section to learn more about access strings and what they can contain.
 
 In this example, we are just checking if the user owns a specific product.
 
-```js
+```javascript
 const access = await hasAccess({ to: "prod_XXXX", headers });
 ```
 
 3. **Handle the result**
 
-If the user is authorzied, `access` will return true, and if they are not, `access` will return false.
+If the user is authorized, `access` will return true, and if they are not, `access` will return false.
 
 We can then show a message to the user based on whether or not they have access.
 
-```js
+```javascript
 if (!access) {
   return <p>You do not have access to view this page</p>;
 }

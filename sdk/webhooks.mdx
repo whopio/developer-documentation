@@ -16,7 +16,7 @@ This guide will walk you through how to use the SDK to handle webhooks events in
 
 ### Preresiquites
 
-For enhanced security, the SDK validates the webhooks signature. This is a string that gets sent in the headers, and is used to allow your server to verify that the request is coming from Whop. To get the signature, you need to get the webhook secret from the Apps Dashboard.
+For enhanced security, the SDK validates the webhook signature. This is a string that gets sent in the headers and is used to allow your server to verify that the request is coming from Whop. To get the signature, you need to get the webhook secret from the Apps Dashboard.
 
 ![Getting the webhook Secret](https://imgur.com/6AY16BV.gif)
 
@@ -28,19 +28,19 @@ Once you have the secret, you need to add it to your environment variables. The 
 
 In your Route Handler / API Endpoint, you need to import the following:
 
-```js
+```javascript
 import { makeWebhookHandler } from "@whop-apps/sdk";
 ```
 
-Once you have imported `makeWebhookHandler`, you can use it to create a webhook handler function. This should be done at the module level of the file, so that it is only created once.
+Once you have imported `makeWebhookHandler`, you can use it to create a webhook handler function. This should be done at the module level of the file so that it is only created once.
 
-```js
+```javascript
 const handleWebhook = makeWebhookHandler();
 ```
 
 Now, you can create your normal route handler. In this example, we are using Next.js in the App Directory.
 
-```js
+```javascript
 import { makeWebhookHandler } from "@whop-apps/sdk";
 import { NextRequest } from "next/server";
 
