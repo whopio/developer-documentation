@@ -17,8 +17,8 @@ In-app purchases allow your app to charge users within it. For example, if you a
 4. The company that has installed your app receives the payment
 
 <Note>
-  The company must have Stripe set up to accept payments. If they do not, the
-  purchase will fail.
+  The company must have Whop Payments set up to accept payments. If they do not,
+  the purchase will fail.
 </Note>
 
 ## Getting started
@@ -35,7 +35,6 @@ We are going to charge $29.99 per T-shirt.
 
 ### 1. Prerequisites
 
-- The company must have Stripe setup
 - You must have initialized the Whop iFrame SDK. See [**Initialising the iFrame SDK**](/sdk/iframe-setup)
 
 ---
@@ -81,36 +80,20 @@ To do this, we are going to use the Whop SDK. This component will need to be cli
 
 ```javascript
 "use client";
-import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { WhopApp } from "@/lib/iframe";
 
 export default function PurchaseComponent() {
-  const [purchaseResult, setPurchaseResult] = useState(null);
-  const [showPurchase, setShowPurchase] = useState(false);
-
-  useEffect(() => {
-    if (showPurchase) {
-      async function makePurchase() {
-        const result = await WhopApp.inAppPurchase({
-          line_item_id: "li_xxx",
-        });
-        console.log(result);
-      }
-      makePurchase();
-    }
-  }, [showPurchase]);
-
-  useEffect(() => {
-    if (purchaseResult) {
-      console.log(purchaseResult);
-    }
-  }, [purchaseResult]);
+  const handleOpenModal = useCallback(async () => {
+    const result = await WhopApp.inAppPurchase({
+      line_item_id: "li_v0bc6JBS4lv26J3",
+    });
+    console.log(result);
+  }, []);
 
   return (
     <div>
-      <button onClick={() => setShowPurchase(!showPurchase)}>
-        {showPurchase ? "Hide Purchase" : "Show Purchase"}
-      </button>
+      <button onClick={handleOpenModal}>Click me to open checkout</button>
     </div>
   );
 }
