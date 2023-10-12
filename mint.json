@@ -81,7 +81,11 @@
     },
     {
       "group": "Whop App Guides",
-      "pages": ["apps/notifications", "apps/inapp-purchases"]
+      "pages": [
+        "apps/notifications",
+        "apps/inapp-purchases",
+        "apps/metered-billing"
+      ]
     },
     {
       "group": "Webhooks",
@@ -175,7 +179,6 @@
       "group": "Company",
       "pages": [
         "api-reference/company/overview",
-        "api-reference/metered-billing",
         {
           "group": "Memberships",
           "pages": [
