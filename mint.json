@@ -278,7 +278,7 @@
     },
     {
       "group": "iFrame",
-      "pages": ["sdk/iframe-setup", "sdk/iframe", "sdk/deeplinking"]
+      "pages": ["sdk/iframe-setup", "sdk/external-url", "sdk/redirect-url"]
     }
   ],
   "footerSocials": {
