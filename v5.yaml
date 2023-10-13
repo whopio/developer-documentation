@@ -573,6 +573,12 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: license_key
+          in: query
+          required: false
+          description: A license key to filter by.
+          schema:
+            type: string
         - name: statuses
           in: query
           required: false
@@ -1140,6 +1146,12 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: license_key
+          in: query
+          required: false
+          description: A license key to filter by.
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -1200,6 +1212,34 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a membership
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/memberships
+      operationId: update_api_v5_company_memberships_id
+      summary: Update a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyMembership"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyMembershipUpdateBody"
+      description: Updates a membership's metadata
   "/v5/company/payments":
     get:
       security:
@@ -1523,6 +1563,12 @@ paths:
           in: query
           required: false
           description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: license_key
+          in: query
+          required: false
+          description: A license key to filter by.
           schema:
             type: string
       responses:
@@ -2448,6 +2494,12 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to first purchase / generate the membership.
+        affiliate_username:
+          type: string
+          description: The username of the affiliate that referred the customer to this membership, if any.
+        manage_url:
+          type: string
+          description: The URL for the customer to manage their membership on whop.com.
       required:
         - id
         - product_id
@@ -2457,6 +2509,7 @@ components:
         - quantity
         - status
         - valid
+        - manage_url
     AppPayment:
       type: object
       properties:
@@ -2953,6 +3006,12 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to first purchase / generate the membership.
+        affiliate_username:
+          type: string
+          description: The username of the affiliate that referred the customer to this membership, if any.
+        manage_url:
+          type: string
+          description: The URL for the customer to manage their membership on whop.com.
       required:
         - id
         - product_id
@@ -2962,6 +3021,15 @@ components:
         - quantity
         - status
         - valid
+        - manage_url
+    CompanyMembershipUpdateBody:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: The metadata for the membership.
+      required:
+        - metadata
     CompanyPayment:
       type: object
       properties:
@@ -3357,6 +3425,12 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to first purchase / generate the membership.
+        affiliate_username:
+          type: string
+          description: The username of the affiliate that referred the customer to this membership, if any.
+        manage_url:
+          type: string
+          description: The URL for the customer to manage their membership on whop.com.
       required:
         - id
         - product_id
@@ -3366,6 +3440,7 @@ components:
         - quantity
         - status
         - valid
+        - manage_url
     MePayment:
       type: object
       properties:
