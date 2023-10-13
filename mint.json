@@ -278,7 +278,7 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/installation", "sdk/whop-proxy"]
+      "pages": ["sdk/installation", "sdk/proxy"]
     },
     {
       "group": "Authentication",
