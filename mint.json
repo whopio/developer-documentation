@@ -41,8 +41,7 @@
     },
     {
       "name": "SDK Reference",
-      "url": "sdk",
-      "version": "V5 API (Recommended)"
+      "url": "sdk"
     }
   ],
   "redirects": [
