@@ -191,7 +191,8 @@
           "group": "Memberships",
           "pages": [
             "api-reference/v5/company/memberships/list",
-            "api-reference/v5/company/memberships/retrieve"
+            "api-reference/v5/company/memberships/retrieve",
+            "api-reference/v5/company/memberships/update"
           ]
         },
         {
