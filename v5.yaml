@@ -4,9 +4,9 @@ info:
   description: The Whop Apps API
   version: v5
 servers:
-  - url: https://api.whop.com/api/v5
+  - url: https://api.whop.com/api
 paths:
-  "/oauth/token":
+  "/v5/oauth/token":
     post:
       security:
         - ApiAuth: [api_key]
@@ -36,7 +36,7 @@ paths:
             schema:
               $ref: "#/components/schemas/OauthTokenCreateBody"
       description: Exchange a code for a token
-  "/app":
+  "/v5/app":
     get:
       security:
         - ApiAuth: [api_key]
@@ -54,7 +54,7 @@ paths:
         "403":
           $ref: "#/components/responses/Forbidden"
       description: Returns an App
-  "/app/billing_usages":
+  "/v5/app/billing_usages":
     post:
       security:
         - ApiAuth: [api_key]
@@ -133,7 +133,7 @@ paths:
                   - pagination
                   - data
       description: Returns a collection of billing usages
-  "/app/billing_usages/{id}":
+  "/v5/app/billing_usages/{id}":
     get:
       security:
         - ApiAuth: [api_key]
@@ -174,7 +174,7 @@ paths:
         "204":
           description: A successful response
       description: Deletes a billing usage
-  "/app/companies":
+  "/v5/app/companies":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -209,7 +209,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
       description: Returns a collection of companies
-  "/app/companies/{id}":
+  "/v5/app/companies/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -241,7 +241,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a company
-  "/app/experiences":
+  "/v5/app/experiences":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -287,7 +287,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
       description: Returns a collection of experiences
-  "/app/experiences/{id}":
+  "/v5/app/experiences/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -316,7 +316,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
       description: Returns an experience
-  "/app/line_items":
+  "/v5/app/line_items":
     post:
       security:
         - ApiAuth: [api_key]
@@ -371,7 +371,7 @@ paths:
                   - pagination
                   - data
       description: Returns a collection of line items
-  "/app/line_items/{id}":
+  "/v5/app/line_items/{id}":
     get:
       security:
         - ApiAuth: [api_key]
@@ -413,7 +413,7 @@ paths:
           description: A successful response
 
       description: Deletes a line item
-  "/app/notification_topics":
+  "/v5/app/notification_topics":
     post:
       security:
         - ApiAuth: [api_key]
@@ -501,7 +501,7 @@ paths:
                   - pagination
                   - data
       description: Returns a collection of notification topics
-  "/app/notification_topics/{id}":
+  "/v5/app/notification_topics/{id}":
     get:
       security:
         - ApiAuth: [api_key]
@@ -552,7 +552,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/AppNotificationTopic"
       description: Updates a notification topic
-  "/app/memberships":
+  "/v5/app/memberships":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -571,6 +571,12 @@ paths:
           in: query
           required: false
           description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: license_key
+          in: query
+          required: false
+          description: A license key to filter by.
           schema:
             type: string
         - name: statuses
@@ -623,7 +629,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of memberships
-  "/app/memberships/{id}":
+  "/v5/app/memberships/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -655,7 +661,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a membership
-  "/app/notifications":
+  "/v5/app/notifications":
     post:
       security:
         - ApiAuth: [api_key]
@@ -681,7 +687,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/NotificationBody"
-  "/app/payments":
+  "/v5/app/payments":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -736,7 +742,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of payments
-  "/app/payments/{id}":
+  "/v5/app/payments/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -768,7 +774,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a payment
-  "/app/products":
+  "/v5/app/products":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -811,7 +817,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of products
-  "/app/products/{id}":
+  "/v5/app/products/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -843,7 +849,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a product
-  "/app/users/{id}":
+  "/v5/app/users/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -875,7 +881,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a user
-  "/app/users/{user_id}/social_accounts":
+  "/v5/app/users/{user_id}/social_accounts":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -908,9 +914,8 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "400":
           $ref: "#/components/responses/InvalidParameters"
-
       description: Returns a User's social accounts
-  "/company/users/{id}":
+  "/v5/company/users/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -942,7 +947,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a user
-  "/company/users/{user_id}/social_accounts":
+  "/v5/company/users/{user_id}/social_accounts":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -977,7 +982,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a User's social accounts
-  "/company/billing_items":
+  "/v5/company/billing_items":
     post:
       security:
         - ApiAuth: [api_key]
@@ -1053,7 +1058,7 @@ paths:
                   - pagination
                   - data
       description: Returns a collection of billing items
-  "/company/billing_items/{id}":
+  "/v5/company/billing_items/{id}":
     get:
       security:
         - ApiAuth: [api_key]
@@ -1104,7 +1109,7 @@ paths:
             schema:
               $ref: "#/components/schemas/CompanyBillingItemUpdateBody"
       description: Updates a billing item
-  "/company/memberships":
+  "/v5/company/memberships":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1141,6 +1146,12 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: license_key
+          in: query
+          required: false
+          description: A license key to filter by.
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -1169,7 +1180,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of memberships
-  "/company/memberships/{id}":
+  "/v5/company/memberships/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1201,7 +1212,35 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a membership
-  "/company/payments":
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/memberships
+      operationId: update_api_v5_company_memberships_id
+      summary: Update a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyMembership"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyMembershipUpdateBody"
+      description: Updates a membership's metadata
+  "/v5/company/payments":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1244,7 +1283,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of payments
-  "/company/payments/{id}":
+  "/v5/company/payments/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1276,7 +1315,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a payment
-  "/company/products":
+  "/v5/company/products":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1312,7 +1351,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of products
-  "/company/products/{id}":
+  "/v5/company/products/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1344,7 +1383,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a product
-  "/company":
+  "/v5/company":
     get:
       security:
         - ApiAuth: [api_key]
@@ -1363,7 +1402,7 @@ paths:
           $ref: "#/components/responses/Forbidden"
       description: Returns a company
 
-  "/me/experiences":
+  "/v5/me/experiences":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1409,7 +1448,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
       description: Returns a collection of experiences
-  "/me/experiences/{id}":
+  "/v5/me/experiences/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1438,7 +1477,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
       description: Returns an experience
-  "/me":
+  "/v5/me":
     get:
       security:
         - ApiAuth: [user]
@@ -1456,7 +1495,7 @@ paths:
         "403":
           $ref: "#/components/responses/Forbidden"
       description: Returns a user
-  "/me/social_accounts":
+  "/v5/me/social_accounts":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1483,7 +1522,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
       description: Returns a User's social accounts
-  "/me/memberships":
+  "/v5/me/memberships":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1526,6 +1565,12 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: license_key
+          in: query
+          required: false
+          description: A license key to filter by.
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response
@@ -1554,7 +1599,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of memberships
-  "/me/memberships/{id}":
+  "/v5/me/memberships/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1586,7 +1631,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a membership
-  "/me/payments":
+  "/v5/me/payments":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1635,7 +1680,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of payments
-  "/me/payments/{id}":
+  "/v5/me/payments/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1667,7 +1712,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a payment
-  "/me/products":
+  "/v5/me/products":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1710,7 +1755,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a collection of products
-  "/me/products/{id}":
+  "/v5/me/products/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -1742,7 +1787,7 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a product
-  "/me/companies/{id}":
+  "/v5/me/companies/{id}":
     get:
       security:
         - ApiAuth: [api_key, user]
@@ -2449,6 +2494,12 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to first purchase / generate the membership.
+        affiliate_username:
+          type: string
+          description: The username of the affiliate that referred the customer to this membership, if any.
+        manage_url:
+          type: string
+          description: The URL for the customer to manage their membership on whop.com.
       required:
         - id
         - product_id
@@ -2458,6 +2509,7 @@ components:
         - quantity
         - status
         - valid
+        - manage_url
     AppPayment:
       type: object
       properties:
@@ -2954,6 +3006,12 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to first purchase / generate the membership.
+        affiliate_username:
+          type: string
+          description: The username of the affiliate that referred the customer to this membership, if any.
+        manage_url:
+          type: string
+          description: The URL for the customer to manage their membership on whop.com.
       required:
         - id
         - product_id
@@ -2963,6 +3021,15 @@ components:
         - quantity
         - status
         - valid
+        - manage_url
+    CompanyMembershipUpdateBody:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: The metadata for the membership.
+      required:
+        - metadata
     CompanyPayment:
       type: object
       properties:
@@ -3358,6 +3425,12 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to first purchase / generate the membership.
+        affiliate_username:
+          type: string
+          description: The username of the affiliate that referred the customer to this membership, if any.
+        manage_url:
+          type: string
+          description: The URL for the customer to manage their membership on whop.com.
       required:
         - id
         - product_id
@@ -3367,6 +3440,7 @@ components:
         - quantity
         - status
         - valid
+        - manage_url
     MePayment:
       type: object
       properties:
