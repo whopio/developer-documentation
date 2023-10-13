@@ -2,7 +2,7 @@
   "$schema": "https://www.jedpatterson.com/spec.json",
   "name": "Whop Developers",
   "api": {
-    "baseUrl": "https://api.whop.com/v5"
+    "baseUrl": "https://api.whop.com"
   },
   "analytics": {
     "ga4": {
@@ -29,6 +29,7 @@
       "to": "#ff6423"
     }
   },
+  "versions": ["V5 API (Recommended)", "V2 API (Legacy)"],
   "topbarCtaButton": {
     "name": "Start Building",
     "url": "https://whop.com/sell"
@@ -40,7 +41,8 @@
     },
     {
       "name": "SDK Reference",
-      "url": "sdk"
+      "url": "sdk",
+      "version": "V5 API (Recommended)"
     }
   ],
   "redirects": [
@@ -90,7 +92,13 @@
     },
     {
       "group": "Webhooks",
-      "pages": ["webhooks", "webhooks/events"]
+      "pages": [
+        "webhooks",
+        {
+          "group": "Events",
+          "pages": ["webhooks/v5", "webhooks/v2"]
+        }
+      ]
     },
     {
       "group": "More",
@@ -98,167 +106,175 @@
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/authentication", "api-reference/rate-limits"]
+      "pages": [
+        "api-reference/v5/authentication",
+        "api-reference/v5/rate-limits"
+      ],
+      "version": "V5 API (Recommended)"
     },
     {
       "group": "Apps",
+      "version": "V5 API (Recommended)",
       "pages": [
-        "api-reference/apps/overview",
+        "api-reference/v5/apps/overview",
         {
           "group": "Companies",
           "pages": [
-            "api-reference/apps/companies/list",
-            "api-reference/apps/companies/retrieve"
+            "api-reference/v5/apps/companies/list",
+            "api-reference/v5/apps/companies/retrieve"
           ]
         },
         {
           "group": "Experiences",
           "pages": [
-            "api-reference/apps/experiences/list",
-            "api-reference/apps/experiences/retrieve"
+            "api-reference/v5/apps/experiences/list",
+            "api-reference/v5/apps/experiences/retrieve"
           ]
         },
         {
           "group": "Memberships",
           "pages": [
-            "api-reference/apps/memberships/list",
-            "api-reference/apps/memberships/retrieve"
+            "api-reference/v5/apps/memberships/list",
+            "api-reference/v5/apps/memberships/retrieve"
           ]
         },
         {
           "group": "Products",
           "pages": [
-            "api-reference/apps/products/list",
-            "api-reference/apps/products/retrieve"
+            "api-reference/v5/apps/products/list",
+            "api-reference/v5/apps/products/retrieve"
           ]
         },
         {
           "group": "Payments",
           "pages": [
-            "api-reference/apps/payments/list",
-            "api-reference/apps/payments/retrieve"
+            "api-reference/v5/apps/payments/list",
+            "api-reference/v5/apps/payments/retrieve"
           ]
         },
         {
           "group": "Notifications",
           "pages": [
-            "api-reference/apps/notifications/send",
-            "api-reference/apps/notifications/topics",
-            "api-reference/apps/notifications/get-topics",
-            "api-reference/apps/notifications/retrieve-topic"
+            "api-reference/v5/apps/notifications/send",
+            "api-reference/v5/apps/notifications/topics",
+            "api-reference/v5/apps/notifications/get-topics",
+            "api-reference/v5/apps/notifications/retrieve-topic"
           ]
         },
         {
           "group": "Line Items",
           "pages": [
-            "api-reference/apps/line-items/list",
-            "api-reference/apps/line-items/retrieve",
-            "api-reference/apps/line-items/create",
-            "api-reference/apps/line-items/delete"
+            "api-reference/v5/apps/line-items/list",
+            "api-reference/v5/apps/line-items/retrieve",
+            "api-reference/v5/apps/line-items/create",
+            "api-reference/v5/apps/line-items/delete"
           ]
         },
         {
           "group": "Users",
           "pages": [
-            "api-reference/apps/users/retrieve",
-            "api-reference/apps/users/accounts"
+            "api-reference/v5/apps/users/retrieve",
+            "api-reference/v5/apps/users/accounts"
           ]
         },
         {
           "group": "Billing Usages",
           "pages": [
-            "api-reference/apps/billing-usages/list",
-            "api-reference/apps/billing-usages/retrieve",
-            "api-reference/apps/billing-usages/create",
-            "api-reference/apps/billing-usages/delete"
+            "api-reference/v5/apps/billing-usages/list",
+            "api-reference/v5/apps/billing-usages/retrieve",
+            "api-reference/v5/apps/billing-usages/create",
+            "api-reference/v5/apps/billing-usages/delete"
           ]
         },
-        "api-reference/apps/app"
+        "api-reference/v5/apps/app"
       ]
     },
     {
       "group": "Company",
+      "version": "V5 API (Recommended)",
       "pages": [
-        "api-reference/company/overview",
+        "api-reference/v5/company/overview",
         {
           "group": "Memberships",
           "pages": [
-            "api-reference/company/memberships/list",
-            "api-reference/company/memberships/retrieve"
+            "api-reference/v5/company/memberships/list",
+            "api-reference/v5/company/memberships/retrieve",
+            "api-reference/v5/company/memberships/update"
           ]
         },
         {
           "group": "Products",
           "pages": [
-            "api-reference/company/products/list",
-            "api-reference/company/products/retrieve"
+            "api-reference/v5/company/products/list",
+            "api-reference/v5/company/products/retrieve"
           ]
         },
         {
           "group": "Payments",
           "pages": [
-            "api-reference/company/payments/list",
-            "api-reference/company/payments/retrieve"
+            "api-reference/v5/company/payments/list",
+            "api-reference/v5/company/payments/retrieve"
           ]
         },
         {
           "group": "Billing Items",
           "pages": [
-            "api-reference/company/billing-items/create",
-            "api-reference/company/billing-items/list",
-            "api-reference/company/billing-items/retrieve",
-            "api-reference/company/billing-items/update"
+            "api-reference/v5/company/billing-items/create",
+            "api-reference/v5/company/billing-items/list",
+            "api-reference/v5/company/billing-items/retrieve",
+            "api-reference/v5/company/billing-items/update"
           ]
         },
         {
           "group": "Users",
           "pages": [
-            "api-reference/company/users/retrieve",
-            "api-reference/company/users/accounts"
+            "api-reference/v5/company/users/retrieve",
+            "api-reference/v5/company/users/accounts"
           ]
         },
-        "api-reference/company"
+        "api-reference/v5/company"
       ]
     },
     {
       "group": "Me",
+      "version": "V5 API (Recommended)",
       "pages": [
-        "api-reference/me/overview",
+        "api-reference/v5/me/overview",
         {
           "group": "Memberships",
           "pages": [
-            "api-reference/me/memberships/list",
-            "api-reference/me/memberships/retrieve"
+            "api-reference/v5/me/memberships/list",
+            "api-reference/v5/me/memberships/retrieve"
           ]
         },
         {
           "group": "Products",
           "pages": [
-            "api-reference/me/products/list",
-            "api-reference/me/products/retrieve"
+            "api-reference/v5/me/products/list",
+            "api-reference/v5/me/products/retrieve"
           ]
         },
         {
           "group": "Payments",
           "pages": [
-            "api-reference/me/payments/list",
-            "api-reference/me/payments/retrieve"
+            "api-reference/v5/me/payments/list",
+            "api-reference/v5/me/payments/retrieve"
           ]
         },
         {
           "group": "Experiences",
           "pages": [
-            "api-reference/me/experiences/list",
-            "api-reference/me/experiences/retrieve"
+            "api-reference/v5/me/experiences/list",
+            "api-reference/v5/me/experiences/retrieve"
           ]
         },
         {
           "group": "Companies",
-          "pages": ["api-reference/me/companies/retrieve"]
+          "pages": ["api-reference/v5/me/companies/retrieve"]
         },
-        "api-reference/me/token",
-        "api-reference/me/user",
-        "api-reference/me/accounts"
+        "api-reference/v5/me/token",
+        "api-reference/v5/me/user",
+        "api-reference/v5/me/accounts"
       ]
     },
     {
@@ -280,6 +296,118 @@
     {
       "group": "iFrame",
       "pages": ["sdk/iframe-setup", "sdk/external-url", "sdk/redirect-url"]
+    },
+    {
+      "group": "API Documentation",
+      "pages": [
+        "api-reference/v2/authentication",
+        "api-reference/v2/rate-limits"
+      ],
+      "version": "V2 API (Legacy)"
+    },
+    {
+      "group": "Memberships",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/memberships/list-memberships",
+        "api-reference/v2/memberships/validate-a-license-key",
+        "api-reference/v2/memberships/retrieve-a-membership",
+        "api-reference/v2/memberships/terminate-a-membership",
+        "api-reference/v2/memberships/update-a-membership",
+        "api-reference/v2/memberships/cancel-a-membership",
+        "api-reference/v2/memberships/add-free-days-to-a-membership"
+      ]
+    },
+    {
+      "group": "Products",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/products/list-products",
+        "api-reference/v2/products/retrieve-a-product",
+        "api-reference/v2/products/update-a-product"
+      ]
+    },
+    {
+      "group": "Plans",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/plans/list-plans",
+        "api-reference/v2/plans/retrieve-a-plan",
+        "api-reference/v2/plans/update-a-plan",
+        "api-reference/v2/plans/create-a-plan",
+        "api-reference/v2/plans/create-a-quick-link"
+      ]
+    },
+    {
+      "group": "Experiences",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/experiences/list-experiences",
+        "api-reference/v2/experiences/retrieve-an-experience",
+        "api-reference/v2/experiences/update-an-experience",
+        "api-reference/v2/experiences/delete-an-experience"
+      ]
+    },
+    {
+      "group": "Checkout Sessions",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/checkout-sessions/create-a-checkout-session",
+        "api-reference/v2/checkout-sessions/retrieve-a-checkout-session",
+        "api-reference/v2/checkout-sessions/list-checkout-sessions",
+        "api-reference/v2/checkout-sessions/delete-a-checkout-session"
+      ]
+    },
+    {
+      "group": "Companies",
+      "version": "V2 API (Legacy)",
+      "pages": ["api-reference/v2/companies/retrieve-a-company"]
+    },
+    {
+      "group": "Members",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/members/list-members",
+        "api-reference/v2/members/retrieve-member"
+      ]
+    },
+    {
+      "group": "Payments",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/payments/list-payments",
+        "api-reference/v2/payments/retrieve-a-payment"
+      ]
+    },
+    {
+      "group": "Promo Codes",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/promo-codes/list-promo-codes",
+        "api-reference/v2/promo-codes/retrieve-a-promo-code",
+        "api-reference/v2/promo-codes/update-a-promo-code",
+        "api-reference/v2/promo-codes/create-a-promo-code",
+        "api-reference/v2/promo-codes/delete-a-promo-code"
+      ]
+    },
+    {
+      "group": "Reviews",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/reviews/list-reviews",
+        "api-reference/v2/reviews/retrieve-a-review"
+      ]
+    },
+    {
+      "group": "Webhooks",
+      "version": "V2 API (Legacy)",
+      "pages": [
+        "api-reference/v2/webhooks/list-webhooks",
+        "api-reference/v2/webhooks/retrieve-a-webhook",
+        "api-reference/v2/webhooks/create-a-webhook",
+        "api-reference/v2/webhooks/update-a-webhook",
+        "api-reference/v2/webhooks/delete-a-webhook"
+      ]
     }
   ],
   "footerSocials": {
