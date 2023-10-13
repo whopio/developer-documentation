@@ -91,7 +91,13 @@
     },
     {
       "group": "Webhooks",
-      "pages": ["webhooks", "webhooks/events"]
+      "pages": [
+        "webhooks",
+        {
+          "group": "Events",
+          "pages": ["webhooks/v5", "webhooks/v2"]
+        }
+      ]
     },
     {
       "group": "More",
