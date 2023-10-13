@@ -9,6 +9,9 @@
       "measurementId": "G-NGD3HKQGSV"
     }
   },
+  "feedback": {
+    "thumbsRating": true
+  },
   "logo": {
     "dark": "/logo/white.png",
     "light": "/logo/whop.png"
@@ -80,7 +83,11 @@
     },
     {
       "group": "Whop App Guides",
-      "pages": ["apps/notifications"]
+      "pages": [
+        "apps/notifications",
+        "apps/inapp-purchases",
+        "apps/metered-billing"
+      ]
     },
     {
       "group": "Webhooks",
@@ -180,7 +187,6 @@
       "version": "V5 API (Recommended)",
       "pages": [
         "api-reference/v5/company/overview",
-        "api-reference/v5/metered-billing",
         {
           "group": "Memberships",
           "pages": [
@@ -281,7 +287,7 @@
     },
     {
       "group": "iFrame",
-      "pages": ["sdk/iframe", "sdk/deeplinking"]
+      "pages": ["sdk/iframe-setup", "sdk/external-url", "sdk/redirect-url"]
     },
     {
       "group": "API Documentation",

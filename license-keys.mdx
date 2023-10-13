@@ -21,7 +21,7 @@ Once you've done that, head to the dashboard to add the license key experience t
 
 <Warning>
   A download link is required to add a **Software** experience. This is the link
-  that will appear in the users dashboard to download the software.
+  that will appear in the user's dashboard to download the software.
 </Warning>
 
 ![Create license key](https://dev-docs-weld.vercel.app/newsoftware.gif)
@@ -33,8 +33,8 @@ Once you've done that, head to the dashboard to add the license key experience t
 For the endpoints below, you'll need to use your API key. You can find your API key in the dashboard under the `Developer` tab.
 
 <Warning>
-  It's important that you keep your API keys safe and secure - if not properly
-  scoped, your API keys can be dangerous if they fall into the wrong hands.
+  You must keep your API keys safe and secure - if not properly scoped, your API
+  keys can be dangerous if they fall into the wrong hands.
 </Warning>
 
 ### Creating an API key
@@ -45,8 +45,9 @@ For the endpoints below, you'll need to use your API key. You can find your API 
 4. Copy the API key
 
 <Note>
-  We recommend you scope your API key for this use-case. For more details, click
+  We recommend you scope your API key for this use case. For more details, click
   [here](/api-reference/v5/authentication#scoped-api-keys)
+
 </Note>
 
 ![Create API key](https://dev-docs-weld.vercel.app/newapikey.gif)
@@ -55,14 +56,14 @@ For the endpoints below, you'll need to use your API key. You can find your API 
 
 ## Metadata
 
-Metadata is a way to store information about a license key. The most common use case for this is to store information about the users device, HWID. **Hardware ID** is a unique identifier for a device, and can be used to prevent users from sharing their license keys with others.
+Metadata is a way to store information about a license key. The most common use case for this is to store information about the user's device, HWID. **Hardware ID** is a unique identifier for a device, and can be used to prevent users from sharing their license keys with others.
 
 <Warning>
   The user can reset their metadata anytime by going to their dashboard and
   clicking the `Reset Key` button.
 </Warning>
 
-#### How to get a users HWID
+#### How to get a user's HWID
 
 <CodeGroup>
     ```js JavaScript

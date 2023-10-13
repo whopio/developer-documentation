@@ -14,13 +14,13 @@ In this tutorial, you’ll learn how to do the following tasks:
 
 ## Prerequisites
 
-In order to view the iFrame as a customer, you will need to own a membership to this app. To do this, make a free pricing option for your product and purchase a membership. Then open the app from your orders page.
+To view the iFrame as a customer, you will need to own a membership to this app. To do this, make a free pricing option for your product and purchase a membership. Then open the app from your orders page.
 
 ## 1. Create your customer page
 
 We will start by building the **customer page.**
 
-The **customer page** is a specific page URL your app defines. Everytime a Whop user purchases a membership that contains your app, they will view the customer page within the iFrame whenever viewing your app.
+The **customer page** is a specific page URL your app defines. Every time a Whop user purchases a membership that contains your app, they will view the customer page within the iFrame whenever viewing your app.
 
 1. Create a page to match this URL `/customer/$productId`. To do this, create this file: `/app/customer/[productId]/page.tsx`
 
@@ -30,14 +30,14 @@ mkdir app/customer && mkdir "app/customer/[productId]" && touch "app/customer/[p
 
 In order to know which product the user purchased, Whop will pass the ID as a **path parameter**.
 
-These are all the options for the path parameters in the Consumer Path, but for now we will only use `productId`:
+These are all the options for the path parameters in the Consumer Path, but for now, we will only use `productId`:
 
 | Parameter      | Description                                               |
 | -------------- | --------------------------------------------------------- |
 | `productId`    | The ID of the product the user purchased                  |
 | `companyId`    | The ID of the company the user purchased the product from |
 | `experienceId` | The ID of the experience                                  |
-| `membershipId` | The ID of the users membership                            |
+| `membershipId` | The ID of the user's membership                           |
 | `planId`       | The ID of the plan the user purchased                     |
 
 2. Add the following code to your file to read and display the product ID
@@ -67,7 +67,7 @@ export default async function CustomerPage({
 
 ## 2. Authenticate the user
 
-Once the user is viewing your page, we will want to make sure they are a valid Whop user with permissions to view this company. Let's begin.
+Once the user is viewing your page, we will want to make sure they are a valid Whop user with permission to view this company. Let's begin.
 
 1. Add two imports to the top of your page
 
@@ -89,7 +89,7 @@ export default async function AdminPage() {
   ensure the user is not being malicious.
 </Warning>
 
-At this point the user is authenticated and we have their Whop User ID
+At this point, the user is authenticated and we have their Whop User ID
 
 ## 3. Check if the user owns the product
 
@@ -97,7 +97,7 @@ We now want to check to make sure this user owns the correct product. To do this
 
 1. **Update the Whop SDK imports**
 
-```js
+```javascript
 import { validateToken, hasAccess } from "@whop-apps/sdk";
 ```
 
@@ -139,7 +139,7 @@ Now that we know the user is allowed to access the product, let's display some i
 
 We can use the Whop API to get information about the current user. To do this, you will need to import the `WhopAPI` function.
 
-```js
+```javascript
 import { validateToken, hasAccess, WhopAPI } from "@whop-apps/sdk";
 ```
 
@@ -147,15 +147,15 @@ import { validateToken, hasAccess, WhopAPI } from "@whop-apps/sdk";
 
 Now that we have imported the WhopAPI function, we can use it to fetch information about the user.
 
-```js
+```javascript
 const user = await WhopAPI.me({ headers }).GET("/me", {});
 ```
 
 3. **Handle potential errors**
 
-To make sure that we can retrieve the data we want from the result, we first need to check if the request was successful. If the request was not successful, we will display an error message.
+To make sure that we can retrieve the data we want from the result, we first need to check if the request was successful. If the request is not successful, we will display an error message.
 
-```js
+```javascript
 if (user.isErr) {
   console.log(user.error.message);
   return <p>Could not fetch information about the user</p>;
@@ -166,7 +166,7 @@ if (user.isErr) {
 
 Now that we have information about the user, we can display it on the page.
 
-```js
+```javascript
 const { username, email } = user.data;
 
 return <p>Hey {username}, welcome to your new Whop App!</p>;
