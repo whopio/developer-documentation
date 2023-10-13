@@ -74,6 +74,7 @@
             "apps/create-an-app",
             "apps/admin-page",
             "apps/customer-page",
+            "apps/checkout-page",
             "apps/deploying"
           ]
         },

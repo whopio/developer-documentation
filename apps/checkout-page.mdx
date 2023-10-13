@@ -1,0 +1,140 @@
+---
+title: Build your checkout page
+icon: circle-4
+description: How to create an app that is displayed alongside the checkout page.
+---
+
+As well as consumer and business-facing apps, you can also create ones that get displayed during the checkout process. When the user goes to checkout a product, they can be shown the app beforehand. This can be used to collect additional information about the user, check they are eligible for the product, or display a message.
+
+### Examples
+
+- Form Collection App
+- NFT Gating App
+- Calendar Booking App
+
+### What you'll learn
+
+In this tutorial, you'll learn how to do the following tasks:
+
+- Build a page that is shown before the checkout page.
+- Use the iFrame SDK to communicate with the checkout page.
+- Prevent or allow the user to continue to the billing section.
+
+### Prerequisites
+
+- To view the checkout iFrame, you need to have added the app to a product. From here you can simulate going through the checkout process.
+- You will need to have set up the [iFrame SDK](/sdk/iframe-setup)
+
+## 1. Create your checkout page
+
+We will start by creating the checkout page.
+
+The **checkout page** will be displayed to customers before they reach the billing section. They will need to perform any actions required by the app before they can continue to the billing section, where they will be able to complete their purchase
+
+1. Create a page to match this URL `checkout/$companyId/$checkoutSessionId`. To do this, create this file: `app/checkout/[companyId]/[checkoutSessionId]/page.tsx`.
+
+```
+mkdir app/checkout && mkdir "app/checkout/[companyId]" && mkdir "app/checkout/[companyId]/[checkoutSessionId]" && touch "app/checkout/[companyId]/[checkoutSessionId]/page.tsx"
+```
+
+To know which company the app belongs to, Whop will pass the ID as a **path parameter**. These are defined in the URL of the app settings page, which we will do later.
+
+These are all the options that you can use for the Checkout Page, but for now, we will only use `companyId` and `checkoutSessionId`.
+
+| Parameter           | Description                    |
+| ------------------- | ------------------------------ |
+| `companyId`         | The ID of the company          |
+| `checkoutSessionId` | The ID of the checkout session |
+| `productId`         | The ID of the product          |
+| `planId`            | The ID of the plan             |
+
+2. Add the following code to the `page.tsx` file, it will read and display the `companyId` and `checkoutSessionId` path parameters.
+
+```javascript
+export default async function CheckoutView({
+  params,
+}: {
+  params: { companyId: string, checkoutSessionId: string },
+}) {
+  const companyId = params.companyId;
+  const checkoutSessionId = params.checkoutSessionId;
+  return (
+    <div>
+      <p>The company ID is: {companyId}</p>
+      <p>The checkout session ID is: {checkoutSessionId}</p>
+    </div>
+  );
+}
+```
+
+3. Update the Checkout Path in your [**app configuration**](https://dash.whop.com/settings/developer) to be `/checkout/$companyId/$checkoutSessionId`.
+
+<Frame>
+  <img src="https://imgur.com/yMcIHrp.png" />
+</Frame>
+
+4. Navigate to the checkout page with a product that has installed your app.
+
+<Frame>
+  <img src="https://imgur.com/RUndYoZ.gif" />
+</Frame>
+
+## 2. Authenticate the session
+
+To ensure that the checkout session is valid, we will need to authenticate it.
+
+1. Add two imports to the top of your page
+
+```javascript
+import { validateCheckoutSession } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+```
+
+2. Use the `validateCheckoutSession` function from the Whop SDK to obtain the user's ID.
+
+```javascript
+const { userId } = await validateCheckoutSession({
+  headers,
+  checkoutSessionId: params.checkoutSessionId,
+});
+```
+
+<Note>The `userId` may be undefined if the user is not logged in.</Note>
+
+## 3. Setup the iFrame SDK
+
+For the app to know when the user has tried to continue to the billing section, we will need to use the iFrame SDK to setup Post Messages.
+
+If you are using our **Next.js template**, this will be already setup.
+
+If you are not, follow this guide to [setup the iFrame SDK](/sdk/iframe-setup).
+
+Once completed, head to the `lib/iframe.ts` file and add the following code:
+
+```javascript
+import { createAppIframeSDK } from "@whop-apps/sdk";
+
+export const WhopApp = createAppIframeSDK({
+  onMessage: {
+    onCheckoutRequirementComplete: async (data) => {
+      const { checkoutSessionId, planId, productId, companyId } = data;
+
+      return {
+        shouldContinue: false,
+        error: "This is an error message",
+      };
+    },
+  },
+});
+```
+
+This will set up the SDK to list for the `onCheckoutRequirementComplete` message. We can then either allow the user to continue to the billing section or display an error message and prevent them from continuing.
+
+- Setting `shouldContinue` to `true` will allow the user to continue to the billing section.
+- Setting `shouldContinue` to `false` will prevent the user from continuing to the billing section. You can also make use of the `error` value to display an error message to the user. This will be in the form of a Toast.
+
+---
+
+### Next steps
+
+- Deploy your app to production
