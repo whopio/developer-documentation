@@ -114,6 +114,20 @@ paths:
           description: An identifier of a billing item to filter by.
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -182,6 +196,21 @@ paths:
         - app/companies
       operationId: get_api_v5_app_companies
       summary: List Companies
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -262,6 +291,20 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -346,6 +389,20 @@ paths:
       operationId: get_api_v5_app_line_items
       summary: List Line Items
       parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
         - name: company_id
           in: query
           required: false
@@ -443,6 +500,20 @@ paths:
       operationId: get_api_v5_app_notification_topics
       summary: List Notification Topics
       parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
         - name: status
           in: query
           required: false
@@ -601,6 +672,20 @@ paths:
           description: A boolean to filter by valid memberships
           schema:
             type: boolean
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -714,6 +799,20 @@ paths:
           description: A boolean of whether or not to return only payments made with a line item created by the app. If false, returns all payments without a line item.
           schema:
             type: boolean
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -789,6 +888,20 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1039,6 +1152,20 @@ paths:
           description: An identifier to filter by.
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1152,6 +1279,20 @@ paths:
           description: A license key to filter by.
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1255,6 +1396,20 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1323,6 +1478,21 @@ paths:
         - company/products
       operationId: get_api_v5_company_products
       summary: List Products
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1423,6 +1593,20 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1571,6 +1755,20 @@ paths:
           description: A license key to filter by.
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1652,6 +1850,20 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
@@ -1727,6 +1939,20 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A successful response
