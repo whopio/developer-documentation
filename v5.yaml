@@ -188,6 +188,130 @@ paths:
         "204":
           description: A successful response
       description: Deletes a billing usage
+  "/v5/app/app_connections":
+    post:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/app_connections
+      operationId: post_api_v5_app_app_connections
+      summary: Create an App Connection
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppAppConnection"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppAppConnectionCreateBody"
+      description: Create an app connection for an object
+    get:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/app_connections
+      operationId: get_api_v5_app_app_connections
+      summary: List App Connections
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: resource_id
+          in: query
+          required: false
+          description: An ID of an object to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: resource_type
+          in: query
+          required: false
+          description: The type of resource to filter by, ex 'product'.
+          schema:
+            type: string
+            enum:
+              - product
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppAppConnection"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of app connections
+  "/v5/app/app_connections/{id}":
+    get:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/app_connections
+      operationId: get_api_v5_app_app_connections_id
+      summary: Retrieve an app connection
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the app connection, which will look like apco_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppAppConnection"
+      description: Returns an app connection
+    delete:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/app_connections
+      operationId: delete_api_v5_app_app_connections_id
+      summary: Delete an App Connection
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the app connection, which will look like apco_*************
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+      description: Deletes an App Connection
   "/v5/app/companies":
     get:
       security:
@@ -472,7 +596,7 @@ paths:
       description: Deletes a line item
     patch:
       security:
-        - ApiAuth: [api_key]
+        - ApiAuth: [ api_key ]
       tags:
         - app/line_items
       operationId: update_api_v5_app_line_items_id
@@ -2375,6 +2499,62 @@ components:
         - service
         - default
         - account_id
+    AppAppConnection:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the app connection, which will look like apco_*************
+        created_at:
+          type: number
+          description: The date the billing usage was created as a unix timestamp.
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        app_id:
+          type: string
+          description: The ID of the app, which will look like app_*************
+        resource_id:
+          type: string
+          description: The ID of the polymorphic resource for the connection. Ex. a product ID like prod_*************.
+        resource_type:
+          type: string
+          description: The type of the polymorphic resource for the connection. Ex. 'product'
+          enum:
+            - product
+        view_type:
+          type: string
+          description: The type of view for the connection.
+          enum:
+            - customer_before_checkout_view
+      required:
+        - id
+        - created_at
+        - company_id
+        - app_id
+        - resource_id
+        - resource_type
+        - view_type
+    AppAppConnectionCreateBody:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: The ID of the polymorphic resource for the connection. Ex. a product ID like prod_*************.
+        resource_type:
+          type: string
+          description: The type of the polymorphic resource for the connection. Ex. 'product'
+          enum:
+            - product
+        view_type:
+          type: string
+          description: The type of view for the connection.
+          enum:
+            - customer_before_checkout_view
+      required:
+        - resource_id
+        - resource_type
+        - view_type
     AppBillingUsage:
       type: object
       properties:
@@ -2865,6 +3045,28 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to execute this payment, if applicable.
+        card_brand:
+          type: string
+          description: If the payment was made with a credit/debit card, the brand of the card.
+        card_last_4:
+          type: string
+          description: The last 4 digits of the debit/credit card used to make the payment, if applicable.
+        funding_method:
+          type: string
+          enum:
+            - credit
+            - debit
+            - prepaid
+            - unknown
+          description: The funding method of the payment, if applicable.
+        wallet_type:
+          type: string
+          enum:
+            - apple_pay
+            - google_pay
+            - paypal
+            - venmo
+          description: The wallet type of the payment, if applicable.
       required:
         - id
         - membership_id
@@ -3385,6 +3587,28 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to execute this payment, if applicable.
+        card_brand:
+          type: string
+          description: If the payment was made with a credit/debit card, the brand of the card.
+        card_last_4:
+          type: string
+          description: The last 4 digits of the debit/credit card used to make the payment, if applicable.
+        funding_method:
+          type: string
+          enum:
+            - credit
+            - debit
+            - prepaid
+            - unknown
+          description: The funding method of the payment, if applicable.
+        wallet_type:
+          type: string
+          enum:
+            - apple_pay
+            - google_pay
+            - paypal
+            - venmo
+          description: The wallet type of the payment, if applicable.
       required:
         - id
         - membership_id
@@ -3796,6 +4020,28 @@ components:
         checkout_id:
           type: string
           description: The ID of the checkout used to execute this payment, if applicable.
+        card_brand:
+          type: string
+          description: If the payment was made with a credit/debit card, the brand of the card.
+        card_last_4:
+          type: string
+          description: The last 4 digits of the debit/credit card used to make the payment, if applicable.
+        funding_method:
+          type: string
+          enum:
+            - credit
+            - debit
+            - prepaid
+            - unknown
+          description: The funding method of the payment, if applicable.
+        wallet_type:
+          type: string
+          enum:
+            - apple_pay
+            - google_pay
+            - paypal
+            - venmo
+          description: The wallet type of the payment, if applicable.
       required:
         - id
         - membership_id

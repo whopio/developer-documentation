@@ -171,6 +171,15 @@
           ]
         },
         {
+          "group": "App Connections",
+          "pages": [
+            "api-reference/v5/apps/app-connections/list",
+            "api-reference/v5/apps/app-connections/retrieve",
+            "api-reference/v5/apps/app-connections/create",
+            "api-reference/v5/apps/app-connections/delete"
+          ]
+        },
+        {
           "group": "Users",
           "pages": [
             "api-reference/v5/apps/users/retrieve",
