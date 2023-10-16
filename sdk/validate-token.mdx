@@ -13,7 +13,7 @@ You can access the user ID of the current used by assigning it to a variable, li
 import { headers } from "next/headers";
 import { validateToken } from "@whop-apps/sdk";
 
-export default async function AdminPage() {
+export default async function SellerPage() {
   const { userId } = await validateToken({ headers });
 }
 ```

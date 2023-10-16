@@ -71,7 +71,7 @@
           "pages": [
             "apps/overview",
             "apps/create-an-app",
-            "apps/admin-page",
+            "apps/seller-page",
             "apps/customer-page",
             "apps/checkout-page",
             "apps/deploying"

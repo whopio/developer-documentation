@@ -1,5 +1,5 @@
 ---
-title: Build your admin page
+title: Build your seller page
 icon: "circle-2"
 description: "After you create an app, you will build out the page that allows Whop Companies to interact with your app"
 ---
@@ -13,21 +13,21 @@ In this tutorial, you’ll learn how to do the following tasks:
 - Authenticate a user
 - Use the Whop API to pull a user's roles
 
-## 1. Create your admin page
+## 1. Create your seller page
 
-We will start by building the **admin page.**
+We will start by building the **seller page.**
 
-The **admin page** is a specific page URL your app defines. Every time a company admin views your app from within the Whop Dashboard, they will view the admin page within the iFrame.
+The **seller page** is a specific page URL your app defines. Every time a company views your app from within the Whop Dashboard, they will view the **seller** page within the iFrame.
 
-1. Create a page to match this URL `/admin/$companyId/$productId`. To do this, create this file: `/app/admin/[companyId]/[productId]/page.tsx`
+1. Create a page to match this URL `/seller/$companyId/$productId`. To do this, create this file: `/app/seller/[companyId]/[productId]/page.tsx`
 
 ```bash
-mkdir app/admin && mkdir "app/admin/[companyId]" && mkdir "app/admin/[companyId]/[productId]" && touch "app/admin/[companyId]/[productId]/page.tsx"
+mkdir app/seller && mkdir "app/seller/[companyId]" && mkdir "app/seller/[companyId]/[productId]" && touch "app/seller/[companyId]/[productId]/page.tsx"
 ```
 
 To know which company is viewing the page, Whop will pass the ID as a **path parameter**. These are defined in the URL on the app settings page, which we will do later.
 
-These are all the options that you can use in the Admin Path, but for now, we will only use `companyId` and `productId`:
+These are all the options that you can use in the Seller Path, but for now, we will only use `companyId` and `productId`:
 
 | Parameter      | Description              |
 | -------------- | ------------------------ |
@@ -38,7 +38,7 @@ These are all the options that you can use in the Admin Path, but for now, we wi
 2. Add the following code to your file to read and display the company ID and product ID
 
 ```javascript
-export default async function AdminPage({
+export default async function SellerPage({
   params,
 }: {
   params: { companyId: string, productId: string },
@@ -54,7 +54,7 @@ export default async function AdminPage({
 }
 ```
 
-3. Update the Admin Path in your [app configuration](https://dash.whop.com/settings/developer) to be `/admin/$companyId/$productId`
+3. Update the Seller Path in your [app configuration](https://dash.whop.com/settings/developer) to be `/seller/$companyId/$productId`
 
    <Frame>
      <img src="https://imgur.com/I02L6Iv.png" />
@@ -80,7 +80,7 @@ import { validateToken } from "@whop-apps/sdk";
 2. Use the `validateToken` function from the Whop SDK to obtain the user's ID
 
 ```javascript
-export default async function AdminPage() {
+export default async function SellerPage() {
   const { userId } = await validateToken({ headers });
 }
 ```
