@@ -166,7 +166,8 @@
             "api-reference/v5/apps/line-items/list",
             "api-reference/v5/apps/line-items/retrieve",
             "api-reference/v5/apps/line-items/create",
-            "api-reference/v5/apps/line-items/delete"
+            "api-reference/v5/apps/line-items/delete",
+            "api-reference/v5/apps/line-items/update"
           ]
         },
         {

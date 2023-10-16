@@ -470,6 +470,35 @@ paths:
           description: A successful response
 
       description: Deletes a line item
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/line_items
+      operationId: update_api_v5_app_line_items_id
+      summary: Update a Line Item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the line item, which will look like li_*************
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppLineItemUpdateBody"
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppLineItem"
+
+      description: Updates a line item's metadata field
   "/v5/app/notification_topics":
     post:
       security:
@@ -2518,6 +2547,14 @@ components:
         - base_currency
         - allow_multiple_quantity
         - name
+    AppLineItemUpdateBody:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: A JSON object containing any additional metadata for the line item.
+      required:
+        - metadata
     AppNotificationTopic:
       type: object
       properties:
