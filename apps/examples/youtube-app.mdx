@@ -1,9 +1,9 @@
 ---
 title: YouTube App
-description: A tutorial on how to build a basic YouTube app. This app allows a seller to upload an unlisted video, and the user to play it directly on Whop
+description: A tutorial on how to build an app that allows a seller to upload an unlisted video, and the user to play it directly on Whop
 ---
 
-This tutorial demonstrates how to build a YouTube App. The app allows a seller to add a video link (even unlisted ones), and then the user to play it directly on Whop through an iFrame.
+This tutorial demonstrates how to build a YouTube App. The app allows a seller to add a YouTube link (even unlisted ones), and then the user to play it directly on Whop through an iFrame.
 
 The app uses:
 
@@ -17,13 +17,28 @@ The app uses:
   <img src="https://imgur.com/uEF3Y9l.png" />
 </Frame>
 
+---
+
+## Prereqiuisites
+
+Before we can start building, we need to make sure we created an app on Whop. If you haven't done this yet, head to the [Developer Settings](https://dash.whop.com/settings/developer) and create a new app.
+
+This app will use the following URL paths:
+
+- Seller Path: `seller/$companyId/$productId`
+- Customer Path: `customer/$productId`
+
+For more information on creating an app, check out the [Create an app](/apps/create-an-app) guide.
+
+---
+
 ## Project Setup
 
 Before we start building we're going to set up our database. This example uses Neon, but you can use any database you want.
 
 ### Database Setup
 
-1. Head to the Neon Dashboard and create a new project
+1. Head to the [Neon Dashboard](https://console.neon.tech/) and create a new project
 2. Enter the name of your project, and select the region closest to you. We are using Postgres Version **15**.
 3. Copy the connection string and save it somewhere safe. We will need it later.
 
@@ -41,6 +56,8 @@ CREATE TABLE videos (
 ```
 
 <Check>We have now set up our database!</Check>
+
+---
 
 ### Next.js Setup
 
@@ -69,15 +86,15 @@ yarn create next-app
 <CodeGroup>
 
 ```bash pnpm
-pnpm add @prisma/client @whop-apps/sdk @whop/frosted-ui prisma
+pnpm add @prisma/client @whop-apps/sdk @whop/frosted-ui @prisma/client prisma
 ```
 
 ```bash npm
-npm install @prisma/client @whop-apps/sdk @whop/frosted-ui prisma
+npm install @prisma/client @whop-apps/sdk @whop/frosted-ui @prisma/client prisma
 ```
 
 ```bash yarn
-yarn add @prisma/client @whop-apps/sdk @whop/frosted-ui prisma
+yarn add @prisma/client @whop-apps/sdk @whop/frosted-ui @prisma/client prisma
 ```
 
 </CodeGroup>
@@ -96,6 +113,22 @@ DATABASE_URL=
 - `NEXT_PUBLIC_WHOP_APP_ID` is your Whop App ID. You can find this in your app's settings.
 - `DATABASE_URL` is the connection string we copied earlier.
 
+You can find out more about the App ID and API key [here](/apps/create-an-app#step-6-setup-your-environment-variables).
+
+4. **Enable Server Actions**
+
+As server actions are still an experimental of Next.js, we have to manually enable them. To do this, head to `next.config.js` and add the following:
+
+```javascript next.config.js
+const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
+};
+
+module.exports = nextConfig;
+```
+
 <Check>We now have set up everything we need to start building our app!</Check>
 
 ---
@@ -103,6 +136,99 @@ DATABASE_URL=
 ## Building the App
 
 This section will walk you through building the app.
+
+### Structuring the project
+
+Before we start building, we need to structure our project. We will:
+
+- Create the path for our seller and customer page
+- Create a `lib` folder for our database client and server actions
+- Create a `components` folder for our components
+- Setup Frosted UI
+
+#### Creating the paths
+
+Create a new path inside of the `app` folder:
+
+```
+app/seller/[companyId]/[productId]/page.tsx
+```
+
+and
+
+```
+app/customer/[productId]/page.tsx
+```
+
+#### Creating the misc folders
+
+In the root of your directory, create 2 new folders called `lib` and `components`.
+
+#### Setting up Frosted UI
+
+To use Frosted UI, we need to edit our `layout.tsx` and `tailwind.config.ts` files.
+
+```javascript tailwind.config.ts
+import type { Config } from "tailwindcss";
+import preset from "@whop/frosted-ui/dist/preset";
+
+const config = preset({
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+});
+export default config;
+```
+
+Now, create a folder in the app directory called `layout.client.tsx`. This is where we will define our client layout.
+
+```javascript layout.client.tsx
+"use client"; // this line is important
+import { FC, PropsWithChildren } from "react";
+import { TooltipProvider, Toaster } from "@whop/frosted-ui";
+
+export const ClientLayout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <TooltipProvider>
+      {children}
+      <Toaster />
+    </TooltipProvider>
+  );
+};
+```
+
+Finally, we need to edit the `layout.tsx` file to use our new layout.
+
+```javascript layout.tsx
+import { ClientLayout } from "./layout.client";
+import "./globals.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
+  );
+}
+```
+
+Finally, head to `globals.css` and remove all the content except the 3 `@tailwind` imports, like so:
+
+```css globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
 
 ### Creating the Database Client
 
@@ -113,6 +239,11 @@ import { PrismaClient } from "@prisma/client";
 
 export const db = new PrismaClient();
 ```
+
+<Note>
+  You may get an error saying that `PrismaClient` is not exported. This is
+  expected and will be resolved in the next step.
+</Note>
 
 ---
 
@@ -136,7 +267,7 @@ yarn prisma init
 
 </CodeGroup>
 
-This will setup Prisma, now we need to tell it to generate our schema.
+This will set up Prisma and the files needed for it to work, now we need to generate our schema.
 
 <CodeGroup>
 
@@ -154,9 +285,9 @@ yarn prisma db pull
 
 </CodeGroup>
 
-If you check `schema.prisma` you will see that Prisma has generated our schema for us.
+If you check `prisma/schema.prisma` you will see that Prisma has generated our schema for us.
 
-To make use of our schema, we need to generate a client to enable us to interact with it. To do this, run the following command in your terminal:
+To make use of our schema, we need to generate a client to enable us to interact with it. This will also resolve the import error we faced earlier. To do this, run the following command in your terminal:
 
 <CodeGroup>
 
@@ -196,6 +327,8 @@ yarn whop-proxy
 
 </CodeGroup>
 
+<br />
+
 <Note>
   To find out more about the `whop-proxy` command, check out the
   [documentation](/sdk/whop-proxy).
@@ -207,11 +340,7 @@ yarn whop-proxy
 
 Now that we have set up our database, we can start building our seller page. This is where sellers will be able to add videos to their products.
 
-Create a new path in your `app` folder:
-
-```
-app/seller/[companyId]/[productId]/index.tsx
-```
+Head to the `page.tsx` we made in the `seller/[companyId]/[productId]` folder.
 
 **In this file we will:**
 
@@ -223,7 +352,7 @@ app/seller/[companyId]/[productId]/index.tsx
 import { validateToken } from "@whop-apps/sdk";
 import { headers } from "next/headers";
 import SellerForm from "@/components/SellerForm";
-import { db } from "@/lib/db";
+import { db } from "@/lib/prisma";
 
 export default async function SellerPage({
   params,
@@ -248,9 +377,11 @@ export default async function SellerPage({
 }
 ```
 
+---
+
 #### Creating the Seller Form
 
-Since our form will be a client component, we are going to create it in a separate file. Create a new file called `SellerForm.tsx` in your `components` folder, which should be in the root of your directory.
+Since our form will be a client component, we are going to create it in a separate file. In the `components` folder we made earlier, create a new file called `SellerForm.tsx`.
 
 This page will take in the following props:
 
@@ -344,7 +475,7 @@ Now that we have created our form, we need to create the server action that will
 
 ```javascript lib/actions.ts
 "use server";
-import { db } from "./db";
+import { db } from "./prisma";
 
 function extractYoutubeVideoId(url: string): string | null {
   const regex =
@@ -407,17 +538,16 @@ export default async function addYoutubeLink(
 
 The customer page will be what the users see when they click on the app. It will display the YouTube video in an embed, and allow them to watch it.
 
-Create a new path in your `app` folder:
-
-`app/customer/[productId]/page.tsx`
+This will be done in the `customer/[productId]/page.tsx` file.
 
 **In this file we will:**
 
 - Fetch the video from our database using the `productId`
 - Render the video in an iFrame
+- Display an error message if there was no video found
 
 ```javascript page.tsx
-import { db } from "@/lib/db";
+import { db } from "@/lib/prisma";
 
 export default async function CustomerPage({
   params,

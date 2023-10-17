@@ -84,13 +84,13 @@
     {
       "group": "Whop App Guides",
       "pages": [
+        "apps/notifications",
+        "apps/inapp-purchases",
+        "apps/metered-billing",
         {
           "group": "App Examples",
           "pages": ["apps/examples/youtube-app"]
-        },
-        "apps/notifications",
-        "apps/inapp-purchases",
-        "apps/metered-billing"
+        }
       ]
     },
     {
