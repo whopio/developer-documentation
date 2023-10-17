@@ -84,6 +84,10 @@
     {
       "group": "Whop App Guides",
       "pages": [
+        {
+          "group": "App Examples",
+          "pages": ["apps/examples/youtube-app"]
+        },
         "apps/notifications",
         "apps/inapp-purchases",
         "apps/metered-billing"
