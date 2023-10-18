@@ -16,6 +16,7 @@ As well as consumer and business-facing apps, you can also create ones that get 
 
 In this tutorial, you'll learn how to do the following tasks:
 
+- Enable the checkout page on specific products
 - Build a page that is shown before the checkout page.
 - Use the iFrame SDK to communicate with the checkout page.
 - Prevent or allow the user to continue to the billing section.
@@ -25,7 +26,27 @@ In this tutorial, you'll learn how to do the following tasks:
 - To view the checkout iFrame, you need to have added the app to a product. From here you can simulate going through the checkout process.
 - You will need to have set up the [iFrame SDK](/sdk/iframe-setup)
 
-## 1. Create your checkout page
+## 1. Add your app to a product
+
+You will need to specify which products you want your app to be added to, this is only for checkout apps.
+
+To do this, you will either need to use the SDK or a standard [HTTP request](/api-reference/v5/apps/app-connections/create).
+
+In this example, we will use the SDK.
+
+```javascript
+await WhopAPI.app().POST("/app/app_connections", {
+  body: {
+    resource_id: "prod_XXX",
+    resource_type: "product",
+    view_type: "customer_before_checkout_view",
+  },
+});
+```
+
+You need to pass in the `productId` that you want to add the app to.
+
+## 2. Create your checkout page
 
 We will start by creating the checkout page.
 
@@ -79,7 +100,7 @@ export default async function CheckoutView({
   <img src="https://imgur.com/RUndYoZ.gif" />
 </Frame>
 
-## 2. Authenticate the session
+## 3. Authenticate the session
 
 To ensure that the checkout session is valid, we will need to authenticate it.
 
@@ -101,7 +122,7 @@ const { userId } = await validateCheckoutSession({
 
 <Note>The `userId` may be undefined if the user is not logged in.</Note>
 
-## 3. Setup the iFrame SDK
+## 4. Setup the iFrame SDK
 
 For the app to know when the user has tried to continue to the billing section, we will need to use the iFrame SDK to setup Post Messages.
 
