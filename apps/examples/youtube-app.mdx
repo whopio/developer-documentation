@@ -349,7 +349,7 @@ Head to the `page.tsx` we made in the `seller/[companyId]/[productId]` folder.
 - Render a form to add a video
 
 ```javascript page.tsx
-import { validateToken } from "@whop-apps/sdk";
+import { validateToken, hasAccess, authorizedUserOn } from "@whop-apps/sdk";
 import { headers } from "next/headers";
 import SellerForm from "@/components/SellerForm";
 import { db } from "@/lib/prisma";
@@ -360,6 +360,15 @@ export default async function SellerPage({
   params: { companyId: string; productId: string };
 }) {
   const { userId } = await validateToken({ headers });
+
+  const access = await hasAccess({
+    to: authorizedUserOn(params.companyId),
+    headers,
+  });
+
+  if (!access) {
+    return <p>You do not have access to this company</p>;
+  }
 
   const currentVideo = await db.videos.findUnique({
     where: {
@@ -544,16 +553,28 @@ This will be done in the `customer/[productId]/page.tsx` file.
 
 - Fetch the video from our database using the `productId`
 - Render the video in an iFrame
-- Display an error message if there was no video found
+- Display an error message if there is no video found
 
 ```javascript page.tsx
 import { db } from "@/lib/prisma";
+import { hasAccess, validateToken } from "@whop-apps/sdk";
+import { headers } from "next/headers";
 
 export default async function CustomerPage({
   params,
 }: {
   params: { productId: string };
 }) {
+  const { userId } = await validateToken({ headers });
+
+  const access = await hasAccess({
+    to: params.productId,
+    headers,
+  });
+
+  if (!access) {
+    return <p>You do not have access to this product</p>;
+  }
 
   const videoId = await db.videos.findUnique({
     where: { product_id: params.productId },
