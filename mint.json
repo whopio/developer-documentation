@@ -105,7 +105,7 @@
     },
     {
       "group": "More",
-      "pages": ["templates", "contribution"]
+      "pages": ["templates", "contribution", "branding"]
     },
     {
       "group": "API Documentation",
