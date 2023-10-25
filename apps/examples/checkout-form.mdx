@@ -1,0 +1,518 @@
+---
+title: Checkout Requirements App
+description: A tutorial on how to build an app that allows sellers to check if a user meets requirements before allowing them to checkout.
+---
+
+The app uses:
+
+- [Whop SDK](/sdk/installation)
+- [Frosted UI](https://github.com/whopio/frosted-ui)
+
+<Frame caption="Checkout View">
+  <img src="https://imgur.com/iqDrhBo.png" />
+</Frame>
+
+---
+
+## Prerequisites
+
+Before we can start building, we need to make sure we created an app on Whop. If you haven't done this yet, head to the [Developer Settings](https://dash.whop.com/settings/developer) and create a new app.
+
+This app will use the following URL paths:
+
+- Checkout Path: `checkout/$checkoutSessionId`
+
+For more information on creating an app, check out the [Create an app](/apps/create-an-app) guide.
+
+---
+
+## Project Setup
+
+### Next.js Setup
+
+This tutorial uses the Next.js App Directory.
+
+1. **Initialize a new project**
+
+<CodeGroup>
+
+```bash pnpm
+pnpm create next-app
+```
+
+```bash npm
+npx create-next-app@latest
+```
+
+```bash yarn
+yarn create next-app
+```
+
+</CodeGroup>
+
+2. **Install the dependancies**
+
+<CodeGroup>
+
+```bash pnpm
+pnpm add  @whop-apps/sdk @whop/frosted-ui
+```
+
+```bash npm
+npm install @whop-apps/sdk @whop/frosted-ui
+```
+
+```bash yarn
+yarn add @whop-apps/sdk @whop/frosted-ui
+```
+
+</CodeGroup>
+
+3. **Create the environment variables**
+
+Create a `.env.local` file in the root of your project and add the following:
+
+```env .env.local
+WHOP_API_KEY=
+NEXT_PUBLIC_WHOP_APP_ID=
+```
+
+- `WHOP_API_KEY` is your Whop API key. You can find this in your app's settings.
+- `NEXT_PUBLIC_WHOP_APP_ID` is your Whop App ID. You can find this in your app's settings.
+
+You can find out more about the App ID and API key [here](/apps/create-an-app#step-6-setup-your-environment-variables).
+
+<Check>We now have set up everything we need to start building our app!</Check>
+
+---
+
+## Building the App
+
+This section will walk you through building the app.
+
+### Structuring the project
+
+Before we start building, we need to structure our project. We will:
+
+- Create the path for our seller and checkout page
+- Create a `lib` folder for our iFrame
+- Create a `components` folder for our components
+- Setup Frosted UI
+
+#### Creating the paths
+
+Create a new path inside of the `app` folder:
+
+```
+app/seller/[companyId]/[productId]/page.tsx
+```
+
+and
+
+```
+app/checkout/[checkoutSessionId]/page.tsx
+```
+
+#### Creating the misc folders
+
+In the root of your directory, create 2 new folders called `lib` and `components`.
+
+#### Setting up Frosted UI
+
+To use Frosted UI, we need to edit our `layout.tsx` and `tailwind.config.ts` files.
+
+```javascript tailwind.config.ts
+import type { Config } from "tailwindcss";
+import preset from "@whop/frosted-ui/dist/preset";
+
+const config = preset({
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+});
+export default config;
+```
+
+Now, create a folder in the app directory called `layout.client.tsx`. This is where we will define our client layout.
+
+```javascript layout.client.tsx
+"use client"; // this line is important
+import { FC, PropsWithChildren } from "react";
+import { TooltipProvider, Toaster } from "@whop/frosted-ui";
+
+export const ClientLayout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <TooltipProvider>
+      {children}
+      <Toaster />
+    </TooltipProvider>
+  );
+};
+```
+
+Finally, we need to edit the `layout.tsx` file to use our new layout.
+
+```javascript layout.tsx
+import { ClientLayout } from "./layout.client";
+import "./globals.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
+  );
+}
+```
+
+Finally, head to `globals.css` and remove all the content except the 3 `@tailwind` imports, like so:
+
+```css globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+### Setting up the iFrame
+
+As we are on the checkout page, we need to listen to the **post message** that gets sent to our app when the user tries to continue to the checkout page. We will then either allow or deny them from doing this.
+
+```javascript lib/iframe.ts
+import { createAppIframeSDK } from "@whop-apps/sdk";
+
+export const WhopApp = createAppIframeSDK({
+  onMessage: {
+    onCheckoutRequirementComplete: async (data) => {
+      const { checkoutSessionId, planId, productId, companyId } = data;
+
+      return {
+        shouldContinue: false,
+        error: "This is an error message",
+      };
+    },
+  },
+});
+```
+
+<Note>We will be building on this file later on</Note>
+
+---
+
+### Developing locally
+
+To develop locally and see our changes on the Whop site, we need to use the `whop-proxy` command. To do this, run the following command in your terminal:
+
+<CodeGroup>
+
+```bash pnpm
+pnpm whop-proxy
+```
+
+```bash npm
+npm whop-proxy
+```
+
+```bash yarn
+yarn whop-proxy
+```
+
+</CodeGroup>
+
+<br />
+
+<Note>
+  To find out more about the `whop-proxy` command, check out the
+  [documentation](/sdk/whop-proxy).
+</Note>
+
+---
+
+### Creating our Seller page
+
+Now that we have set up our database, we can start building our seller page. This is where sellers will be able to add videos to their products.
+
+Head to the `page.tsx` we made in the `seller/[companyId]/[productId]` folder.
+
+**In this file we will:**
+
+- Verify that the user is allowed to access the page
+- Check our database to see if a video has already been added, and if so, pass it to the `SellerForm` component
+- Render a form to add a video
+
+```javascript page.tsx
+import { validateToken, hasAccess, authorizedUserOn } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+import SellerForm from "@/components/SellerForm";
+import { db } from "@/lib/prisma";
+
+export default async function SellerPage({
+  params,
+}: {
+  params: { companyId: string; productId: string };
+}) {
+  const { userId } = await validateToken({ headers });
+
+  const access = await hasAccess({
+    to: authorizedUserOn(params.companyId),
+    headers,
+  });
+
+  if (!access) {
+    return <p>You do not have access to this company</p>;
+  }
+
+  const currentVideo = await db.videos.findUnique({
+    where: {
+      product_id: params.productId,
+    },
+  });
+
+  return (
+    <SellerForm
+      productId={params.productId}
+      companyId={params.companyId}
+      currentUrl={currentVideo?.video_url || null}
+    />
+  );
+}
+```
+
+---
+
+#### Creating the Seller Form
+
+Since our form will be a client component, we are going to create it in a separate file. In the `components` folder we made earlier, create a new file called `SellerForm.tsx`.
+
+This page will take in the following props:
+
+- `companyId` - The ID of the company
+- `productId` - The ID of the product that the video will be added to
+- `currentUrl` - The current video URL, if one exists
+
+Since we are using Server Actions, we need to create a FormState and FormStatus, these will let us know the status of our form, and send any error messages which we can display to the user.
+
+If the form is successful, we will display a success toast, otherwise, we will display an error message on the input.
+
+```javascript components/SellerForm.tsx
+"use client";
+import { Input, Button, toast, Toaster } from "@whop/frosted-ui";
+import { experimental_useFormState as useFormState } from "react-dom";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import addYoutubeLink from "@/lib/actions";
+import { useEffect } from "react";
+
+const initialState = {
+  message: null,
+  errorMessage: null,
+};
+
+export default function SellerForm({
+  companyId,
+  productId,
+  currentUrl,
+}: {
+  companyId: string;
+  productId: string;
+  currentUrl: string | null;
+}) {
+  const [state, formAction] = useFormState(addYoutubeLink, initialState);
+  const { pending } = useFormStatus();
+
+  useEffect(() => {
+    if (state?.message === "success") {
+      toast.success("Successfully added YouTube link!");
+    }
+  }, [state?.message]);
+
+  return (
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200">
+      <div className="bg-white w-[600px] p-8 rounded-lg shadow-lg">
+        <h1 className="text-lg text-center font-semibold mb-4">YouTube App</h1>
+        <form action={formAction}>
+          <input type="hidden" name="companyId" value={companyId} />
+          <input type="hidden" name="productId" value={productId} />
+          <div className="mb-4">
+            <Input
+              label={{
+                children: "YouTube URL",
+                tooltip: {
+                  description:
+                    "The URL of the YouTube video you want your users to watch.",
+                },
+              }}
+              messageIcon
+              placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              size="md"
+              className="w-full"
+              name="url"
+              errorMessage={state?.errorMessage}
+              defaultValue={currentUrl || ""}
+            />
+          </div>
+          <Button isLoading={pending} type="submit" className="w-full">
+            Submit
+          </Button>
+        </form>
+      </div>
+      <Toaster />
+    </div>
+  );
+}
+```
+
+---
+
+#### Creating the Server Action
+
+Now that we have created our form, we need to create the server action that will handle the form submission. Create a new file called `actions.ts` in the `lib` folder.
+
+**In this file, we are:**
+
+- Creating a server action that will:
+  - Extract the video ID from the URL
+  - Upsert the video in our database
+  - Return success or error messages
+
+```javascript lib/actions.ts
+"use server";
+import { db } from "./prisma";
+
+function extractYoutubeVideoId(url: string): string | null {
+  const regex =
+    /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+  return match && match[1] ? match[1] : null;
+}
+
+export default async function addYoutubeLink(
+  prevState: any,
+  formData: FormData
+) {
+  try {
+    const url = formData.get("url") as string;
+    const companyId = formData.get("companyId") as string;
+    const productId = formData.get("productId") as string;
+
+    if (!url || !companyId || !productId) {
+      return { errorMessage: "Missing data" };
+    }
+
+    const youtubeUrlRegex =
+      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
+    if (!youtubeUrlRegex.test(url)) {
+      return { errorMessage: "Invalid YouTube URL format" };
+    }
+
+    const videoId = extractYoutubeVideoId(url);
+    if (!videoId) {
+      return { errorMessage: "Could not extract YouTube video ID" };
+    }
+
+    await db.videos.upsert({
+      where: { product_id: productId },
+      update: { video_id: videoId, video_url: url },
+      create: {
+        company_id: companyId,
+        product_id: productId,
+        video_id: videoId,
+        video_url: url,
+      },
+    });
+
+    return { message: "success" };
+  } catch (e) {
+    return { errorMessage: "Failed to create" };
+  }
+}
+
+```
+
+<Check>
+  We have now created our seller page! If you head to the seller page, you
+  should be able to add a video URL and see it in your database.
+</Check>
+
+---
+
+### Creating the Customer page
+
+The customer page will be what the users see when they click on the app. It will display the YouTube video in an embed, and allow them to watch it.
+
+This will be done in the `customer/[productId]/page.tsx` file.
+
+**In this file we will:**
+
+- Fetch the video from our database using the `productId`
+- Render the video in an iFrame
+- Display an error message if there is no video found
+
+```javascript page.tsx
+import { db } from "@/lib/prisma";
+import { hasAccess, validateToken } from "@whop-apps/sdk";
+import { headers } from "next/headers";
+
+export default async function CustomerPage({
+  params,
+}: {
+  params: { productId: string };
+}) {
+  const { userId } = await validateToken({ headers });
+
+  const access = await hasAccess({
+    to: params.productId,
+    headers,
+  });
+
+  if (!access) {
+    return <p>You do not have access to this product</p>;
+  }
+
+  const videoId = await db.videos.findUnique({
+    where: { product_id: params.productId },
+    select: { video_id: true },
+  });
+
+  return (
+    <div className="relative w-screen h-screen flex items-center justify-center m-0">
+      {videoId ? (
+        <iframe
+          className="absolute top-0 left-0 w-full h-full"
+          src={`https://www.youtube.com/embed/${videoId.video_id}`}
+          allowFullScreen
+        />
+      ) : (
+        <p className="text-center">
+          I could not find a video to play, please contact the seller
+        </p>
+      )}
+    </div>
+  );
+}
+```
+
+<Check>
+  We have now created our customer page! If you purchase your product and test
+  it, you should see your YouTube video. You have now created a fully functional
+  app!
+</Check>
+
+---
+
+## Next steps
+
+Now that we have created the app, we need to host it so anyone can use it. We recommend using Vercel, but you can use any hosting provider you want.
+
+<Tip>
+  Make sure to keep your environment variables secret and don't commit them to
+  your repository.
+</Tip>
