@@ -193,9 +193,9 @@ await WhopAPI.app().POST("/app/billing_usages", {
 
 ## 4. Get Paid
 
-Every Friday, Whop will aggregate all usage submitted the prior week and charge the seller for the amount used.
+Every Friday, Whop will aggregate all usage submitted the prior week and charge the seller for the amount used. This will be automatically to your balance for withdrawal.
 
-This will be automatically to your balance for withdrawal.
+To know when the payment has been captured and succeeded, you can listen to the [**payment.succeeded**](/webhooks/v5#payment-succeeded) webhook event. The `receipt_id` will also be shown in the [Billing Usages](/api-reference/v5/apps/billing-usages/retrieve) response on the API, which you can then use to retrieve more information about the payment using the [**Retrieve a payment**](/api-reference/v5/apps/payments/retrieve) endpoint.
 
 <Check>
   Congratulations. You have set up metered billing with Whop. You can now
