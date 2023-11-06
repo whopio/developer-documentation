@@ -89,7 +89,7 @@
         "apps/metered-billing",
         {
           "group": "App Examples",
-          "pages": ["apps/examples/youtube-app", "apps/examples/code-app"]
+          "pages": ["apps/examples/video-app", "apps/examples/code-app"]
         }
       ]
     },
@@ -212,7 +212,8 @@
           "pages": [
             "api-reference/v5/company/memberships/list",
             "api-reference/v5/company/memberships/retrieve",
-            "api-reference/v5/company/memberships/update"
+            "api-reference/v5/company/memberships/update",
+            "api-reference/v5/company/memberships/delete"
           ]
         },
         {

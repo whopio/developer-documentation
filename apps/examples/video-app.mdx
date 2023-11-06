@@ -1,9 +1,8 @@
 ---
-title: YouTube App
-description: A tutorial on how to build an app that allows a seller to upload an unlisted video, and the user to play it directly on Whop
+title: Sell Unlisted YouTube Videos
 ---
 
-This tutorial demonstrates how to build a YouTube App. The app allows a seller to add a YouTube link (even unlisted ones), and then the user to play it directly on Whop through an iFrame.
+This tutorial demonstrates how to build an app that allows a seller to insert a link to a YouTube video, and then display that video to the customer within Whop. This allows sellers to monetize unlisted YouTube videos.
 
 The app uses:
 
@@ -11,7 +10,7 @@ The app uses:
 - [Frosted UI](https://github.com/whopio/frosted-ui)
 - [Neon Database](https://neon.tech/)
 - [Prisma ORM](https://www.prisma.io/)
-- [Next.js Server Actions (experimental)](https://nextjs.org/docs/app/api-reference/functions/server-actions)
+- [Next.js Server Actions](https://nextjs.org/docs/app/api-reference/functions/server-actions)
 
 <Frame caption="Seller View">
   <img src="https://imgur.com/uEF3Y9l.png" />
@@ -68,7 +67,7 @@ Now that we have set up our database, we can start building our app. This tutori
 <CodeGroup>
 
 ```bash pnpm
-pnpm create next-app
+pnpm create next-app@latest
 ```
 
 ```bash npm
@@ -114,22 +113,6 @@ DATABASE_URL=
 - `DATABASE_URL` is the connection string we copied earlier.
 
 You can find out more about the App ID and API key [here](/apps/create-an-app#step-6-setup-your-environment-variables).
-
-4. **Enable Server Actions**
-
-As server actions are still an experimental feature of Next.js, we have to manually enable them. To do this, head to `next.config.js` and add the following:
-
-```javascript next.config.js
-const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
-};
-
-module.exports = nextConfig;
-```
-
-<Check>We now have set up everything we need to start building our app!</Check>
 
 ---
 
@@ -234,7 +217,7 @@ Finally, head to `globals.css` and remove all the content except the 3 `@tailwin
 
 We will be using Prisma as our ORM. Prisma is a great tool that allows us to easily interact with our database with TypeSafety. To get started, we are going to create a new file called `prisma.ts` in our `lib` folder.
 
-```javascript db.ts
+```javascript lib/prisma.ts
 import { PrismaClient } from "@prisma/client";
 
 export const db = new PrismaClient();
@@ -405,8 +388,7 @@ If the form is successful, we will display a success toast, otherwise, we will d
 ```javascript components/SellerForm.tsx
 "use client";
 import { Input, Button, toast, Toaster } from "@whop/frosted-ui";
-import { experimental_useFormState as useFormState } from "react-dom";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { useFormStatus, useFormState } from "react-dom";
 import addYoutubeLink from "@/lib/actions";
 import { useEffect } from "react";
 

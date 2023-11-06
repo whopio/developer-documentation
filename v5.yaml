@@ -191,7 +191,7 @@ paths:
   "/v5/app/app_connections":
     post:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/app_connections
       operationId: post_api_v5_app_app_connections
@@ -212,7 +212,7 @@ paths:
       description: Create an app connection for an object
     get:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/app_connections
       operationId: get_api_v5_app_app_connections
@@ -274,7 +274,7 @@ paths:
   "/v5/app/app_connections/{id}":
     get:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/app_connections
       operationId: get_api_v5_app_app_connections_id
@@ -296,7 +296,7 @@ paths:
       description: Returns an app connection
     delete:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/app_connections
       operationId: delete_api_v5_app_app_connections_id
@@ -596,7 +596,7 @@ paths:
       description: Deletes a line item
     patch:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/line_items
       operationId: update_api_v5_app_line_items_id
@@ -1534,6 +1534,37 @@ paths:
             schema:
               $ref: "#/components/schemas/CompanyMembershipUpdateBody"
       description: Updates a membership's metadata
+    delete:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/memberships
+      operationId: delete_api_v5_company_memberships_id
+      summary: Terminate a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyMembership"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Terminates the membership. No further payments will be made, and the customer will lose access. A terminated membership cannot be reactivated.
   "/v5/company/payments":
     get:
       security:
@@ -3067,6 +3098,17 @@ components:
             - paypal
             - venmo
           description: The wallet type of the payment, if applicable.
+        calculated_statement_descriptor:
+          type: string
+          description: The statement descriptor that appears on the customer's bank statement for the payment, if applicable.
+        issuer_identification_number:
+          type: string
+          description: The IIN/BIN of the payment, if applicable.
+        billing_usage_ids:
+          type: array
+          items:
+            type: string
+            description: The IDs of billing usages connected to this payment, which will look like bu_*************
       required:
         - id
         - membership_id
@@ -3609,6 +3651,17 @@ components:
             - paypal
             - venmo
           description: The wallet type of the payment, if applicable.
+        calculated_statement_descriptor:
+          type: string
+          description: The statement descriptor that appears on the customer's bank statement for the payment, if applicable.
+        issuer_identification_number:
+          type: string
+          description: The IIN/BIN of the payment, if applicable.
+        billing_usage_ids:
+          type: array
+          items:
+            type: string
+            description: The IDs of billing usages connected to this payment, which will look like bu_*************
       required:
         - id
         - membership_id
@@ -4042,6 +4095,17 @@ components:
             - paypal
             - venmo
           description: The wallet type of the payment, if applicable.
+        calculated_statement_descriptor:
+          type: string
+          description: The statement descriptor that appears on the customer's bank statement for the payment, if applicable.
+        issuer_identification_number:
+          type: string
+          description: The IIN/BIN of the payment, if applicable.
+        billing_usage_ids:
+          type: array
+          items:
+            type: string
+            description: The IDs of billing usages connected to this payment, which will look like bu_*************
       required:
         - id
         - membership_id
