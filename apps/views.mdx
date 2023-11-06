@@ -1,0 +1,95 @@
+---
+title: App views
+description: Information about all the different app views, and variables available to them.
+---
+
+App views are the different locations where your app can be displayed within Whop.
+
+There are currently 4 different views:
+
+| View             | Description                                                      | Example                                                               |
+| ---------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `customer`       | The view that customers see on whop.com when accessing a product | Displaying sports picks to paying users                               |
+| `checkout`       | Displayed before the customer pays for the product               | Collecting information about a user such as their Twitter             |
+| `seller_product` | Accessible by the seller when they are editing a product         | Uploading a file that the user can download for that specific product |
+| `seller`         | Accessible by the seller in the apps page on the dashboard       | Displaying detailed analytics about their company                     |
+
+---
+
+## Customer View
+
+The customer view is the view that customers see when they are viewing your product on Whop.
+
+Example use cases:
+
+- Displaying sports picks
+- Displaying a video
+- Custom AI chatbot
+
+### Variables
+
+Below are the variables that are available to the customer view.
+
+| Views          | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| `productId`    | The ID of the product the user purchased                  |
+| `companyId`    | The ID of the company the user purchased the product from |
+| `experienceId` | The ID of the experience                                  |
+| `membershipId` | The ID of the user's membership                           |
+| `planId`       | The ID of the plan the user purchased                     |
+
+---
+
+## Checkout View
+
+The checkout view is displayed before the customer pays for the product. The app will be able to decide if the user is allowed to purchase the product or not. If the user is not allowed to purchase the product, the app can display a message to the user.
+
+Example use cases:
+
+- Collecting information about a user such as a delivery address
+- Asking questions to the user to determine if they are allowed to purchase the product
+
+### Variables
+
+| Parameter           | Description                    |
+| ------------------- | ------------------------------ |
+| `companyId`         | The ID of the company          |
+| `checkoutSessionId` | The ID of the checkout session |
+| `productId`         | The ID of the product          |
+| `planId`            | The ID of the plan             |
+
+---
+
+## Seller Product View
+
+The seller product view is displayed on the **Edit Product Page**. This view is only accessible by the seller. It allows the app to have context about a specific product.
+
+Example use cases:
+
+- Uploading a file that the user can download for that specific product
+- Configuring the prompt of a chatbot for that specific product
+
+### Variables
+
+| Parameter      | Description              |
+| -------------- | ------------------------ |
+| `companyId`    | The ID of the company    |
+| `productId`    | The ID of the product    |
+| `experienceId` | The ID of the experience |
+
+---
+
+## Seller View
+
+The seller view is displayed on the **Apps Page**. This view is only accessible by the seller and does not have context about a specific product.
+
+Example use cases:
+
+- Showing analytics about a company
+- App to display SMS messages to customers
+
+### Variables
+
+| Parameter   | Description           |
+| ----------- | --------------------- |
+| `companyId` | The ID of the company |
