@@ -1,0 +1,453 @@
+---
+title: Email app
+---
+
+This tutorial demonstrates how to build an app that allows a seller to send mass emails to their current members.
+
+<Frame>
+  <img src="https://imgur.com/W5xwxU4.gif" />
+</Frame>
+
+**You could use it to:**
+
+- Send weekly updates on sports picks
+- Send announcements to members
+
+**This app uses:**
+
+- [Whop SDK](/sdk/installation)
+- [Frosted UI](https://github.com/whopio/frosted-ui)
+- [Resend](https://resend.com/)
+- [Next.js Server Actions](https://nextjs.org/docs/app/api-reference/functions/server-actions)
+
+---
+
+## Prerequisites
+
+Before we can start building, we need to create an app on Whop. If you haven't already, head to the [Developer Settings](https://dash.whop.com/settings/developer) page and create a new app.
+
+As this app is a **Business-facing app**, it will not be shown to the customer, so we will only need to set the seller path in our app settings.
+
+- Seller Path: `/seller-view/$companyId`
+
+---
+
+## Project Setup
+
+### Resend Setup
+
+To send emails, we will be using **Resend**. The app will need an API key to use the Resend SDK, so head to the [Resend Dashboard](https://resend.com/overview) and create a new API key.
+
+---
+
+### Next.js Setup
+
+Now that we have got our Resend API key, we can move on to the app itself. This tutorial will use Next.js with the App Directory
+
+1. **Initialize a new project**
+
+<CodeGroup>
+
+```bash pnpm
+pnpm create next-app@latest
+```
+
+```bash npm
+npx create-next-app@latest
+```
+
+```bash yarn
+yarn create next-app@latest
+```
+
+</CodeGroup>
+
+2. **Install the dependencies**
+
+<CodeGroup>
+
+```bash pnpm
+pnpm add @whop-apps/sdk @whop/frosted-ui resend
+```
+
+```bash npm
+npm install @whop-apps/sdk @whop/frosted-ui resend
+```
+
+```bash yarn
+yarn add @whop-apps/sdk @whop/frosted-ui resend
+```
+
+</CodeGroup>
+
+3. **Set up Environment Variables**
+
+To ensure that we don't leave any sensitive information in our code, we are going to use environment variables to store our API keys.
+
+Create a `.env.local` file in the root of your project and add the following:
+
+```env .env.local
+WHOP_API_KEY=
+NEXT_PUBLIC_WHOP_APP_ID=
+RESEND_API_KEY=
+```
+
+- `WHOP_API_KEY` is your Whop API key. You can find this in your app's settings.
+- `NEXT_PUBLIC_WHOP_APP_ID` is your Whop App ID. You can find this in your app's settings.
+- `RESEND_API_KEY` is the API key we created earlier.
+
+---
+
+## Building the app
+
+This section will walk you through building the app.
+
+### Structuring the project
+
+Before we start building, we need to set up the project structure. We will:
+
+- Create the path for our seller page
+- Create a `lib` folder for our server-side logic
+- Create a `components` folder for our UI components
+- Setup Frosted UI
+
+#### Creating the seller page
+
+Create a new path inside of the `app` folder:
+
+```
+seller-view/[companyId]/page.tsx
+```
+
+This will be the page that the seller sees when they open the app.
+
+#### Creating the miscellaneous folders
+
+To use Frosted UI, we need to edit our `layout.tsx` and `tailwind.config.ts` files.
+
+```javascript tailwind.config.ts
+import type { Config } from "tailwindcss";
+import preset from "@whop/frosted-ui/dist/preset";
+
+const config = preset({
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+});
+export default config;
+```
+
+Now, create a folder in the app directory called `layout.client.tsx`. This is where we will define our client layout.
+
+```javascript layout.client.tsx
+"use client"; // this line is important
+import { FC, PropsWithChildren } from "react";
+import { TooltipProvider, Toaster } from "@whop/frosted-ui";
+
+export const ClientLayout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <TooltipProvider>
+      {children}
+      <Toaster />
+    </TooltipProvider>
+  );
+};
+```
+
+Finally, we need to edit the `layout.tsx` file to use our new layout.
+
+```javascript layout.tsx
+import { ClientLayout } from "./layout.client";
+import "./globals.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
+    </html>
+  );
+}
+```
+
+Finally, head to `globals.css` and remove all the content except the 3 `@tailwind` imports, like so:
+
+```css globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+### Developing locally
+
+To develop locally and see our changes on the Whop site, we need to use the `whop-proxy` command. To do this, run the following command in your terminal:
+
+<CodeGroup>
+
+```bash pnpm
+pnpm whop-proxy
+```
+
+```bash npm
+npm whop-proxy
+```
+
+```bash yarn
+yarn whop-proxy
+```
+
+</CodeGroup>
+
+<br />
+
+<Note>
+  To find out more about the `whop-proxy` command, check out the
+  [documentation](/sdk/whop-proxy).
+</Note>
+
+---
+
+### Creating the seller page
+
+Now that we have our project setup, we can start building the app. We will start by creating the seller page.
+
+**In this file we will:**
+
+- Verify that the user is allowed to access the page
+- Fetch all the products for the company
+- Render the form to send emails
+
+```
+import {
+  hasAccess,
+  validateToken,
+  authorizedUserOn,
+  WhopAPI,
+} from "@whop-apps/sdk";
+import Form from "@/components/Form";
+import { headers } from "next/headers";
+
+export default async function SellerView({
+  params,
+}: {
+  params: { companyId: string };
+}) {
+  const { userId } = await validateToken({ headers });
+
+  const access = await hasAccess({
+    to: authorizedUserOn(params.companyId),
+    headers,
+  });
+
+  if (!access) return <p>no access</p>;
+
+  const products = await WhopAPI.app().GET("/app/products", {
+    params: {
+      query: {
+        company_id: params.companyId,
+      },
+    },
+  });
+
+  if (!products.data?.data) return <p>no products</p>;
+
+  return (
+    <div>
+      <Form companyId={params.companyId} products={products.data.data} />
+    </div>
+  );
+}
+```
+
+---
+
+### Creating the form
+
+In this form, the seller will be able to select a specific product or all of them, and then input the email content, such as the subject and body.
+
+```javascript components/Form.tsx
+"use client";
+import { useState, useEffect } from "react";
+import {
+  Input,
+  Select,
+  Button,
+  TextArea,
+  Toaster,
+  toast,
+} from "@whop/frosted-ui";
+import SendEmail from "@/lib/actions"; // We will create this later
+import { useFormState, useFormStatus } from "react-dom";
+
+const initialState = {
+  error: false,
+  message: "",
+};
+
+export default function Form({
+  companyId,
+  products,
+}: {
+  companyId: string;
+  products: { name: string; id: string }[];
+}) {
+  const [selectedProduct, setSelectedProduct] = useState<string>("all"); // Default to all products
+  const [state, formAction] = useFormState(SendEmail, initialState);
+  const { pending } = useFormStatus();
+
+  useEffect(() => { // Show a toast when the response of the form action changes
+    if (state.message) {
+      if (state.error === false) {
+        toast.success(state.message);
+      } else {
+        toast.error(state.message);
+      }
+    }
+  }, [state.error, state.message]);
+
+  return (
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200">
+      <div className="bg-white w-[600px] p-8 rounded-lg shadow-lg">
+        <h1 className="text-lg text-center font-semibold mb-4">Send emails</h1>
+        <form action={formAction}>
+          <input type="hidden" name="companyId" value={companyId} />
+          <div className="space-y-3">
+            <Select
+              items={[
+                {
+                  textValue: "All products",
+                  value: "all",
+                },
+                ...products.map((product) => ({
+                  textValue: product.name,
+                  value: product.id,
+                })),
+              ]}
+              onValueChange={(value) => setSelectedProduct(value)}
+              placeholder="Select a product"
+              size="md"
+              name="productId"
+              value={selectedProduct}
+            />
+            <Input name="title" placeholder="Title" size="md" required />
+            <TextArea
+              resizable
+              name="body"
+              placeholder="Body"
+              rows={5}
+              isRequired
+            />
+          </div>
+          <Button isLoading={pending} className="w-full" type="submit">
+            Send
+          </Button>
+        </form>
+      </div>
+      <Toaster />
+    </div>
+  );
+}
+```
+
+---
+
+### Creating the server action
+
+Now that we have created our form, we need to create the server action that will be triggered when the form is submitted. Create a new file called `actions.ts` in the `lib` folder.
+
+**In this file we will:**
+
+- Retrieve the email of each user for the selected product
+- Send the emails using Resend
+- Return a success/error message
+
+```javascript lib/actions.ts
+"use server";
+import { Resend } from "resend";
+import { WhopAPI } from "@whop-apps/sdk";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+async function retrieveEmail(userId: string) {
+  // Retrieve the email of a user
+  const response = await WhopAPI.app().GET("/app/users/{id}", {
+    params: {
+      path: {
+        id: userId,
+      },
+    },
+  });
+
+  if (!response.data) {
+    return null;
+  }
+
+  return response.data.email ? response.data.email : null;
+}
+
+export default async function SendEmail(prevState: any, formData: FormData) {
+  const companyId = formData.get("companyId") as string; // Parse all the data from the form
+  const productId = formData.get("productId") as string;
+  const title = formData.get("title") as string;
+  const body = formData.get("body") as string;
+
+  const memberships = await WhopAPI.app().GET("/app/memberships", {
+    // Retrieve all memberships for the product
+    params: {
+      query: {
+        company_id: companyId,
+        product_id: productId === "all" ? undefined : productId, // If the product ID is "all", then don't filter by product ID
+        valid: true,
+        per: 50,
+      },
+    },
+  });
+
+  if (!memberships.data) {
+    return { error: true, message: "No memberships found" }; // Return an error if there were no memberships found
+  }
+
+  let emailList = [] as string[];
+
+  for (const membership of memberships.data.data) {
+    // Loop through all the memberships and fetch the email of the user
+    if (membership.user_id) {
+      const email = await retrieveEmail(membership.user_id);
+      if (email) {
+        // If the email exists, add it to the list
+        emailList.push(email);
+      }
+    }
+  }
+
+  const data = await resend.emails.send({
+    from: "Acme <onboarding@resend.dev>", // TODO: Change this to your own email
+    to: emailList,
+    subject: title,
+    text: body,
+  });
+
+  if (data.error) {
+    return { error: true, message: data.error.message }; // Return an error if there was an error sending the emails
+  }
+
+  return { error: false, message: "Emails sent successfully" }; // Return a success message if the emails were sent successfully
+}
+```
+
+---
+
+## Next Steps
+
+If you have made it this far, congratulations! You have successfully built an app.
+
+If you want to view the source code for this app, you can find it on [GitHub](https://github.com/whopio/whop-app-examples/tree/main/email-app)

@@ -1,10 +1,15 @@
 ---
-title: Sell Unlisted YouTube Videos
+title: Video App
 ---
 
-This tutorial demonstrates how to build an app that allows a seller to insert a link to a YouTube video, and then display that video to the customer within Whop. This allows sellers to monetize unlisted YouTube videos.
+This tutorial demonstrates how to build an app that allows a seller to insert a link to a YouTube / Imgur video, and then display the video in the users hub.
 
-The app uses:
+You could use it to:
+
+- **Display a welcome video for people getting started with your company**
+- **Display a video guide to your product**
+
+**This app uses:**
 
 - [Whop SDK](/sdk/installation)
 - [Frosted UI](https://github.com/whopio/frosted-ui)
@@ -20,20 +25,18 @@ The app uses:
 
 ## Prerequisites
 
-Before we can start building, we need to make sure we created an app on Whop. If you haven't done this yet, head to the [Developer Settings](https://dash.whop.com/settings/developer) and create a new app.
+Before we can start building, we need to create an app on Whop. If you haven't already, head to the [Developer Settings](https://dash.whop.com/settings/developer) page and create a new app.
 
-This app will use the following URL paths:
+This app will use the following view paths:
 
-- Seller Path: `seller/$companyId/$productId`
-- Customer Path: `customer/$productId`
-
-For more information on creating an app, check out the [Create an app](/apps/create-an-app) guide.
+- Seller Path: `/seller-view/$companyId`
+- Customer Path: `/customer-view/$companyId`
 
 ---
 
 ## Project Setup
 
-Before we start building we're going to set up our database. This example uses Neon, but you can use any database you want.
+Before we start building, we are going to set up our database. This example uses Neon, but you can use any database you like.
 
 ### Database Setup
 
@@ -41,26 +44,13 @@ Before we start building we're going to set up our database. This example uses N
 2. Enter the name of your project, and select the region closest to you. We are using Postgres Version **15**.
 3. Copy the connection string and save it somewhere safe. We will need it later.
 
-Now, we need to create a table for our videos. Head to the SQL Editor and enter the following query:
-
-```sql
-CREATE TABLE videos (
-    id SERIAL PRIMARY KEY,
-    video_id VARCHAR(255) NOT NULL,
-    video_url VARCHAR(255) NOT NULL,
-    company_id VARCHAR(255) NOT NULL,
-    product_id VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP
-);
-```
-
 <Check>We have now set up our database!</Check>
 
 ---
 
 ### Next.js Setup
 
-Now that we have set up our database, we can start building our app. This tutorial uses Next.js with the App Directory.
+Now that we have created our database, we can move onto the app itself. This tutorial will use Next.js with the App Directory.
 
 1. **Initialize a new project**
 
@@ -75,7 +65,7 @@ npx create-next-app@latest
 ```
 
 ```bash yarn
-yarn create next-app
+yarn create next-app@latest
 ```
 
 </CodeGroup>
@@ -85,20 +75,22 @@ yarn create next-app
 <CodeGroup>
 
 ```bash pnpm
-pnpm add @prisma/client @whop-apps/sdk @whop/frosted-ui @prisma/client prisma
+pnpm add @whop-apps/sdk @whop/frosted-ui prisma
 ```
 
 ```bash npm
-npm install @prisma/client @whop-apps/sdk @whop/frosted-ui @prisma/client prisma
+npm install @whop-apps/sdk @whop/frosted-ui prisma
 ```
 
 ```bash yarn
-yarn add @prisma/client @whop-apps/sdk @whop/frosted-ui @prisma/client prisma
+yarn add @whop-apps/sdk @whop/frosted-ui prisma
 ```
 
 </CodeGroup>
 
-3. **Create the environment variables**
+3. **Set up Environment Variables**
+
+To ensure that we don't leave any sensitive information in our code, we are going to use environment variables to store our database connection string, and app information.
 
 Create a `.env.local` file in the root of your project and add the following:
 
@@ -116,38 +108,34 @@ You can find out more about the App ID and API key [here](/apps/create-an-app#st
 
 ---
 
-## Building the App
+## Building the app
 
 This section will walk you through building the app.
 
 ### Structuring the project
 
-Before we start building, we need to structure our project. We will:
+Before we start building, we need to lay out our project. We will:
 
 - Create the path for our seller and customer page
 - Create a `lib` folder for our database client and server actions
 - Create a `components` folder for our components
 - Setup Frosted UI
 
-#### Creating the paths
+#### Creating the pages
 
 Create a new path inside of the `app` folder:
 
 ```
-app/seller/[companyId]/[productId]/page.tsx
+seller-view/[companyId]/page.tsx
 ```
 
 and
 
 ```
-app/customer/[productId]/page.tsx
+customer/[productId]/page.tsx
 ```
 
-#### Creating the misc folders
-
-In the root of your directory, create 2 new folders called `lib` and `components`.
-
-#### Setting up Frosted UI
+#### Creating the miscellaneous folders
 
 To use Frosted UI, we need to edit our `layout.tsx` and `tailwind.config.ts` files.
 
@@ -213,7 +201,7 @@ Finally, head to `globals.css` and remove all the content except the 3 `@tailwin
 
 ---
 
-### Creating the Database Client
+### Creating the database client
 
 We will be using Prisma as our ORM. Prisma is a great tool that allows us to easily interact with our database with TypeSafety. To get started, we are going to create a new file called `prisma.ts` in our `lib` folder.
 
@@ -230,9 +218,11 @@ export const db = new PrismaClient();
 
 ---
 
-### Defining our schema
+### Creating our schema
 
-To make use of our ORM, we are going to define our schema. Instead of doing this manually, we will get Prisma to generate it for us. To do this, run the following command in your terminal
+So far, we have created the database in Neon. However, we haven't told Prisma what our database looks like (because we haven't created a table yet). We first need to initialize Prisma, and then create our schema.
+
+Run the following command in your terminal:
 
 <CodeGroup>
 
@@ -250,27 +240,43 @@ yarn prisma init
 
 </CodeGroup>
 
-This will set up Prisma and the files needed for it to work, now we need to generate our schema.
+This will set up Prisma and the files needed for it to work, now we need to create our table and schema. In your schema.prisma file, add this model to the bottom of the file:
 
 <CodeGroup>
 
-```bash pnpm
-pnpm prisma db pull
-```
-
-```bash npm
-npx prisma db pull
-```
-
-```bash yarn
-yarn prisma db pull
+```bash schema
+model videos {
+    id         Int       @id @default(autoincrement())
+    video_id   String    @db.VarChar(255)
+    video_url  String    @db.VarChar(255)
+    company_id String    @db.VarChar(255)
+    video_type String    @db.VarChar(255)
+    product_id String    @unique @db.VarChar(255)
+    created_at DateTime? @default(now()) @db.Timestamp(6)
+}
 ```
 
 </CodeGroup>
 
-If you check `prisma/schema.prisma` you will see that Prisma has generated our schema for us.
+Now, we need to tell Neon that we want to create these tables. To do this, run the following command in your terminal:
 
-To make use of our schema, we need to generate a client to enable us to interact with it. This will also resolve the import error we faced earlier. To do this, run the following command in your terminal:
+<CodeGroup>
+
+```bash pnpm
+pnpm prisma db push
+```
+
+```bash npm
+npx prisma db push
+```
+
+```bash yarn
+yarn prisma db push
+```
+
+</CodeGroup>
+
+To make use of our schema and the types in our IDE, we need to generate a client to enable us to interact with it. This will also resolve the import error we faced earlier. To do this, run the following command in your terminal:
 
 <CodeGroup>
 
@@ -319,28 +325,36 @@ yarn whop-proxy
 
 ---
 
-### Creating our Seller page
+### Creating the Seller page
 
-Now that we have set up our database, we can start building our seller page. This is where sellers will be able to add videos to their products.
-
-Head to the `page.tsx` we made in the `seller/[companyId]/[productId]` folder.
+Now that we have set up our database, we can start building our seller page. This is where the sellers will be able to select the product they would like to add a video to, and then insert the video link.
 
 **In this file we will:**
 
 - Verify that the user is allowed to access the page
-- Check our database to see if a video has already been added, and if so, pass it to the `SellerForm` component
-- Render a form to add a video
+- Fetch all the companies products
+- Render a grid of products that will redirect to the video form when clicked
 
-```javascript page.tsx
-import { validateToken, hasAccess, authorizedUserOn } from "@whop-apps/sdk";
+```javascript seller-view/[companyId]/page.tsx
+import {
+  hasAccess,
+  authorizedUserOn,
+  validateToken,
+  WhopAPI,
+} from "@whop-apps/sdk";
 import { headers } from "next/headers";
-import SellerForm from "@/components/SellerForm";
-import { db } from "@/lib/prisma";
+import Link from "next/link";
 
-export default async function SellerPage({
+interface Product {
+  name: string;
+  id: string;
+  description?: string;
+}
+
+export default async function SellerView({
   params,
 }: {
-  params: { companyId: string; productId: string };
+  params: { companyId: string };
 }) {
   const { userId } = await validateToken({ headers });
 
@@ -350,47 +364,105 @@ export default async function SellerPage({
   });
 
   if (!access) {
-    return <p>You do not have access to this company</p>;
+    return <p>no access</p>;
   }
 
-  const currentVideo = await db.videos.findUnique({
-    where: {
-      product_id: params.productId,
+  const companyProducts = await WhopAPI.app().GET("/app/products", {
+    params: {
+      query: {
+        company_id: params.companyId,
+      },
     },
   });
 
+  if (!companyProducts.data) {
+    return <p>No product founds</p>;
+  }
+
   return (
-    <SellerForm
-      productId={params.productId}
-      companyId={params.companyId}
-      currentUrl={currentVideo?.video_url || null}
-    />
+    <div className="container mx-auto px-4">
+      <h1 className="text-2xl font-bold my-6">Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {companyProducts.data.data.map((product: Product) => (
+          <Link
+            key={product.id}
+            href={`/seller-view/${params.companyId}/${product.id}`}
+          >
+            <div className="transform transition duration-500 hover:scale-105 bg-white rounded-lg border border-gray-200 shadow-md hover:shadow-xl overflow-hidden">
+              <div className="p-5">
+                <h2 className="text-lg font-bold mb-2">{product.name}</h2>
+                <p className="text-gray-700">{product.description}</p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 ```
 
 ---
 
-#### Creating the Seller Form
+### Creating the Video Form
 
-Since our form will be a client component, we are going to create it in a separate file. In the `components` folder we made earlier, create a new file called `SellerForm.tsx`.
+When the seller clicks on a product, they will be redirected to a form where they can insert the video link. They will also be able to select the type of video they are inserting (YouTube or Imgur).
 
-This page will take in the following props:
+**In this file we will:**
 
-- `companyId` - The ID of the company
-- `productId` - The ID of the product that the video will be added to
-- `currentUrl` - The current video URL, if one exists
+- Fetch the current video details for the product (if there are any)
+- Render a form that allows the seller to insert a video link
 
-Since we are using Server Actions, we need to create a FormState and FormStatus, these will let us know the status of our form, and send any error messages which we can display to the user.
+```javascript seller-view/[companyId]/[productId]/page.tsx
+import SellerForm from "@/components/Form";
+import { db } from "@/lib/prisma";
 
-If the form is successful, we will display a success toast, otherwise, we will display an error message on the input.
+export default async function ProductView({
+  params,
+}: {
+  params: { productId: string; companyId: string };
+}) {
+  const currentVideoURL = await db.videos.findUnique({
+    where: {
+      product_id: params.productId,
+    },
+    select: {
+      video_url: true,
+      video_type: true,
+    },
+  });
 
-```javascript components/SellerForm.tsx
+  return (
+    <SellerForm
+      companyId={params.companyId}
+      productId={params.productId}
+      currentVideoURL={currentVideoURL?.video_url}
+      currentVideoType={currentVideoURL?.video_type}
+    />
+  );
+}
+```
+
+Now, we need to create the actual form component. Create a new file called `Form.tsx` in the `components` folder.
+
+**In this file we will:**
+
+- Create a form where the user can input the video link, which will then trigger a server action
+- Display a success/error message when the server action is complete
+
+```javascript components/Form.tsx
+
 "use client";
-import { Input, Button, toast, Toaster } from "@whop/frosted-ui";
-import { useFormStatus, useFormState } from "react-dom";
-import addYoutubeLink from "@/lib/actions";
-import { useEffect } from "react";
+import {
+  Input,
+  Button,
+  toast,
+  Toaster,
+  RadioCardGroup,
+} from "@whop/frosted-ui";
+import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useState } from "react";
+import AddVideoLink from "@/lib/actions";
 
 const initialState = {
   message: null,
@@ -400,18 +472,21 @@ const initialState = {
 export default function SellerForm({
   companyId,
   productId,
-  currentUrl,
+  currentVideoURL,
+  currentVideoType,
 }: {
   companyId: string;
   productId: string;
-  currentUrl: string | null;
+  currentVideoURL?: string;
+  currentVideoType?: string;
 }) {
-  const [state, formAction] = useFormState(addYoutubeLink, initialState);
+  const [state, formAction] = useFormState(AddVideoLink, initialState);
+  const [videoType, setVideoType] = useState(currentVideoType || "youtube");
   const { pending } = useFormStatus();
 
   useEffect(() => {
     if (state?.message === "success") {
-      toast.success("Successfully added YouTube link!");
+      toast.success("Successfully added video!");
     }
   }, [state?.message]);
 
@@ -422,22 +497,43 @@ export default function SellerForm({
         <form action={formAction}>
           <input type="hidden" name="companyId" value={companyId} />
           <input type="hidden" name="productId" value={productId} />
-          <div className="mb-4">
+          <div>
+            <RadioCardGroup
+              className="flex space-x-6"
+              colorScheme="brand"
+              defaultValue={videoType}
+              onValueChange={(value) => setVideoType(value)}
+              value={videoType}
+              name="videoType"
+              items={[
+                {
+                  description: "A YouTube Video",
+                  value: "youtube",
+                  label: "YouTube",
+                },
+                {
+                  description: "An Imgur Video",
+                  value: "imgur",
+                  label: "Imgur",
+                },
+              ]}
+            />
+          </div>
+          <div className="my-4">
             <Input
               label={{
-                children: "YouTube URL",
+                children: "Video URL",
                 tooltip: {
                   description:
                     "The URL of the YouTube video you want your users to watch.",
                 },
               }}
               messageIcon
-              placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
               size="md"
               className="w-full"
               name="url"
+              defaultValue={currentVideoURL}
               errorMessage={state?.errorMessage}
-              defaultValue={currentUrl || ""}
             />
           </div>
           <Button isLoading={pending} type="submit" className="w-full">
@@ -453,69 +549,58 @@ export default function SellerForm({
 
 ---
 
-#### Creating the Server Action
+### Creating the server action
 
-Now that we have created our form, we need to create the server action that will handle the form submission. Create a new file called `actions.ts` in the `lib` folder.
+Now that we have created our form, we need to create the server action that will be triggered when the form is submitted. Create a new file called `action.ts` in the `lib` folder.
 
-**In this file, we are:**
+**In this file we will: **
 
-- Creating a server action that will:
-  - Extract the video ID from the URL
-  - Upsert the video in our database
-  - Return success or error messages
+- Create an asynchronous function that receives the form data
+- Parse the form data
+- Extract the YouTube video ID from the URL (if it is a YouTube video)
+- Upsert the video details in the database
 
-```javascript lib/actions.ts
+```javascript lib/action.ts
 "use server";
 import { db } from "./prisma";
 
-function extractYoutubeVideoId(url: string): string | null {
-  const regex =
-    /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-  const match = url.match(regex);
-  return match && match[1] ? match[1] : null;
-}
+export default async function AddVideoLink(prevState: any, formData: FormData) {
+  const url = formData.get("url") as string;
+  const companyId = formData.get("companyId") as string;
+  const productId = formData.get("productId") as string;
+  const videoType = formData.get("videoType") as string;
 
-export default async function addYoutubeLink(
-  prevState: any,
-  formData: FormData
-) {
-  try {
-    const url = formData.get("url") as string;
-    const companyId = formData.get("companyId") as string;
-    const productId = formData.get("productId") as string;
+  let youtubeId = "";
 
-    if (!url || !companyId || !productId) {
-      return { errorMessage: "Missing data" };
-    }
+  if (videoType == "youtube") {
+    const urlObj = new URL(url);
+    const params = new URLSearchParams(urlObj.search);
 
-    const youtubeUrlRegex =
-      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
-    if (!youtubeUrlRegex.test(url)) {
-      return { errorMessage: "Invalid YouTube URL format" };
-    }
-
-    const videoId = extractYoutubeVideoId(url);
-    if (!videoId) {
-      return { errorMessage: "Could not extract YouTube video ID" };
-    }
-
-    await db.videos.upsert({
-      where: { product_id: productId },
-      update: { video_id: videoId, video_url: url },
-      create: {
-        company_id: companyId,
-        product_id: productId,
-        video_id: videoId,
-        video_url: url,
-      },
-    });
-
-    return { message: "success" };
-  } catch (e) {
-    return { errorMessage: "Failed to create" };
+    youtubeId = params.get("v") || "";
   }
-}
 
+  await db.videos.upsert({
+    where: {
+      product_id: productId,
+    },
+    update: {
+      company_id: companyId,
+      product_id: productId,
+      video_id: youtubeId,
+      video_url: url,
+      video_type: videoType,
+    },
+    create: {
+      company_id: companyId,
+      product_id: productId,
+      video_id: youtubeId,
+      video_url: url,
+      video_type: videoType,
+    },
+  });
+
+  return { message: "success" };
+}
 ```
 
 <Check>
@@ -525,75 +610,57 @@ export default async function addYoutubeLink(
 
 ---
 
-### Creating the Customer page
+## Creating the Customer Page
 
-The customer page will be what the users see when they click on the app. It will display the YouTube video in an embed, and allow them to watch it.
+This page will be displayed inside of the Whop hub and will allow the customer to watch the video.
 
-This will be done in the `customer/[productId]/page.tsx` file.
+We will have to check what type of video the seller has added, as that dictates how we display the video.
 
 **In this file we will:**
 
-- Fetch the video from our database using the `productId`
-- Render the video in an iFrame
-- Display an error message if there is no video found
+- Fetch the video details from the database
+- Display the video
 
-```javascript page.tsx
+```javascript customer/[productId]/page.tsx
 import { db } from "@/lib/prisma";
-import { hasAccess, validateToken } from "@whop-apps/sdk";
-import { headers } from "next/headers";
 
-export default async function CustomerPage({
+export default async function CustomerView({
   params,
 }: {
   params: { productId: string };
 }) {
-  const { userId } = await validateToken({ headers });
-
-  const access = await hasAccess({
-    to: params.productId,
-    headers,
+  const video = await db.videos.findUnique({
+    where: {
+      product_id: params.productId,
+    },
+    select: {
+      video_type: true,
+      video_url: true,
+      video_id: true,
+    },
   });
 
-  if (!access) {
-    return <p>You do not have access to this product</p>;
+  if (video?.video_type === "youtube") {
+    return (
+      <iframe
+        className="absolute top-0 left-0 w-full h-full"
+        src={`https://www.youtube.com/embed/${video.video_id}`}
+      />
+    );
   }
 
-  const videoId = await db.videos.findUnique({
-    where: { product_id: params.productId },
-    select: { video_id: true },
-  });
-
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center m-0">
-      {videoId ? (
-        <iframe
-          className="absolute top-0 left-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${videoId.video_id}`}
-          allowFullScreen
-        />
-      ) : (
-        <p className="text-center">
-          I could not find a video to play, please contact the seller
-        </p>
-      )}
-    </div>
+    <video controls className="absolute top-0 left-0 w-full h-full">
+      <source src={video?.video_url} type="video/mp4" />
+    </video>
   );
 }
 ```
-
-<Check>
-  We have now created our customer page! If you purchase your product and test
-  it, you should see your YouTube video. You have now created a fully functional
-  app!
-</Check>
 
 ---
 
 ## Next steps
 
-Now that we have created the app, we need to host it so anyone can use it. We recommend using Vercel, but you can use any hosting provider you want.
+If you have made it this far, congratulations! You have successfully built an app.
 
-<Tip>
-  Make sure to keep your environment variables secret and don't commit them to
-  your repository.
-</Tip>
+If you want to view the source code for this app, you can find it on [GitHub](https://github.com/whopio/whop-app-examples/tree/main/video-app)

@@ -90,7 +90,7 @@
         "apps/metered-billing",
         {
           "group": "App Examples",
-          "pages": ["apps/examples/video-app", "apps/examples/code-app"]
+          "pages": ["apps/examples/video-app", "apps/examples/email-app"]
         }
       ]
     },
