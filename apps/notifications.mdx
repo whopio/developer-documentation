@@ -22,7 +22,7 @@ If you are using our SDK, you can do it easily through the WhopAPI function. Her
 <CodeGroup>
 
 ```typescript SDK
-WhopAPI.server().POST("/notifications", {
+await WhopAPI.app().POST("/app/notifications", {
   body: {
     topic_identifier: "string",
     notification_data: {
