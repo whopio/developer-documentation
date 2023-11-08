@@ -99,7 +99,11 @@ export default function PurchaseComponent() {
 }
 ```
 
-In this component, we are rendering a button that will open the checkout modal when clicked. The `result` object will output the following, if successful:
+---
+
+### 4. Handling the result
+
+When the user completes the purchase, the modal will close and return a result. This result will contain the `session_id` and the `receipt_id`.
 
 ```javascript
 type Return = {
@@ -112,6 +116,8 @@ type Return = {
 ```
 
 The `receipt_id` is a unique identifier for the purchase. You can use this to verify the purchase on your backend and fetch information about the purchase.
+
+Your app will also receive a webhook when the purchase is complete. See [**Webhooks**](/webhooks/v5#payment-succeeded) for more information.
 
 ---
 
