@@ -111,7 +111,7 @@ Before we start building, we need to set up the project structure. We will:
 - Create a `components` folder for our UI components
 - Setup Frosted UI
 
-#### Creating the seller page
+#### Creating the Seller page
 
 Create a new path inside of the `app` folder:
 
@@ -216,7 +216,7 @@ yarn whop-proxy
 
 ---
 
-### Creating the seller page
+### Creating the Seller page
 
 Now that we have our project setup, we can start building the app. We will start by creating the seller page.
 
@@ -226,7 +226,7 @@ Now that we have our project setup, we can start building the app. We will start
 - Fetch all the products for the company
 - Render the form to send emails
 
-```
+```javascript seller-view/[companyId]/page.tsx
 import {
   hasAccess,
   validateToken,
