@@ -43,10 +43,10 @@ If you have been accepted, check out the Slack Channel for information on how to
 
 ## Step 3: Create a new app
 
-Now that you are part of the App Developer Alpha, you can create a new app. You can do this by clicking [**here**](https://dash.whop.com/settings/developer). You can also watch the video below for a step-by-step guide.
+Now that you are part of the App Developer Alpha, you can create a new app. You can do this by clicking [**here**](https://whop.com/apps). You can also watch the video below for a step-by-step guide.
 
 <Frame>
-  <img src="https://imgur.com/LBTHQie.gif" />
+  <img src="https://imgur.com/vKfHQiF.gif" />
 </Frame>
 
 ## Step 4: Setup your development environment
@@ -125,14 +125,14 @@ WHOP_API_KEY=YOUR_API_KEY
 NEXT_PUBLIC_WHOP_APP_ID=YOUR_APP_ID
 ```
 
-1. `WHOP_API_KEY`: The API key used to authenticate with the Whop API. Get this from the app's settings page on the [**Whop Dashboard**](https://dash.whop.com/settings/developer).
+1. `WHOP_API_KEY`: The API key used to authenticate with the Whop API. Get this from the app's settings page on the [**Whop Dashboard**](https://whop.com/apps).
 
 <Accordion title="How to get WHOP_API_KEY" >
 
-Head to the [**Developer Settings Page**](https://dash.whop.com/settings/developer), and click on the applicable app you created. From here, you will see the `API Key` field. You need to click the `Copy` button to copy it to your clipboard.
+Head to the [**Developer Settings Page**](https://whop.com/apps), and click on the applicable app you created. From here, you will see the `API Key` field. You need to click the `Copy` button to copy it to your clipboard.
 
 <Frame>
-  <img src="https://imgur.com/SPnZLIL.png" />
+  <img src="https://imgur.com/g6UIIj4.png" />
 </Frame>
 
 </Accordion>
@@ -141,10 +141,10 @@ Head to the [**Developer Settings Page**](https://dash.whop.com/settings/develop
 
 <Accordion title="How to get NEXT_PUBLIC_WHOP_APP_ID" >
 
-Head to the [**Developer Settings Page**](https://dash.whop.com/settings/developer), and click on the applicable app you created. From here, you will see the `App ID`. You need to click the `Copy` button to copy it to your clipboard.
+Head to the [**Developer Settings Page**](https://whop.com/apps), and click on the applicable app you created. From here, you will see the `App ID`. You need to click the `Copy` button to copy it to your clipboard.
 
 <Frame>
-  <img src="https://imgur.com/WhAhvNt.png" />
+  <img src="https://imgur.com/KcdiZ9c.png" />
 </Frame>
 
 </Accordion>
@@ -203,20 +203,66 @@ pnpm whop-proxy
 <br />
 
 <Tip>
-This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`. Be sure to save your correct development URL on the [app settings](https://dash.whop.com/settings/developer/app_soLLJMDkBhQDtz).
+This will start a proxy server on port `3000`. If you would like to change the port, you can do so by running `yarn whop-proxy --proxyPort <port>`. Be sure to save your correct development URL on the [app settings](https://whop.com/apps).
 
 </Tip>
 
-2. Now you can open your app in its iFrame. On the app settings page, there will be a purple banner that will take you to a pre-created product with your app installed. Once you are on the page, you can click on the `Dev Mode` toggle in the bottom left.
+2. Now you can open your app in its iFrame. Depending on the type of app you are creating, you will need to open it in a different location.
 
-<Note>
-  This toggle is only visible to members of your team, and will not be visible
-  to your customers.
-</Note>
+<AccordionGroup>
 
-<Frame>
-  <img src="https://imgur.com/RMjXYJx.gif" />
-</Frame>
+<Accordion title="Customer View">
+
+If you are creating an app that will be shown to customers, you need to add it to a product. Here is how you can do it:
+
+1. Install the app. On the Developer homepage, grab the install link for your app. You can do this by clicking on this button:
+   <Frame>
+     <img src="https://imgur.com/iNPkf9g.jpeg" />
+   </Frame>
+2. Head to that link and install it on your company.
+3. Create a product, and select your app from the options
+4. Purchase the product with a free pricing plan, and then head to your orders on Whop.
+
+</Accordion>
+
+<Accordion title="Seller Product View" >
+
+This view is shown to sellers when they are viewing a product on the dashboard. To view this, you need to do the following:
+
+1. Install the app. On the Developer homepage, grab the install link for your app. You can do this by clicking on this button:
+   <Frame>
+     <img src="https://imgur.com/iNPkf9g.jpeg" />
+   </Frame>
+2. Head to that link and install it on your company.
+3. Create a product, and select your app from the options
+4. Press on the **Open App** button
+
+</Accordion>
+
+<Accordion title="Seller View" >
+
+1. Install the app. On the Developer homepage, grab the install link for your app. You can do this by clicking on this button:
+   <Frame>
+     <img src="https://imgur.com/iNPkf9g.jpeg" />
+   </Frame>
+2. Head to that link and install it on your company.
+3. Go to the **Installed Apps** page on the Whop dashboard, and click on your app.
+
+</Accordion>
+
+<Accordion title="Checkout View">
+
+1. Install the app. On the Developer homepage, grab the install link for your app. You can do this by clicking on this button:
+   <Frame>
+     <img src="https://imgur.com/iNPkf9g.jpeg" />
+   </Frame>
+2. Head to that link and install it on your company.
+3. Create a product, and select your app from the options
+4. Go to purchase the product you created, and you will see your app when you attempt to checkout.
+
+</Accordion>
+
+</AccordionGroup>
 
 ---
 
