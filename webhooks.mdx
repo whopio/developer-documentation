@@ -74,8 +74,30 @@ Head to the Apps Dashboard and navigate to the **Integration** page for the app.
 
 ---
 
-<Check>
-  You have now set up webhooks! If you are building an app, head to the [**V5
-  section**](/webhooks/v5), otherwise use [**V2**](/webhooks/v2) to see the
-  different events we send.
-</Check>
+## Webhook Secrets
+
+For enhanced security, you can validate that the webhook is being sent by Whop. This is a string that gets sent in the headers and is used to allow your server to verify that the request is coming from Whop. To get the signature, you need to get the webhook secret from the webhook settings.
+
+This secret key is sent in the `X-Whop-Signature` header.
+
+<AccordionGroup>
+
+<Accordion title="Company Webhooks">
+Access the Whop Business dashboard and navigate to the [**developer settings page**](https://dash.whop.com/settings/developer). Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
+
+<Frame>
+  <img src="https://imgur.com/6AY16BV.gif" />
+</Frame>
+
+</Accordion>
+
+<Accordion title="App webhooks">
+
+Head to the App Dashboard, and then select the app that has the webhook. Navigate to the **Integration** page for the app.
+
+  <Frame>
+    <img src="https://imgur.com/wLwXFdU.gif" />
+  </Frame>
+</Accordion>
+
+</AccordionGroup>
