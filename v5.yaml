@@ -908,7 +908,7 @@ paths:
       operationId: post_api_v5_app_notifications
       summary: Send a Notification
       responses:
-        "200":
+        "201":
           description: A successful response
           content:
             application/json:
@@ -2315,6 +2315,14 @@ components:
                 type: array
                 items:
                   type: string
+              products:
+                type: array
+                items:
+                  type: string
+              companies:
+                type: array
+                items:
+                  type: string
         notification_data:
           type: object
           properties:
@@ -2472,6 +2480,9 @@ components:
           description: The URL of the company's image
         authorized_user:
           $ref: "#/components/schemas/AppAuthorizedUser"
+        has_payment_method:
+          type: boolean
+          description: Whether or not the company has a payment method on file to charge for metered billing usage.
       required:
         - id
         - created_at
@@ -2977,6 +2988,9 @@ components:
         company_buyer_id:
           type: string
           description: The ID of the company that purchased/owns the membership. (For example, they installed an app). Looks like biz_*************
+        marketplace:
+          type: boolean
+          description: Whether or not the membership was purchased through the whop marketplace.
       required:
         - id
         - product_id
@@ -3528,6 +3542,9 @@ components:
         company_buyer_id:
           type: string
           description: The ID of the company that purchased/owns the membership. (For example, they installed an app). Looks like biz_*************
+        marketplace:
+          type: boolean
+          description: Whether or not the membership was purchased through the whop marketplace.
       required:
         - id
         - product_id
@@ -3986,6 +4003,9 @@ components:
         company_buyer_id:
           type: string
           description: The ID of the company that purchased/owns the membership. (For example, they installed an app). Looks like biz_*************
+        marketplace:
+          type: boolean
+          description: Whether or not the membership was purchased through the whop marketplace.
       required:
         - id
         - product_id

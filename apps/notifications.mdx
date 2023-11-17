@@ -3,15 +3,7 @@ title: Send a notification
 description: Send a notification to your users using the Notifications API.
 ---
 
-<Note>
-  The dashboard for this feature is not complete, we expect it to be complete
-  October 4th. If you would like to use it, please reach out to us and we can
-  manually set it up for you.
-</Note>
-
-There are 2 ways to notify members through Whop, either by sending a push notification to our mobile app or through the notifications tab on the website.
-
----
+Whop allows apps to send notifications to customers and companies through the API. These get sent to the user's notification feed on the Whop website, and as a push notification to their mobile device (if they have the Whop app installed).
 
 ## Usage
 
@@ -24,16 +16,16 @@ If you are using our SDK, you can do it easily through the WhopAPI function. Her
 ```typescript SDK
 await WhopAPI.app().POST("/app/notifications", {
   body: {
-    topic_identifier: "string",
+    topic_identifier: "dispatch",
     notification_data: {
       all: {
-        subject: "string",
-        content: "string",
+        subject: "My First Subject",
+        content: "My first Content",
       },
     },
     targets: [
       {
-        users: ["string"],
+        users: ["user_xxx"],
       },
     ],
   },
@@ -48,28 +40,42 @@ curl --request POST \
   --data '{
   "notification_data": {
     "all": {
-      "content": "string",
-      "subject": "string"
+      "content": "My First Content",
+      "subject": "My First Subject"
     }
   },
   "targets": [
     {
       "users": [
-        "string"
+        "user_xxx"
       ]
     }
   ],
-  "topic_identifier": "string"
+  "topic_identifier": "dispatch"
 }'
 ```
 
 </CodeGroup>
 
+Using that code, the user will receive a notification with the subject "My First Subject", and the content "My First Content", like this:
+
+<Frame caption="Notification feed on whop.com">
+  <img src="https://imgur.com/UrFAZoC.png" />
+</Frame>
+
+<Frame caption="Mobile app push notification">
+  <img src="https://imgur.com/AvHQtNx.jpg" />
+</Frame>
+
+---
+
 ### Topic Identifier
 
-The `topic_identifier` is a unique identifier for the notification you want to send. You can set that up in the Developer Dashboard:
+The `topic_identifier` is a unique identifier for the notification you want to send. You can set that up in the [Developer Dashboard](https://whop.com/dev):
 
-[INSERT GUIDE HERE ONCE FLOW IS DONE]
+<Frame>
+  <img src="https://imgur.com/fwMNrZM.gif" />
+</Frame>
 
 ### Notification data
 
@@ -83,8 +89,21 @@ The `all` key is used to send a notification to both the user's notification fee
 
 In each of these, there are the `subject` and `content` keys. The `subject` key is used to specify the subject of the notification, while the `content` key is used to specify the description of the notification.
 
+<Note>
+  If you do not use the `all` key, you must specify the `subject` and `content`
+  keys in both the `in_app` and `mobile` keys.
+</Note>
+
 ### Targets
 
-The targets array is used to specify who should receive the notification. There are 2 ways to specify who should receive the notification, either by specifying the `experiences` key, or the `users` key.
+The targets array is used to specify who should receive the notification. There are 4 different targets you can use:
 
-Each is an array, of either the `experience_id` or `user_id` respectively. Using `experiences` is the easiest way to send to all users of a specific experience, while using `users` is the easiest way to send to a specific user.
+- `users`: This takes in the `user_id` of the user you want to send the notification to.
+- `products`: This takes in the `product_id` of the product you want to send the notification to, and will send it to all users who own that product.
+- `companies`: This takes in the `company_id` of the company you want to send the notification to, and will send it to all users who have an active product.
+- `experiences`: Uses the `experience_id`, and will send to all users who have an active product that uses that experience.
+
+<Warning>
+  If you use multiple targets, and a user is in multiple of those targets, they
+  will only receive multiple notifications.
+</Warning>

@@ -78,11 +78,13 @@ Head to the Apps Dashboard and navigate to the **Integration** page for the app.
 
 For enhanced security, you can validate that the webhook is being sent by Whop. This is a string that gets sent in the headers and is used to allow your server to verify that the request is coming from Whop. To get the signature, you need to get the webhook secret from the webhook settings.
 
-This secret key is sent in the `X-Whop-Signature` header.
+### Company Webhooks
 
-<AccordionGroup>
+If you are using a company webhook, you can get the secret from the [**developer settings page**](https://dash.whop.com/settings/developer).
 
-<Accordion title="Company Webhooks">
+This secret key is sent in the `webhook-secret` header.
+
+<Accordion title="Retrieving the webhook secret">
 Access the Whop Business dashboard and navigate to the [**developer settings page**](https://dash.whop.com/settings/developer). Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
 
 <Frame>
@@ -91,7 +93,11 @@ Access the Whop Business dashboard and navigate to the [**developer settings pag
 
 </Accordion>
 
-<Accordion title="App webhooks">
+---
+
+### App webhooks
+
+<Accordion title="Retrieving the webhook secret">
 
 Head to the App Dashboard, and then select the app that has the webhook. Navigate to the **Integration** page for the app.
 
@@ -100,4 +106,42 @@ Head to the App Dashboard, and then select the app that has the webhook. Navigat
   </Frame>
 </Accordion>
 
-</AccordionGroup>
+If you are using a webhook for your app, the verification process is a bit different.
+
+It will be sent in the `X-Whop-Signature` header. This then needs to be verified using the following code, passing in the value of the header, and the request body.
+
+```javascript
+async function verifyWebhook(header, body) {
+  if (!header) return null;
+  const [timestampStr, signatureStr] = header.split(",");
+  const [, timestamp] = timestampStr.split("=");
+  const [version, sentSignature] = signatureStr.split("=");
+
+  const now = Math.round(Date.now() / 1000);
+
+  if (
+    Number.isNaN(parseInt(timestamp)) ||
+    Math.abs(now - parseInt(timestamp)) > 300
+  )
+    return null; // 5 minutes buffer interval
+
+  const stringToHash = timestamp + "." + body;
+
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    textEncoder.encode(key),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+
+  const signatureBuffer = await crypto.subtle.sign(
+    { name: "HMAC", hash: "SHA-256" },
+    cryptoKey,
+    textEncoder.encode(stringToHash)
+  );
+  const signature = buf2hex(signatureBuffer);
+
+  if (signature !== sentSignature && version !== "v1") return null;
+}
+```
