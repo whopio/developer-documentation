@@ -9,7 +9,13 @@ Whop allows apps to send notifications to customers and companies through the AP
 
 To send a notification, you need to make a `POST` request to the [**/notifications**](/api-reference/v5/apps/notifications/send) endpoint.
 
-If you are using our SDK, you can do it easily through the WhopAPI function. Here is an example:
+If you are using our SDK, you can do it easily through the WhopAPI function. Here is an example of how to send the following notification:
+
+<Frame caption="Notification feed on whop.com">
+  <img src="https://imgur.com/KguZJMH.png" />
+</Frame>
+
+<br />
 
 <CodeGroup>
 
@@ -56,16 +62,6 @@ curl --request POST \
 ```
 
 </CodeGroup>
-
-Using that code, the user will receive a notification with the subject "My First Subject", and the content "My First Content", like this:
-
-<Frame caption="Notification feed on whop.com">
-  <img src="https://imgur.com/UrFAZoC.png" />
-</Frame>
-
-<Frame caption="Mobile app push notification">
-  <img src="https://imgur.com/AvHQtNx.jpg" />
-</Frame>
 
 ---
 
