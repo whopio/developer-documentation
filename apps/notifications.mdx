@@ -94,12 +94,7 @@ In each of these, there are the `subject` and `content` keys. The `subject` key 
 
 The targets array is used to specify who should receive the notification. There are 4 different targets you can use:
 
-- `users`: This takes in the `user_id` of the user you want to send the notification to.
-- `products`: This takes in the `product_id` of the product you want to send the notification to, and will send it to all users who own that product.
-- `companies`: This takes in the `company_id` of the company you want to send the notification to, and will send it to all users who have an active product.
+- `users`: This takes in the `user_id` of the users you want to send the notification to.
+- `products`: This takes in the `product_id` of the products you want to send the notification to, and will send it to all users who own that product.
+- `companies`: This takes in the `company_id` of the companies you want to send the notification to, and will send it to all users who have an active product.
 - `experiences`: Uses the `experience_id`, and will send to all users who have an active product that uses that experience.
-
-<Warning>
-  If you use multiple targets, and a user is in multiple of those targets, they
-  will receive multiple notifications.
-</Warning>
