@@ -32,7 +32,7 @@
   "versions": ["V5 API (Recommended)", "V2 API (Legacy)"],
   "topbarCtaButton": {
     "name": "Start Building",
-    "url": "https://whop.com/sell"
+    "url": "https://whop.com/apps"
   },
   "tabs": [
     {
