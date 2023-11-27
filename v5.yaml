@@ -3146,6 +3146,9 @@ components:
         id:
           type: string
           description: The ID of the user, which will look like user_*************
+        name:
+          type: string
+          description: The first and last name of the user.
         username:
           type: string
           description: The username of the user
@@ -3708,6 +3711,9 @@ components:
         id:
           type: string
           description: The ID of the user, which will look like user_*************
+        name:
+          type: string
+          description: The first and last name of the user.
         username:
           type: string
           description: The username of the user
@@ -4161,6 +4167,9 @@ components:
         id:
           type: string
           description: The ID of the user, which will look like user_*************
+        name:
+          type: string
+          description: The first and last name of the user.
         username:
           type: string
           description: The username of the user
