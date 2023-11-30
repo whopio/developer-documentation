@@ -9,7 +9,7 @@ paths:
     get:
       security:
         - ApiAuth: []
-      summary: Access API endpoint
+      summary: Check Access
       description: This endpoint checks the given access expression.
       parameters:
         - in: path
@@ -34,3 +34,4 @@ components:
     ApiAuth:
       type: http
       scheme: bearer
+      description: The users access token, this can be fetched from the `whop_user_token` cookie.

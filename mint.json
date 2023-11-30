@@ -201,7 +201,8 @@
             "api-reference/v5/apps/billing-usages/delete"
           ]
         },
-        "api-reference/v5/apps/app"
+        "api-reference/v5/apps/app",
+        "api-reference/v5/apps/access"
       ]
     },
     {
