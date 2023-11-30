@@ -1,5 +1,6 @@
 {
   "$schema": "https://www.jedpatterson.com/spec.json",
+  "openapi": ["/v5.yaml", "/v2.json", "/access.yaml"],
   "name": "Whop Developers",
   "api": {
     "baseUrl": "https://api.whop.com"
