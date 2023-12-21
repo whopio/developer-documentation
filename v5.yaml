@@ -879,7 +879,7 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the Membership, which will look like mem_*************
+          description: The ID of the Membership, which will look like mem_*************. This can also be the license key
           schema:
             type: string
       responses:
@@ -1486,7 +1486,7 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the Membership, which will look like mem_*************
+          description: The ID of the Membership, which will look like mem_*************. This can also be the license key
           schema:
             type: string
       responses:
@@ -1564,6 +1564,68 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
+<<<<<<< Updated upstream
+      description: Returns a membership
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - company/memberships
+      operationId: update_api_v5_company_memberships_id
+      summary: Update a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyMembership"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompanyMembershipUpdateBody"
+      description: Updates a membership's metadata
+    delete:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - company/memberships
+      operationId: delete_api_v5_company_memberships_id
+      summary: Terminate a Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Membership, which will look like mem_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompanyMembership"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+=======
+>>>>>>> Stashed changes
       description: Terminates the membership. No further payments will be made, and the customer will lose access. A terminated membership cannot be reactivated.
   "/v5/company/payments":
     get:
@@ -1993,7 +2055,7 @@ paths:
         - name: id
           in: path
           required: true
-          description: The ID of the Membership, which will look like mem_*************
+          description: The ID of the Membership, which will look like mem_*************. This can also be the license key
           schema:
             type: string
       responses:
@@ -2302,6 +2364,11 @@ components:
       properties:
         topic_identifier:
           type: string
+        deep_link:
+          type: string
+        target_app_view:
+          type: string
+          default: "customer_product_view"
         targets:
           type: array
           items:
@@ -2352,6 +2419,9 @@ components:
         status:
           type: string
           example: "created"
+        message:
+          type: string
+          example: "We will attempt to send out your notification. This is processed in a background job, so we cannot confirm how many notifications were sent in this request."
 
     OauthTokenCreateBody:
       type: object
@@ -3226,9 +3296,9 @@ components:
         unit_name:
           type: string
           description: The name of the unit for the billing item.
-        unit_amount:
+        unit_per_price:
           type: integer
-          description: The unit amount for the billing item.
+          description: The unit per price / unit amount for the billing item.
         unit_price:
           type: number
           description: The unit price for the billing item.
@@ -3290,9 +3360,9 @@ components:
         unit_name:
           type: string
           description: The name of the unit for the billing item. Only for structured billing items.
-        unit_amount:
+        unit_per_price:
           type: integer
-          description: The unit amount for the billing item. Only for structured billing items.
+          description: The unit per price / unit amount for the billing item. Only for structured billing items.
         unit_price:
           type: number
           description: The unit price for the billing item. Only for structured billing items.
@@ -4184,6 +4254,110 @@ components:
         - username
 
 webhooks:
+  app-membership-went-valid:
+    post:
+      operationId: app-membership-went-valid
+      security:
+        - WebhookSignature: []
+      summary: When a membership is purchased and goes valid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - app.membership_went_valid
+                  example: "app.membership_went_valid"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppMembership"
+              required:
+                - action
+                - data
+        required: true
+  app-membership-went-invalid:
+    post:
+      operationId: app-membership-went-invalid
+      security:
+        - WebhookSignature: []
+      summary: When a membership goes invalid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - app.membership_went_invalid
+                  example: "app.membership_went_invalid"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppMembership"
+              required:
+                - action
+                - data
+        required: true
+  app-payment-succeeded:
+    post:
+      operationId: app-payment-succeeded
+      security:
+        - WebhookSignature: []
+      summary: When a payment is successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - app.payment_succeeded
+                  example: "app.payment_succeeded"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppPayment"
+              required:
+                - action
+                - data
+        required: true
+  app-payment-failed:
+    post:
+      operationId: app-payment-failed
+      security:
+        - WebhookSignature: []
+      summary: When a payment fails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum:
+                    - app.payment_failed
+                  example: "app.payment_failed"
+                company:
+                  type: string
+                  example: biz_123
+                data:
+                  $ref: "#/components/schemas/AppPayment"
+              required:
+                - action
+                - data
+        required: true
   membership-went-valid:
     post:
       operationId: membership-went-valid
@@ -4201,19 +4375,10 @@ webhooks:
                   enum:
                     - membership.went_valid
                   example: "membership.went_valid"
-                version:
-                  type: string
-                  enum:
-                    - v5
-                  example: "v5"
-                company:
-                  type: string
-                  example: biz_123
                 data:
                   $ref: "#/components/schemas/AppMembership"
               required:
                 - action
-                - version
                 - data
         required: true
   membership-went-invalid:
@@ -4233,19 +4398,10 @@ webhooks:
                   enum:
                     - membership.went_invalid
                   example: "membership.went_invalid"
-                version:
-                  type: string
-                  enum:
-                    - v5
-                  example: "v5"
-                company:
-                  type: string
-                  example: biz_123
                 data:
                   $ref: "#/components/schemas/AppMembership"
               required:
                 - action
-                - version
                 - data
         required: true
   payment-succeeded:
@@ -4265,19 +4421,10 @@ webhooks:
                   enum:
                     - payment.succeeded
                   example: "payment.succeeded"
-                version:
-                  type: string
-                  enum:
-                    - v5
-                  example: "v5"
-                company:
-                  type: string
-                  example: biz_123
                 data:
                   $ref: "#/components/schemas/AppPayment"
               required:
                 - action
-                - version
                 - data
         required: true
   payment-failed:
@@ -4297,18 +4444,9 @@ webhooks:
                   enum:
                     - payment.failed
                   example: "payment.failed"
-                version:
-                  type: string
-                  enum:
-                    - v5
-                  example: "v5"
-                company:
-                  type: string
-                  example: biz_123
                 data:
                   $ref: "#/components/schemas/AppPayment"
               required:
                 - action
-                - version
                 - data
         required: true
