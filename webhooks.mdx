@@ -82,8 +82,6 @@ For enhanced security, you can validate that the webhook is being sent by Whop. 
 
 If you are using a company webhook, you can get the secret from the [**developer settings page**](https://dash.whop.com/settings/developer).
 
-This secret key is sent in the `webhook-secret` header.
-
 <Accordion title="Retrieving the webhook secret">
 Access the Whop Business dashboard and navigate to the [**developer settings page**](https://dash.whop.com/settings/developer). Here, you can configure your webhook endpoint URL, as well as manage all other aspects of the Whop API.
 
@@ -106,9 +104,8 @@ Head to the App Dashboard, and then select the app that has the webhook. Navigat
   </Frame>
 </Accordion>
 
-If you are using a webhook for your app, the verification process is a bit different.
-
-It will be sent in the `X-Whop-Signature` header. This then needs to be verified using the following code, passing in the value of the header, and the request body.
+### Verify the signature
+The webhook secret signature will be sent in the `X-Whop-Signature` header. This then needs to be verified using the following code, passing in the value of the header, and the request body.
 
 ```javascript
 async function verifyWebhook(header, body) {
@@ -144,4 +141,9 @@ async function verifyWebhook(header, body) {
 
   if (signature !== sentSignature && version !== "v1") return null;
 }
+
+
 ```
+<Info>
+  `version` is meant to equal `v1`. It is not a typo.
+</Info>
