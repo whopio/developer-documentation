@@ -10,7 +10,7 @@ This ReadMe provides instructions on how to edit the Whop Developer documentatio
 
 ## Development
 
-We use [Mintlify](https://mintlify.com/) for our documentation. To run the documentation locally on your machine, you will need to install their CLI.
+We use [Mintlify](https://mintlify.com/) for our documentation. To run the documentation locally on your machine, you will need to install their CLI. 
 
 Use the following command:
 
