@@ -937,7 +937,7 @@ paths:
             schema:
               $ref: "#/components/schemas/AppMembershipAddFreeDaysBody"
 
-      description: Returns a membership
+      description: Adds free days to a membership
   "/v5/app/notifications":
     post:
       security:
@@ -3054,6 +3054,8 @@ components:
         days:
           type: number
           description: The number of free days to add to the membership.
+      required:
+        - days
     AppPayment:
       type: object
       properties:
