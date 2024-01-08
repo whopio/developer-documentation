@@ -899,6 +899,45 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a membership
+  "/v5/app/memberships/{id}/add_free_days":
+    post:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - app/memberships
+      operationId: post_api_v5_app_memberships_id_add_free_days
+      summary: Add Free Days to Membership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Membership, which will look like mem_*************. This can also be the license key
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response with no content
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppMembershipAddFreeDaysBody"
+
+      description: Returns a membership
   "/v5/app/notifications":
     post:
       security:
@@ -3009,6 +3048,12 @@ components:
         - status
         - valid
         - manage_url
+    AppMembershipAddFreeDaysBody:
+      type: object
+      properties:
+        days:
+          type: number
+          description: The number of free days to add to the membership.
     AppPayment:
       type: object
       properties:
