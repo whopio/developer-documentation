@@ -140,7 +140,8 @@
           "group": "Memberships",
           "pages": [
             "api-reference/v5/apps/memberships/list",
-            "api-reference/v5/apps/memberships/retrieve"
+            "api-reference/v5/apps/memberships/retrieve",
+            "api-reference/v5/apps/memberships/add-free-days"
           ]
         },
         {
