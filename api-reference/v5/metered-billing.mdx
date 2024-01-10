@@ -126,8 +126,8 @@ await WhopAPI.company().POST("/company/billing_items", {
 ```
 
 <Check>
-  Once you have your billing item created, **save the Billing Item `identifier`
-  or `id`**
+    Once you have your billing item created, **save the Billing Item `identifier`
+    or `id`**
 </Check>
 
 ## 3. Submit usage
@@ -135,8 +135,8 @@ await WhopAPI.company().POST("/company/billing_items", {
 Now you need to tell Whop how much the seller has used. To do this, we are going to use the Billing Usage API
 
 <Warning>
-  You are going to need the Company's ID in order to charge them. You should
-  save this in your database or you can retrieve it from the API{" "}
+    You are going to need the Company's ID in order to charge them. You should
+    save this in your database or you can retrieve it from the API{" "}
 </Warning>
 
 ### Structured Billing Item
@@ -144,8 +144,8 @@ Now you need to tell Whop how much the seller has used. To do this, we are going
 Let's say the seller uploaded 69 GB of video today. You will create a billing usage object with the following JSON body:
 
 <Info>
-  We are following the **structured** billing usage flow. A code snippet for
-  variable billing usage is below
+    We are following the **structured** billing usage flow. A code snippet for
+    variable billing usage is below
 </Info>
 
 ```json
@@ -194,11 +194,19 @@ await WhopAPI.app().POST("/app/billing_usages", {
 
 ## 4. Get Paid
 
-Every Friday, Whop will aggregate all usage submitted the prior week and charge the seller for the amount used.
+Daily, at 9am EST, Whop will aggregate all usage submitted in the prior 24 hours, and charge the seller for the total amount.
 
-This will be automatically to your balance for withdrawal.
+If a seller has pending usage charges from your app, but does not have a payment method on file, Whop will send them email reminders daily, prompting them to add one.
+
+<Note>
+    To check if a seller has a payment method on file, you can read the `has_payment_method` boolean on their company object.
+</Note>
+
+To know when the payment has been captured and succeeded, you can listen to the [**payment.succeeded**](/webhooks/v5#payment-succeeded) webhook event. The `receipt_id` will also be shown in the [Billing Usages](/api-reference/v5/apps/billing-usages/retrieve) response on the API, which you can then use to retrieve more information about the payment using the [**Retrieve a payment**](/api-reference/v5/apps/payments/retrieve) endpoint.
+
+After your app's usage is processed, it will be automatically added to your balance for withdrawal.
 
 <Check>
-  Congratulations. You have set up metered billing with Whop. You can now
-  generate revenue.
+    Congratulations. You have set up metered billing with Whop. You can now
+    generate revenue.
 </Check>
