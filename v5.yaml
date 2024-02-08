@@ -776,6 +776,123 @@ paths:
               schema:
                 $ref: "#/components/schemas/AppNotificationTopic"
       description: Updates a notification topic
+  "/v5/app/reviews":
+    get:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - app/reviews
+      operationId: get_api_v5_app_reviews
+      summary: List Reviews
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          required: false
+          description: An ID of a user to filter by, which will look like user_*************
+          schema:
+            type: string
+        - name: stars
+          in: query
+          required: false
+          description: The number of stars to filter by. Ex. 1, 2, 3, 4, or 5.
+          schema:
+            type: number
+        - name: status
+          in: query
+          required: false
+          description: A status to filter by.
+          schema:
+              type: string
+              enum:
+              - pending
+              - published
+              - removed
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppReview"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of reviews
+  "/v5/app/reviews/{id}":
+    get:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - app/reviews
+      operationId: get_api_v5_app_reviews_id
+      summary: Retrieve a Review
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Review, which will look like rev_*************.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppReview"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a review
   "/v5/app/memberships":
     get:
       security:
@@ -1929,6 +2046,117 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
       description: Returns a User's social accounts
+  "/v5/me/reviews":
+    get:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - me/reviews
+      operationId: get_api_v5_me_reviews
+      summary: List Reviews
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: product_id
+          in: query
+          required: false
+          description: An ID of a product to filter by, which will look like prod_*************
+          schema:
+            type: string
+        - name: stars
+          in: query
+          required: false
+          description: The number of stars to filter by. Ex. 1, 2, 3, 4, or 5.
+          schema:
+            type: number
+        - name: status
+          in: query
+          required: false
+          description: A status to filter by.
+          schema:
+            type: string
+            enum:
+              - pending
+              - published
+              - removed
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MeReview"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of reviews
+  "/v5/me/reviews/{id}":
+    get:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - me/reviews
+      operationId: get_api_v5_me_reviews_id
+      summary: Retrieve a Review
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Review, which will look like rev_*************.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeReview"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a review
   "/v5/me/memberships":
     get:
       security:
@@ -2449,6 +2677,9 @@ components:
         company_id:
           type: string
           description: The ID of the company that owns this app, which will look like biz_*************
+        icon_url:
+          type: string
+          description: The URL of the app's icon
       required:
         - id
         - created_at
@@ -2530,6 +2761,9 @@ components:
         has_payment_method:
           type: boolean
           description: Whether or not the company has a payment method on file to charge for metered billing usage.
+        route:
+          type: string
+          description: The route to the company's first/default page
       required:
         - id
         - created_at
@@ -2967,6 +3201,48 @@ components:
             - company
             - user
           description: The type of the notification topic
+    AppReview:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the review, which will look like rev_*************
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        status:
+          type: string
+          enum:
+            - pending
+            - published
+            - removed
+          description: The status of the review
+        stars:
+          type: number
+          description: The rating of the review. It will be an integer between one and five.
+        description:
+          type: string
+          description: The text response the user left for the review.
+        joined_at:
+          type: number
+          description: The date the customer first joined the creator's whop as a unix timestamp.
+        created_at:
+          type: number
+          description: The date the review was created as a unix timestamp.
+      required:
+        - id
+        - company_id
+        - user_id
+        - product_id
+        - status
+        - stars
+        - created_at
     AppMembership:
       type: object
       properties:
@@ -3440,6 +3716,9 @@ components:
           description: The URL of the company's image
         authorized_user:
           $ref: "#/components/schemas/CompanyAuthorizedUser"
+        route:
+          type: string
+          description: The route to the company's first/default page
       required:
         - id
         - created_at
@@ -3879,6 +4158,9 @@ components:
           description: The URL of the company's image
         authorized_user:
           $ref: "#/components/schemas/MeAuthorizedUser"
+        route:
+          type: string
+          description: The route to the company's first/default page
       required:
         - id
         - created_at
@@ -3996,6 +4278,48 @@ components:
         - service
         - default
         - account_id
+    MeReview:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the review, which will look like rev_*************
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        product_id:
+          type: string
+          description: The ID of the product, which will look like prod_*************
+        status:
+          type: string
+          enum:
+              - pending
+              - published
+              - removed
+          description: The status of the review
+        stars:
+          type: number
+          description: The rating of the review. It will be an integer between one and five.
+        description:
+          type: string
+          description: The text response the user left for the review.
+        joined_at:
+          type: number
+          description: The date the customer first joined the creator's whop as a unix timestamp.
+        created_at:
+          type: number
+          description: The date the review was created as a unix timestamp.
+      required:
+        - id
+        - company_id
+        - user_id
+        - product_id
+        - status
+        - stars
+        - created_at
     MeMembership:
       type: object
       properties:
