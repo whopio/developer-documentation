@@ -159,6 +159,13 @@
           ]
         },
         {
+          "group": "Reviews",
+          "pages": [
+            "api-reference/v5/apps/reviews/list",
+            "api-reference/v5/apps/reviews/retrieve"
+          ]
+        },
+        {
           "group": "Notifications",
           "pages": [
             "api-reference/v5/apps/notifications/send",
@@ -277,6 +284,13 @@
           "pages": [
             "api-reference/v5/me/payments/list",
             "api-reference/v5/me/payments/retrieve"
+          ]
+        },
+        {
+          "group": "Reviews",
+          "pages": [
+            "api-reference/v5/me/reviews/list",
+            "api-reference/v5/me/reviews/retrieve"
           ]
         },
         {
