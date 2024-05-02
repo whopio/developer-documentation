@@ -10,7 +10,7 @@ There are currently 4 different views:
 | View             | Description                                                      | Example                                                               |
 | ---------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `customer`       | Accessible by the user when they are viewing a whop              | Displaying sports picks to paying users                               |
-| `seller_product` | Accessible by the seller when they are editing a product         | Uploading a file that the user can download for that specific app instance   |
+| `admin` | Accessible by the creator when they are editing a product         | Uploading a file that the user can download for that specific app instance   |
 | `analytics`      | Accessible by the creator in the hub under the "Analytics" tab   | Displaying detailed analytics about this app instance                 |
 
 Each view can have different variables passed to it. For example, the `customer` view will have variables such as the `experienceId` passed to it. These are set in the URL, and you can find more information about them [here](/apps/seller-page#1-create-your-seller-page).
@@ -40,7 +40,7 @@ Below are the variables that are available to the customer view.
 
 ## Admin View
 
-The admin view is displayed on the **Edit Product Page**. This view is only accessible by the seller. It allows the app to have context about a specific product.
+The admin view is displayed on the **Edit Product Page**. This view is only accessible by the creator. It allows the app to have context about a specific product.
 
 **Example use cases:**
 
@@ -58,7 +58,7 @@ The admin view is displayed on the **Edit Product Page**. This view is only acce
 
 ## Analytics View
 
-The analytics view is displayed on the "Analytics" tab. This view is only accessible by the seller. It allows the developer to offer a specific page for analytics about their app instance.
+The analytics view is displayed on the "Analytics" tab. This view is only accessible by the creator. It allows the developer to offer a specific page for analytics about their app instance.
 
 
 **Example use cases:**
