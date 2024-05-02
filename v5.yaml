@@ -271,6 +271,73 @@ paths:
                   - pagination
                   - data
       description: Returns a collection of app connections
+  "/v5/app/activity_feed_items":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/activity_feed_items
+      operationId: post_api_v5_app_activity_feed_items
+      summary: Create an Activity Feed Item
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppActivityFeedItem"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppActivityFeedItemCreateBody"
+      description: Create an activity feed object (aka a post)
+    delete:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/activity_feed_items
+      operationId: delete_api_v5_app_activity_feed_item
+      summary: Delete an Activity Feed Item
+      parameters:
+        - name: external_id
+          in: path
+          required: true
+          description: The external ID of the activity feed item
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+      description: Deletes an Activity Feed Item
+    patch:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/activity_feed_items
+      operationId: update_api_v5_app_activity_feed_item
+      summary: Update an Activity Feed Item
+      parameters:
+        - name: external_id
+          in: path
+          required: true
+          description: The external ID of the activity feed item
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppActivityFeedItemUpdateBody"
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActivityFeedItem"
   "/v5/app/app_connections/{id}":
     get:
       security:
@@ -776,10 +843,126 @@ paths:
               schema:
                 $ref: "#/components/schemas/AppNotificationTopic"
       description: Updates a notification topic
+  "/v5/app/members":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/members
+      operationId: get_api_v5_app_members
+      summary: List Members
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          required: false
+          description: An ID of a user to filter by, which will look like user_*************
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          description: A status to filter by.
+          schema:
+            type: string
+            enum:
+              - joined
+              - left
+        - name: experience_id
+          in: query
+          required: false
+          description: An ID of an experience to filter by, which will look like exp_*************. If private, the member must have a valid membership on a product that grants them access to the experience. If public, the user must be a member of the company.
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          description: A search to filter by. This will search the member's name and username.
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppMember"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of members
+  "/v5/app/members/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/members
+      operationId: get_api_v5_app_members_id
+      summary: Retrieve a Review
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Member, which will look like mber_*************.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppMember"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a member
   "/v5/app/reviews":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - app/reviews
       operationId: get_api_v5_app_reviews
@@ -814,8 +997,8 @@ paths:
           required: false
           description: A status to filter by.
           schema:
-              type: string
-              enum:
+            type: string
+            enum:
               - pending
               - published
               - removed
@@ -864,7 +1047,7 @@ paths:
   "/v5/app/reviews/{id}":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - app/reviews
       operationId: get_api_v5_app_reviews_id
@@ -1019,7 +1202,7 @@ paths:
   "/v5/app/memberships/{id}/add_free_days":
     post:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - app/memberships
       operationId: post_api_v5_app_memberships_id_add_free_days
@@ -1081,6 +1264,32 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/NotificationBody"
+  "/v5/app/notifications/requests":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notifications
+      operationId: post_api_v5_app_notifications_requests
+      summary: Create a Notification Request
+      responses:
+        "201":
+          description: A successful response
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRequestResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      description: Send a notification to a set of targets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationRequestBody"
   "/v5/app/payments":
     get:
       security:
@@ -2049,7 +2258,7 @@ paths:
   "/v5/me/reviews":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - me/reviews
       operationId: get_api_v5_me_reviews
@@ -2128,7 +2337,7 @@ paths:
   "/v5/me/reviews/{id}":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - me/reviews
       operationId: get_api_v5_me_reviews_id
@@ -2574,6 +2783,10 @@ components:
         target_app_view:
           type: string
           default: "customer_product_view"
+        experience_id:
+          type: string
+        sender_user_id:
+          type: string
         targets:
           type: array
           items:
@@ -2628,6 +2841,67 @@ components:
           type: string
           example: "We will attempt to send out your notification. This is processed in a background job, so we cannot confirm how many notifications were sent in this request."
 
+    NotificationRequestBody:
+      type: object
+      properties:
+        topic_identifier:
+          type: string
+        sender_user_id:
+          type: string
+        deep_link:
+          type: string
+        targets:
+          type: object
+          properties:
+            experience:
+              type: string
+            company:
+              type: string
+            company_team:
+              type: string
+            users:
+              type: array
+              items:
+                type: string
+        body:
+          type: object
+          properties:
+            all:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+            mobile:
+              type: object
+              properties:
+                title:
+                  type: string
+                subtitle:
+                  type: string
+                content:
+                  type: string
+            in_app:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      required:
+        - topic_identifier
+        - targets
+        - body
+    NotificationRequestResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "created"
+        message:
+          type: string
+          example: "We will attempt to send out your notification. This is processed in a background job, so we cannot confirm how many notifications were sent in this request."
     OauthTokenCreateBody:
       type: object
       properties:
@@ -2791,12 +3065,16 @@ components:
         app_id:
           type: string
           description: The ID of the app that created the experience, which will look like app_*************
+        app_icon_url:
+          type: string
+          description: The URL of the app's icon
       required:
         - id
         - created_at
         - name
         - company_id
         - product_ids
+        - app_id
     AppSocialAccount:
       type: object
       properties:
@@ -2878,6 +3156,81 @@ components:
         - resource_id
         - resource_type
         - view_type
+    AppActivityFeedItem:
+      type: object
+      properties:
+        activity_feed_item_id:
+          type: string
+          description: The ID of the activity feed item, which will look like afi_*************
+      required:
+        - activity_feed_item_id
+    AppActivityFeedItemCreateBody:
+      type: object
+      properties:
+        experience_id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        external_id:
+          type: string
+          description: The ID of the external object that this maps to, like a feed post
+        link:
+          type: string
+          description: "The link that this feed post should open when clicked"
+        rest_path:
+          type: string
+          description: "The relative path the user should be redirected to in the app"
+        blocks:
+          type: array
+          description: The blocks of the post
+          items:
+            type: object
+            properties:
+              block_type:
+                type: string
+                description: "The type of the block"
+              text_content:
+                type: string
+                description: "The textual content of the block, if applicable"
+              metadata:
+                type: object
+                description: "Any additional metadata associated with the block"
+            required:
+              - block_type
+      required:
+        - experience_id
+        - user_id
+        - external_id
+        - blocks
+    AppActivityFeedItemUpdateBody:
+      type: object
+      properties:
+        link:
+          type: string
+          description: "The link that this feed post should open when clicked"
+        rest_path:
+          type: string
+          description: "The relative path the user should be redirected to in the app"
+        blocks:
+          type: array
+          description: The blocks of the post
+          items:
+            type: object
+            properties:
+              block_type:
+                type: string
+                description: "The type of the block"
+              text_content:
+                type: string
+                description: "The textual content of the block, if applicable"
+              metadata:
+                type: object
+                description: "Any additional metadata associated with the block"
+            required:
+              - block_type
+
     AppBillingUsage:
       type: object
       properties:
@@ -3462,8 +3815,6 @@ components:
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
       required:
         - id
-        - membership_id
-        - product_id
         - company_id
         - created_at
         - status
@@ -3489,10 +3840,45 @@ components:
         profile_pic_url:
           type: string
           description: The URL of the user's profile picture
+        created_at:
+          type: number
+          description: The date the user was created as a unix timestamp.
       required:
         - id
         - username
-
+        - created_at
+    AppMember:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        status:
+          type: string
+          enum:
+            - joined
+            - left
+            - drafted
+          description: The status of the member
+        most_recent_action:
+          type: string
+          description: The most recent action of the member
+        joined_at:
+          type: number
+          description: The date the member was created as a unix timestamp.
+        user:
+          $ref: "#/components/schemas/AppUser"
+      required:
+        - id
+        - company_id
+        - status
+        - joined_at
     CompanyBillingItem:
       type: object
       properties:
@@ -3746,12 +4132,16 @@ components:
         app_id:
           type: string
           description: The ID of the app that created the experience, which will look like app_*************
+        app_icon_url:
+          type: string
+          description: The URL of the app's icon
       required:
         - id
         - created_at
         - name
         - company_id
         - product_ids
+        - app_id
     CompanyLineItem:
       type: object
       properties:
@@ -4030,8 +4420,6 @@ components:
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
       required:
         - id
-        - membership_id
-        - product_id
         - company_id
         - created_at
         - status
@@ -4188,12 +4576,16 @@ components:
         app_id:
           type: string
           description: The ID of the app that created the experience, which will look like app_*************
+        app_icon_url:
+          type: string
+          description: The URL of the app's icon
       required:
         - id
         - created_at
         - name
         - company_id
         - product_ids
+        - app_id
     MeLineItem:
       type: object
       properties:
@@ -4296,9 +4688,9 @@ components:
         status:
           type: string
           enum:
-              - pending
-              - published
-              - removed
+            - pending
+            - published
+            - removed
           description: The status of the review
         stars:
           type: number
@@ -4531,8 +4923,6 @@ components:
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
       required:
         - id
-        - membership_id
-        - product_id
         - company_id
         - created_at
         - status
