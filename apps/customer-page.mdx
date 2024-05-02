@@ -1,7 +1,7 @@
 ---
-title: Build your customer page
+title: Build your user page
 icon: "circle-3"
-description: "If your app is built for businesses to sell to customers, then it's time to build your customer page"
+description: "If your app is built for businesses to sell to users, then it's time to build your user page"
 ---
 
 ## What you'll learn
@@ -9,55 +9,48 @@ description: "If your app is built for businesses to sell to customers, then it'
 In this tutorial, you’ll learn how to do the following tasks:
 
 - Use the Whop API to check more advanced permissions
-- Build a page that is shown to all customers
+- Build a page that is shown to all users
 - Use Frosted components to style your app
 
 ## Prerequisites
 
-To view the iFrame as a customer, you will need to own a membership to this app. To do this, make a free pricing option for your product and purchase a membership. Then open the app from your orders page.
+To view the iFrame as a user, you will can click the "Preview as User" tab.
 
-## 1. Create your customer page
+## 1. Create your user page
 
-We will start by building the **customer page.**
+We will start by building the **user page.**
 
-The **customer page** is a specific page URL your app defines. Every time a Whop user purchases a membership that contains your app, they will view the customer page within the iFrame whenever viewing your app.
+The **user page** is a specific page URL your app defines. Every time a Whop user purchases a membership that contains your app, they will view the user page within the iFrame whenever viewing your app.
 
-1. Create a page to match this URL `/customer/$productId`. To do this, create this file: `/app/customer/[productId]/page.tsx`
+1. Create a page to match this URL `/user/$experienceId`. To do this, create this file: `/app/user/[experienceId]/page.tsx`
 
 ```bash
-mkdir app/customer && mkdir "app/customer/[productId]" && touch "app/customer/[productId]/page.tsx"
+mkdir app/user && mkdir "app/user/[experienceId]" && touch "app/user/[experienceId]/page.tsx"
 ```
 
 In order to know which product the user purchased, Whop will pass the ID as a **path parameter**.
 
-These are all the options for the path parameters in the Consumer Path, but for now, we will only use `productId`:
+These are all the options for the path parameters in the Consumer Path, but for now, we will only use `experienceId`:
 
 | Parameter      | Description                                               |
 | -------------- | --------------------------------------------------------- |
-| `productId`    | The ID of the product the user purchased                  |
-| `companyId`    | The ID of the company the user purchased the product from |
+| `companyId`    | The ID of the company the user purchased from |
 | `experienceId` | The ID of the experience                                  |
-| `membershipId` | The ID of the user's membership                           |
-| `planId`       | The ID of the plan the user purchased                     |
 
-2. Add the following code to your file to read and display the product ID
+2. Add the following code to your file to read and display the experience ID
 
 ```javascript
-export default async function CustomerPage({
+export default async function UserPage({
   params,
 }: {
-  params: { productId: string },
+  params: { experienceId: string },
 }) {
-  const productId = params.productId;
-  return <h1>The ID of the product the user is viewing is {productId}</h1>;
+  const experienceId = params.experienceId;
+  return <h1>The ID of the product the user is viewing is {experienceId}</h1>;
 }
 ```
 
-3. Update the Customer Path in your [app configuration](https://whop.com/apps) to be `/customer/$productId`
-
-   <Frame>
-     <img src="https://imgur.com/sMeszvY.png" />
-   </Frame>
+3. Update the User Path in your [app configuration](https://whop.com/apps) to be `/user/$experienceId`
 
 ## 2. Authenticate the user
 
@@ -73,7 +66,7 @@ import { validateToken } from "@whop-apps/sdk";
 2. Use the `validateToken` function from the Whop SDK to ensure the user's access token is valid
 
 ```javascript
-export default async function CustomerPage() {
+export default async function UserPage() {
   const { userId } = await validateToken({ headers });
 }
 ```
@@ -95,15 +88,15 @@ We now want to check to make sure this user owns the correct product. To do this
 import { validateToken, hasAccess } from "@whop-apps/sdk";
 ```
 
-2. **Check if the user owns the product**
+2. **Check if the user owns access to this app instance**
 
 To check if the user should be able to access this page, we will use the `hasAccess` function. This function takes in an object with two properties:
 
-- `to`: The resource the user is trying to access. In this case, it will be the product ID from the URL.
+- `to`: The resource the user is trying to access. In this case, it will be the experience ID from the URL.
 - `headers`: The headers of the request - this allows the SDK to get information about the user.
 
 ```javascript
-const access = await hasAccess({ to: params.productId, headers });
+const access = await hasAccess({ to: params.experienceId, headers });
 ```
 
 3. **Handle the result**

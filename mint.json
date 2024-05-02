@@ -74,7 +74,6 @@
             "apps/create-an-app",
             "apps/seller-page",
             "apps/customer-page",
-            "apps/checkout-page",
             "apps/deploying"
           ]
         },
@@ -107,7 +106,7 @@
     },
     {
       "group": "More",
-      "pages": ["templates", "contribution", "branding", "office-hours"]
+      "pages": ["templates", "contribution", "branding"]
     },
     {
       "group": "API Documentation",
