@@ -1,7 +1,7 @@
 ---
-title: Build your customer page
+title: Build your user page
 icon: "circle-3"
-description: "If your app is built for businesses to sell to customers, then it's time to build your customer page"
+description: "If your app is built for businesses to sell to users, then it's time to build your user page"
 ---
 
 ## What you'll learn
@@ -9,23 +9,23 @@ description: "If your app is built for businesses to sell to customers, then it'
 In this tutorial, you’ll learn how to do the following tasks:
 
 - Use the Whop API to check more advanced permissions
-- Build a page that is shown to all customers
+- Build a page that is shown to all users
 - Use Frosted components to style your app
 
 ## Prerequisites
 
-To view the iFrame as a customer, you will need to own a membership to this app. To do this, make a free pricing option for your product and purchase a membership. Then open the app from your orders page.
+To view the iFrame as a user, you will can click the "Preview as User" tab.
 
-## 1. Create your customer page
+## 1. Create your user page
 
-We will start by building the **customer page.**
+We will start by building the **user page.**
 
-The **customer page** is a specific page URL your app defines. Every time a Whop user purchases a membership that contains your app, they will view the customer page within the iFrame whenever viewing your app.
+The **user page** is a specific page URL your app defines. Every time a Whop user purchases a membership that contains your app, they will view the user page within the iFrame whenever viewing your app.
 
-1. Create a page to match this URL `/customer/$experienceId`. To do this, create this file: `/app/customer/[experienceId]/page.tsx`
+1. Create a page to match this URL `/user/$experienceId`. To do this, create this file: `/app/user/[experienceId]/page.tsx`
 
 ```bash
-mkdir app/customer && mkdir "app/customer/[experienceId]" && touch "app/customer/[experienceId]/page.tsx"
+mkdir app/user && mkdir "app/user/[experienceId]" && touch "app/user/[experienceId]/page.tsx"
 ```
 
 In order to know which product the user purchased, Whop will pass the ID as a **path parameter**.
@@ -40,7 +40,7 @@ These are all the options for the path parameters in the Consumer Path, but for 
 2. Add the following code to your file to read and display the experience ID
 
 ```javascript
-export default async function CustomerPage({
+export default async function UserPage({
   params,
 }: {
   params: { experienceId: string },
@@ -50,7 +50,7 @@ export default async function CustomerPage({
 }
 ```
 
-3. Update the Customer Path in your [app configuration](https://whop.com/apps) to be `/customer/$experienceId`
+3. Update the User Path in your [app configuration](https://whop.com/apps) to be `/user/$experienceId`
 
 ## 2. Authenticate the user
 
@@ -66,7 +66,7 @@ import { validateToken } from "@whop-apps/sdk";
 2. Use the `validateToken` function from the Whop SDK to ensure the user's access token is valid
 
 ```javascript
-export default async function CustomerPage() {
+export default async function UserPage() {
   const { userId } = await validateToken({ headers });
 }
 ```
