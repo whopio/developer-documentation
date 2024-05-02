@@ -22,42 +22,35 @@ We will start by building the **customer page.**
 
 The **customer page** is a specific page URL your app defines. Every time a Whop user purchases a membership that contains your app, they will view the customer page within the iFrame whenever viewing your app.
 
-1. Create a page to match this URL `/customer/$productId`. To do this, create this file: `/app/customer/[productId]/page.tsx`
+1. Create a page to match this URL `/customer/$experienceId`. To do this, create this file: `/app/customer/[experienceId]/page.tsx`
 
 ```bash
-mkdir app/customer && mkdir "app/customer/[productId]" && touch "app/customer/[productId]/page.tsx"
+mkdir app/customer && mkdir "app/customer/[experienceId]" && touch "app/customer/[experienceId]/page.tsx"
 ```
 
 In order to know which product the user purchased, Whop will pass the ID as a **path parameter**.
 
-These are all the options for the path parameters in the Consumer Path, but for now, we will only use `productId`:
+These are all the options for the path parameters in the Consumer Path, but for now, we will only use `experienceId`:
 
 | Parameter      | Description                                               |
 | -------------- | --------------------------------------------------------- |
-| `productId`    | The ID of the product the user purchased                  |
-| `companyId`    | The ID of the company the user purchased the product from |
+| `companyId`    | The ID of the company the user purchased from |
 | `experienceId` | The ID of the experience                                  |
-| `membershipId` | The ID of the user's membership                           |
-| `planId`       | The ID of the plan the user purchased                     |
 
-2. Add the following code to your file to read and display the product ID
+2. Add the following code to your file to read and display the experience ID
 
 ```javascript
 export default async function CustomerPage({
   params,
 }: {
-  params: { productId: string },
+  params: { experienceId: string },
 }) {
-  const productId = params.productId;
-  return <h1>The ID of the product the user is viewing is {productId}</h1>;
+  const experienceId = params.experienceId;
+  return <h1>The ID of the product the user is viewing is {experienceId}</h1>;
 }
 ```
 
-3. Update the Customer Path in your [app configuration](https://whop.com/apps) to be `/customer/$productId`
-
-   <Frame>
-     <img src="https://imgur.com/sMeszvY.png" />
-   </Frame>
+3. Update the Customer Path in your [app configuration](https://whop.com/apps) to be `/customer/$experienceId`
 
 ## 2. Authenticate the user
 
@@ -95,15 +88,15 @@ We now want to check to make sure this user owns the correct product. To do this
 import { validateToken, hasAccess } from "@whop-apps/sdk";
 ```
 
-2. **Check if the user owns the product**
+2. **Check if the user owns access to this app instance**
 
 To check if the user should be able to access this page, we will use the `hasAccess` function. This function takes in an object with two properties:
 
-- `to`: The resource the user is trying to access. In this case, it will be the product ID from the URL.
+- `to`: The resource the user is trying to access. In this case, it will be the experience ID from the URL.
 - `headers`: The headers of the request - this allows the SDK to get information about the user.
 
 ```javascript
-const access = await hasAccess({ to: params.productId, headers });
+const access = await hasAccess({ to: params.experienceId, headers });
 ```
 
 3. **Handle the result**

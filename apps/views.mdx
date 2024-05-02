@@ -9,22 +9,17 @@ There are currently 4 different views:
 
 | View             | Description                                                      | Example                                                               |
 | ---------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `customer`       | The view that customers see on whop.com when accessing a product | Displaying sports picks to paying users                               |
-| `checkout`       | Displayed before the customer pays for the product               | Collecting information about a user such as their Twitter             |
-| `seller_product` | Accessible by the seller when they are editing a product         | Uploading a file that the user can download for that specific product |
-| `seller`         | Accessible by the seller in the apps page on the dashboard       | Displaying detailed analytics about their company                     |
+| `customer`       | Accessible by the user when they are viewing a whop              | Displaying sports picks to paying users                               |
+| `seller_product` | Accessible by the seller when they are editing a product         | Uploading a file that the user can download for that specific app instance   |
+| `analytics`      | Accessible by the creator in the hub under the "Analytics" tab   | Displaying detailed analytics about this app instance                 |
 
-Each view can have different variables passed to it. For example, the `customer` view will have variables such as the `productId` and `companyId` passed to it, while the `checkout` view will have variables such as the `checkoutSessionId` and `productId` passed to it. These are set in the URL, and you can find more information about them [here](/apps/seller-page#1-create-your-seller-page).
+Each view can have different variables passed to it. For example, the `customer` view will have variables such as the `experienceId` passed to it. These are set in the URL, and you can find more information about them [here](/apps/seller-page#1-create-your-seller-page).
 
 ---
 
-## Customer View
+## User View
 
-The customer view is the view that customers see when they are viewing your product on Whop.
-
-<Frame>
-  <img src="https://imgur.com/ldN9I1Q.gif" />
-</Frame>
+The user view is the view that customers see when they are viewing your product on Whop.
 
 **Example use cases:**
 
@@ -38,45 +33,14 @@ Below are the variables that are available to the customer view.
 
 | Views          | Description                                               |
 | -------------- | --------------------------------------------------------- |
-| `productId`    | The ID of the product the user purchased                  |
 | `companyId`    | The ID of the company the user purchased the product from |
 | `experienceId` | The ID of the experience                                  |
-| `membershipId` | The ID of the user's membership                           |
-| `planId`       | The ID of the plan the user purchased                     |
 
 ---
 
-## Checkout View
+## Admin View
 
-The checkout view is displayed before the customer pays for the product. The app will be able to decide if the user is allowed to purchase the product or not. If the user is not allowed to purchase the product, the app can display a message to the user.
-
-<Frame>
-  <img src="https://imgur.com/2WlM5cz.gif" />
-</Frame>
-
-**Example use cases:**
-
-- Collecting information about a user such as a delivery address
-- Asking questions to the user to determine if they are allowed to purchase the product
-
-### Variables
-
-| Parameter           | Description                    |
-| ------------------- | ------------------------------ |
-| `companyId`         | The ID of the company          |
-| `checkoutSessionId` | The ID of the checkout session |
-| `productId`         | The ID of the product          |
-| `planId`            | The ID of the plan             |
-
----
-
-## Seller Product View
-
-The seller product view is displayed on the **Edit Product Page**. This view is only accessible by the seller. It allows the app to have context about a specific product.
-
-<Frame>
-  <img src="https://imgur.com/24Df0Gu.gif" />
-</Frame>
+The admin view is displayed on the **Edit Product Page**. This view is only accessible by the seller. It allows the app to have context about a specific product.
 
 **Example use cases:**
 
@@ -88,26 +52,25 @@ The seller product view is displayed on the **Edit Product Page**. This view is 
 | Parameter      | Description              |
 | -------------- | ------------------------ |
 | `companyId`    | The ID of the company    |
-| `productId`    | The ID of the product    |
 | `experienceId` | The ID of the experience |
 
 ---
 
-## Seller View
+## Analytics View
 
-The seller view is displayed on the **Apps Page**. This view is only accessible by the seller and does not have context about a specific product.
+The analytics view is displayed on the "Analytics" tab. This view is only accessible by the seller. It allows the developer to offer a specific page for analytics about their app instance.
 
-<Frame>
-  <img src="https://imgur.com/giUtHhL.gif" />
-</Frame>
 
 **Example use cases:**
 
-- Showing analytics about a company
-- App to display SMS messages to customers
+- Showing how many users viewed this course in the past week
+- Showing your most active users in your community
 
 ### Variables
 
-| Parameter   | Description           |
-| ----------- | --------------------- |
-| `companyId` | The ID of the company |
+| Parameter      | Description              |
+| -------------- | ------------------------ |
+| `companyId`    | The ID of the company    |
+| `experienceId` | The ID of the experience |
+
+---

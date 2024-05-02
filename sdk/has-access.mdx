@@ -78,19 +78,17 @@ When evaluating the access string, the entity (user) must satisfy at least one o
 An `<expression>` is either:
 
 - a single access control term (or primitive) EG:
-  - `prod_123` meaning the user owns access to this product
   - `user_123` meaning the user is user_123
   - `authorized-biz_123` (meaning the user is an authorized user on biz_123)
   - `exp_123` meaning the user has access to this experience
-  - `mem_123` meaning this membership is active and valid for the user
 - a `not-` operator followed by a single `<expression>` and terminated with an underscore `_`
-  - eg: `not-prod_123_` meaning the user does not own access to this product
+  - eg: `not-authorized-biz_123` meaning the user is not authorized on this company
 - an `and-` operator followed by an `<expression-list>` and terminated with an underscore `_`
-  - eg: `and-prod_123-user_123_` meaning the user owns access to this product _and_ is user_123
+  - eg: `and-exp_123-user_123_` meaning the user has access to this experience _and_ is user_123
 - an `or-` operator followed by an `<expression-list>` and terminated with an underscore `_`
-  - eg: `or-prod_123-user_123_` meaning the user owns access to this product _or_ is user_123
+  - eg: `or-exp_123-user_123_` meaning the user has access to this experience _or_ is user_123
 
 This structure is recursive meaning you can nest `and` and `or` operators as well as `not` operators. For example:
-`and-prod_123-or-not-user_123_-authorized-biz_123__`
+`and-exp_123-or-not-user_123_-authorized-biz_123__`
 would parse to:
 `and(prod_123, or(not(user_123), authorized-biz_123))`

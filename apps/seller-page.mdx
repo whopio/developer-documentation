@@ -19,46 +19,41 @@ We will start by building the **seller page.**
 
 The **seller page** is a specific page URL your app defines. Every time a company views your app from within the Whop Dashboard, they will view the **seller** page within the iFrame.
 
-1. Create a page to match this URL `/seller/$companyId/$productId`. To do this, create this file: `/app/seller/[companyId]/[productId]/page.tsx`
+1. Create a page to match this URL `/seller/$companyId/$experienceId`. To do this, create this file: `/app/seller/[companyId]/[experienceId]/page.tsx`
 
 ```bash
-mkdir app/seller && mkdir "app/seller/[companyId]" && mkdir "app/seller/[companyId]/[productId]" && touch "app/seller/[companyId]/[productId]/page.tsx"
+mkdir app/seller && mkdir "app/seller/[companyId]" && mkdir "app/seller/[companyId]/[experienceId]" && touch "app/seller/[companyId]/[experienceId]/page.tsx"
 ```
 
 To know which company is viewing the page, Whop will pass the ID as a **path parameter**. These are defined in the URL on the app settings page, which we will do later.
 
-These are all the options that you can use in the Seller Path, but for now, we will only use `companyId` and `productId`:
+These are all the options that you can use in the Seller Path, but for now, we will only use `companyId` and `experienceId`:
 
 | Parameter      | Description              |
 | -------------- | ------------------------ |
 | `companyId`    | The ID of the company    |
-| `productId`    | The ID of the product    |
 | `experienceId` | The ID of the experience |
 
-2. Add the following code to your file to read and display the company ID and product ID
+2. Add the following code to your file to read and display the company ID and experience ID
 
 ```javascript
 export default async function SellerPage({
   params,
 }: {
-  params: { companyId: string, productId: string },
+  params: { companyId: string, experienceId: string, },
 }) {
   const companyId = params.companyId;
-  const productId = params.productId;
+  const experienceId = params.experienceId;
   return (
     <div>
       <p>The company ID is: {companyId}</p>
-      <p>The product ID is: {productId}</p>
+      <p>The experience ID is: {experience}</p>
     </div>
   );
 }
 ```
 
-3. Update the Seller Path in your [app configuration](https://whop.com/apps) to be `/seller/$companyId/$productId`
-
-   <Frame>
-     <img src="https://imgur.com/V6s2qMH.png" />
-   </Frame>
+3. Update the Seller Path in your [app configuration](https://whop.com/apps) to be `/seller/$companyId/$experienceId`
 
 ## 2. Authenticate the user
 
