@@ -167,7 +167,7 @@
         {
           "group": "Notifications",
           "pages": [
-            "api-reference/v5/apps/notifications/send",
+            "api-reference/v5/apps/notifications/create-request",
             "api-reference/v5/apps/notifications/topics",
             "api-reference/v5/apps/notifications/get-topics",
             "api-reference/v5/apps/notifications/retrieve-topic"
@@ -238,6 +238,13 @@
           "pages": [
             "api-reference/v5/company/payments/list",
             "api-reference/v5/company/payments/retrieve"
+          ]
+        },
+        {
+          "group": "Reviews",
+          "pages": [
+            "api-reference/v5/company/reviews/list",
+            "api-reference/v5/company/reviews/retrieve"
           ]
         },
         {
