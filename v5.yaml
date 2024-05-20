@@ -935,7 +935,7 @@ paths:
       tags:
         - app/members
       operationId: get_api_v5_app_members_id
-      summary: Retrieve a Review
+      summary: Retrieve a Member
       parameters:
         - name: id
           in: path
