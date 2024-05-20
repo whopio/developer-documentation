@@ -136,6 +136,13 @@
           ]
         },
         {
+          "group": "Members",
+          "pages": [
+            "api-reference/v5/apps/members/list",
+            "api-reference/v5/apps/members/retrieve"
+          ]
+        },
+        {
           "group": "Memberships",
           "pages": [
             "api-reference/v5/apps/memberships/list",
