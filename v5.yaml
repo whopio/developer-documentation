@@ -960,6 +960,117 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a member
+  "/v5/app/authorized_users":
+    get:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - app/authorized_users
+      operationId: get_api_v5_app_authorized_users
+      summary: List Authorized Users
+      parameters:
+        - name: company_id
+          in: query
+          required: false
+          description: An ID of a company to filter by, which will look like biz_*************
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          required: false
+          description: An ID of a user to filter by, which will look like user_*************
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          description: A role to filter by.
+          schema:
+            type: string
+            enum:
+              - owner
+              - admin
+              - moderator
+        - name: search
+          in: query
+          required: false
+          description: A search to filter by. This will search the authorized users' name and username.
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: The page number to retrieve
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppAuthorizedUser"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a collection of Authorized Users
+  "/v5/app/authorized_users/{id}":
+    get:
+      security:
+        - ApiAuth: [ api_key, user ]
+      tags:
+        - app/authorized_users
+      operationId: get_api_v5_app_authorized_users_id
+      summary: Retrieve an Authorized User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the AuthorizedUser, which will look like ausr_*************.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppAuthorizedUser"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns an Authorized User
   "/v5/app/reviews":
     get:
       security:
@@ -3034,11 +3145,18 @@ components:
         role:
           type: string
           description: The role of the user
+        company_id:
+          type: string
+          description: The ID of the company, which will look like biz_*************
+        user:
+          $ref: "#/components/schemas/AppUser"
       required:
         - id
         - username
         - email
         - role
+        - company_id
+        - user
     AppCompany:
       type: object
       properties:
