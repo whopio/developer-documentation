@@ -991,6 +991,7 @@ paths:
               - owner
               - admin
               - moderator
+              - app_manager
         - name: search
           in: query
           required: false
@@ -2985,6 +2986,8 @@ components:
           type: string
         rest_path:
           type: string
+        increments_badge:
+          type: boolean
         targets:
           type: object
           properties:
@@ -3210,6 +3213,12 @@ components:
         app_icon_url:
           type: string
           description: The URL of the app's icon
+        access_level:
+          type: string
+          enum:
+            - public
+            - private
+          description: The access level of the experience
       required:
         - id
         - created_at
@@ -4319,6 +4328,12 @@ components:
         app_icon_url:
           type: string
           description: The URL of the app's icon
+        access_level:
+          type: string
+          enum:
+            - public
+            - private
+          description: The access level of the experience
       required:
         - id
         - created_at
@@ -4602,6 +4617,8 @@ components:
         company_buyer_id:
           type: string
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
+        billing_address:
+          $ref: "#/components/schemas/BillingAddress"
       required:
         - id
         - company_id
@@ -4763,6 +4780,12 @@ components:
         app_icon_url:
           type: string
           description: The URL of the app's icon
+        access_level:
+          type: string
+          enum:
+            - public
+            - private
+          description: The access level of the experience
       required:
         - id
         - created_at
@@ -5105,6 +5128,8 @@ components:
         company_buyer_id:
           type: string
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
+        billing_address:
+          $ref: "#/components/schemas/BillingAddress"
       required:
         - id
         - company_id
@@ -5135,6 +5160,30 @@ components:
       required:
         - id
         - username
+    BillingAddress:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The first and last name of the person
+        line1:
+          type: string
+          description: The first line of the address
+        line2:
+          type: string
+          description: The second line of the address
+        city:
+          type: string
+          description: The city of the address
+        state:
+          type: string
+          description: The state of the address
+        postal_code:
+          type: string
+          description: The postal code of the address
+        country:
+          type: string
+          description: The country of the address
 
 webhooks:
   app-membership-went-valid:
