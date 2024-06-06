@@ -4619,6 +4619,9 @@ components:
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
         billing_address:
           $ref: "#/components/schemas/BillingAddress"
+        user_email:
+          type: string
+          description: The email of the user that made the payment
       required:
         - id
         - company_id
@@ -5130,6 +5133,9 @@ components:
           description: The ID of the company that made the payment. (For example, they installed an app). Looks like biz_*************
         billing_address:
           $ref: "#/components/schemas/BillingAddress"
+        user_email:
+          type: string
+          description: The email of the user that made the payment
       required:
         - id
         - company_id
