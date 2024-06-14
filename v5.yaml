@@ -963,7 +963,7 @@ paths:
   "/v5/app/authorized_users":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - app/authorized_users
       operationId: get_api_v5_app_authorized_users
@@ -1043,7 +1043,7 @@ paths:
   "/v5/app/authorized_users/{id}":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - app/authorized_users
       operationId: get_api_v5_app_authorized_users_id
@@ -1362,7 +1362,7 @@ paths:
       responses:
         "201":
           description: A successful response
-          content: 
+          content:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotificationRequestResponse"
@@ -1377,6 +1377,32 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/NotificationRequestBody"
+  "/v5/app/notification_requests":
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/notifications
+      operationId: post_api_v5_app_notification_requests
+      summary: Create a Notification Request
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationRequestResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+      description: Send a notification to a set of targets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationRequestBody2"
   "/v5/app/payments":
     get:
       security:
@@ -1567,6 +1593,41 @@ paths:
           $ref: "#/components/responses/InvalidParameters"
 
       description: Returns a product
+  "/v5/app/users":
+    get:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/users
+      operationId: list_api_v5_app_users
+      summary: List all User
+      parameters:
+        - name: user_ids
+          in: query
+          required: true
+          description: A list of user IDs
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AppUser"
+                additionalProperties: false
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "400":
+          $ref: "#/components/responses/InvalidParameters"
+
+      description: Returns a user
   "/v5/app/users/{id}":
     get:
       security:
@@ -1703,7 +1764,7 @@ paths:
   "/v5/company/reviews":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - company/reviews
       operationId: get_api_v5_company_reviews
@@ -1782,7 +1843,7 @@ paths:
   "/v5/company/reviews/{id}":
     get:
       security:
-        - ApiAuth: [ api_key, user ]
+        - ApiAuth: [api_key, user]
       tags:
         - company/reviews
       operationId: get_api_v5_company_reviews_id
@@ -3031,6 +3092,63 @@ components:
         - topic_identifier
         - targets
         - body
+
+    NotificationRequestBody2:
+      type: object
+      properties:
+        sender_user_id:
+          type: string
+        external_id:
+          type: string
+        link:
+          type: string
+        rest_path:
+          type: string
+        target:
+          type: object
+          oneOf:
+            - required: ["experience"]
+              properties:
+                experience:
+                  type: string
+            - required: ["company"]
+              properties:
+                company:
+                  type: string
+            - required: ["company_team"]
+              properties:
+                company_team:
+                  type: string
+        body:
+          type: object
+          required:
+            - title
+            - content
+          properties:
+            title:
+              type: string
+            subtitle:
+              type: string
+            content:
+              type: string
+        topics:
+          type: array
+          items:
+            type: object
+            required:
+              - topic_identifier
+            properties:
+              topic_identifier:
+                type: string
+              users:
+                type: array
+                items:
+                  type: string
+      required:
+        - target
+        - body
+        - topics
+
     NotificationRequestResponse:
       type: object
       properties:
@@ -4622,6 +4740,9 @@ components:
         user_email:
           type: string
           description: The email of the user that made the payment
+        user_username:
+          type: string
+          description: The username of the user that made the payment
       required:
         - id
         - company_id
