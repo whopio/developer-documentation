@@ -1519,6 +1519,12 @@ paths:
           description: An ID of a company to filter by, which will look like biz_*************
           schema:
             type: string
+        - name: experience_id
+          in: query
+          required: false
+          description: An ID of an experience to filter by, which will look like exp_*************
+          schema:
+              type: string
         - name: page
           in: query
           required: false
@@ -2769,6 +2775,12 @@ paths:
           description: An ID of a product to filter by, which will look like prod_*************
           schema:
             type: string
+        - name: line_item_id
+          in: query
+          required: false
+          description: An ID of a line item to filter by, which will look like li_*************
+          schema:
+            type: string
         - name: page
           in: query
           required: false
@@ -3047,8 +3059,6 @@ components:
           type: string
         rest_path:
           type: string
-        increments_badge:
-          type: boolean
         targets:
           type: object
           properties:
