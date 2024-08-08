@@ -218,8 +218,8 @@
         {
           "group": "Feed Content Items",
           "pages": [
-            "api-reference/v5/apps/feed_content_items/create",
-            "api-reference/v5/apps/feed_content_items/delete"
+            "api-reference/v5/apps/feed-content-items/create",
+            "api-reference/v5/apps/feed-content-items/delete"
           ]
         },
         "api-reference/v5/apps/app",
