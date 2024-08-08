@@ -329,6 +329,47 @@ paths:
                   - pagination
                   - data
       description: Returns a collection of app connections
+  "/v5/app/feed_content_items":
+    post:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/feed_content_items
+      operationId: post_api_v5_app_feed_content_items
+      summary: Create a Feed Content Item
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppFeedContentItemCreateResponse"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppFeedContentItemCreateBody"
+      description: Create a Feed Content Item
+  "/v5/app/feed_content_items/{external_id}":
+    delete:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/feed_content_items
+      operationId: delete_api_v5_app_feed_content_item
+      summary: Delete a Feed Content Item
+      parameters:
+        - name: external_id
+          in: path
+          required: true
+          description: The external ID of the feed content item
+          schema:
+            type: string
+      responses:
+        "204":
+          description: A successful response
+      description: Deletes a Feed Content Item
   "/v5/app/activity_feed_items":
     post:
       security:
@@ -1302,6 +1343,7 @@ paths:
           description: A boolean to filter by valid memberships
           schema:
             type: boolean
+            default: true
         - name: page
           in: query
           required: false
@@ -1343,7 +1385,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns a collection of memberships
+      description: Returns a collection of memberships. By default, the valid filter is set to true.
   "/v5/app/memberships/{id}":
     get:
       security:
@@ -2114,6 +2156,7 @@ paths:
           description: A boolean to filter by valid memberships
           schema:
             type: boolean
+            default: true
         - name: product_id
           in: query
           required: false
@@ -2167,7 +2210,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns a collection of memberships
+      description: Returns a collection of memberships. By default, the valid filter is set to true.
   "/v5/company/memberships/{id}":
     get:
       security:
@@ -2732,6 +2775,7 @@ paths:
           description: A boolean to filter by valid memberships
           schema:
             type: boolean
+            default: true
         - name: product_id
           in: query
           required: false
@@ -2785,7 +2829,7 @@ paths:
         "400":
           $ref: "#/components/responses/InvalidParameters"
 
-      description: Returns a collection of memberships
+      description: Returns a collection of memberships. By default, the valid filter is set to true.
   "/v5/me/memberships/{id}":
     get:
       security:
@@ -3454,6 +3498,11 @@ components:
             - public
             - private
           description: The access level of the experience
+        features:
+          type: array
+          items:
+            type: string
+            description: The features enabled for the experience
       required:
         - id
         - created_at
@@ -3461,6 +3510,7 @@ components:
         - company_id
         - product_ids
         - app_id
+        - features
     AppSocialAccount:
       type: object
       properties:
@@ -3542,6 +3592,74 @@ components:
         - resource_id
         - resource_type
         - view_type
+    AppFeedContentItemCreateBody:
+      type: object
+      properties:
+        experience_id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+        user_id:
+          type: string
+          description: The ID of the user, which will look like user_*************
+        external_id:
+          type: string
+          description: The ID of the external object that this maps to, like a feed post
+        rest_path:
+          type: string
+          description: "The relative path the user should be redirected to in the app"
+        event_type:
+          type: string
+          description: "The type of event that this feed post is associated with. This is what defines the properties you are allowed to send in the metadata hash."
+          enum:
+            - generic
+          # Add other event_types for different event types
+        metadata:
+          oneOf:
+            - type: object
+              description: "Metadata schema for generic event_type"
+              properties:
+                title:
+                  type: string
+                  description: "A title for the feed content item"
+                body:
+                  type: string
+                  description: "A body for the feed content item"
+              required:
+                - title
+            # Add other schemas here for different event types
+        file_attachments:
+          type: array
+          description: The file attachments of the feed content item. This can be videos, images, or files.
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                  - image
+                  - video
+                  - file
+                description: "The type of the file"
+              file_url:
+                type: string
+                description: "The url of the file"
+            required:
+              - type
+              - file_url
+      required:
+        - experience_id
+        - user_id
+        - external_id
+        - metadata
+        - event_type
+    AppFeedContentItemCreateResponse:
+      type: object
+      properties:
+        feed_content_item_id:
+          type: string
+          description: The ID of the feed content item, which will look like fci_*************
+      required:
+        - feed_content_item_id
     AppActivityFeedItem:
       type: object
       properties:
