@@ -1,3 +1,4 @@
+
 openapi: 3.1.0
 info:
   title: Whop Apps API
@@ -650,6 +651,78 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
       description: Returns an experience
+  "/v5/app/inbound_webhooks":
+    get:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/inbound_webhooks
+      operationId: get_api_v5_app_inbound_webhooks
+      summary: List Inbound Webhooks
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to return
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+        - name: experience_id
+          in: query
+          required: true
+          description: The ID of an experience to filter by, which will look like exp_*************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppInboundWebhook"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of inbound webhooks
+    post:
+      security:
+        - ApiAuth: [ api_key ]
+      tags:
+        - app/inbound_webhooks
+      operationId: post_api_v5_app_inbound_webhooks
+      summary: Create a Inbound Webhook
+      responses:
+        "201":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppInboundWebhookCreateBody"
+
+      description: Create a Feed Content Item
+
   "/v5/app/line_items":
     post:
       security:
@@ -3592,6 +3665,21 @@ components:
         - resource_id
         - resource_type
         - view_type
+    AppInboundWebhookCreateBody:
+      type: object
+      properties:
+        filter_values:
+          type: object
+          description: The filter values of the inbound webhook
+        discord_embed:
+          type: object
+          description: The discord embed of the inbound webhook
+        idempotent_key:
+          type: string
+          description: The idempotent key of the inbound webhook
+      required:
+        - filter_values
+        - discord_embed
     AppFeedContentItemCreateBody:
       type: object
       properties:
@@ -3609,24 +3697,11 @@ components:
           description: "The relative path the user should be redirected to in the app"
         event_type:
           type: string
-          description: "The type of event that this feed post is associated with. This is what defines the properties you are allowed to send in the metadata hash."
-          enum:
-            - generic
-          # Add other event_types for different event types
+          description: "The type of event that this feed post is associated with."
         metadata:
-          oneOf:
-            - type: object
-              description: "Metadata schema for generic event_type"
-              properties:
-                title:
-                  type: string
-                  description: "A title for the feed content item"
-                body:
-                  type: string
-                  description: "A body for the feed content item"
-              required:
-                - title
-            # Add other schemas here for different event types
+          type: object
+          description: "A metadata object that can accept any properties. All metadata must include a 'title' property that is a String value."
+          additionalProperties: true
         file_attachments:
           type: array
           description: The file attachments of the feed content item. This can be videos, images, or files.
@@ -3648,7 +3723,6 @@ components:
               - file_url
       required:
         - experience_id
-        - user_id
         - external_id
         - metadata
         - event_type
@@ -4330,6 +4404,15 @@ components:
         profile_pic_url:
           type: string
           description: The URL of the user's profile picture
+        profile_pic_url_32:
+          type: string
+          description: The URL of the user's profile picture at 32x32 pixels
+        profile_pic_url_64:
+          type: string
+          description: The URL of the user's profile picture at 64x64 pixels
+        profile_pic_url_128:
+          type: string
+          description: The URL of the user's profile picture at 128x128 pixels
         created_at:
           type: number
           description: The date the user was created as a unix timestamp.
@@ -4369,6 +4452,29 @@ components:
         - company_id
         - status
         - joined_at
+    AppInboundWebhook:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The ID of the inbound webhook, which will look like inwh_*************
+          filter_values:
+            type: object
+            description: The filter values of the inbound webhook
+          discord_embed:
+            type: object
+            description: The discord embed of the inbound webhook
+          idempotent_key:
+            type: string
+            description: The idempotent key of the inbound webhook
+          created_at:
+            type: number
+            description: The date the inbound webhook was created as a unix timestamp.
+        required:
+          - id
+          - filter_values
+          - discord_embed
+          - created_at
     CompanyReview:
       type: object
       properties:
