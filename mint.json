@@ -222,6 +222,13 @@
             "api-reference/v5/apps/feed-content-items/delete"
           ]
         },
+        {
+          "group": "Inbound Webhooks",
+          "pages": [
+            "api-reference/v5/apps/inbound-webhooks/create",
+            "api-reference/v5/apps/inbound-webhooks/list"
+          ]
+        },
         "api-reference/v5/apps/app",
         "api-reference/v5/apps/access"
       ]
