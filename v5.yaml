@@ -1,4 +1,3 @@
-
 openapi: 3.1.0
 info:
   title: Whop Apps API
@@ -333,7 +332,7 @@ paths:
   "/v5/app/feed_content_items":
     post:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/feed_content_items
       operationId: post_api_v5_app_feed_content_items
@@ -355,7 +354,7 @@ paths:
   "/v5/app/feed_content_items/{external_id}":
     delete:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/feed_content_items
       operationId: delete_api_v5_app_feed_content_item
@@ -654,7 +653,7 @@ paths:
   "/v5/app/inbound_webhooks":
     get:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/inbound_webhooks
       operationId: get_api_v5_app_inbound_webhooks
@@ -701,7 +700,7 @@ paths:
       description: Returns a collection of inbound webhooks
     post:
       security:
-        - ApiAuth: [ api_key ]
+        - ApiAuth: [api_key]
       tags:
         - app/inbound_webhooks
       operationId: post_api_v5_app_inbound_webhooks
@@ -722,7 +721,122 @@ paths:
               $ref: "#/components/schemas/AppInboundWebhookCreateBody"
 
       description: Create a Feed Content Item
-
+  "/v5/app/inbound_webhook_filters":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/inbound_webhook_filters
+      operationId: get_api_v5_app_inbound_webhook_filters
+      summary: List Inbound Webhooks Filters
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: The page number to return
+          schema:
+            type: integer
+            default: 1
+        - name: per
+          in: query
+          required: false
+          description: The number of resources to return per page. There is a limit of 50 results per page.
+          schema:
+            type: integer
+            default: 10
+        - name: experience_id
+          in: query
+          required: false
+          description: The ID of an experience to filter by, which will look like exp_*************. If omitted, we will return all inbound webhook filters for the app.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AppInboundWebhookFilter"
+                additionalProperties: false
+                required:
+                  - pagination
+                  - data
+      description: Returns a collection of inbound webhook filters
+    post:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/inbound_webhook_filters
+      operationId: post_api_v5_app_inbound_webhook_filters
+      summary: Creates or updates a Inbound Webhook Filter for a given experience
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppInboundWebhookFilterCreateBody"
+      description: Create an Inbound Webhook Filter
+  "/v5/app/inbound_webhook_filters/{id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/inbound_webhook_filters
+      operationId: get_api_v5_app_inbound_webhook_filters
+      summary: Retrieve an Inbound Webhook Filter
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Inbound Webhook Filter, which will look like inwf_************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppInboundWebhookFilter"
+      description: Returns an inbound webhook filter
+  "/v5/app/inbound_webhook_filters/fetch_for_experience/{experience_id}":
+    get:
+      security:
+        - ApiAuth: [api_key]
+      tags:
+        - app/inbound_webhook_filters
+      operationId: get_api_v5_app_inbound_webhook_filters
+      summary: Retrieve an Inbound Webhook Filter
+      parameters:
+        - name: experience_id
+          in: path
+          required: true
+          description: The ID of the experience, which will look like exp_************
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppInboundWebhookFilter"
+      description: Returns an inbound webhook filter
   "/v5/app/line_items":
     post:
       security:
@@ -1381,13 +1495,13 @@ paths:
           required: false
           description: An ID of a user to filter by, which will look like user_*************
           schema:
-              type: string
+            type: string
         - name: experience_id
           in: query
           required: false
           description: An ID of an experience to filter by, which will look like exp_*************
           schema:
-              type: string
+            type: string
         - name: license_key
           in: query
           required: false
@@ -3535,10 +3649,13 @@ components:
         route:
           type: string
           description: The route to the company's first/default page
+        owner:
+          $ref: "#/components/schemas/AppUser"
       required:
         - id
         - created_at
         - title
+        - owner
     AppExperience:
       type: object
       properties:
@@ -3677,9 +3794,26 @@ components:
         idempotent_key:
           type: string
           description: The idempotent key of the inbound webhook
+        timestamp:
+          type: string
+          description: "The timestamp of the inbound webhook in ISO8601 format. Example: 2021-01-01T00:00:00Z"
       required:
         - filter_values
         - discord_embed
+        - timestamp
+    AppInboundWebhookFilterCreateBody:
+      type: object
+      properties:
+        filter_values:
+          type: object
+          description: The filter values of the inbound webhook
+        experience_id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+      required:
+        - experience_id
+        - filter_values
+
     AppFeedContentItemCreateBody:
       type: object
       properties:
@@ -3692,6 +3826,9 @@ components:
         external_id:
           type: string
           description: The ID of the external object that this maps to, like a feed post
+        parent_external_id:
+          type: string
+          description: The ID of the parent external object that this maps to, like a feed post
         rest_path:
           type: string
           description: "The relative path the user should be redirected to in the app"
@@ -3721,6 +3858,45 @@ components:
             required:
               - type
               - file_url
+        gifs:
+          type: array
+          description: Any gifs attached to the feed content item.
+          items:
+            type: object
+            properties:
+              height:
+                type: number
+                description: "The height of the gif"
+              width:
+                type: number
+                description: "The width of the gif"
+              original_url:
+                type: string
+                description: "The original url of the gif"
+              preview_url:
+                type: string
+                description: "The preview url of the gif"
+              url:
+                type: string
+                description: "The url of the gif"
+              slug:
+                type: string
+                description: "The slug of the gif"
+              title:
+                type: string
+                description: "The title of the gif"
+              provider:
+                type: string
+                description: "The provider of the gif"
+            required:
+              - height
+              - width
+              - original_url
+              - preview_url
+              - url
+              - slug
+              - title
+              - provider
       required:
         - experience_id
         - external_id
@@ -4453,28 +4629,45 @@ components:
         - status
         - joined_at
     AppInboundWebhook:
-        type: object
-        properties:
-          id:
-            type: string
-            description: The ID of the inbound webhook, which will look like inwh_*************
-          filter_values:
-            type: object
-            description: The filter values of the inbound webhook
-          discord_embed:
-            type: object
-            description: The discord embed of the inbound webhook
-          idempotent_key:
-            type: string
-            description: The idempotent key of the inbound webhook
-          created_at:
-            type: number
-            description: The date the inbound webhook was created as a unix timestamp.
-        required:
-          - id
-          - filter_values
-          - discord_embed
-          - created_at
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the inbound webhook, which will look like inwh_*************
+        filter_values:
+          type: object
+          description: The filter values of the inbound webhook
+        discord_embed:
+          type: object
+          description: The discord embed of the inbound webhook
+        idempotent_key:
+          type: string
+          description: The idempotent key of the inbound webhook
+        timestamp:
+          type: string
+          description: "The timestamp of the inbound webhook in ISO8601 format. Example: 2021-01-01T00:00:00Z"
+      required:
+        - id
+        - filter_values
+        - discord_embed
+        - created_at
+        - timestamp
+    AppInboundWebhookFilter:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the inbound webhook, which will look like inwh_*************
+        filters:
+          type: object
+          description: The values the experience will filter by
+        experience_id:
+          type: string
+          description: The ID of the experience, which will look like exp_*************
+      required:
+        - id
+        - filters
+        - experience_id
     CompanyReview:
       type: object
       properties:
