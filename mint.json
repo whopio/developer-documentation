@@ -233,7 +233,7 @@
           "group": "Inbound Webhook Filters",
           "pages": [
             "api-reference/v5/apps/inbound-webhooks-filters/create",
-            "api-reference/v5/apps/inbound-webhooks/list",
+            "api-reference/v5/apps/inbound-webhooks-filters/list",
             "api-reference/v5/apps/inbound-webhooks-filters/retrieve",
             "api-reference/v5/apps/inbound-webhooks-filters/fetch-for-experience"
           ]
