@@ -821,7 +821,7 @@ paths:
       tags:
         - app/inbound_webhook_filters
       operationId: get_api_v5_app_inbound_webhook_filters
-      summary: Retrieve an Inbound Webhook Filter
+      summary: Retrieve an Experience's Inbound Webhook Filters
       parameters:
         - name: experience_id
           in: path
@@ -3804,15 +3804,15 @@ components:
     AppInboundWebhookFilterCreateBody:
       type: object
       properties:
-        filter_values:
+        filters:
           type: object
-          description: The filter values of the inbound webhook
+          description: The filters of the inbound webhook
         experience_id:
           type: string
           description: The ID of the experience, which will look like exp_*************
       required:
         - experience_id
-        - filter_values
+        - filters
 
     AppFeedContentItemCreateBody:
       type: object
