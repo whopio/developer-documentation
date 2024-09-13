@@ -650,6 +650,40 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
       description: Returns an experience
+    patch:
+      security:
+        - ApiAuth: [api_key, user]
+      tags:
+        - app/experiences
+      operationId: patch_api_v5_app_experiences_id
+      summary: Update an Experience
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Experience, which will look like exp_*************
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppExperienceUpdateBody"
+      responses:
+        "200":
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppExperience"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+      description: Updates an experience
   "/v5/app/inbound_webhooks":
     get:
       security:
@@ -711,8 +745,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: "#/components/schemas/AppInboundWebhook"
       requestBody:
         required: true
         content:
@@ -744,12 +777,6 @@ paths:
           schema:
             type: integer
             default: 10
-        - name: experience_id
-          in: query
-          required: false
-          description: The ID of an experience to filter by, which will look like exp_*************. If omitted, we will return all inbound webhook filters for the app.
-          schema:
-            type: string
       responses:
         "200":
           description: A successful response
@@ -3353,6 +3380,16 @@ components:
         - title
         - content
 
+    AppExperienceUpdateBody:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: The metadata of the experience
+
+      required:
+        - metadata
+
     SearchDocumentCreateBody:
       type: object
       properties:
@@ -3693,6 +3730,9 @@ components:
           items:
             type: string
             description: The features enabled for the experience
+        metadata:
+          type: object
+          description: The metadata of the experience
       required:
         - id
         - created_at
@@ -3701,6 +3741,7 @@ components:
         - product_ids
         - app_id
         - features
+        - metadata
     AppSocialAccount:
       type: object
       properties:

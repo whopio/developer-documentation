@@ -132,7 +132,8 @@
           "group": "Experiences",
           "pages": [
             "api-reference/v5/apps/experiences/list",
-            "api-reference/v5/apps/experiences/retrieve"
+            "api-reference/v5/apps/experiences/retrieve",
+            "api-reference/v5/apps/experiences/update"
           ]
         },
         {
