@@ -955,7 +955,7 @@
                   "Plans"
               ],
               "summary": "Create a quick link",
-              "description": "Create a quick link (or release link) for a plan. This will copy over all data from an existing plan and make a new plan with the same data that can be used as a one-time release link. You can change the stock and metadata on the new plan.",
+              "description": "Create a quick link (or release link) for a plan. This will copy over all data from an existing plan and make a new plan with the same data that can be used as a one-time release link. You can change the stock and metadata on the new plan. Warning: You can only create up to 10,000 quick links per product.",
               "operationId": "create_quick_link",
               "parameters": [
                   {

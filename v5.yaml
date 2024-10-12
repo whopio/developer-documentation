@@ -3826,7 +3826,7 @@ components:
     AppInboundWebhookCreateBody:
       type: object
       properties:
-        filter_values:
+        filters:
           type: object
           description: The filter values of the inbound webhook
         discord_embed:
@@ -3839,7 +3839,7 @@ components:
           type: string
           description: "The timestamp of the inbound webhook in ISO8601 format. Example: 2021-01-01T00:00:00Z"
       required:
-        - filter_values
+        - filters
         - discord_embed
         - timestamp
     AppInboundWebhookFilterCreateBody:
