@@ -449,6 +449,13 @@
       ]
     },
     {
+      "group": "Payment Fees",
+      "version": "V2 API",
+      "pages": [
+        "api-reference/v2/payment-fees/list-payment-fees"
+      ]
+    },
+    {
       "group": "Promo Codes",
       "version": "V2 API",
       "pages": [
