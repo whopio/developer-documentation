@@ -2284,6 +2284,10 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/PaymentFee"
                                             }
+                                        },
+                                        "fees_sum": {
+                                            "type": "number",
+                                            "format": "float"
                                         }
                                     }
                                 }
@@ -3490,6 +3494,10 @@
                         "type": "string",
                         "description": "The ID of the Product, which will look like `prod_*************` or `pass_*************`"
                     },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the Product"
+                    },
                     "name": {
                         "type": "string",
                         "description": "The name of the Product"
@@ -3570,6 +3578,10 @@
                         "type": "string",
                         "description": "The ID of the Product, which will look like `prod_*************` or `pass_*************`"
                     },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the Product"
+                    },
                     "name": {
                         "type": "string",
                         "description": "The name of the Product"
@@ -3628,6 +3640,10 @@
                     "internal_notes": {
                         "type": "string",
                         "description": "A nickname for the Plan set by the company and not visible to the customer"
+                    },
+                    "payment_link_description": {
+                        "type": "string",
+                        "description": "The description of the Plan as seen by the customer on the checkout page"
                     },
                     "metadata": {
                         "type": "object",
@@ -3742,6 +3758,10 @@
                         "type": "number",
                         "description": "The price to be initially charged when a user first purchases the Plan",
                         "format": "float"
+                    },
+                    "payment_link_description": {
+                        "type": "string",
+                        "description": "The description of the Plan as seen by the customer on the checkout page"
                     },
                     "internal_notes": {
                         "type": "string",
@@ -4276,6 +4296,10 @@
                         "type": "string",
                         "description": "The name of the Product"
                     },
+                    "title": {
+                        "type": "string",
+                        "description": "The title of the Product"
+                    },
                     "one_per_user": {
                         "type": "boolean",
                         "description": "Whether or not a user can purchase multiple of the same Product"
@@ -4363,6 +4387,10 @@
                         "description": "The price to be initially charged when a user first purchases the Plan",
                         "format": "float"
                     },
+                    "payment_link_description": {
+                        "type": "string",
+                        "description": "The description of the Plan as seen by the customer on the checkout page"
+                    },
                     "internal_notes": {
                         "type": "string",
                         "description": "A nickname for the Plan set by the company and not visible to the customer"
@@ -4402,6 +4430,10 @@
                     "internal_notes": {
                         "type": "string",
                         "description": "A nickname for the Plan set by the company and not visible to the customer"
+                    },
+                    "payment_link_description": {
+                        "type": "string",
+                        "description": "The description of the Plan as seen by the customer on the checkout page"
                     },
                     "short_link": {
                         "type": "string",
@@ -4562,13 +4594,6 @@
                         "type": "boolean",
                         "description": "Whether or not Coinbase Commerce payments are accepted."
                     },
-                    "custom_fields": {
-                        "type": "array",
-                        "description": "An array of custom field objects.",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "expiration_days": {
                         "type": "integer",
                         "description": "The interval at which the Plan charges (expiration plans).",
@@ -4587,6 +4612,10 @@
                     "internal_notes": {
                         "type": "string",
                         "description": "A nickname for the Plan set by the company and not visible to the customer"
+                    },
+                    "payment_link_description": {
+                        "type": "string",
+                        "description": "The description of the Plan as seen by the customer on the checkout page"
                     },
                     "one_per_user": {
                         "type": "boolean",
@@ -4844,6 +4873,11 @@
                     },
                     "billing_address": {
                         "$ref": "#/components/schemas/Address"
+                    },
+                    "membership_metadata": {
+                        "type": "object",
+                        "properties": {},
+                        "description": "The metadata attached to the receipt's Membership."
                     }
                 },
                 "description": "Payment model"
@@ -5234,6 +5268,10 @@
                                 "membership_metadata_updated",
                                 "payment_succeeded",
                                 "payment_failed",
+                                "refund_created",
+                                "refund_updated",
+                                "dispute_created",
+                                "dispute_updated",
                                 "membership_cancel_at_period_end_changed",
                                 "payment_affiliate_reward_created",
                                 "membership_experience_claimed",
