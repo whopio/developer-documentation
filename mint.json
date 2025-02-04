@@ -87,7 +87,6 @@
         "apps/views",
         "apps/notifications",
         "apps/inapp-purchases",
-        "apps/metered-billing",
         {
           "group": "App Examples",
           "pages": ["apps/examples/video-app", "apps/examples/email-app"]
@@ -208,15 +207,6 @@
           ]
         },
         {
-          "group": "Billing Usages",
-          "pages": [
-            "api-reference/v5/apps/billing-usages/list",
-            "api-reference/v5/apps/billing-usages/retrieve",
-            "api-reference/v5/apps/billing-usages/create",
-            "api-reference/v5/apps/billing-usages/delete"
-          ]
-        },
-        {
           "group": "Feed Content Items",
           "pages": [
             "api-reference/v5/apps/feed-content-items/create",
@@ -276,15 +266,6 @@
           "pages": [
             "api-reference/v5/company/reviews/list",
             "api-reference/v5/company/reviews/retrieve"
-          ]
-        },
-        {
-          "group": "Billing Items",
-          "pages": [
-            "api-reference/v5/company/billing-items/create",
-            "api-reference/v5/company/billing-items/list",
-            "api-reference/v5/company/billing-items/retrieve",
-            "api-reference/v5/company/billing-items/update"
           ]
         },
         {
