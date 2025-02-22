@@ -1,13 +1,11 @@
+---
 openapi: 3.1.0
 info:
   title: Whop Apps API
   description: The Whop Apps API
   version: v5
 servers:
-  - url: https://{defaultHost}
-    variables:
-      defaultHost:
-        default: api.whop.com/api
+  - url: https://api.whop.com/api
 paths:
   "/v5/app/activity_feed_items":
     post:
@@ -1074,6 +1072,10 @@ paths:
       responses:
         "201":
           description: line item created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AppLineItem"
       requestBody:
         content:
           application/json:
@@ -1598,6 +1600,12 @@ paths:
                         items:
                           type: string
                 sender_user_id:
+                  type: string
+                external_id:
+                  type: string
+                link:
+                  type: string
+                rest_path:
                   type: string
                 target:
                   type: object
@@ -2420,6 +2428,10 @@ paths:
       responses:
         "200":
           description: membership terminated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CompanyMembership"
   "/v5/company/payments":
     get:
       summary: List Payments
@@ -2710,6 +2722,194 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/CompanyUser"
+  "/v5/feed/webhooks/{id}/execute":
+    post:
+      summary: Execute a webhook
+      tags:
+        - chat
+      description: Executes a webhook
+      operationId: post_api_v5_feed_webhooks_id_execute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the webhook
+          schema:
+            type: string
+      responses:
+        "204":
+          description: webhook execution accepted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type:
+                    - string
+                    - "null"
+                  maxLength: 4000
+                embeds:
+                  type:
+                    - array
+                    - "null"
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 152133
+                      url:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 2048
+                        format: uri
+                      title:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 256
+                      color:
+                        type:
+                          - integer
+                          - "null"
+                        minimum: 0
+                        maximum: 16777215
+                      timestamp:
+                        type:
+                          - string
+                          - "null"
+                        format: date-time
+                      description:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 4096
+                      image:
+                        oneOf:
+                          - type: "null"
+                          - type: object
+                            properties:
+                              url:
+                                type:
+                                  - string
+                                  - "null"
+                                maxLength: 2048
+                                format: uri
+                              width:
+                                type:
+                                  - integer
+                                  - "null"
+                              height:
+                                type:
+                                  - integer
+                                  - "null"
+                      thumbnail:
+                        oneOf:
+                          - type: "null"
+                          - type: object
+                            properties:
+                              url:
+                                type:
+                                  - string
+                                  - "null"
+                                maxLength: 2048
+                                format: uri
+                              width:
+                                type:
+                                  - integer
+                                  - "null"
+                              height:
+                                type:
+                                  - integer
+                                  - "null"
+                      footer:
+                        oneOf:
+                          - type: "null"
+                          - type: object
+                            properties:
+                              text:
+                                type:
+                                  - string
+                                  - "null"
+                                maxLength: 2048
+                              icon_url:
+                                type:
+                                  - string
+                                  - "null"
+                                maxLength: 2048
+                                format: uri
+                      fields:
+                        type:
+                          - array
+                          - "null"
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              maxLength: 256
+                            value:
+                              type: string
+                              maxLength: 1024
+                            inline:
+                              type:
+                                - boolean
+                                - "null"
+                          required:
+                            - name
+                            - value
+                        maxItems: 25
+                  maxItems: 10
+                attachments:
+                  type:
+                    - array
+                    - "null"
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        pattern: "^(0|[1-9][0-9]*)$"
+                        format: snowflake
+                      filename:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 1024
+                      description:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 1024
+                      duration_secs:
+                        type:
+                          - number
+                          - "null"
+                        minimum: 0
+                        maximum: 2147483647
+                        format: double
+                      waveform:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 400
+                      title:
+                        type:
+                          - string
+                          - "null"
+                        maxLength: 1024
+                      is_remix:
+                        type:
+                          - boolean
+                          - "null"
+                    required:
+                      - id
+                  maxItems: 10
   "/v5/me/companies/{id}":
     parameters:
       - name: id
@@ -3280,7 +3480,7 @@ components:
     AppToken:
       type: http
       scheme: bearer
-      description: App API key for /v5/app and /v5/company endpoints (doorkeeper token)
+      description: App API key for /v5/app and /v5/company endpoints
     AppProxyToken:
       type: http
       scheme: bearer
@@ -3289,11 +3489,11 @@ components:
     UserToken:
       type: http
       scheme: bearer
-      description: User company OAuth token for /v5/me endpoints (doorkeeper token)
+      description: User OAuth token for /v5/me endpoints
     CompanyToken:
       type: http
       scheme: bearer
-      description: Company API key for /v5/company endpoints (doorkeeper token)
+      description: Company API key for /v5/company endpoints
   schemas:
     BillingAddress:
       type: object
@@ -4937,7 +5137,9 @@ components:
           type: number
           description: The date the product was created
         name:
-          type: ""
+          type: string
+          nullable: true
+          description: This field has been deprecated. Please use 'title' instead.
         title:
           type: string
           description: The name of the product
@@ -4945,7 +5147,9 @@ components:
           type: string
           description: The ID of the company, which will look like biz_*************
         description:
-          type: ""
+          type: string
+          nullable: true
+          description: This field has been deprecated
         page_id:
           type: string
           description: The ID of the page, which will look like page_*************
@@ -4960,10 +5164,8 @@ components:
       required:
         - id
         - created_at
-        - name
         - title
         - company_id
-        - description
         - page_id
         - visibility
     MeAuthorizedUser:
