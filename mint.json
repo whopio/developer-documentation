@@ -328,6 +328,19 @@
       ]
     },
     {
+      "group": "Chat",
+      "version": "V5 API",
+      "pages": [
+        {
+          "group": "Webhooks",
+          "pages": [
+            "api-reference/v5/chat/webhooks/overview",
+            "api-reference/v5/chat/webhooks/execute"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Getting started",
       "pages": ["sdk/installation", "sdk/proxy"]
     },
@@ -432,9 +445,7 @@
     {
       "group": "Payment Fees",
       "version": "V2 API",
-      "pages": [
-        "api-reference/v2/payment-fees/list-payment-fees"
-      ]
+      "pages": ["api-reference/v2/payment-fees/list-payment-fees"]
     },
     {
       "group": "Promo Codes",
