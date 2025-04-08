@@ -1,0 +1,45 @@
+---
+title: Get an API Key
+description: You can either get your own API key to automate your own user account, or you can oauth another user to make calls on behalf of their user.
+---
+
+
+You have two options when getting a key to make API calls:
+- **Your own API key**: Personal, secure, for automating your account.
+- **Another user's API key**: Requires permission, for accessing and managing another user's account.
+
+### Getting your own API key
+
+To retrieve your own API key, visit your profile at [https://whop.com/@me](https://whop.com/@me). Once logged in, navigate to the 'API Keys' section and click on 'Generate New Key'. Your new API key will be displayed. Make sure to store it securely.
+
+### Getting another user's API key
+
+To generate an OAuth link for another user, use the following endpoint:
+
+```
+POST https://api.whop.com/oauth/authorize
+```
+
+Include the following parameters in your request:
+
+- `client_id`: Your application's client ID.
+- `redirect_uri`: The URL to redirect the user after authorization.
+- `response_type`: Set this to `code`.
+- `scope`: Specify the permissions your application needs.
+
+Example request:
+
+```
+POST https://api.whop.com/oauth/authorize
+Content-Type: application/json
+
+{
+  "client_id": "your-client-id",
+  "redirect_uri": "https://yourapp.com/callback",
+  "response_type": "code",
+  "scope": "read write"
+}
+```
+
+After the user authorizes your application, they will be redirected to your specified `redirect_uri` with an authorization code. Use this code to request an access token.
+

@@ -1,0 +1,73 @@
+---
+title: Build an App Interface
+description: Learn how to build an interface for your app using Whop's chat or by embedding a full web app.
+---
+
+
+
+### Option 1: Use Whop's Chat as a UI
+
+This option allows users to interact with your app through chat. It's ideal for agent-based applications.
+
+- **Listen to Messages**: Subscribe to a feed ID to receive messages.
+  
+  Mock GraphQL Endpoint:
+  ```graphql
+  subscription {
+    listenToMessages(feedID: "your-feed-id") {
+      message
+      sender
+      timestamp
+    }
+  }
+  ```
+
+- **Send Messages**: Send messages to a specific feed ID.
+  
+  Mock GraphQL Endpoint:
+  ```graphql
+  mutation {
+    sendMessage(feedID: "your-feed-id", message: "Hello, World!") {
+      success
+      messageID
+    }
+  }
+  ```
+
+- **Fetch All Messages**: Retrieve all messages from a feed.
+  
+  Mock GraphQL Endpoint:
+  ```graphql
+  query {
+    fetchAllMessages(feedID: "your-feed-id") {
+      messages {
+        message
+        sender
+        timestamp
+      }
+    }
+  }
+  ```
+
+### Option 2: Build a Full Web App
+
+Create a full web app that embeds into Whop.com on both mobile and web platforms. This option provides more control over the UI and automatically includes basic profile information of users accessing your app.
+
+- **Best For**: Games, tools, and custom experiences.
+- **User Profile Access**: Automatically receive basic user profile info to render in your UI.
+
+## Setting Up Your App
+
+To set up your app on Whop, follow these steps:
+
+1. **Go to Your Profile**: Log in to your Whop account and navigate to your profile.
+
+2. **Access Developer Settings**: Click on the 'Developer' tab to access developer settings.
+
+3. **Create Your App**: Click on 'Create App' and fill in the necessary details, including the base URL of your app. You can use localhost to test your app locally.
+
+4. **Fetch User Information**: In your app, fetch the cookie named `whop-cookie` to access custom user information. This cookie contains the basic profile info of users accessing your app, allowing you to personalize their experience.
+
+Currently, embedded apps are in private beta. If you would like to build an embedded app to live throughout the Whop platform and touch millions of monthly users, please join the waitlist here https://whop.com/whop-developer-program/
+
+Choose the option that best fits your app's needs and start cooking shit up today!

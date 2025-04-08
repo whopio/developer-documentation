@@ -1,0 +1,48 @@
+---
+title: Make a call
+description: Make calls on behalf of another user.
+---
+
+## Using Your API Key to Make API Calls
+
+Once you have [obtained your API key](/instructions/get-api-key), you can use it to interact with the Whop API endpoints listed in the GraphQL documentation at [graphql.whop.tech](https://graphql.whop.tech).
+
+### Making a GraphQL API Call
+
+1. **Set Up Your Environment**: Ensure you have a tool or library to make HTTP requests, such as `curl`, Postman, or a GraphQL client in your preferred programming language.
+
+2. **Prepare Your Request**:
+   - **Endpoint**: Use the GraphQL endpoint `https://api.whop.com/graphql`.
+   - **Headers**: Include your API key in the headers to authenticate your request.
+     ```
+     Authorization: Bearer YOUR_API_KEY
+     Content-Type: application/json
+     ```
+
+3. **Craft Your Query**: Write your GraphQL query or mutation. For example, to retrieve user data:
+   ```graphql
+   query {
+     user {
+       id
+       name
+       email
+     }
+   }
+   ```
+
+4. **Send the Request**: Use your tool to send the request to the GraphQL endpoint.
+
+5. **Handle the Response**: Process the response from the server, which will include the data requested or any errors encountered.
+
+### Example Request Using `curl`
+
+```bash
+curl -X POST https://api.whop.com/graphql \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{ "query": "query { user { id name email } }" }'
+```
+
+This example demonstrates how to make a simple API call to retrieve user information using your API key. Adjust the query and headers as needed for different endpoints and data requirements.
+
+

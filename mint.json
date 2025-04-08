@@ -65,20 +65,20 @@
       "pages": ["introduction"]
     },
     {
-      "group": "What can I sell with Whop?",
+      "group": "What can I build with Whop API?",
       "pages": [
-        {
-          "group": "Whop Apps",
-          "pages": [
-            "apps/overview",
-            "apps/create-an-app",
-            "apps/seller-page",
-            "apps/customer-page",
-            "apps/deploying"
-          ]
-        },
-        "license-keys",
-        "oauth"
+        "agentic-businesses",
+        "saas",
+        "frontends"
+      ]
+    },
+    {
+      "group": "Instructions",
+      "pages": [
+        "instructions/get-api-key",
+        "instructions/make-a-call",
+        "instructions/build-app-interface",
+        "instructions/request-payment"
       ]
     },
     {
