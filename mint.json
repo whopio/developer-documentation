@@ -65,7 +65,7 @@
       "pages": ["introduction"]
     },
     {
-      "group": "What can I build with Whop API?",
+      "group": "What can I build on Whop?",
       "pages": [
         "agentic-businesses",
         "saas",
@@ -82,18 +82,6 @@
       ]
     },
     {
-      "group": "Whop App Guides",
-      "pages": [
-        "apps/views",
-        "apps/notifications",
-        "apps/inapp-purchases",
-        {
-          "group": "App Examples",
-          "pages": ["apps/examples/video-app", "apps/examples/email-app"]
-        }
-      ]
-    },
-    {
       "group": "Webhooks",
       "pages": [
         "webhooks",
@@ -102,10 +90,6 @@
           "pages": ["webhooks/v5", "webhooks/v2"]
         }
       ]
-    },
-    {
-      "group": "More",
-      "pages": ["templates", "contribution", "branding"]
     },
     {
       "group": "API Documentation",

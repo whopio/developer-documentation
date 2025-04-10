@@ -1,45 +1,23 @@
 ---
 title: Get an API Key
-description: You can either get your own API key to automate your own user account, or you can oauth another user to make calls on behalf of their user.
+description: All requests to Whop APIs are managed using a secure API key. 
 ---
 
+All API calls are authenticated using either an App API key or a Company API key:
+- **Apps API**: Lets you create applications that other people can use and you can monetize as a developer. Best for building agents, tools and experiences for other people on the Whop platform.
+- **Company API**: Best for when you want to automate your own creator account or sync payments/crm data to your internal systems.
 
-You have two options when getting a key to make API calls:
-- **Your own API key**: Personal, secure, for automating your account.
-- **Another user's API key**: Requires permission, for accessing and managing another user's account.
 
-### Getting your own API key
+### Getting your App API Key
 
-To retrieve your own API key, visit your profile at [https://whop.com/@me](https://whop.com/@me). Once logged in, navigate to the 'API Keys' section and click on 'Generate New Key'. Your new API key will be displayed. Make sure to store it securely.
+1. Create a user account on https://whop.com/login, navigate to https://whop.com/@me, and enable developer mode in the bottom right corner.
+2. Go to whop.new to create a new Organization that will hold your app. (If you are already a creator on Whop, you can skip this step and use your existing organization)
+3. Go to https://whop.com/dashboard, click **"New whop"**, check the **"Make this an App"** box, and give your app a name.
+4. On the App detail view, click the "Api keys" tab and copy your API key to your clipboard.
 
-### Getting another user's API key
+### Getting your Company API Key
 
-To generate an OAuth link for another user, use the following endpoint:
-
-```
-POST https://api.whop.com/oauth/authorize
-```
-
-Include the following parameters in your request:
-
-- `client_id`: Your application's client ID.
-- `redirect_uri`: The URL to redirect the user after authorization.
-- `response_type`: Set this to `code`.
-- `scope`: Specify the permissions your application needs.
-
-Example request:
-
-```
-POST https://api.whop.com/oauth/authorize
-Content-Type: application/json
-
-{
-  "client_id": "your-client-id",
-  "redirect_uri": "https://yourapp.com/callback",
-  "response_type": "code",
-  "scope": "read write"
-}
-```
-
-After the user authorizes your application, they will be redirected to your specified `redirect_uri` with an authorization code. Use this code to request an access token.
+1. Go to https://whop.com/dashboard.
+2. Navigate to Settings -> API keys.
+3. Click the Create API Key button.
 
