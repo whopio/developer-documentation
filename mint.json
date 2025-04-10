@@ -92,7 +92,11 @@
     },
     {
       "group": "GraphQL API",
-      "pages": ["api-reference/graphql/authentication", "api-reference/graphql/schema"],
+      "pages": [
+        "api-reference/graphql/authentication",
+        "api-reference/graphql/schema",
+        "api-reference/graphql/rate-limits"
+      ],
       "version": "GraphQL API"
     },
     {
