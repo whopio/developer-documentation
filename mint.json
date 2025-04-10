@@ -30,7 +30,7 @@
       "to": "#ff6423"
     }
   },
-  "versions": ["V2 API", "V5 API"],
+  "versions": ["V2 API", "V5 API", "GraphQL API"],
   "topbarCtaButton": {
     "name": "Start Building",
     "url": "https://whop.com/apps"
@@ -89,6 +89,11 @@
           "pages": ["webhooks/v5", "webhooks/v2"]
         }
       ]
+    },
+    {
+      "group": "GraphQL API",
+      "pages": ["api-reference/graphql/authentication", "api-reference/graphql/schema"],
+      "version": "GraphQL API"
     },
     {
       "group": "API Documentation",
