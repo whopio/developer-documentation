@@ -19,7 +19,7 @@ I'll be using Python and FastAPI for these examples, but you can use any languag
 
 Before we get started, you'll need to get an API key for your Whop. If you do not have a Whop already, create one [here](https://whop.com/new/).
 
-Then get the API key and App ID. Instructions available [here](/instructions/get-api-key).
+Then get the API key for your agent. Instructions available [here](/instructions/get-api-key).
 
 ---
 
@@ -228,7 +228,7 @@ payload = {
     "query": full_query,
     "variables": {
         "input": {
-            "appId": WHOP_APP_ID,
+            "appId": "app_xml5hbizmZPgUT",  # the Chat app that handles DMs for Whop, use this app ID
             "dmsPosts": [
                 {
                     "feedId": feed_id,
