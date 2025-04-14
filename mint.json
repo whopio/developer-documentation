@@ -81,6 +81,12 @@
       ]
     },
     {
+      "group": "Examples",
+      "pages": [
+        "examples/chatbot"
+      ]
+    },
+    {
       "group": "Webhooks",
       "pages": [
         "webhooks",
