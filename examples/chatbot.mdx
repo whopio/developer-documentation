@@ -233,8 +233,8 @@ payload = {
                 {
                     "feedId": feed_id,
                     "feedType": "dms_feed",
-                    "content": plain_text[:4096], # there is a limit on len(content), but not on len(richContent)
-                    "richContent": rich_content,  # richContent is what is actually displayed in the UI
+                    "content": response[:4096], # there is a limit on len(content), but not on len(richContent)
+                    "richContent": response_formatted,  # richContent is what is actually displayed in the UI
                     "id": post_id,
                 }
             ],
