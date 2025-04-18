@@ -157,87 +157,20 @@ Great! Now we've fetched the latest DM, seen if it's from the other user, and if
 
 ### **Step 5: Sending the response back to Whop**
 
-We're almost ready to send the response back to Whop. We just need to format the response in the correct way. We'll need a couple of helper methods in order to do this.
-
-First, we need to use a specific rich content format for the response. Below is a helper method that formats a (plaintext) string into the correct format.
+Let's send the response back to Whop.
 
 ```python
-def to_rich_tiptap_format(input_string: str) -> str:
-    tiptap = {
-        "attrs": {"is_streamed_node": False},
-        "type": "doc",
-        "content": [
-            {
-                "content": [{"marks": [], "type": "text", "text": input_string}],
-                "type": "paragraph",
-            }
-        ],
-    }
-    return json.dumps(tiptap)
-```
-
-```python
-response_formatted = to_rich_tiptap_format(response)
-```
-
-We also need a specific ID format in order to work with Whop. Below is a method that helps us generate this.
-
-```python
-import secrets
-import struct
-import time
-
-def base58_encode_16_bytes(data: bytes) -> str:
-    base58_alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-    int_data = int.from_bytes(data, byteorder="big")
-    result = ""
-    while int_data > 0:
-        int_data, remainder = divmod(int_data, 58)
-        result = base58_alphabet[remainder] + result
-    result = "1" * (22 - len(result)) + result
-    return result
-
-
-def generate_feed_temporal_id() -> str:
-    time_bytes = 6
-    total_bytes = 16
-    actual_timestamp = int(time.time() * 1000)
-    timestamp_bytes = struct.pack(">Q", actual_timestamp)[-time_bytes:]
-    random_bytes = secrets.token_bytes(total_bytes - time_bytes)
-    id_bytes = timestamp_bytes + random_bytes
-    id_str = base58_encode_16_bytes(id_bytes)
-    return f"feed_{id_str}"
-```
-
-```python
-post_id = generate_feed_temporal_id()
-```
-
-Now, we should be able to send the response back to Whop.
-
-```python
-full_query = """mutation ProcessEntities($input: ProcessEntitiesInput!) {
-    processEntities(input: $input) {
-        entities {
-            id
-        }
-    }
+full_query = """mutation sendMessage($input: SendMessageInput!) {
+	sendMessage(input: $input)
 }"""
 
 payload = {
     "query": full_query,
     "variables": {
         "input": {
-            "appId": "app_xml5hbizmZPgUT",  # the Chat app that handles DMs for Whop, use this app ID
-            "dmsPosts": [
-                {
-                    "feedId": feed_id,
-                    "feedType": "dms_feed",
-                    "content": response[:4096], # there is a limit on len(content), but not on len(richContent)
-                    "richContent": response_formatted,  # richContent is what is actually displayed in the UI
-                    "id": post_id,
-                }
-            ],
+            "feedId": feed_id,
+            "feedType": "dms_feed",
+            "message": response
         }
     },
 }
