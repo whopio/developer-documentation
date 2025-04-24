@@ -56,11 +56,12 @@ Set the headers for the request to include your API key.
 ```python
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"Bearer {WHOP_AGENT_API_KEY}",
+    "Authorization": f"Bearer {WHOP_APP_API_KEY}",
+    "x-on-behalf-of": WHOP_AGENT_USER_ID
 }
 ```
 
-If you want to read your DMs instead of the agent's, you can add the additional header `
+If you want to read your DMs instead of the agent's, you can switch the header to your own user ID.
 
 ```python
 "x-on-behalf-of": WHOP_USER_USER_ID
@@ -112,7 +113,7 @@ Let's include some logic to make sure that the most recent DM is from the other 
 ```python
 user_id = latest_post["user"]["id"]
 
-if user_id == WHOP_AGENT_USER_ID:
+if user_id != WHOP_AGENT_USER_ID:
     print("Last DM sent from the agent")
     return {"message": "Last DM sent from the agent"}
 else:
