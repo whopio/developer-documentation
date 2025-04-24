@@ -119,8 +119,8 @@ mutation updateAccessPass {
 Post picks to live chat for active users:
 
 ```graphql
-mutation createChatMessage {
-  createChatMessage(input: { 
+mutation sendMessage {
+  sendMessage(input: { 
     experienceId: "EXPERIENCE_ID", 
     message: "🚨 Locking in Suns ML tonight. Anyone riding?"
   }) {
@@ -154,9 +154,9 @@ mutation createContentRewardsCampaign($input: CreateCampaignInput!) {
 Optional — follow up with engaged users.
 
 ```graphql
-mutation sendDirectMessage {
-  sendDirectMessage(input: { 
-    userId: "user_123", 
+mutation sendMessage {
+  sendMessage(input: { 
+    toUserId: "user_123", 
     message: "Saw you hit last night's parlay — appreciate you being here 🎯" 
   }) {
     id
@@ -168,9 +168,8 @@ mutation sendDirectMessage {
 
 ## Next Steps
 
-- Try building a [Daily Sports Pick bot](#daily-sports-picks)  
+- Try building an [agentic chatbot](/examples/chatbot)
 - Read more about [SaaS tools](https://docs.whop.com/saas)  
 - Learn about [OAuth apps](https://docs.whop.com/oauth)  
 
 Have questions? Post in the Whop Dev Forum.
-
