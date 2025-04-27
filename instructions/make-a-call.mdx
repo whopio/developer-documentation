@@ -5,7 +5,7 @@ description: Make calls to the Whop API.
 
 # Using Your API Key to Make API Calls
 
-Once you have [obtained your API key](/instructions/get-api-key), you can use it to interact with the Whop API endpoints listed in the GraphQL documentation on the [Apollo Studio Explorer](https://studio.apollographql.com/public/whop-public-gql/variant/current/explorer).
+Once you have [obtained your App API key](/instructions/get-api-key), you can use it to interact with the Whop API endpoints listed in the GraphQL documentation on the [Apollo Studio Explorer](https://studio.apollographql.com/public/whop-public-gql/variant/current/explorer).
 
 ## Making a GraphQL API Call
 
@@ -44,6 +44,9 @@ This header specifies a Company to target when making requests to the GraphQL AP
 Whenever you are making requests that involve managing a creators' whops, you'll need to supply this ID.
 For example, when using the `createPlan`, `createAccessPass`, or `refundReceipt` mutations. The user you are making
 requests for needs to be an owner / team member of the specified company in order for the API calls to succeed.
+
+##### `Authorization: Bearer YOUR_API_KEY`
+This header specifies the API key you are using to make requests. This should be an App API key.
 
 ### 3. Craft Your Query
 
