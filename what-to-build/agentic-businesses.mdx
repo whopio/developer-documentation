@@ -85,7 +85,7 @@ mutation createForumPost {
   createForumPost(input: { 
     experienceId: "exp_123",
     title: "April 3rd Picks: NBA + MLB",
-    body: "🏀 Suns ML, 📈 Over 213.5 in Knicks game. MLB: Take Braves -1.5"
+    body: "Suns ML, Over 213.5 in Knicks game. MLB: Take Braves -1.5"
   }) {
     id
   }
@@ -122,7 +122,7 @@ Post picks to live chat for active users:
 mutation sendMessage {
   sendMessage(input: { 
     experienceId: "EXPERIENCE_ID", 
-    message: "🚨 Locking in Suns ML tonight. Anyone riding?"
+    message: "Locking in Suns ML tonight. Anyone riding?"
   }) {
     id
   }
@@ -157,7 +157,7 @@ Optional — follow up with engaged users.
 mutation sendMessage {
   sendMessage(input: { 
     toUserId: "user_123", 
-    message: "Saw you hit last night's parlay — appreciate you being here 🎯" 
+    message: "Saw you hit last night's parlay — appreciate you being here" 
   }) {
     id
   }
