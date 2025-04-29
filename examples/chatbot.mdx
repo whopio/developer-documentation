@@ -23,31 +23,7 @@ Then get the API key for your agent. Instructions available [here](/instructions
 
 ---
 
-### **Step 2: Install FastAPI and set up a basic server**
-
-```bash
-pip install "fastapi[standard]"
-```
-
-```python
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-```
-
-```bash
-fastapi dev main.py
-```
-
-At this point, you should be able to see the "Hello World" message by going to `http://127.0.0.1:8000/`. Alternatively, you can query the API using a tool like [Insomnia](https://insomnia.rest/).
-
----
-
-### **Step 3: Read DMs on demand**
+### **Step 2: Read DMs on demand**
 
 Choose which DMs feed you want to read. We'll need the `id` of the feed, which you can find in the URL of the feed. Feed IDs are formatted like this: `feed_123`.
 
@@ -122,7 +98,7 @@ else:
 
 ---
 
-### **Step 4: Generate a response**
+### **Step 3: Generate a response**
 
 Connect to an LLM to generate a response to the DM. In this example, we'll use the `openai` library.
 
@@ -156,7 +132,7 @@ Great! Now we've fetched the latest DM, seen if it's from the other user, and if
 
 ---
 
-### **Step 5: Sending the response back to Whop**
+### **Step 4: Sending the response back to Whop**
 
 Let's send the response back to Whop.
 
