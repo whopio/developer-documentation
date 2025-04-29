@@ -1,0 +1,198 @@
+---
+title: Chatbot
+description: "Build an application on Whop that can respond to its own DMs."
+---
+
+---
+
+## Building a chatbot
+
+We'll build an agentic Whop application that plugs into the API in order to manage a user's DMs. At the end of this tutorial, you'll have a good idea of how to interact with the DM API.
+
+You can use this application to either manage the agent's own DMs, or to manage your own DMs on your behalf.
+
+I'll be using Python and FastAPI for these examples, but you can use any language you want.
+
+---
+
+### **Step 1: Get your API key**
+
+Before we get started, you'll need to get an API key for your Whop. If you do not have a Whop already, create one [here](https://whop.com/new/).
+
+Then get the API key for your agent. Instructions available [here](/instructions/get-api-key).
+
+---
+
+### **Step 2: Install FastAPI and set up a basic server**
+
+```bash
+pip install "fastapi[standard]"
+```
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+```
+
+```bash
+fastapi dev main.py
+```
+
+At this point, you should be able to see the "Hello World" message by going to `http://127.0.0.1:8000/`. Alternatively, you can query the API using a tool like [Insomnia](https://insomnia.rest/).
+
+---
+
+### **Step 3: Read DMs on demand**
+
+Choose which DMs feed you want to read. We'll need the `id` of the feed, which you can find in the URL of the feed. Feed IDs are formatted like this: `feed_123`.
+
+Set the headers for the request to include your API key.
+
+```python
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {WHOP_APP_API_KEY}",
+    "x-on-behalf-of": WHOP_AGENT_USER_ID
+}
+```
+
+If you want to read your DMs instead of the agent's, you can switch the header to your own user ID.
+
+```python
+"x-on-behalf-of": WHOP_USER_USER_ID
+```
+
+Now, we can read fetch a DM.
+
+```python
+full_query = """query DmsFeedData($feedId: ID!, $postsLimit: Int!) {
+    dmsFeedData(feedId: $feedId, postsLimit: $postsLimit) {
+          posts {
+            content
+            user {
+                username
+                id
+            }
+        }
+    }
+}"""
+
+payload = {
+    "query": full_query, 
+    "variables": {
+        "feedId": feed_id, 
+        "postsLimit": 1
+    }
+}
+
+response = requests.post(
+    "https://api.whop.com/public-graphql", headers=headers, json=payload
+)
+response_json = response.json()
+print(response_json)
+
+if len(response_json["data"]["dmsFeedData"]["posts"]) > 0:
+    latest_post = response_json["data"]["dmsFeedData"]["posts"][0]
+    message_content = latest_post["content"]
+    print(latest_post)
+else:
+    print("No DMs found")
+```
+
+This will fetch the most recent DM from the feed. You can change the `postsLimit` to fetch more or fewer DMs.
+
+We are fetching the content of the most recent DM, as well as the user that sent it's username and ID. There are many more fields available, you can see the full list [here](https://studio.apollographql.com/public/whop-public-gql/variant/current/schema/reference/objects/DmsPost).
+
+Let's include some logic to make sure that the most recent DM is from the other user.
+
+```python
+user_id = latest_post["user"]["id"]
+
+if user_id != WHOP_AGENT_USER_ID:
+    print("Last DM sent from the agent")
+    return {"message": "Last DM sent from the agent"}
+else:
+    print("Last DM sent from the user, continuing...")
+```
+
+---
+
+### **Step 4: Generate a response**
+
+Connect to an LLM to generate a response to the DM. In this example, we'll use the `openai` library.
+
+```bash
+pip install openai
+```
+
+```bash
+export OPENAI_API_KEY="sk-proj-..."
+```
+
+```python
+from openai import OpenAI
+client = OpenAI()
+
+completion = client.chat.completions.create(
+    model="gpt-4.1",
+    messages=[
+        {
+            "role": "user",
+            "content": message_content
+        }
+    ]
+)
+
+response = completion.choices[0].message.content
+print(response)
+```
+
+Great! Now we've fetched the latest DM, seen if it's from the other user, and if so, generated a response.
+
+---
+
+### **Step 5: Sending the response back to Whop**
+
+Let's send the response back to Whop.
+
+```python
+full_query = """mutation sendMessage($input: SendMessageInput!) {
+	sendMessage(input: $input)
+}"""
+
+payload = {
+    "query": full_query,
+    "variables": {
+        "input": {
+            "feedId": feed_id,
+            "feedType": "dms_feed",
+            "message": response
+        }
+    },
+}
+
+response = requests.post(
+    "https://api.whop.com/public-graphql", 
+    headers=headers,    # use the same headers as before
+    json=payload
+)
+```
+
+And we're done! You should see your response in the DM feed.
+
+Any time you want to send a response, you run this script.
+
+---
+
+## Next Steps
+
+What we've built is still pretty manual. We're reading the DMs on demand, and sending a response each time.
+
+We can plug into websockets to get real-time updates on DMs, and send responses as they come in, so no manual polling is needed.
+
+More docs on how to do this coming soon!
