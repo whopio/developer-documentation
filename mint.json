@@ -67,8 +67,7 @@
       "group": "What to build?",
       "pages": [
         "what-to-build/agentic-businesses",
-        "what-to-build/saas",
-        "what-to-build/frontends"
+        "what-to-build/saas"
       ]
     },
     {
