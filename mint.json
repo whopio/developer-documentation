@@ -75,7 +75,6 @@
       "pages": [
         "instructions/get-api-key",
         "instructions/create-agent-user",
-        "instructions/create-app-views",
         "instructions/make-a-call",
         "instructions/build-app-interface"
       ]
