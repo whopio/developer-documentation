@@ -65,7 +65,11 @@
     },
     {
       "group": "Guides",
-      "pages": ["what-to-build/agentic-businesses", "what-to-build/web-apps"]
+      "pages": [
+        "what-to-build/agentic-businesses",
+        "what-to-build/web-apps",
+        "what-to-build/webhooks"
+      ]
     },
     {
       "group": "Templates",
