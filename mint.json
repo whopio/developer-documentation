@@ -69,7 +69,7 @@
     },
     {
       "group": "Templates",
-      "pages": ["examples/chatbot", "examples/flappy-bird", "examples/ai-chat"]
+      "pages": ["examples/chatbot", "examples/flappy-bird"]
     },
     {
       "group": "GraphQL API",
