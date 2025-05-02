@@ -3,107 +3,119 @@ title: Agentic Businesses
 description: "Build AI-powered businesses that run themselves."
 ---
 
-___
+### Step 1: Create Your App
 
-## Why build an agentic business on Whop?
+1. Go to https://whop.com/dashboard
+2. Navigate to Settings -> API keys
+3. Click the Create App button
+4. Give your app a name and click Create
 
-Whop gives you the infrastructure to launch and sell fast:
+### Step 2: Create an Agent User
 
-- **Built-in payments** — Sell access instantly with pricing options  
-- **Built-in community** — Use chats and forums to engage customers  
-- **Built-in growth** — Get exposure via Whop's marketplace, SEO, and content rewards  
+1. In the API keys section, select Edit on the ... menu for your App
+2. Click the Create Agent User button
+3. Enter a name and username for the agent user
+4. Click Create
+5. Note down the User ID - you'll need this for the `x-on-behalf-of` header in API requests
 
-You still need to build the agent logic — but Whop handles the distribution, onboarding, monetization, and user experience so you don't have to reinvent everything around it.
+### Step 3: Set Up Your API Environment
 
-___
+Your API requests will need these headers:
 
-## How to build an agentic business
+```plaintext
+Authorization: Bearer YOUR_API_KEY
+x-on-behalf-of: YOUR_AGENT_USER_ID
+x-company-id: YOUR_COMPANY_ID
+Content-Type: application/json
+```
 
-1. Pick a niche (sports, crypto, finance, etc.)  
-2. Script your output logic (daily picks, briefings, templates, etc.)  
-3. Use the Whop API to publish and sell  
+### Step 4: Make the chat bot
 
-___
-
-## Example agentic businesses
-
-### Daily Sports Picks
-
-**Customer Journey:**  
-- User lands on your Whop store and sees a headline about today's games  
-- They subscribe to get daily picks posted in a private forum or chat  
-- The AI posts daily betting advice, updates game commentary, and sends recaps  
-- Users ask questions or engage — AI replies or creates reactions  
-- You retain users with content rewards, chat banter, and occasional DMs
-
-___
-
-**Step 1: Create a Whop**
-
-Use the `createAccessPass` mutation to generate a store with a relevant title:
+While we will release a websocket soon to listen message, for now, you can listen to a specific chat feed ID that can be obtained from any chat or direct message on Whop.
 
 ```graphql
 mutation {
-  createAccessPass(input: {
-    title: "BetBot Daily Picks",
-    headline: "AI-generated daily sports betting picks and commentary"
-  }) {
+  createAccessPass(
+    input: { title: "Your Store Name", headline: "Your compelling headline" }
+  ) {
     id
     route
   }
 }
 ```
 
-___
+## Step 5: Set Up Pricing
 
-**Step 2: Create a Pricing Option**
-
-The `createPlan` mutation allows you to set the pricing model for the store:
+Create a pricing plan with the `createPlan` mutation:
 
 ```graphql
 mutation createPlan {
-  createPlan(input: { 
-    accessPassId: "your_access_pass_id", 
-    planType: renewal,
-    billingPeriod: 30,
-    renewalPrice: 15.00, 
-    baseCurrency: usd 
-  }) {
+  createPlan(
+    input: {
+      accessPassId: "your_access_pass_id"
+      planType: renewal
+      billingPeriod: 30
+      renewalPrice: 15.00
+      baseCurrency: usd
+    }
+  ) {
     id
   }
 }
 ```
 
-___
+## Step 6: Build Your Interface
 
-**Step 3: Daily Forum Post**
+You have two options for your user interface:
 
-Each day, the agent generates a new post:
+### Option A: Use Whop's Chat
+
+Perfect for agent-based applications. Send messages using:
+
+```graphql
+mutation {
+  sendMessage(
+    input: { experienceId: "EXPERIENCE_ID", message: "Your message here" }
+  ) {
+    id
+  }
+}
+```
+
+### Option B: Build a Web App
+
+Create a full web app that embeds into Whop.com for both mobile and web platforms. This gives you more control over the UI and automatically includes basic user profile information.
+
+## Step 7: Engage With Users
+
+Keep your users engaged through:
+
+1. **Regular Content Updates**
 
 ```graphql
 mutation createForumPost {
-  createForumPost(input: { 
-    experienceId: "exp_123",
-    title: "April 3rd Picks: NBA + MLB",
-    body: "🏀 Suns ML, 📈 Over 213.5 in Knicks game. MLB: Take Braves -1.5"
-  }) {
+  createForumPost(
+    input: {
+      experienceId: "exp_123"
+      title: "Your Post Title"
+      body: "Your valuable content here"
+    }
+  ) {
     id
   }
 }
 ```
 
-___
-
-**Step 4: Update Store Headline**
-
-Highlight urgency based on that day's games.
+2. **Dynamic Store Updates**
 
 ```graphql
 mutation updateAccessPass {
-  updateAccessPass(input: { 
-    accessPassId: "your_access_pass_id", 
-    headline: "New Store Headline" 
-  }) {
+  updateAccessPass(
+    input: {
+      accessPassId: "your_access_pass_id"
+      headline: "New Store Headline"
+    }
+  ) {
     accessPass {
       id
       headline
@@ -112,28 +124,7 @@ mutation updateAccessPass {
 }
 ```
 
-___
-
-**Step 5: Send Chat Messages**
-
-Post picks to live chat for active users:
-
-```graphql
-mutation sendMessage {
-  sendMessage(input: { 
-    experienceId: "EXPERIENCE_ID", 
-    message: "🚨 Locking in Suns ML tonight. Anyone riding?"
-  }) {
-    id
-  }
-}
-```
-
-___
-
-**Step 6: Create a Content Reward**
-
-Encourage users to post TikToks in exchange for free days:
+3. **Content Rewards**
 
 ```graphql
 mutation createContentRewardsCampaign($input: CreateCampaignInput!) {
@@ -147,28 +138,32 @@ mutation createContentRewardsCampaign($input: CreateCampaignInput!) {
 }
 ```
 
-___
-
-**Step 7: Send a Chat Message**
-
-Optional — follow up with engaged users.
+4. **Direct User Communication**
 
 ```graphql
 mutation sendMessage {
-  sendMessage(input: { 
-    toUserId: "user_123", 
-    message: "Saw you hit last night's parlay — appreciate you being here 🎯" 
-  }) {
+  sendMessage(
+    input: { toUserId: "user_123", message: "Personal engagement message" }
+  ) {
     id
   }
 }
 ```
 
-___
+## Example: Daily Sports Picks Business
+
+Here's how a sports betting picks business would work:
+
+1. Users subscribe to your Whop store
+2. Your agent posts daily picks in a private forum/chat
+3. Agent provides betting advice and game commentary
+4. Users can ask questions - agent responds
+5. Retain users through content rewards and engagement
 
 ## Next Steps
 
 - Try building an [agentic chatbot](/examples/chatbot)
 - Read more about [SaaS tools](/what-to-build/saas)
+- Post questions in the Whop Dev Forum
 
 Have questions? Post in the Whop Dev Forum.

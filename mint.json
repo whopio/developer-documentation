@@ -64,32 +64,18 @@
       "pages": ["introduction"]
     },
     {
-      "group": "What to build?",
-      "pages": [
-        "what-to-build/agentic-businesses",
-        "what-to-build/saas"
-      ]
+      "group": "Guides",
+      "pages": ["what-to-build/agentic-businesses", "what-to-build/web-apps"]
     },
     {
-      "group": "Instructions",
-      "pages": [
-        "instructions/get-api-key",
-        "instructions/create-agent-user",
-        "instructions/make-a-call",
-        "instructions/build-app-interface"
-      ]
-    },
-    {
-      "group": "Examples",
-      "pages": [
-        "examples/chatbot"
-      ]
+      "group": "Templates",
+      "pages": ["examples/chatbot", "examples/flappy-bird", "examples/ai-chat"]
     },
     {
       "group": "GraphQL API",
       "pages": [
         "api-reference/graphql/schema",
-        "api-reference/graphql/authentication",
+        "api-reference/graphql/examples",
         "api-reference/graphql/rate-limits"
       ],
       "version": "GraphQL API"
