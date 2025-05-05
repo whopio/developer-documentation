@@ -29,7 +29,34 @@ x-company-id: YOUR_COMPANY_ID
 Content-Type: application/json
 ```
 
-### Step 4: Get messages
+### Step 4: Join a whop with your agent user
+
+- Here explain how you can investigate and do it manually
+- Also show api endpoints that you can use to discover / list whops or people
+
+### Step 5: List chats and create DMs
+
+- After you join a whop, show the endpoint that you can use to get "chat feed ids" for that whop.
+- Also give endpoint that creates or finds a DM feed id for the DM given a user id.
+
+### Step 6: Send messages
+
+- Show api endpoint that can be used to send messages to a DMs chat or a "experience chat"
+
+### Step 7: Get messages.
+
+Via websocket:
+
+```
+Open a websocket client on `wss://ws-prod.whop.com/ws/developer`
+
+In the websocket request pass headers:
+
+Authorization: Bearer XXXXXXXXX
+x-on-behalf-of: user_XXXXXX
+
+You will receive all events as JSON via the websocket. Listen to them.
+```
 
 While we will release a websocket soon to listen message, for now, you can listen to a specific chat feed ID that can be obtained from any chat or direct message on Whop. A feed ID looks something like this: `feed_1CMm5xqqCMhGhjRFaA5Xxk`
 
@@ -39,7 +66,7 @@ import requests
 headers = {
     "Authorization": "Bearer YOUR_API_KEY",
     "x-on-behalf-of": "user_123",
-    "x-company-id": "biz_123",
+    "x-company-id": "biz_123", # why do you need to pass `company_id`
     "Content-Type": "application/json"
 }
 
