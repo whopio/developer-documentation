@@ -29,48 +29,89 @@ x-company-id: YOUR_COMPANY_ID
 Content-Type: application/json
 ```
 
-### Step 4: Get messages
+### Step 4: Listen for messages (via WebSocket)
 
-While we will release a websocket soon to listen message, for now, you can listen to a specific chat feed ID that can be obtained from any chat or direct message on Whop. A feed ID looks something like this: `feed_1CMm5xqqCMhGhjRFaA5Xxk`
+To receive messages in real-time, you can connect to our WebSocket.
+
+First, ensure you have the necessary headers defined (as in Step 3). The `Authorization` and `x-on-behalf-of` headers are crucial for WebSocket authentication. Note that `x-company-id` is not needed for the WebSocket connection itself but is good to have for other API calls.
 
 ```python
-import requests
+# Headers from Step 3 (ensure WHOP_APP_API_KEY and WHOP_AGENT_USER_ID are set)
+# headers = {
+#     "Authorization": "Bearer YOUR_API_KEY",
+#     "x-on-behalf-of": "YOUR_AGENT_USER_ID",
+#     # "x-company-id": "YOUR_COMPANY_ID", # Not used for WebSocket connection
+#     "Content-Type": "application/json" # Not strictly needed for WebSocket but good practice
+# }
 
-headers = {
-    "Authorization": "Bearer YOUR_API_KEY",
-    "x-on-behalf-of": "user_123",
-    "x-company-id": "biz_123",
-    "Content-Type": "application/json"
+# WebSocket specific headers
+ws_headers = {
+    "Authorization": f"Bearer YOUR_API_KEY", # Replace with your actual key
+    "x-on-behalf-of": "YOUR_AGENT_USER_ID" # Replace with your agent user ID
 }
-
-# Example: Fetching DMs
-full_query = """query DmsFeedData($feedId: ID!, $postsLimit: Int!) {
-    dmsFeedData(feedId: $feedId, postsLimit: $postsLimit) {
-        posts {
-            content
-            user {
-                username
-                id
-            }
-        }
-    }
-}"""
-
-payload = {
-    "query": full_query,
-    "variables": {
-        "feedId": "your_feed_id",
-        "postsLimit": 1
-    }
-}
-
-response = requests.post(
-    "https://api.whop.com/public-graphql",
-    headers=headers,
-    json=payload
-)
-response_json = response.json()
 ```
+
+Install the required package:
+```bash
+pip install websockets
+```
+
+Then, connect and listen for messages:
+
+```python
+import asyncio
+import websockets
+import json
+
+# Define ws_headers as shown above, using your API key and Agent User ID
+
+async def connect_to_websocket():
+    uri = "wss://ws-prod.whop.com/ws/developer"
+    try:
+        async with websockets.connect(uri, additional_headers=ws_headers) as websocket:
+            print(f"Successfully connected to {uri}")
+            
+            # Keep the connection alive and listen for messages
+            while True:
+                try:
+                    message = await websocket.recv()
+                    formatted_message = json.loads(message)
+                    print(f"Received: {formatted_message}")
+                    # Add your logic here to process the message
+                    # For example, to filter DMs:
+                    # if "feedEntity" in formatted_message:
+                    #     feed_entity = formatted_message["feedEntity"]
+                    #     if "dmsPost" in feed_entity:
+                    #         dms_post = feed_entity["dmsPost"]
+                    #         print(f"DM Post: {dms_post}")
+                    #         message_content = dms_post["message"]
+                    #         sender_id = dms_post["user"]["id"]
+                    #         feed_id = formatted_message["feedId"] # or dms_post.get("feedId")
+                                        
+                except websockets.exceptions.ConnectionClosed:
+                    print("Connection closed")
+                    break
+    except Exception as e:
+        print(f"Failed to connect or error during communication: {e}")
+
+if __name__ == "__main__":
+    # Ensure you have your YOUR_API_KEY and YOUR_AGENT_USER_ID defined
+    # For example:
+    # YOUR_API_KEY = "sk_123..." 
+    # YOUR_AGENT_USER_ID = "user_abc..."
+    # ws_headers = {
+    #    "Authorization": f"Bearer {YOUR_API_KEY}",
+    #    "x-on-behalf-of": YOUR_AGENT_USER_ID
+    # }
+    asyncio.run(connect_to_websocket())
+```
+
+This setup will connect to the WebSocket and print any incoming messages. You will receive all messages associated with the authenticated user (defined in `x-on-behalf-of`), including DMs.
+
+**Important Notes:**
+- You'll receive messages sent *by* the authenticated user as well. Filter these out in your processing logic if needed, by checking the sender's user ID against your agent's user ID.
+- The `ws_headers` should use your actual API key and Agent User ID. The example `headers` from Step 3 can be adapted, or you can create `ws_headers` specifically for the WebSocket.
+- You can parse the `formatted_message` JSON to extract details like `feedId`, sender information, message content, etc. The structure for DMs would be nested within `feedEntity.dmsPost`.
 
 ### Step 5: Send messages
 
