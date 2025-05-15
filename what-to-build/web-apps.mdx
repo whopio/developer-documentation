@@ -1,6 +1,231 @@
 ---
 title: Web Apps
-description: "Build an app or game."
+description: "Learn how to build and deploy a Next.js application powered by Whop's developer platform"
 ---
 
-Coming soon...
+# Building a Whop App with Next.js
+
+Welcome! This guide will walk you through creating a Next.js application that integrates with Whop's platform. We'll cover everything from initial setup to handling payments and webhooks.
+Nothing is particularly tied to nextjs, so feel free to adapt these concepts to your framework of choice.
+
+## 1. Getting Started
+
+### 1.1 Create Your Whop App
+
+1. Head to [whop.com/dashboard](https://whop.com/dashboard/)
+2. Create a new app in your organization
+3. Note down your API credentials from the app details page
+
+### 1.2 Set Up Your Next.js Project
+
+1. Create a new Next.js project:
+
+```bash
+pnpm create next-app my-whop-app
+cd my-whop-app
+```
+
+2. Install the required dependencies:
+
+```bash
+pnpm add @whop/api @whop-apps/dev-proxy
+```
+
+### 1.3 Configure Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```env
+WHOP_API_KEY=your_api_key_here
+WHOP_APP_ID=your_app_id_here
+WHOP_AGENT_USER_ID=your_agent_user_id
+WHOP_WEBHOOK_SECRET=your_webhook_secret # Optional, for webhooks
+```
+
+## 2. Setting Up the Whop Integration
+
+### 2.1 Configure App Settings
+
+1. In your Whop dashboard, set up your app's configuration:
+   - Set the "Base Domain" to your production domain
+   - Configure the "App Path" (e.g., `/experience/[experienceId]`)
+   - Enable localhost mode for development
+
+### 2.2 Initialize the Whop API Client
+
+Create a new file `lib/whop-api.ts`:
+
+```typescript
+import { WhopApi, makeUserTokenVerifier } from "@whop/api";
+
+export const whopApi = WhopApi({
+  appApiKey: process.env.WHOP_API_KEY ?? "fallback",
+  onBehalfOfUserId: process.env.WHOP_AGENT_USER_ID,
+});
+
+export const verifyUserToken = makeUserTokenVerifier({
+  appId: process.env.WHOP_APP_ID ?? "fallback",
+  dontThrow: true,
+});
+```
+
+### 2.3 Set Up Development Environment
+
+1. Add the dev proxy script to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "whop-proxy": "whop-proxy"
+  }
+}
+```
+
+2. Run the development environment:
+
+```bash
+# Terminal 1
+pnpm whop-proxy
+
+# Terminal 2
+pnpm dev
+```
+
+## 3. Implementing Core Features
+
+### 3.1 User Authentication
+
+Create a component to verify user tokens:
+
+```typescript
+import { verifyUserToken } from "@/lib/whop-api";
+import { headers } from "next/headers";
+
+export async function UserVerification() {
+  const requestHeaders = await headers();
+  const userTokenData = await verifyUserToken(requestHeaders);
+
+  if (!userTokenData) {
+    return <div className="text-red-500">Invalid or missing user token</div>;
+  }
+
+  return (
+    <div>
+      Authenticated as: <code>{userTokenData.userId}</code>
+    </div>
+  );
+}
+```
+
+### 3.2 Making API Requests
+
+Here are some common API operations:
+
+```typescript
+// Get user profile
+const userProfile = await whopApi.PublicUser({
+  userId: userTokenData.userId,
+});
+
+// List experiences
+const experiences = await whopApi.ListExperiences({
+  companyId: "your_company_id",
+});
+
+// Send messages
+// Direct message
+await whopApi.SendDmMessage({
+  toUserId: "target_user_id",
+  message: "Hello!",
+});
+
+// Chat message
+await whopApi.SendChatMessage({
+  experienceId: "target_experience_id",
+  message: "Hello everyone!",
+});
+```
+
+### 3.3 Handling Payments
+
+Implement payment processing:
+
+```typescript
+const chargeResult = await whopApi.ChargeUser({
+  userId: "target_user_id",
+  amount: 10.0,
+  currency: "USD",
+  description: "Premium feature access",
+  metadata: {
+    featureId: "premium_access",
+  },
+});
+
+// Handle the checkout session
+if (chargeResult.status === "needs-action") {
+  // Redirect to checkout
+  const checkoutUrl = chargeResult.checkoutSession.url;
+  // ... handle redirect
+}
+```
+
+## 4. Webhook Integration
+
+### 4.1 Set Up Webhook Endpoint
+
+Create a new API route in `app/api/webhooks/whop/route.ts`:
+
+```typescript
+import { waitUntil } from "@vercel/functions";
+import { makeWebhookValidator } from "@whop/api";
+import type { NextRequest } from "next/server";
+
+const validateWebhook = makeWebhookValidator({
+  webhookSecret: process.env.WHOP_WEBHOOK_SECRET ?? "fallback",
+});
+
+export async function POST(request: NextRequest): Promise<Response> {
+  const webhookData = await validateWebhook(request);
+
+  if (webhookData.action === "payment.succeeded") {
+    const { id, final_amount, amount_after_fees, currency, user_id } =
+      webhookData.data;
+
+    // Handle successful payment
+    waitUntil(
+      handlePaymentSuccess(user_id, final_amount, currency, amount_after_fees)
+    );
+  }
+
+  return new Response("OK", { status: 200 });
+}
+```
+
+## 5. Deployment
+
+### 5.1 Prepare for Production
+
+1. Push your code to GitHub
+2. Set up your environment variables in your hosting platform
+3. Update your Whop dashboard settings:
+   - Verify your Base Domain
+   - Update webhook callback URLs
+   - Test the production integration
+
+### 5.2 Deploy to Vercel
+
+1. Connect your GitHub repository to Vercel
+2. Configure your environment variables
+3. Deploy your application
+
+## Best Practices
+
+- Always validate user tokens before making API requests
+- Use the dev proxy during local development
+- Implement proper error handling for API calls
+- Keep your API keys secure and never expose them in client-side code
+- Use TypeScript for better type safety and developer experience
+
+## Need Help?
+
+- Join the [Developer Whop](https://whop.com/whop-devs)
