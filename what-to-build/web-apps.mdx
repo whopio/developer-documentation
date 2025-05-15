@@ -1,12 +1,11 @@
 ---
-title: Web Apps
-description: "Learn how to build and deploy a Next.js application powered by Whop's developer platform"
+title: Building a Whop App with Next.js
+description: "Learn how to build and deploy a Next.js application that integrates with Whop's platform"
 ---
 
 # Building a Whop App with Next.js
 
 Welcome! This guide will walk you through creating a Next.js application that integrates with Whop's platform. We'll cover everything from initial setup to handling payments and webhooks.
-Nothing is particularly tied to nextjs, so feel free to adapt these concepts to your framework of choice.
 
 ## 1. Getting Started
 
@@ -18,10 +17,10 @@ Nothing is particularly tied to nextjs, so feel free to adapt these concepts to 
 
 ### 1.2 Set Up Your Next.js Project
 
-1. Create a new Next.js project:
+1. Create a new Next.js project with TypeScript and Tailwind CSS:
 
 ```bash
-pnpm create next-app my-whop-app
+pnpm create next-app my-whop-app --typescript --tailwind --eslint
 cd my-whop-app
 ```
 
@@ -36,10 +35,19 @@ pnpm add @whop/api @whop-apps/dev-proxy
 Create a `.env.local` file with the following variables:
 
 ```env
+# Required: Your app's API key from the Whop dashboard
 WHOP_API_KEY=your_api_key_here
+
+# Required: Your app's ID from the Whop dashboard
 WHOP_APP_ID=your_app_id_here
+
+# Required: The user ID of your app's agent user
+# This user will make API calls on behalf of your app
 WHOP_AGENT_USER_ID=your_agent_user_id
-WHOP_WEBHOOK_SECRET=your_webhook_secret # Optional, for webhooks
+
+# Optional: Secret for validating webhooks
+# Only needed if you're implementing webhook functionality
+WHOP_WEBHOOK_SECRET=your_webhook_secret
 ```
 
 ## 2. Setting Up the Whop Integration
@@ -47,7 +55,7 @@ WHOP_WEBHOOK_SECRET=your_webhook_secret # Optional, for webhooks
 ### 2.1 Configure App Settings
 
 1. In your Whop dashboard, set up your app's configuration:
-   - Set the "Base Domain" to your production domain
+   - Set the "Base Domain" to your production domain (e.g., `https://your-app.com`)
    - Configure the "App Path" (e.g., `/experience/[experienceId]`)
    - Enable localhost mode for development
 
@@ -58,15 +66,31 @@ Create a new file `lib/whop-api.ts`:
 ```typescript
 import { WhopApi, makeUserTokenVerifier } from "@whop/api";
 
+// Initialize the Whop API client with your app's credentials
 export const whopApi = WhopApi({
+  // Your app's API key - required for all API calls
   appApiKey: process.env.WHOP_API_KEY ?? "fallback",
+
+  // The user ID that will make API calls on behalf of your app
+  // This is typically your app's agent user
   onBehalfOfUserId: process.env.WHOP_AGENT_USER_ID,
 });
 
+// Create a function to verify user tokens
+// This is used to authenticate requests from the Whop iframe
 export const verifyUserToken = makeUserTokenVerifier({
   appId: process.env.WHOP_APP_ID ?? "fallback",
-  dontThrow: true,
+  dontThrow: true, // Return null instead of throwing on invalid tokens
 });
+
+// Helper function to get the current user's ID
+export async function getCurrentUserId(headers: Headers) {
+  const userTokenData = await verifyUserToken(headers);
+  if (!userTokenData) {
+    throw new Error("Invalid or missing user token");
+  }
+  return userTokenData.userId;
+}
 ```
 
 ### 2.3 Set Up Development Environment
@@ -76,7 +100,9 @@ export const verifyUserToken = makeUserTokenVerifier({
 ```json
 {
   "scripts": {
-    "whop-proxy": "whop-proxy"
+    "dev": "next dev",
+    "whop-proxy": "whop-proxy",
+    "dev:whop": "concurrently \"pnpm whop-proxy\" \"pnpm dev\""
   }
 }
 ```
@@ -84,20 +110,18 @@ export const verifyUserToken = makeUserTokenVerifier({
 2. Run the development environment:
 
 ```bash
-# Terminal 1
-pnpm whop-proxy
-
-# Terminal 2
-pnpm dev
+# Run both the proxy and dev server
+pnpm dev:whop
 ```
 
 ## 3. Implementing Core Features
 
 ### 3.1 User Authentication
 
-Create a component to verify user tokens:
+Create a component to verify user tokens and handle authentication:
 
 ```typescript
+// app/components/UserVerification.tsx
 import { verifyUserToken } from "@/lib/whop-api";
 import { headers } from "next/headers";
 
@@ -106,66 +130,206 @@ export async function UserVerification() {
   const userTokenData = await verifyUserToken(requestHeaders);
 
   if (!userTokenData) {
-    return <div className="text-red-500">Invalid or missing user token</div>;
+    return (
+      <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+        <h2 className="text-red-600 font-semibold">Authentication Error</h2>
+        <p className="text-red-500">Invalid or missing user token</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      Authenticated as: <code>{userTokenData.userId}</code>
+    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+      <h2 className="text-green-600 font-semibold">
+        Authentication Successful
+      </h2>
+      <p>
+        Authenticated as:{" "}
+        <code className="bg-gray-100 px-2 py-1 rounded">
+          {userTokenData.userId}
+        </code>
+      </p>
     </div>
+  );
+}
+
+// app/layout.tsx
+import { UserVerification } from "./components/UserVerification";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <UserVerification />
+        {children}
+      </body>
+    </html>
   );
 }
 ```
 
 ### 3.2 Making API Requests
 
-Here are some common API operations:
+Here are some common API operations with error handling:
 
 ```typescript
-// Get user profile
-const userProfile = await whopApi.PublicUser({
-  userId: userTokenData.userId,
-});
+// app/lib/whop-operations.ts
+import { whopApi } from "./whop-api";
 
-// List experiences
-const experiences = await whopApi.ListExperiences({
-  companyId: "your_company_id",
-});
+export async function getUserProfile(userId: string) {
+  try {
+    const userProfile = await whopApi.PublicUser({
+      userId,
+    });
+    return userProfile;
+  } catch (error) {
+    console.error("Failed to fetch user profile:", error);
+    throw new Error("Failed to fetch user profile");
+  }
+}
 
-// Send messages
-// Direct message
-await whopApi.SendDmMessage({
-  toUserId: "target_user_id",
-  message: "Hello!",
-});
+export async function listExperiences(companyId: string) {
+  try {
+    const experiences = await whopApi.ListExperiences({
+      companyId,
+      first: 10, // Limit to 10 results
+    });
+    return experiences;
+  } catch (error) {
+    console.error("Failed to list experiences:", error);
+    throw new Error("Failed to list experiences");
+  }
+}
 
-// Chat message
-await whopApi.SendChatMessage({
-  experienceId: "target_experience_id",
-  message: "Hello everyone!",
-});
+export async function sendMessage(options: {
+  type: "dm" | "chat" | "feed";
+  targetId: string;
+  message: string;
+}) {
+  try {
+    switch (options.type) {
+      case "dm":
+        return await whopApi.SendDmMessage({
+          toUserId: options.targetId,
+          message: options.message,
+        });
+      case "chat":
+        return await whopApi.SendChatMessage({
+          experienceId: options.targetId,
+          message: options.message,
+        });
+      case "feed":
+        return await whopApi.SendFeedMessage({
+          experienceId: options.targetId,
+          message: options.message,
+        });
+    }
+  } catch (error) {
+    console.error("Failed to send message:", error);
+    throw new Error("Failed to send message");
+  }
+}
 ```
 
 ### 3.3 Handling Payments
 
-Implement payment processing:
+Implement payment processing with proper error handling and type safety:
 
 ```typescript
-const chargeResult = await whopApi.ChargeUser({
-  userId: "target_user_id",
-  amount: 10.0,
-  currency: "USD",
-  description: "Premium feature access",
-  metadata: {
-    featureId: "premium_access",
-  },
-});
+// app/lib/payments.ts
+import { whopApi } from "./whop-api";
 
-// Handle the checkout session
-if (chargeResult.status === "needs-action") {
-  // Redirect to checkout
-  const checkoutUrl = chargeResult.checkoutSession.url;
-  // ... handle redirect
+interface PaymentOptions {
+  userId: string;
+  amount: number;
+  currency: "USD" | "EUR" | "GBP";
+  description: string;
+  metadata?: Record<string, any>;
+  redirectUrl?: string;
+  affiliateCode?: string;
+}
+
+export async function chargeUser(options: PaymentOptions) {
+  try {
+    const chargeResult = await whopApi.ChargeUser({
+      userId: options.userId,
+      amount: options.amount,
+      currency: options.currency,
+      description: options.description,
+      metadata: options.metadata,
+      redirectUrl: options.redirectUrl,
+      affiliateCode: options.affiliateCode,
+    });
+
+    // Handle different payment statuses
+    switch (chargeResult.status) {
+      case "needs-action":
+        // User needs to complete the checkout
+        return {
+          type: "checkout_required",
+          checkoutUrl: chargeResult.checkoutSession.url,
+        };
+      case "succeeded":
+        // Payment was successful
+        return {
+          type: "success",
+          receiptId: chargeResult.receiptId,
+        };
+      case "failed":
+        // Payment failed
+        return {
+          type: "failed",
+          error: chargeResult.error,
+        };
+      default:
+        throw new Error(`Unknown payment status: ${chargeResult.status}`);
+    }
+  } catch (error) {
+    console.error("Payment processing failed:", error);
+    throw new Error("Failed to process payment");
+  }
+}
+
+// Example usage in a component
+// app/components/PaymentButton.tsx
+import { chargeUser } from "../lib/payments";
+
+export function PaymentButton({ userId }: { userId: string }) {
+  const handlePayment = async () => {
+    try {
+      const result = await chargeUser({
+        userId,
+        amount: 10.0,
+        currency: "USD",
+        description: "Premium feature access",
+        metadata: {
+          featureId: "premium_access",
+        },
+        redirectUrl: "https://your-app.com/payment-success",
+      });
+
+      if (result.type === "checkout_required") {
+        // Redirect to checkout
+        window.location.href = result.checkoutUrl;
+      }
+    } catch (error) {
+      console.error("Payment failed:", error);
+      // Handle error (show error message, etc.)
+    }
+  };
+
+  return (
+    <button
+      onClick={handlePayment}
+      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+    >
+      Purchase Premium Access
+    </button>
+  );
 }
 ```
 
@@ -180,24 +344,75 @@ import { waitUntil } from "@vercel/functions";
 import { makeWebhookValidator } from "@whop/api";
 import type { NextRequest } from "next/server";
 
+// Initialize webhook validator with your webhook secret
 const validateWebhook = makeWebhookValidator({
   webhookSecret: process.env.WHOP_WEBHOOK_SECRET ?? "fallback",
 });
 
+// Handle webhook events
 export async function POST(request: NextRequest): Promise<Response> {
-  const webhookData = await validateWebhook(request);
+  try {
+    // Validate the webhook signature
+    const webhookData = await validateWebhook(request);
 
-  if (webhookData.action === "payment.succeeded") {
-    const { id, final_amount, amount_after_fees, currency, user_id } =
-      webhookData.data;
+    // Handle different webhook events
+    switch (webhookData.action) {
+      case "payment.succeeded":
+        const { id, final_amount, amount_after_fees, currency, user_id } =
+          webhookData.data;
 
-    // Handle successful payment
-    waitUntil(
-      handlePaymentSuccess(user_id, final_amount, currency, amount_after_fees)
-    );
+        // Process the successful payment
+        waitUntil(
+          handlePaymentSuccess(
+            user_id,
+            final_amount,
+            currency,
+            amount_after_fees
+          )
+        );
+        break;
+
+      case "payment.failed":
+        const { error, user_id: failedUserId } = webhookData.data;
+        waitUntil(handlePaymentFailure(failedUserId, error));
+        break;
+
+      // Add more webhook event handlers as needed
+    }
+
+    return new Response("OK", { status: 200 });
+  } catch (error) {
+    console.error("Webhook processing failed:", error);
+    return new Response("Webhook validation failed", { status: 400 });
   }
+}
 
-  return new Response("OK", { status: 200 });
+// Handle successful payments
+async function handlePaymentSuccess(
+  userId: string,
+  amount: number,
+  currency: string,
+  amountAfterFees: number
+) {
+  try {
+    // Update your database
+    // Grant access to premium features
+    // Send confirmation email
+    // etc.
+  } catch (error) {
+    console.error("Failed to process successful payment:", error);
+  }
+}
+
+// Handle failed payments
+async function handlePaymentFailure(userId: string, error: any) {
+  try {
+    // Update your database
+    // Notify the user
+    // etc.
+  } catch (error) {
+    console.error("Failed to process payment failure:", error);
+  }
 }
 ```
 
@@ -225,7 +440,15 @@ export async function POST(request: NextRequest): Promise<Response> {
 - Implement proper error handling for API calls
 - Keep your API keys secure and never expose them in client-side code
 - Use TypeScript for better type safety and developer experience
+- Implement proper logging for debugging and monitoring
+- Use environment variables for all sensitive configuration
+- Implement rate limiting for API endpoints
+- Add proper error boundaries in React components
+- Use proper HTTP status codes in API responses
 
 ## Need Help?
 
 - Join the [Developer Whop](https://whop.com/whop-devs)
+- Check out our [API documentation](https://docs.whop.com)
+- Visit our [GitHub repository](https://github.com/whop-apps)
+- Contact our support team at support@whop.com
