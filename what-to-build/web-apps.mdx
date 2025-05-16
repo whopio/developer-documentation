@@ -64,6 +64,8 @@ WHOP_WEBHOOK_SECRET=your_webhook_secret
 Create a new file `lib/whop-api.ts`:
 
 ```typescript
+"use server"; // ensure that this file is not imported by the client bundle
+
 import { WhopApi, makeUserTokenVerifier } from "@whop/api";
 
 // Initialize the Whop API client with your app's credentials
@@ -82,15 +84,6 @@ export const verifyUserToken = makeUserTokenVerifier({
   appId: process.env.WHOP_APP_ID ?? "fallback",
   dontThrow: true, // Return null instead of throwing on invalid tokens
 });
-
-// Helper function to get the current user's ID
-export async function getCurrentUserId(headers: Headers) {
-  const userTokenData = await verifyUserToken(headers);
-  if (!userTokenData) {
-    throw new Error("Invalid or missing user token");
-  }
-  return userTokenData.userId;
-}
 ```
 
 ### 2.3 Set Up Development Environment
@@ -101,8 +94,7 @@ export async function getCurrentUserId(headers: Headers) {
 {
   "scripts": {
     "dev": "next dev",
-    "whop-proxy": "whop-proxy",
-    "dev:whop": "concurrently \"pnpm whop-proxy\" \"pnpm dev\""
+    "whop-proxy": "whop-proxy"
   }
 }
 ```
@@ -111,7 +103,7 @@ export async function getCurrentUserId(headers: Headers) {
 
 ```bash
 # Run both the proxy and dev server
-pnpm dev:whop
+pnpm whop-proxy
 ```
 
 ## 3. Implementing Core Features
@@ -121,11 +113,11 @@ pnpm dev:whop
 Create a component to verify user tokens and handle authentication:
 
 ```typescript
-// app/components/UserVerification.tsx
+// app/components/SomeComponentThatNeedsAuthVerified.tsx
 import { verifyUserToken } from "@/lib/whop-api";
 import { headers } from "next/headers";
 
-export async function UserVerification() {
+export async function Page() {
   const requestHeaders = await headers();
   const userTokenData = await verifyUserToken(requestHeaders);
 
@@ -152,186 +144,56 @@ export async function UserVerification() {
     </div>
   );
 }
-
-// app/layout.tsx
-import { UserVerification } from "./components/UserVerification";
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body>
-        <UserVerification />
-        {children}
-      </body>
-    </html>
-  );
-}
 ```
 
 ### 3.2 Making API Requests
 
 Here are some common API operations with error handling:
 
-```typescript
-// app/lib/whop-operations.ts
-import { whopApi } from "./whop-api";
-
-export async function getUserProfile(userId: string) {
-  try {
-    const userProfile = await whopApi.PublicUser({
-      userId,
-    });
-    return userProfile;
-  } catch (error) {
-    console.error("Failed to fetch user profile:", error);
-    throw new Error("Failed to fetch user profile");
-  }
-}
-
-export async function listExperiences(companyId: string) {
-  try {
-    const experiences = await whopApi.ListExperiences({
-      companyId,
-      first: 10, // Limit to 10 results
-    });
-    return experiences;
-  } catch (error) {
-    console.error("Failed to list experiences:", error);
-    throw new Error("Failed to list experiences");
-  }
-}
-
-export async function sendMessage(options: {
-  type: "dm" | "chat" | "feed";
-  targetId: string;
-  message: string;
-}) {
-  try {
-    switch (options.type) {
-      case "dm":
-        return await whopApi.SendDmMessage({
-          toUserId: options.targetId,
-          message: options.message,
-        });
-      case "chat":
-        return await whopApi.SendChatMessage({
-          experienceId: options.targetId,
-          message: options.message,
-        });
-      case "feed":
-        return await whopApi.SendFeedMessage({
-          experienceId: options.targetId,
-          message: options.message,
-        });
-    }
-  } catch (error) {
-    console.error("Failed to send message:", error);
-    throw new Error("Failed to send message");
-  }
-}
-```
+FEEDBACK: don't make helper functions for the sdk. Show how to use it and show all the options.
 
 ### 3.3 Handling Payments
 
-Implement payment processing with proper error handling and type safety:
+If you want to charge the user custom amounts, follow this payment processing flow.
 
 ```typescript
 // app/lib/payments.ts
 import { whopApi } from "./whop-api";
 
-interface PaymentOptions {
-  userId: string;
-  amount: number;
-  currency: "USD" | "EUR" | "GBP";
-  description: string;
-  metadata?: Record<string, any>;
-  redirectUrl?: string;
-  affiliateCode?: string;
-}
-
-export async function chargeUser(options: PaymentOptions) {
+export async function chargeUser(options: PaymentOptions): string | null {
   try {
     const chargeResult = await whopApi.ChargeUser({
-      userId: options.userId,
-      amount: options.amount,
-      currency: options.currency,
-      description: options.description,
-      metadata: options.metadata,
-      redirectUrl: options.redirectUrl,
-      affiliateCode: options.affiliateCode,
+      input: {
+        userId: options.userId,
+        amount: options.amount,
+        currency: options.currency,
+        description: options.description, // Show a custom message to the user at checkout.
+        metadata: options.metadata, // pass any Record<string, any>. This data will be sent in the payment
+        redirectUrl: options.redirectUrl, // optional, redirect the user to a custom url AFTER checkout
+        affiliateCode: options.affiliateCode, // attribute this purchase to a custom username / user_id
+      },
     });
 
-    // Handle different payment statuses
-    switch (chargeResult.status) {
-      case "needs-action":
-        // User needs to complete the checkout
-        return {
-          type: "checkout_required",
-          checkoutUrl: chargeResult.checkoutSession.url,
-        };
-      case "succeeded":
-        // Payment was successful
-        return {
-          type: "success",
-          receiptId: chargeResult.receiptId,
-        };
-      case "failed":
-        // Payment failed
-        return {
-          type: "failed",
-          error: chargeResult.error,
-        };
-      default:
-        throw new Error(`Unknown payment status: ${chargeResult.status}`);
+    if (!chargeResult.chargeUser) {
+      throw Error("Failed to charge user.");
     }
+
+    // If we get back a checkout session, we need to return the `purchaseUrl` to the client application.
+    // The client should redirect or open this URL.
+    if (chargeResult.checkoutSession) {
+      return chargeResult.chargeUser.checkoutSession.purchaseUrl;
+    }
+
+    // Otherwise the checkout processing succeeded, and the payment webhook will be received soon.
+    return null;
   } catch (error) {
     console.error("Payment processing failed:", error);
     throw new Error("Failed to process payment");
   }
 }
-
-// Example usage in a component
-// app/components/PaymentButton.tsx
-import { chargeUser } from "../lib/payments";
-
-export function PaymentButton({ userId }: { userId: string }) {
-  const handlePayment = async () => {
-    try {
-      const result = await chargeUser({
-        userId,
-        amount: 10.0,
-        currency: "USD",
-        description: "Premium feature access",
-        metadata: {
-          featureId: "premium_access",
-        },
-        redirectUrl: "https://your-app.com/payment-success",
-      });
-
-      if (result.type === "checkout_required") {
-        // Redirect to checkout
-        window.location.href = result.checkoutUrl;
-      }
-    } catch (error) {
-      console.error("Payment failed:", error);
-      // Handle error (show error message, etc.)
-    }
-  };
-
-  return (
-    <button
-      onClick={handlePayment}
-      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    >
-      Purchase Premium Access
-    </button>
-  );
-}
 ```
+
+Upon payment completion by the client, your will receive a webhook. (Only if you configured webhooks in the dashboard).
 
 ## 4. Webhook Integration
 
@@ -426,25 +288,6 @@ async function handlePaymentFailure(userId: string, error: any) {
    - Verify your Base Domain
    - Update webhook callback URLs
    - Test the production integration
-
-### 5.2 Deploy to Vercel
-
-1. Connect your GitHub repository to Vercel
-2. Configure your environment variables
-3. Deploy your application
-
-## Best Practices
-
-- Always validate user tokens before making API requests
-- Use the dev proxy during local development
-- Implement proper error handling for API calls
-- Keep your API keys secure and never expose them in client-side code
-- Use TypeScript for better type safety and developer experience
-- Implement proper logging for debugging and monitoring
-- Use environment variables for all sensitive configuration
-- Implement rate limiting for API endpoints
-- Add proper error boundaries in React components
-- Use proper HTTP status codes in API responses
 
 ## Need Help?
 
