@@ -101,9 +101,25 @@ export const verifyUserToken = makeUserTokenVerifier({
 
 2. Run the development environment:
 
+The `whop-proxy` will by default run the `npm dev` script with a custom `PORT` environment variable.
+Ensure your app correctly responds to this env var.
+
 ```bash
-# Run both the proxy and dev server
+# Run the proxy
 pnpm whop-proxy
+```
+
+If you need to customise this behaviour, you can use the following options:
+
+- `proxyPort`: which port the proxy should start on
+- `upstreamPort`: which port the upstream server should listen on
+- `npmCommand`: override which npm command to run. Can be `"dev"`, `"start"`, etc..
+- `command`: provide a custom shell command to run instead of `pnpm dev`
+
+For example:
+
+```bash
+pnpm whop-proxy --proxyPort=3000 --upstreamPort=3001 --command='echo "Hello from the proxy running on $PORT!"'
 ```
 
 ## 3. Implementing Core Features
@@ -148,9 +164,43 @@ export async function Page() {
 
 ### 3.2 Making API Requests
 
-Here are some common API operations with error handling:
+Here are examples of direct SDK usage:
 
-FEEDBACK: don't make helper functions for the sdk. Show how to use it and show all the options.
+```typescript
+// Get user profile
+const userProfile = await whopApi.PublicUser({
+  userId: "user_id_here",
+});
+
+// List experiences
+const experiences = await whopApi.ListExperiences({
+  companyId: "company_id_here",
+  first: 10, // Optional: limit results
+  after: "cursor_here", // Optional: pagination
+  accessPassId: "access_pass_id_here", // Optional: filter by access pass
+  appId: "app_id_here", // Optional: filter by app
+  onAccessPass: true, // Optional: only show experiences on access pass
+});
+
+// Send messages
+// Direct message
+await whopApi.SendDmMessage({
+  toUserId: "target_user_id",
+  message: "Hello!",
+});
+
+// Chat message
+await whopApi.SendChatMessage({
+  experienceId: "target_experience_id",
+  message: "Hello everyone!",
+});
+
+// Feed message
+await whopApi.SendFeedMessage({
+  experienceId: "target_experience_id",
+  message: "New announcement!",
+});
+```
 
 ### 3.3 Handling Payments
 
