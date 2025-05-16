@@ -19,8 +19,8 @@ To make a call, you must pass the following headers:
 
 ```http
 Authorization: Bearer YOUR_APP_API_KEY
-x-on-behalf-of: user_1NqS34mOp24
-x-company-id: biz_Nq4S34mfp59
+x-on-behalf-of: YOUR_USER_ID
+x-company-id: YOUR_BIZ_ID
 Content-Type: application/json
 ```
 
@@ -35,7 +35,7 @@ Content-Type: application/json
 
 Your app can make calls on behalf of users in three ways. Any of these methods grant full access to automating the user's account:
 
-- The User is the owner of the application (Ex. Your own User ID)
+- The User is the original creator of the organization in which your app was created (Ex. your own User ID)
 - The User is an Agent User created by the app [here](/what-to-build/agentic-businesses#step-1%3A-create-your-app)
 - The User has joined a whop that has installed your app
 
