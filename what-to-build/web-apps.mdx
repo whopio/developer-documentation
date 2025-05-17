@@ -3,19 +3,13 @@ title: Web Apps
 description: "Learn how to build and deploy a Next.js application that integrates with Whop's platform"
 ---
 
-# Building a Whop App with Next.js
-
-Welcome! This guide will walk you through creating a Next.js application that integrates with Whop's platform. We'll cover everything from initial setup to handling payments and webhooks.
-
-## 1. Getting Started
-
-### 1.1 Create Your Whop App
+### Getting Started
 
 1. Head to [whop.com/dashboard](https://whop.com/dashboard/)
 2. Create a new app in your organization
 3. Note down your API credentials from the app details page
 
-### 1.2 Set Up Your Next.js Project
+### Set Up Your Next.js Project
 
 1. Create a new Next.js project with TypeScript and Tailwind CSS:
 
@@ -30,7 +24,7 @@ cd my-whop-app
 pnpm add @whop/api @whop-apps/dev-proxy
 ```
 
-### 1.3 Configure Environment Variables
+### Configure Environment Variables
 
 Create a `.env.local` file with the following variables:
 
@@ -50,16 +44,15 @@ WHOP_AGENT_USER_ID=your_agent_user_id
 WHOP_WEBHOOK_SECRET=your_webhook_secret
 ```
 
-## 2. Setting Up the Whop Integration
+## Setting Up the Whop Integration
 
-### 2.1 Configure App Settings
+In your Whop dashboard, set up your app's configuration:
 
-1. In your Whop dashboard, set up your app's configuration:
-   - Set the "Base Domain" to your production domain (e.g., `https://your-app.com`)
-   - Configure the "App Path" (e.g., `/experience/[experienceId]`)
-   - Enable localhost mode for development
+- Set the "Base Domain" to your production domain (e.g., `https://your-app.com`)
+- Configure the "App Path" (e.g., `/experience/[experienceId]`)
+- Enable localhost mode for development
 
-### 2.2 Initialize the Whop API Client
+### Initialize the Whop API Client
 
 Create a new file `lib/whop-api.ts`:
 
@@ -86,7 +79,7 @@ export const verifyUserToken = makeUserTokenVerifier({
 });
 ```
 
-### 2.3 Set Up Development Environment
+### Set Up Development Environment
 
 1. Add the dev proxy script to your `package.json`:
 
@@ -122,11 +115,9 @@ For example:
 pnpm whop-proxy --proxyPort=3000 --upstreamPort=3001 --command='echo "Hello from the proxy running on $PORT!"'
 ```
 
-## 3. Implementing Core Features
+### Authenticating Users
 
-### 3.1 User Authentication
-
-Create a component to verify user tokens and handle authentication:
+Get user ID information anywhere you want.
 
 ```typescript
 // app/components/SomeComponentThatNeedsAuthVerified.tsx
@@ -162,7 +153,7 @@ export async function Page() {
 }
 ```
 
-### 3.2 Making API Requests
+### Making API Requests
 
 Here are examples of direct SDK usage:
 
@@ -204,7 +195,7 @@ await whopApi.SendFeedMessage({
 
 There are many more (and growing) API methods that are all typed and ready to use.
 
-### 3.3 Handling Payments
+### Charge user
 
 If you want to charge the user custom amounts, follow this payment processing flow.
 
@@ -247,9 +238,7 @@ export async function chargeUser(options: PaymentOptions): string | null {
 
 Upon payment completion by the client, your will receive a webhook. (Only if you configured webhooks in the dashboard).
 
-## 4. Webhook Integration
-
-### 4.1 Set Up Webhook Endpoint
+### Set Up Payment Received Webhook
 
 Create a new API route in `app/api/webhooks/whop/route.ts`:
 
@@ -330,9 +319,7 @@ async function handlePaymentFailure(userId: string, error: any) {
 }
 ```
 
-## 5. Deployment
-
-### 5.1 Prepare for Production
+## Deployment
 
 1. Push your code to GitHub
 2. Set up your environment variables in your hosting platform
@@ -344,4 +331,5 @@ async function handlePaymentFailure(userId: string, error: any) {
 ## Need Help?
 
 - Join the [Developer Whop](https://whop.com/whop-devs)
+- View the template for the above [here](https://github.com/whopio/whop-nextjs-app-template)
 - Visit our [SDK GitHub repository](https://github.com/whopio/whop-sdk-ts)
