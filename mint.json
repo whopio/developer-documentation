@@ -61,23 +61,30 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["introduction"]
+      "pages": ["introduction", "tutorials"]
     },
     {
-      "group": "Guides",
+      "group": "How-to Guides",
       "pages": [
-        "what-to-build/agentic-businesses",
+        "what-to-build/chat-bots",
         "what-to-build/web-apps",
-        "what-to-build/webhooks"
+        "what-to-build/webhooks",
+        "what-to-build/oauth-guide",
+        "what-to-build/checkout-embed",
+        "what-to-build/websocket-guide"
       ]
     },
     {
-      "group": "Templates",
-      "pages": ["examples/chatbot", "examples/flappy-bird"]
+      "group": "Sample Code",
+      "pages": [
+        "examples/flappy-bird",
+        "examples/first-button-press"
+      ]
     },
     {
       "group": "GraphQL API",
       "pages": [
+        "api-reference/graphql/authentication",
         "api-reference/graphql/schema",
         "api-reference/graphql/examples",
         "api-reference/graphql/rate-limits"
