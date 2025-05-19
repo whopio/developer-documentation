@@ -9,15 +9,14 @@ OAuth allows your users to access your web application by verifying their Whop p
 
 ## Implementation Steps
 
-### Handle the OAuth Flow
 
-When users click your app from Whop Hub, they'll be redirected to your app with a code:
+1. Send users to an authentication link with your OAuth client ID (found [here](https://whop.com/dashboard))
 
 ```bash
-https://your-app.com/callback?code=xxxxxxxx
+https://whop.com/oauth/?scope=openid+user&response_type=code&client_id=[YOUR_CLIENT_ID]&redirect_uri=[YOUR_REDIRECT_URL]
 ```
 
-### 3. Create the Callback Handler
+2. Get token
 
 ```javascript
 export default function Callback() {
@@ -27,9 +26,7 @@ export default function Callback() {
 }
 ```
 
-### 4. Get the Auth Token
-
-Exchange the code for an auth token:
+3. Exchange the code for an auth token:
 
 ```javascript
 const getAuthToken = async (code, clientId, clientSecret, redirect_uri) => {
@@ -49,7 +46,7 @@ const getAuthToken = async (code, clientId, clientSecret, redirect_uri) => {
 };
 ```
 
-### 5. Verify User Access
+4. Retrieve profile details
 
 Use the token to get user information:
 
@@ -64,6 +61,7 @@ const checkAccess = async (accessToken) => {
 };
 ```
 
+You can now make any calls listed [here](https://dev.whop.com/api-reference/v5/apps/memberships/list)
 ## Error Handling
 
 Common error codes:

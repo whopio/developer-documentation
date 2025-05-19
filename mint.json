@@ -66,7 +66,7 @@
     {
       "group": "How-to Guides",
       "pages": [
-        "what-to-build/agentic-businesses",
+        "what-to-build/chat-bots",
         "what-to-build/web-apps",
         "what-to-build/webhooks",
         "what-to-build/oauth-guide",
@@ -77,7 +77,6 @@
     {
       "group": "Sample Code",
       "pages": [
-        "examples/chatbot",
         "examples/flappy-bird",
         "examples/first-button-press"
       ]
@@ -85,6 +84,7 @@
     {
       "group": "GraphQL API",
       "pages": [
+        "api-reference/graphql/authentication",
         "api-reference/graphql/schema",
         "api-reference/graphql/examples",
         "api-reference/graphql/rate-limits"
