@@ -64,21 +64,23 @@
       "pages": ["introduction", "tutorials"]
     },
     {
-      "group": "How-to Guides",
+      "group": "Tutorials",
       "pages": [
         "what-to-build/chat-bots",
-        "what-to-build/web-apps",
-        "what-to-build/webhooks",
-        "what-to-build/oauth-guide",
-        "what-to-build/checkout-embed",
-        "what-to-build/websocket-guide"
+        "what-to-build/web-apps"
       ]
     },
     {
-      "group": "Sample Code",
+      "group": "Features",
       "pages": [
-        "examples/flappy-bird",
-        "examples/first-button-press"
+        "what-to-build/oauth-guide",
+        "what-to-build/checkout-embed",
+        "what-to-build/websocket-guide",
+        "what-to-build/webhooks",
+        "features/iframe-auth",
+        "features/payments",
+        "features/send-push-notifications",
+        "features/post-content-in-whop"
       ]
     },
     {
