@@ -3,33 +3,31 @@ title: Installation
 description: "Getting started developing an App on Whop"
 ---
 
-The Whop SDK makes it easier to build apps. It provides a set of tools that are commonly used in apps, such as authentication, API requests, push notifications, and more.
-
-To install our SDK, you need to run one of the following commands:
+While you can of course use our raw API, we have built a package for building Next.JS apps easily:
 
 <CodeGroup>
 
-```bash yarn
-yarn add @whop-apps/sdk
+```bash pnpm
+pnpm install @whop/api && pnpm install -D @whop-apps/dev-proxy
 ```
 
 ```bash npm
-npm install @whop-apps/sdk
+npm install @whop/api && npm install -D @whop-apps/dev-proxy
 ```
 
-```bash pnpm
-pnpm add @whop-apps/sdk
+```bash yarn
+yarn add @whop/api && yarn add -D @whop-apps/dev-proxy
 ```
 
 </CodeGroup>
 
 ---
 
+
 ### Next Steps
 
 Check out some of the things you can do with the SDK:
 
-- [Authenticate users](/sdk/validate-token)
-- [Use the API](/sdk/api)
-- [Send notifications](/api-reference/v5/apps/notifications/send)
-- [Handle webhooks](/sdk/webhooks)
+- [Run your app locally inside a Whop iFrame](/sdk/proxy)
+- [Get current user](/sdk/current-user)
+- [Look at the endpoints](/sdk/api)

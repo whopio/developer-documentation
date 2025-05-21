@@ -332,7 +332,7 @@
     },
     {
       "group": "Authentication",
-      "pages": ["sdk/has-access", "sdk/validate-token", "sdk/fetch-token"]
+      "pages": ["sdk/current-user", "sdk/check-access"]
     },
     {
       "group": "API",

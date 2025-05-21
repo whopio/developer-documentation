@@ -1,34 +1,56 @@
 ---
-title: Whop Proxy
-description: How to use Whop Proxy
+title: Local development
+description: Run your local setup inside of a Whop frame.
 ---
 
-This proxy is designed to proxy traffic (ie requests) from an iframe to the localhost developer URL of the developer's local development server.
-In the proxy, we fetch a user token and forward it to the app mimicking the behaviour of the Cloudflare proxy in production.
+You can use this proxy with any application written in any language, not just javascript.
 
-## Usage
 
 ### Install
 
-These commands are already included in the `@whop-apps/sdk` package. However, if you would like to install it on its own, you can run the following command:
 
 <CodeGroup>
 
-```bash yarn
-yarn add @whop-apps/dev-proxy
+```bash pnpm
+pnpm add @whop-apps/dev-proxy
 ```
 
 ```bash npm
 npm install @whop-apps/dev-proxy
 ```
 
-```bash pnpm
-pnpm add @whop-apps/dev-proxy
+```bash yarn
+yarn add @whop-apps/dev-proxy
 ```
 
 </CodeGroup>
 
 ### Run
+
+
+
+<CodeGroup>
+
+```bash pnpm
+pnpm whop-proxy
+```
+
+```bash npm
+npm run whop-proxy
+```
+
+```bash yarn
+yarn whop-proxy
+```
+
+</CodeGroup>
+
+<Note>
+  If you are using **NPM**, you need to add ```"whop-proxy": "whop-proxy"``` to
+  the **scripts** section of your `package.json` file.
+</Note>
+
+### If you are running a running any app with a `pnpm dev` script:
 
 <Note>
   If you are using **NPM**, you need to add ```"whop-proxy": "whop-proxy"``` to
@@ -37,17 +59,38 @@ pnpm add @whop-apps/dev-proxy
 
 <CodeGroup>
 
-```bash yarn
-yarn whop-proxy
+```bash pnpm
+pnpm whop-proxy
 ```
 
 ```bash npm
 npm run whop-proxy
 ```
 
-```bash pnpm
-pnpm whop-proxy
+```bash yarn
+yarn whop-proxy
 ```
+
+</CodeGroup>
+
+
+### If you are running an app that does not have a `pnpm dev` script, for example, a Ruby on Rails app on port 3001:
+
+
+<CodeGroup>
+
+```bash pnpm
+pnpm whop-proxy --proxyPort=3000 --upstreamPort=3001 --command="sleep 3d"
+```
+
+```bash npm
+npm whop-proxy --proxyPort=3000 --upstreamPort=3001 --command="sleep 3d"
+```
+
+```bash yarn
+yarn whop-proxy --proxyPort=3000 --upstreamPort=3001 --command="sleep 3"
+```
+
 
 </CodeGroup>
 
@@ -56,7 +99,7 @@ pnpm whop-proxy
 The proxy can be configured using the following command line options:
 
 ```bash
-Usage: yarn whop-proxy [options]
+Usage: pnpm whop-proxy [options]
 
 Options:
 
