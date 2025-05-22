@@ -1,76 +1,14 @@
 ---
-title: Get Experience
-description: Get information about a specific experience.
+title: Get experience
+description: Retrieve detailed information for a specific experience by its ID.
 ---
 
-<CodeGroup>
+```typescript
+import { whopApi } from "@/lib/whop-api";
 
-```typescript @whop/api
-import { getExperience } from "@whop/api";
+const experienceDetails = (await whopApi.getExperience({experienceId: "exp_xxx"})).experience;
 
-const experience: Experience = await getExperience({ id: "experience_id" });
+if (experienceDetails) {
+  console.log(experienceDetails);
+}
 ```
-
-```typescript GraphQL
-const query = `
-  query GetExperience($id: ID!) {
-    experience(id: $id) {
-      id
-      name
-      description
-      upsellType
-      logo {
-        sourceUrl
-      }
-      app {
-        id
-        name
-        icon {
-          sourceUrl
-        }
-      }
-      company {
-        id
-        title
-      }
-      upsellPlan {
-        id
-        baseCurrency
-        rawRenewalPrice
-        rawInitialPrice
-        initialPriceDue
-        createdAt
-        updatedAt
-        billingPeriod
-        trialPeriodDays
-        expirationDays
-        unlimitedStock
-        paymentLinkDescription
-        releaseMethod
-        stock
-        visibility
-        planType
-      }
-    }
-  }
-`;
-
-const response = await fetch("https://api.whop.com/api/v2", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${process.env.WHOP_API_KEY}`
-  },
-  body: JSON.stringify({
-    query,
-    variables: {
-      id: "experience_id"
-    }
-  })
-});
-
-const { data } = await response.json();
-const experience = data.experience;
-```
-
-</CodeGroup> 

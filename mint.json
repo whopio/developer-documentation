@@ -329,41 +329,56 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/installation", "sdk/local-development"]
+      "pages": [
+        "sdk/installation",
+        "sdk/local-development",
+        "sdk/whop-api-client"
+      ]
     },
     {
       "group": "Authentication",
-      "pages": [  "sdk/retrieve-current-user", "sdk/api/validate-access"]
+      "pages": ["sdk/retrieve-current-user", "sdk/validate-access"]
     },
     {
-      "group": "API",
+      "group": "Core Resources",
       "pages": [
         {
-          "group": "Identity",
-          "pages": [
-            "sdk/api/retrieve-user"
-          ]
+          "group": "Users",
+          "pages": ["sdk/api/get-user", "sdk/api/get-current-user", "sdk/api/check-if-user-has-access-to-access-pass", "sdk/api/check-if-user-has-access-to-experience", "sdk/api/check-if-user-has-access-to-company"]
         },
         {
           "group": "Payments",
-          "pages": [
-            "sdk/api/charge-user"
-          ]
+          "pages": ["sdk/api/get-user-ledger-account",  "sdk/api/get-company-ledger-account", "sdk/api/charge-user", "sdk/api/transfer-funds"]
+        },
+
+        {
+          "group": "Access Passes",
+          "pages": ["sdk/api/get-access-pass"]
         },
         {
-          "group": "Engagement",
-          "pages": [
-            "sdk/api/get-feed-messages",
-            "sdk/api/create-forum-post"
-          ]
+          "group": "Experiences",
+          "pages": ["sdk/api/get-experience", "sdk/api/list-experiences"]
+        }
+      ]
+    },
+    {
+      "group": "Features",
+      "pages": [
+        {
+          "group": "Notifications",
+          "pages": ["sdk/api/send-notification"]
         },
         {
-          "group": "Discovery",
-          "pages": [
-            "sdk/api/get-access-pass-details",
-            "sdk/api/get-experience",
-            "sdk/api/get-experiences"
-          ]
+          "group": "Forums",
+          "pages": ["sdk/api/create-forum-post", "sdk/api/find-or-create-forum", "sdk/api/list-posts"]
+        },
+        {
+          "group": "Chat",
+          "pages": ["sdk/api/list-messages", "sdk/api/send-message-to-whop-chat", "sdk/api/send-message-to-chat-feed", "sdk/api/send-direct-message-to-user", "sdk/api/find-or-create-chat"]
+        },
+        {
+          "group": "File Attachments",
+          "pages": ["sdk/api/get-attachment", "sdk/api/upload-media", "sdk/api/process-attachment"]
         }
       ]
     },

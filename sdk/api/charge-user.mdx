@@ -1,68 +1,34 @@
 ---
-title: Charge User
-description: Charge a user a specific amount for a product or service.
+title: Charge user
+description: Initiate a payment by charging a user for a product or service.
 ---
 
-<CodeGroup>
+```typescript
+import { whopApi } from "@/lib/whop-api";
 
-```typescript @whop/api
-import { chargeUser } from "@whop/api";
-
-const input: ChargeUserInput = {
-  amount: 29.99,
-  currency: "USD",
-  userId: "user_123",
-  description: "Premium subscription",
-  redirectUrl: "https://your-app.com/success",
-  metadata: {
-    subscriptionType: "premium"
-  }
+const input = {
+  planId: "plan_xxx", // Replace with actual Plan ID
+  userId: "user_xxx",   // Replace with actual User ID if applicable
+  successUrl: "https://example.com/success",
+  cancelUrl: "https://example.com/cancel",
+  // Add other necessary fields for ChargeUserInput
 };
 
-const response: ChargeUserResponse = await chargeUser(input);
+try {
+  const response = (await whopApi.chargeUser({input})).chargeUser;
+
+  if (response.checkoutSession) {
+    console.log("Checkout Session ID:", response.checkoutSession.id);
+    console.log("Purchase URL:", response.checkoutSession.purchaseUrl);
+    console.log("Status:", response.status);
+    // Redirect the user to response.checkoutSession.purchaseUrl or use it in an iframe
+  } else {
+    console.log("Charge status:", response.status);
+    // Handle cases where checkoutSession might not be returned directly
+  }
+} catch (error) {
+  console.error("Error creating charge:", error);
+}
 ```
 
-```typescript GraphQL
-const mutation = `
-  mutation ChargeUser($input: ChargeUserInput!) {
-    chargeUser(input: $input) {
-      status
-      checkoutSession {
-        id
-        purchaseUrl
-      }
-    }
-  }
-`;
-
-
-const variables = {
-  input: {
-    amount: 29.99,
-    currency: "USD",
-    userId: "user_123",
-    description: "Premium subscription",
-    redirectUrl: "https://your-app.com/success",
-    metadata: {
-      subscriptionType: "premium"
-    }
-  }
-};
-
-const response = await fetch("https://api.whop.com/public-graphql", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${process.env.WHOP_API_KEY}`
-  },
-  body: JSON.stringify({
-    query: mutation,
-    variables
-  })
-});
-
-const { data } = await response.json();
-const chargeResponse: ChargeUserResponse = data.chargeUser;
-```
-
-</CodeGroup> 
+This mutation typically returns a `checkoutSession` which includes a `purchaseUrl` to redirect the user to complete the payment.
