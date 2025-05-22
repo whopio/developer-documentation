@@ -1,0 +1,149 @@
+---
+title: Retrieve User
+description: Retrieve the public profile information for any user on Whop
+---
+
+## Example `User` object
+
+```json
+{
+    "id": "user_RLK3ZmTdSpbQ8",
+    "name": "Jack Sharkey",
+    "username": "jack",
+    "profilePicture": {
+    "sourceUrl": "https://s3.us-east-2.amazonaws.com/assets.whop.com/uploads/2025-03-25/user_331_9f96c11a-d5ef-4c6f-9c81-716554b72dc2.png"
+    },
+    "bio": "Resident Builder",
+    "phoneVerified": true,
+    "banner": {
+    "sourceUrl": "https://assets.whop.com/uploads/2024-06-15/user_331_652a782a-d658-4176-8e0d-541f0d0b0b80.jpeg"
+    },
+    "createdAt": 1609448400
+}
+```
+
+
+
+
+## Fetch the currently logged in user
+
+Use the following snippet to authenticate the currently logged in user and fetch their public profile information. You can use this to personalize the experience for the user.
+
+
+<CodeGroup>
+```javascript Next.js
+import { whopApi } from "@/lib/whop-api";
+import { headers } from "next/headers";
+
+const headersList = await headers();
+
+// Extract the user ID (this will extract the user ID from the headers for you)
+const { userId } = await verifyUserToken(headersList);
+
+// Load the user's public profile information
+const user = (await whopApi.retrieveUser({userId: userId})).publicUser;
+
+console.log(user);
+```
+
+</CodeGroup>
+
+### Not using the Whop TS SDK?
+
+<Accordion title="How to authenticate users in other languages">
+
+In order to retrieve the current user's ID, you need to decrypt a JWT token that is stored in the `x-whop-user-token` header. `VerifyUserToken` is a helper function in our TS SDK that decodes the JWT token and returns the user's ID.
+
+If are using a different framework and do not have access to the Typescript Whop SDK, you will need to implement your own JWT decoding logic. Here is an example of how to do this in Ruby on Rails:
+
+```ruby Ruby on Rails
+require 'jwt'
+require 'openssl'
+
+# This is a static public key that is used to decode the JWT token
+# You can put this into your application
+JWT_PEM = <<~PEM.freeze
+  -----BEGIN PUBLIC KEY-----
+  MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAErz8a8vxvexHC0TLT91g7llOdDOsN
+  uYiGEfic4Qhni+HMfRBuUphOh7F3k8QgwZc9UlL0AHmyYqtbhL9NuJes6w==
+  -----END PUBLIC KEY-----
+PEM
+
+# In your controller
+user_token = request.headers["x-whop-user-token"]
+return if user_token.blank?
+
+key = OpenSSL::PKey::EC.new(JWT_PEM)
+payload, _header = JWT.decode user_token, key, true, {
+  iss: "urn:whopcom:exp-proxy",
+  verify_iss: true,
+  algorithm: "ES256"
+}
+
+jwt_app_id = payload["aud"]
+
+# WARNING! You must set the WHOP_APP_ID environment variable in your application.
+# This looks like app_xxxx.
+return if jwt_app_id != ENV.fetch("WHOP_APP_ID")
+
+jwt_user_id = payload["sub"]
+```
+
+</Accordion>
+
+## Fetch a user via ID
+
+Use the following snippet to fetch a user's public profile information by their ID. Their id looks like `user_xxxx`.
+
+
+<CodeGroup>
+```javascript Typescript
+import { whopApi } from "@/lib/whop-api";
+
+const user = (await whopApi.retrieveUser({userId: "user_xxxx"})).publicUser;
+
+console.log(user);
+```
+
+```curl
+curl --location 'https://api.whop.com/public-graphql' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR_API_KEY' \
+--data '{
+    "operationName": "retrieveUser",
+    "variables": {
+        "userId": "user_123"
+    }
+}'
+```
+
+</CodeGroup>
+
+## Fetch a user via username
+
+Use the following snippet to fetch a user's public profile information by their username.
+
+
+<CodeGroup>
+```javascript Typescript
+import { whopApi } from "@/lib/whop-api";
+
+const user = (await whopApi.retrieveUser({username: "jack"})).publicUser;
+
+console.log(user);
+```
+
+```curl
+curl --location 'https://api.whop.com/public-graphql' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR_API_KEY' \
+--data '{
+    "operationName": "retrieveUser",
+    "variables": {
+        "username": "jack"
+    }
+}'
+```
+
+</CodeGroup>
+

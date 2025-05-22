@@ -35,10 +35,10 @@ user_token = request.headers["x-whop-user-token"]
 return if user_token.blank?
 
 key = OpenSSL::PKey::EC.new(JWT_PEM)
-payload, _header = JWT.decode user_token, key, true, { 
-  iss: "urn:whopcom:exp-proxy", 
-  verify_iss: true, 
-  algorithm: "ES256" 
+payload, _header = JWT.decode user_token, key, true, {
+  iss: "urn:whopcom:exp-proxy",
+  verify_iss: true,
+  algorithm: "ES256"
 }
 
 jwt_app_id = payload["aud"]
@@ -64,10 +64,10 @@ if (!$userToken) return null;
 
 try {
     $payload = JWT::decode($userToken, new Key($JWT_PEM, 'ES256'));
-    
+
     if ($payload->iss !== 'urn:whopcom:exp-proxy') return null;
     if ($payload->aud !== $_ENV['WHOP_APP_ID']) return null;
-    
+
     $jwtUserId = $payload->sub;
 } catch (Exception $e) {
     return null;
@@ -148,19 +148,19 @@ def your_route():
             JWT_PEM.encode(),
             backend=default_backend()
         )
-        
+
         payload = jwt.decode(
             user_token,
             public_key,
             algorithms=['ES256'],
             issuer='urn:whopcom:exp-proxy'
         )
-        
+
         if payload['aud'] != os.environ['WHOP_APP_ID']:
             return None
-            
+
         jwt_user_id = payload['sub']
-        
+
     except jwt.InvalidTokenError:
         return None
 ```
@@ -172,4 +172,4 @@ Now that you have a trustworthy user ID, you can check if they are an admin or c
 
 ### Next Steps
 
-- [Check a user's access](/sdk/check-access)
+- [Check a user's access](/sdk/validate-access)
