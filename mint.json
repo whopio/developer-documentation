@@ -333,12 +333,17 @@
     },
     {
       "group": "Authentication",
-      "pages": ["sdk/api/retrieve-user", "sdk/api/validate-access"]
+      "pages": [ "sdk/api/validate-access", "sdk/retrieve-current-user"]
     },
     {
       "group": "API",
       "pages": [
-
+        {
+          "group": "Identity",
+          "pages": [
+            "sdk/api/retrieve-user"
+          ]
+        },
         {
           "group": "Payments",
           "pages": [
