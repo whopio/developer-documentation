@@ -340,7 +340,7 @@
       "pages": ["sdk/retrieve-current-user", "sdk/validate-access"]
     },
     {
-      "group": "API",
+      "group": "Core Resources",
       "pages": [
         {
           "group": "Users",
@@ -351,16 +351,25 @@
           "pages": ["sdk/api/charge-user"]
         },
         {
+          "group": "Companies",
+          "pages": ["sdk/api/charge-user"]
+        },
+        {
           "group": "Access Passes",
           "pages": ["sdk/api/get-access-pass-details"]
         },
         {
           "group": "Experiences",
           "pages": ["sdk/api/get-experience", "sdk/api/get-experiences"]
-        },
+        }
+      ]
+    },
+    {
+      "group": "Features",
+      "pages": [
         {
           "group": "Notifications",
-          "pages": []
+          "pages": ["sdk/api/charge-user"]
         },
         {
           "group": "Forums",
@@ -369,6 +378,10 @@
         {
           "group": "Chat",
           "pages": ["sdk/api/get-feed-messages"]
+        },
+        {
+          "group": "File Attachments",
+          "pages": ["sdk/api/charge-user"]
         }
       ]
     },
