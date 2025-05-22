@@ -1,0 +1,2546 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Whop GraphQL API",
+    "version": "1.0.0",
+    "description": "OpenAPI specification for Whop GraphQL API"
+  },
+  "paths": {
+    "/graphql/CreateChat": {
+      "post": {
+        "summary": "GraphQL CreateChat",
+        "operationId": "CreateChat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation CreateChat($input: CreateChatInput!) {\n\tcreateChat(input: $input) {\n\t\tid\n\t\tlink\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "object",
+                        "properties": {
+                          "clientMutationId": {
+                            "type": "string"
+                          },
+                          "accessPassId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "experienceId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "expiresAt": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "price": {
+                            "type": "object",
+                            "properties": {
+                              "baseCurrency": {
+                                "type": "string",
+                                "enum": [
+                                  "usd",
+                                  "sgd",
+                                  "inr",
+                                  "aud",
+                                  "brl",
+                                  "cad",
+                                  "dkk",
+                                  "eur",
+                                  "nok",
+                                  "gbp",
+                                  "sek",
+                                  "chf",
+                                  "hkd",
+                                  "huf",
+                                  "jpy",
+                                  "mxn",
+                                  "myr",
+                                  "pln",
+                                  "czk",
+                                  "nzd",
+                                  "aed",
+                                  "eth",
+                                  "ape",
+                                  "cop",
+                                  "ron",
+                                  "thb",
+                                  "bgn",
+                                  "idr",
+                                  "dop",
+                                  "php",
+                                  "try",
+                                  "krw",
+                                  "twd",
+                                  "vnd",
+                                  "pkr",
+                                  "clp",
+                                  "uyu",
+                                  "ars",
+                                  "zar",
+                                  "dzd",
+                                  "tnd",
+                                  "mad",
+                                  "kes",
+                                  "kwd",
+                                  "jod",
+                                  "all",
+                                  "xcd",
+                                  "amd",
+                                  "bsd",
+                                  "bhd",
+                                  "bob",
+                                  "bam",
+                                  "khr",
+                                  "crc",
+                                  "xof",
+                                  "egp",
+                                  "etb",
+                                  "gmd",
+                                  "ghs",
+                                  "gtq",
+                                  "gyd",
+                                  "ils",
+                                  "jmd",
+                                  "mop",
+                                  "mga",
+                                  "mur",
+                                  "mdl",
+                                  "mnt",
+                                  "nad",
+                                  "ngn",
+                                  "mkd",
+                                  "omr",
+                                  "pyg",
+                                  "pen",
+                                  "qar",
+                                  "rwf",
+                                  "sar",
+                                  "rsd",
+                                  "lkr",
+                                  "tzs",
+                                  "ttd",
+                                  "uzs",
+                                  "rub"
+                                ]
+                              },
+                              "customFields": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "fieldType": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text"
+                                      ],
+                                      "nullable": false
+                                    },
+                                    "id": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "nullable": false
+                                    },
+                                    "order": {
+                                      "type": "integer"
+                                    },
+                                    "placeholder": {
+                                      "type": "string"
+                                    },
+                                    "required": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "fieldType",
+                                    "name"
+                                  ],
+                                  "nullable": false
+                                }
+                              },
+                              "expirationDays": {
+                                "type": "integer"
+                              },
+                              "initialPrice": {
+                                "type": "number",
+                                "format": "float"
+                              },
+                              "releaseMethod": {
+                                "type": "string",
+                                "enum": [
+                                  "buy_now",
+                                  "waitlist",
+                                  "raffle"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "CreateChat": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "CreateChat": {
+                      "input": {
+                        "clientMutationId": "example_string",
+                        "accessPassId": "123e4567-e89b-12d3-a456-426614174000",
+                        "experienceId": "123e4567-e89b-12d3-a456-426614174000",
+                        "expiresAt": "example_value",
+                        "name": "example_string",
+                        "price": {
+                          "baseCurrency": "usd",
+                          "customFields": [
+                            {
+                              "fieldType": "text",
+                              "id": "123e4567-e89b-12d3-a456-426614174000",
+                              "name": "example_string",
+                              "order": 42,
+                              "placeholder": "example_string",
+                              "required": true
+                            }
+                          ],
+                          "expirationDays": 42,
+                          "initialPrice": 42,
+                          "releaseMethod": "buy_now"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/CreateForumPost": {
+      "post": {
+        "summary": "GraphQL CreateForumPost",
+        "operationId": "CreateForumPost",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation CreateForumPost($input: CreateForumPostInput!) {\n\tcreateForumPost(input: $input) {\n\t\t...ForumPostFragment\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "object",
+                        "properties": {
+                          "clientMutationId": {
+                            "type": "string"
+                          },
+                          "accessPassId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "attachments": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "directUploadId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "nullable": false
+                            }
+                          },
+                          "experienceId": {
+                            "type": "string"
+                          },
+                          "content": {
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "poll": {
+                            "type": "object",
+                            "properties": {
+                              "options": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "nullable": false
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "nullable": false
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "text"
+                                  ],
+                                  "nullable": false
+                                },
+                                "nullable": false
+                              }
+                            },
+                            "required": [
+                              "options"
+                            ]
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "parentId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "pinned": {
+                            "type": "boolean"
+                          },
+                          "paywallAmount": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "paywallCurrency": {
+                            "type": "string",
+                            "enum": [
+                              "usd",
+                              "sgd",
+                              "inr",
+                              "aud",
+                              "brl",
+                              "cad",
+                              "dkk",
+                              "eur",
+                              "nok",
+                              "gbp",
+                              "sek",
+                              "chf",
+                              "hkd",
+                              "huf",
+                              "jpy",
+                              "mxn",
+                              "myr",
+                              "pln",
+                              "czk",
+                              "nzd",
+                              "aed",
+                              "eth",
+                              "ape",
+                              "cop",
+                              "ron",
+                              "thb",
+                              "bgn",
+                              "idr",
+                              "dop",
+                              "php",
+                              "try",
+                              "krw",
+                              "twd",
+                              "vnd",
+                              "pkr",
+                              "clp",
+                              "uyu",
+                              "ars",
+                              "zar",
+                              "dzd",
+                              "tnd",
+                              "mad",
+                              "kes",
+                              "kwd",
+                              "jod",
+                              "all",
+                              "xcd",
+                              "amd",
+                              "bsd",
+                              "bhd",
+                              "bob",
+                              "bam",
+                              "khr",
+                              "crc",
+                              "xof",
+                              "egp",
+                              "etb",
+                              "gmd",
+                              "ghs",
+                              "gtq",
+                              "gyd",
+                              "ils",
+                              "jmd",
+                              "mop",
+                              "mga",
+                              "mur",
+                              "mdl",
+                              "mnt",
+                              "nad",
+                              "ngn",
+                              "mkd",
+                              "omr",
+                              "pyg",
+                              "pen",
+                              "qar",
+                              "rwf",
+                              "sar",
+                              "rsd",
+                              "lkr",
+                              "tzs",
+                              "ttd",
+                              "uzs",
+                              "rub"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "content"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "CreateForumPost": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "CreateForumPost": {
+                      "input": {
+                        "clientMutationId": "example_string",
+                        "accessPassId": "123e4567-e89b-12d3-a456-426614174000",
+                        "attachments": [
+                          {
+                            "directUploadId": "123e4567-e89b-12d3-a456-426614174000",
+                            "id": "123e4567-e89b-12d3-a456-426614174000"
+                          }
+                        ],
+                        "experienceId": "example_string",
+                        "content": "example_string",
+                        "poll": {
+                          "options": [
+                            {
+                              "id": "example_string",
+                              "text": "example_string"
+                            }
+                          ]
+                        },
+                        "title": "example_string",
+                        "parentId": "123e4567-e89b-12d3-a456-426614174000",
+                        "pinned": true,
+                        "paywallAmount": 42,
+                        "paywallCurrency": "usd"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/CreateForum": {
+      "post": {
+        "summary": "GraphQL CreateForum",
+        "operationId": "CreateForum",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation CreateForum($input: CreateForumInput!) {\n\tcreateForum(input: $input) {\n\t\tid\n\t\tlink\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "object",
+                        "properties": {
+                          "clientMutationId": {
+                            "type": "string"
+                          },
+                          "accessPassId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "experienceId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "expiresAt": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "price": {
+                            "type": "object",
+                            "properties": {
+                              "baseCurrency": {
+                                "type": "string",
+                                "enum": [
+                                  "usd",
+                                  "sgd",
+                                  "inr",
+                                  "aud",
+                                  "brl",
+                                  "cad",
+                                  "dkk",
+                                  "eur",
+                                  "nok",
+                                  "gbp",
+                                  "sek",
+                                  "chf",
+                                  "hkd",
+                                  "huf",
+                                  "jpy",
+                                  "mxn",
+                                  "myr",
+                                  "pln",
+                                  "czk",
+                                  "nzd",
+                                  "aed",
+                                  "eth",
+                                  "ape",
+                                  "cop",
+                                  "ron",
+                                  "thb",
+                                  "bgn",
+                                  "idr",
+                                  "dop",
+                                  "php",
+                                  "try",
+                                  "krw",
+                                  "twd",
+                                  "vnd",
+                                  "pkr",
+                                  "clp",
+                                  "uyu",
+                                  "ars",
+                                  "zar",
+                                  "dzd",
+                                  "tnd",
+                                  "mad",
+                                  "kes",
+                                  "kwd",
+                                  "jod",
+                                  "all",
+                                  "xcd",
+                                  "amd",
+                                  "bsd",
+                                  "bhd",
+                                  "bob",
+                                  "bam",
+                                  "khr",
+                                  "crc",
+                                  "xof",
+                                  "egp",
+                                  "etb",
+                                  "gmd",
+                                  "ghs",
+                                  "gtq",
+                                  "gyd",
+                                  "ils",
+                                  "jmd",
+                                  "mop",
+                                  "mga",
+                                  "mur",
+                                  "mdl",
+                                  "mnt",
+                                  "nad",
+                                  "ngn",
+                                  "mkd",
+                                  "omr",
+                                  "pyg",
+                                  "pen",
+                                  "qar",
+                                  "rwf",
+                                  "sar",
+                                  "rsd",
+                                  "lkr",
+                                  "tzs",
+                                  "ttd",
+                                  "uzs",
+                                  "rub"
+                                ]
+                              },
+                              "customFields": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "fieldType": {
+                                      "type": "string",
+                                      "enum": [
+                                        "text"
+                                      ],
+                                      "nullable": false
+                                    },
+                                    "id": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "nullable": false
+                                    },
+                                    "order": {
+                                      "type": "integer"
+                                    },
+                                    "placeholder": {
+                                      "type": "string"
+                                    },
+                                    "required": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "fieldType",
+                                    "name"
+                                  ],
+                                  "nullable": false
+                                }
+                              },
+                              "expirationDays": {
+                                "type": "integer"
+                              },
+                              "initialPrice": {
+                                "type": "number",
+                                "format": "float"
+                              },
+                              "releaseMethod": {
+                                "type": "string",
+                                "enum": [
+                                  "buy_now",
+                                  "waitlist",
+                                  "raffle"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "CreateForum": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "CreateForum": {
+                      "input": {
+                        "clientMutationId": "example_string",
+                        "accessPassId": "123e4567-e89b-12d3-a456-426614174000",
+                        "experienceId": "123e4567-e89b-12d3-a456-426614174000",
+                        "expiresAt": "example_value",
+                        "name": "example_string",
+                        "price": {
+                          "baseCurrency": "usd",
+                          "customFields": [
+                            {
+                              "fieldType": "text",
+                              "id": "123e4567-e89b-12d3-a456-426614174000",
+                              "name": "example_string",
+                              "order": 42,
+                              "placeholder": "example_string",
+                              "required": true
+                            }
+                          ],
+                          "expirationDays": 42,
+                          "initialPrice": 42,
+                          "releaseMethod": "buy_now"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/SendDirectMessageToUser": {
+      "post": {
+        "summary": "GraphQL SendDirectMessageToUser",
+        "operationId": "SendDirectMessageToUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation SendDirectMessageToUser($toUserId: String!, $message: String!) {\n\tsendMessage(input: { message: $message, toUserId: $toUserId })\n}"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "toUserId": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "toUserId",
+                      "message"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "SendDirectMessageToUser": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "SendDirectMessageToUser": {
+                      "toUserId": "example_string",
+                      "message": "example_string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/SendMessageToChatFeed": {
+      "post": {
+        "summary": "GraphQL SendMessageToChatFeed",
+        "operationId": "SendMessageToChatFeed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation SendMessageToChatFeed(\n\t$feedId: String!\n\t$feedType: FeedTypes!\n\t$message: String!\n) {\n\tsendMessage(\n\t\tinput: { message: $message, feedId: $feedId, feedType: $feedType }\n\t)\n}"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "feedId": {
+                        "type": "string"
+                      },
+                      "feedType": {
+                        "type": "string",
+                        "enum": [
+                          "dms_feed",
+                          "chat_feed",
+                          "forum_feed",
+                          "livestream_feed",
+                          "universal_post",
+                          "user"
+                        ]
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "feedId",
+                      "feedType",
+                      "message"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "SendMessageToChatFeed": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "SendMessageToChatFeed": {
+                      "feedId": "example_string",
+                      "feedType": "dms_feed",
+                      "message": "example_string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/SendMessageToWhopChat": {
+      "post": {
+        "summary": "GraphQL SendMessageToWhopChat",
+        "operationId": "SendMessageToWhopChat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation SendMessageToWhopChat($experienceId: String!, $message: String!) {\n\tsendMessage(input: { message: $message, experienceId: $experienceId })\n}\n\n\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "experienceId": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "experienceId",
+                      "message"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "SendMessageToWhopChat": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "SendMessageToWhopChat": {
+                      "experienceId": "example_string",
+                      "message": "example_string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/SendNotification": {
+      "post": {
+        "summary": "GraphQL SendNotification",
+        "operationId": "SendNotification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation SendNotification($input: SendNotificationInput!) {\n\tsendNotification(input: $input)\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "object",
+                        "properties": {
+                          "clientMutationId": {
+                            "type": "string"
+                          },
+                          "companyTeamId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "content": {
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "experienceId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "externalId": {
+                            "type": "string"
+                          },
+                          "isMention": {
+                            "type": "boolean"
+                          },
+                          "link": {
+                            "type": "string"
+                          },
+                          "senderUserId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "subtitle": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "userIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "format": "uuid",
+                              "nullable": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "content",
+                          "title"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "SendNotification": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "SendNotification": {
+                      "input": {
+                        "clientMutationId": "example_string",
+                        "companyTeamId": "123e4567-e89b-12d3-a456-426614174000",
+                        "content": "example_string",
+                        "experienceId": "123e4567-e89b-12d3-a456-426614174000",
+                        "externalId": "example_string",
+                        "isMention": true,
+                        "link": "example_string",
+                        "senderUserId": "123e4567-e89b-12d3-a456-426614174000",
+                        "subtitle": "example_string",
+                        "title": "example_string",
+                        "userIds": [
+                          "123e4567-e89b-12d3-a456-426614174000"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/ChargeUser": {
+      "post": {
+        "summary": "GraphQL ChargeUser",
+        "operationId": "ChargeUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation ChargeUser($input: ChargeUserInput!) {\n\tchargeUser(input: $input) {\n\t\tstatus\n\t\tcheckoutSession {\n\t\t\tid\n\t\t\tpurchaseUrl\n\t\t}\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "object",
+                        "properties": {
+                          "clientMutationId": {
+                            "type": "string"
+                          },
+                          "affiliateCode": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "number",
+                            "format": "float",
+                            "nullable": false
+                          },
+                          "currency": {
+                            "type": "string",
+                            "enum": [
+                              "usd",
+                              "sgd",
+                              "inr",
+                              "aud",
+                              "brl",
+                              "cad",
+                              "dkk",
+                              "eur",
+                              "nok",
+                              "gbp",
+                              "sek",
+                              "chf",
+                              "hkd",
+                              "huf",
+                              "jpy",
+                              "mxn",
+                              "myr",
+                              "pln",
+                              "czk",
+                              "nzd",
+                              "aed",
+                              "eth",
+                              "ape",
+                              "cop",
+                              "ron",
+                              "thb",
+                              "bgn",
+                              "idr",
+                              "dop",
+                              "php",
+                              "try",
+                              "krw",
+                              "twd",
+                              "vnd",
+                              "pkr",
+                              "clp",
+                              "uyu",
+                              "ars",
+                              "zar",
+                              "dzd",
+                              "tnd",
+                              "mad",
+                              "kes",
+                              "kwd",
+                              "jod",
+                              "all",
+                              "xcd",
+                              "amd",
+                              "bsd",
+                              "bhd",
+                              "bob",
+                              "bam",
+                              "khr",
+                              "crc",
+                              "xof",
+                              "egp",
+                              "etb",
+                              "gmd",
+                              "ghs",
+                              "gtq",
+                              "gyd",
+                              "ils",
+                              "jmd",
+                              "mop",
+                              "mga",
+                              "mur",
+                              "mdl",
+                              "mnt",
+                              "nad",
+                              "ngn",
+                              "mkd",
+                              "omr",
+                              "pyg",
+                              "pen",
+                              "qar",
+                              "rwf",
+                              "sar",
+                              "rsd",
+                              "lkr",
+                              "tzs",
+                              "ttd",
+                              "uzs",
+                              "rub"
+                            ],
+                            "nullable": false
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "metadata": {
+                            "type": "string"
+                          },
+                          "redirectUrl": {
+                            "type": "string"
+                          },
+                          "userId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": false
+                          }
+                        },
+                        "required": [
+                          "amount",
+                          "currency",
+                          "userId"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "ChargeUser": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "ChargeUser": {
+                      "input": {
+                        "clientMutationId": "example_string",
+                        "affiliateCode": "example_string",
+                        "amount": 42,
+                        "currency": "usd",
+                        "description": "example_string",
+                        "metadata": "example_value",
+                        "redirectUrl": "example_string",
+                        "userId": "123e4567-e89b-12d3-a456-426614174000"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/TransferFunds": {
+      "post": {
+        "summary": "GraphQL TransferFunds",
+        "operationId": "TransferFunds",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "mutation TransferFunds($input: TransferFundsInput!) {\n\ttransferFunds(input: $input)\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "object",
+                        "properties": {
+                          "clientMutationId": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "number",
+                            "format": "float",
+                            "nullable": false
+                          },
+                          "currency": {
+                            "type": "string",
+                            "enum": [
+                              "usd",
+                              "sgd",
+                              "inr",
+                              "aud",
+                              "brl",
+                              "cad",
+                              "dkk",
+                              "eur",
+                              "nok",
+                              "gbp",
+                              "sek",
+                              "chf",
+                              "hkd",
+                              "huf",
+                              "jpy",
+                              "mxn",
+                              "myr",
+                              "pln",
+                              "czk",
+                              "nzd",
+                              "aed",
+                              "eth",
+                              "ape",
+                              "cop",
+                              "ron",
+                              "thb",
+                              "bgn",
+                              "idr",
+                              "dop",
+                              "php",
+                              "try",
+                              "krw",
+                              "twd",
+                              "vnd",
+                              "pkr",
+                              "clp",
+                              "uyu",
+                              "ars",
+                              "zar",
+                              "dzd",
+                              "tnd",
+                              "mad",
+                              "kes",
+                              "kwd",
+                              "jod",
+                              "all",
+                              "xcd",
+                              "amd",
+                              "bsd",
+                              "bhd",
+                              "bob",
+                              "bam",
+                              "khr",
+                              "crc",
+                              "xof",
+                              "egp",
+                              "etb",
+                              "gmd",
+                              "ghs",
+                              "gtq",
+                              "gyd",
+                              "ils",
+                              "jmd",
+                              "mop",
+                              "mga",
+                              "mur",
+                              "mdl",
+                              "mnt",
+                              "nad",
+                              "ngn",
+                              "mkd",
+                              "omr",
+                              "pyg",
+                              "pen",
+                              "qar",
+                              "rwf",
+                              "sar",
+                              "rsd",
+                              "lkr",
+                              "tzs",
+                              "ttd",
+                              "uzs",
+                              "rub"
+                            ],
+                            "nullable": false
+                          },
+                          "destinationId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": false
+                          },
+                          "idempotenceKey": {
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "ledgerAccountId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": false
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "reason": {
+                            "type": "string",
+                            "enum": [
+                              "team_member_payout",
+                              "bounty_payout",
+                              "creator_to_user",
+                              "user_to_user",
+                              "creator_to_creator",
+                              "user_to_creator",
+                              "wadmin_transferred_funds",
+                              "content_reward_payout",
+                              "content_reward_return",
+                              "pool_top_up",
+                              "content_reward_fixed_payout"
+                            ]
+                          },
+                          "transferFee": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "feedId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "feedType": {
+                            "type": "string",
+                            "enum": [
+                              "dms_feed",
+                              "chat_feed",
+                              "forum_feed",
+                              "livestream_feed",
+                              "universal_post",
+                              "user"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "amount",
+                          "currency",
+                          "destinationId",
+                          "idempotenceKey",
+                          "ledgerAccountId"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "input"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "TransferFunds": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "TransferFunds": {
+                      "input": {
+                        "clientMutationId": "example_string",
+                        "amount": 42,
+                        "currency": "usd",
+                        "destinationId": "123e4567-e89b-12d3-a456-426614174000",
+                        "idempotenceKey": "example_string",
+                        "ledgerAccountId": "123e4567-e89b-12d3-a456-426614174000",
+                        "notes": "example_string",
+                        "reason": "team_member_payout",
+                        "transferFee": 42,
+                        "feedId": "123e4567-e89b-12d3-a456-426614174000",
+                        "feedType": "dms_feed"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/GetAccessPassDetails": {
+      "post": {
+        "summary": "GraphQL GetAccessPassDetails",
+        "operationId": "GetAccessPassDetails",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query GetAccessPassDetails($accessPassId: ID!) {\n\taccessPass: publicAccessPass(id: $accessPassId) {\n\t\t...AccessPassFragment\n\t\tbannerImage {\n\t\t\tsourceUrl\n\t\t}\n\t\theadline\n\t\tcompany {\n\t\t\tid\n\t\t\ttitle\n\t\t}\n\t\treviewsAverage\n\t\townerUser {\n\t\t\t...BasePublicProfileUser\n\t\t}\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "accessPassId": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": [
+                      "accessPassId"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "GetAccessPassDetails": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "GetAccessPassDetails": {
+                      "accessPassId": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/GetCompanyLedgerAccount": {
+      "post": {
+        "summary": "GraphQL GetCompanyLedgerAccount",
+        "operationId": "GetCompanyLedgerAccount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query GetCompanyLedgerAccount($companyId: ID!) {\n\tcompany(id: $companyId) {\n\t\tledgerAccount {\n\t\t\t...BaseLedgerAccount\n\t\t}\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "companyId": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": [
+                      "companyId"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "GetCompanyLedgerAccount": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "GetCompanyLedgerAccount": {
+                      "companyId": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/GetExperience": {
+      "post": {
+        "summary": "GraphQL GetExperience",
+        "operationId": "GetExperience",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query GetExperience($experienceId: ID!) {\n\texperience: publicExperience(id: $experienceId) {\n\t\t...PublicExperienceFragment\n\t\tupsellType\n\t\tupsellPlan {\n\t\t\t...BasePublicPlan\n\t\t}\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "experienceId": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": [
+                      "experienceId"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "GetExperience": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "GetExperience": {
+                      "experienceId": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/GetPublicUser": {
+      "post": {
+        "summary": "GraphQL GetPublicUser",
+        "operationId": "GetPublicUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query GetPublicUser($userId: ID!) {\n\tpublicUser(id: $userId) {\n\t\t...BasePublicProfileUser\n\t\tbio\n\t\tphoneVerified\n\t\tbanner {\n\t\t\tsourceUrl\n\t\t}\n\t\tcreatedAt\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": [
+                      "userId"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "GetPublicUser": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "GetPublicUser": {
+                      "userId": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/CheckIfUserHasAccessToExperience": {
+      "post": {
+        "summary": "GraphQL CheckIfUserHasAccessToExperience",
+        "operationId": "CheckIfUserHasAccessToExperience",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query CheckIfUserHasAccessToExperience($experienceId: ID!, $userId: ID) {\n\thasAccessToExperience(experienceId: $experienceId, userId: $userId) {\n\t\thasAccess\n\t\taccessLevel\n\t}\n}\n\nquery CheckIfUserHasAccessToAccessPass($accessPassId: ID!, $userId: ID) {\n\thasAccessToAccessPass(accessPassId: $accessPassId, userId: $userId) {\n\t\thasAccess\n\t\taccessLevel\n\t}\n}\n\nquery CheckIfUserHasAccessToCompany($companyId: ID!, $userId: ID) {\n\thasAccessToCompany(companyId: $companyId, userId: $userId) {\n\t\thasAccess\n\t\taccessLevel\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "experienceId": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": [
+                      "experienceId"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "CheckIfUserHasAccessToExperience": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "CheckIfUserHasAccessToExperience": {
+                      "experienceId": "123e4567-e89b-12d3-a456-426614174000",
+                      "userId": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/GetExperiencesForCompanyOrWhop": {
+      "post": {
+        "summary": "GraphQL GetExperiencesForCompanyOrWhop",
+        "operationId": "GetExperiencesForCompanyOrWhop",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query GetExperiencesForCompanyOrWhop(\n\t$after: String\n\t$first: Int\n\t$accessPassId: ID\n\t$appId: ID\n\t$onAccessPass: Boolean\n\t$companyId: ID!\n) {\n\tcompany(id: $companyId) {\n\t\texperiencesV2(\n\t\t\tafter: $after\n\t\t\tfirst: $first\n\t\t\tfilter: {\n\t\t\t\tappId: $appId\n\t\t\t\tonAccessPass: $onAccessPass\n\t\t\t\taccessPassId: $accessPassId\n\t\t\t}\n\t\t) {\n\t\t\tnodes {\n\t\t\t\t...ExperienceFragment\n\t\t\t}\n\t\t\tpageInfo {\n\t\t\t\thasNextPage\n\t\t\t\tendCursor\n\t\t\t}\n\t\t\ttotalCount\n\t\t}\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "GetExperiencesForCompanyOrWhop": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "GetExperiencesForCompanyOrWhop": {
+                      "after": "NONE"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/graphql/GetMessagesForFeed": {
+      "post": {
+        "summary": "GraphQL GetMessagesForFeed",
+        "operationId": "GetMessagesForFeed",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "query GetMessagesForFeed($type: FeedTypes!, $id: ID!) {\n\tfeedPosts(feedType: $type, feedId: $id) {\n\t\tposts {\n\t\t\t...Message\n\t\t}\n\t}\n}\n"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "dms_feed",
+                          "chat_feed",
+                          "forum_feed",
+                          "livestream_feed",
+                          "universal_post",
+                          "user"
+                        ]
+                      },
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ]
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "GetMessagesForFeed": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "locations": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "line": {
+                                  "type": "integer"
+                                },
+                                "column": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "GetMessagesForFeed": {
+                      "type": "dms_feed",
+                      "id": "123e4567-e89b-12d3-a456-426614174000"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

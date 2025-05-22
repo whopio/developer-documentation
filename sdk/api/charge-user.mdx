@@ -8,6 +8,17 @@ description: Charge a user a specific amount for a product or service.
 ```typescript @whop/api
 import { chargeUser } from "@whop/api";
 
+const input: ChargeUserInput = {
+  amount: 29.99,
+  currency: "USD",
+  userId: "user_123",
+  description: "Premium subscription",
+  redirectUrl: "https://your-app.com/success",
+  metadata: {
+    subscriptionType: "premium"
+  }
+};
+
 const response: ChargeUserResponse = await chargeUser(input);
 ```
 

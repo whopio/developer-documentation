@@ -1,5 +1,5 @@
 {
-  "openapi": ["/v5.yaml", "/v2.json", "/access.yaml"],
+  "openapi": ["/v5.yaml", "graphql.json", "/v2.json", "/access.yaml"],
   "name": "Whop Developers",
   "api": {
     "baseUrl": "https://api.whop.com"
