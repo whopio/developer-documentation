@@ -1,0 +1,17 @@
+---
+title: Check if user has access to company
+description: Check if a user has access to a specific company and their access level.
+---
+
+## Check Company Access
+
+Use the following snippet to determine if a user has access to a given company and what their level of access is.
+
+```typescript
+import { whopApi } from "@/lib/whop-api";
+
+const { hasAccess, accessLevel } = (await whopApi.checkIfUserHasAccessToCompany({companyId: "biz_xxx", userId: "user_xxx"})).hasAccessToCompany;
+
+console.log(hasAccess);
+console.log(accessLevel);
+```

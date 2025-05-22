@@ -1,0 +1,43 @@
+---
+title: Upload media
+description: Initiate a direct media upload and get a signed URL for uploading a file.
+---
+
+## Upload Media File
+
+Use the following snippet to get a presigned URL to upload a media file. You will need to provide details like filename, type, and size.
+
+```typescript
+import { whopApi } from "@/lib/whop-api";
+
+// The DirectUploadInput structure needs to be defined based on your GraphQL schema
+// Example structure:
+// interface DirectUploadInput {
+//   filename: string;
+//   contentType: string;
+//   byteSize: number;
+//   // ... other fields as required by your schema
+// }
+
+const uploadDetails = async () => {
+  const input = {
+    filename: "example.png",
+    contentType: "image/png",
+    byteSize: 102400, // 100KB example
+    // Specify other necessary fields for DirectUploadInput
+  };
+
+  const response = (await whopApi.uploadMedia({input})).mediaDirectUpload;
+
+  if (response) {
+    console.log("Upload ID:", response.id);
+    console.log("Upload URL:", response.uploadUrl);
+    console.log("Headers:", response.headers);
+    // Handle multipart upload if necessary using response.multipartUploadId and response.multipartUploadUrls
+  }
+};
+
+uploadDetails();
+```
+
+After obtaining the `uploadUrl` and `headers`, you can use a standard HTTP PUT request to upload the file directly to the returned URL.
