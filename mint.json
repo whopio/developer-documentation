@@ -333,7 +333,7 @@
     },
     {
       "group": "Authentication",
-      "pages": [ "sdk/api/validate-access", "sdk/retrieve-current-user"]
+      "pages": [  "sdk/retrieve-current-user", "sdk/api/validate-access"]
     },
     {
       "group": "API",

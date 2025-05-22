@@ -5,13 +5,29 @@ description: Retrieve the public profile information for the currently logged in
 
 
 
-## Fetch the currently logged in user
-
-Use the following snippet to authenticate the currently logged in user and fetch their public profile information. You can use this to personalize the experience for the user.
 
 
 <CodeGroup>
 ```javascript Next.js
+
+// lib/whop-api.ts
+
+import { WhopServerSdk, makeUserTokenVerifier } from "@whop/api";
+
+export const whopApi = WhopServerSdk({
+  appApiKey: process.env.WHOP_API_KEY ?? "fallback",
+  onBehalfOfUserId: process.env.MY_USER_ID,
+  companyId: "biz_fsyAlxa8BZM1Ca",
+});
+
+export const verifyUserToken = makeUserTokenVerifier({
+  appId: process.env.WHOP_APP_ID ?? "fallback",
+  dontThrow: true,
+});
+
+
+// page.tsx
+
 import { whopApi } from "@/lib/whop-api";
 import { headers } from "next/headers";
 
