@@ -370,7 +370,7 @@
         },
         {
           "group": "Forums",
-          "pages": ["sdk/api/create-forum-post", "sdk/api/find-or-create-forum"]
+          "pages": ["sdk/api/create-forum-post", "sdk/api/find-or-create-forum", "sdk/api/list-posts"]
         },
         {
           "group": "Chat",

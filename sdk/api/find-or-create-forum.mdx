@@ -18,25 +18,21 @@ import { whopApi } from "@/lib/whop-api";
 //   // ... other fields as required
 // }
 
-const manageForum = async () => {
-  const input = {
-    experienceId: "exp_xxx", // Replace with actual Experience ID or other relevant ID
-    name: "General Discussion"
-  };
-
-  try {
-    const forum = (await whopApi.findOrCreateForum({input})).createForum;
-
-    if (forum) {
-      console.log("Forum ID:", forum.id);
-      console.log("Forum Link:", forum.link);
-    } else {
-      console.log("Could not find or create forum.");
-    }
-  } catch (error) {
-    console.error("Error managing forum:", error);
-  }
+const input = {
+  experienceId: "exp_xxx", // Replace with actual Experience ID or other relevant ID
+  name: "General Discussion"
 };
 
-manageForum();
+try {
+  const forum = (await whopApi.findOrCreateForum({input})).createForum;
+
+  if (forum) {
+    console.log("Forum ID:", forum.id);
+    console.log("Forum Link:", forum.link);
+  } else {
+    console.log("Could not find or create forum.");
+  }
+} catch (error) {
+  console.error("Error managing forum:", error);
+}
 ```

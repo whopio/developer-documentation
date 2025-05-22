@@ -10,28 +10,23 @@ Use the following snippet to send a message to a designated chat feed. You need 
 ```typescript
 import { whopApi } from "@/lib/whop-api";
 
-// Assuming FeedTypes is an enum or a set of string constants available
-// e.g., FeedTypes.COMPANY_FEED or "COMPANY_FEED", FeedTypes.EXPERIENCE_FEED or "EXPERIENCE_FEED"
 
-const sendMessageToFeed = async () => {
-  const input = {
-    feedId: "feed_id_xxx", // e.g., biz_xxx for company feed, exp_xxx for experience feed
-    feedType: "COMPANY_FEED", // Or FeedTypes.COMPANY_FEED
-    message: "General announcement!"
-  };
 
-  try {
-    const success = (await whopApi.sendMessageToChatFeed(input)).sendMessage;
-
-    if (success) {
-      console.log("Message sent successfully to chat feed.");
-    } else {
-      console.log("Failed to send message to chat feed.");
-    }
-  } catch (error) {
-    console.error("Error sending message to feed:", error);
-  }
+const input = {
+  feedId: "feed_xxx",
+  feedType: "chat_feed",
+  message: "Hello world"
 };
 
-sendMessageToFeed();
+try {
+  const success = (await whopApi.sendMessageToChatFeed(input)).sendMessage;
+
+  if (success) {
+    console.log("Message sent successfully to chat feed.");
+  } else {
+    console.log("Failed to send message to chat feed.");
+  }
+} catch (error) {
+  console.error("Error sending message to feed:", error);
+}
 ```

@@ -18,23 +18,19 @@ import { whopApi } from "@/lib/whop-api";
 //   // ... other fields as required by your schema, e.g., filename, context
 // }
 
-const finalizeAttachment = async () => {
-  const input = {
-    directUploadId: "upload_id_from_uploadMedia", // Replace with actual ID
-    // filename: "example.png", // May or may not be needed, check schema
-  };
-
-  try {
-    const result = (await whopApi.processAttachment({input})).mediaAnalyzeAttachment;
-    // The result for mediaAnalyzeAttachment is often a boolean or a status.
-    // If it's a boolean as in the query, it might just return true on success.
-    console.log("Attachment processing initiated:", result);
-    // If it returns an object:
-    // console.log("Processing status:", result.status);
-  } catch (error) {
-    console.error("Error processing attachment:", error);
-  }
+const input = {
+  directUploadId: "upload_id_from_uploadMedia", // Replace with actual ID
+  // filename: "example.png", // May or may not be needed, check schema
 };
 
-finalizeAttachment();
+try {
+  const result = (await whopApi.processAttachment({input})).mediaAnalyzeAttachment;
+  // The result for mediaAnalyzeAttachment is often a boolean or a status.
+  // If it's a boolean as in the query, it might just return true on success.
+  console.log("Attachment processing initiated:", result);
+  // If it returns an object:
+  // console.log("Processing status:", result.status);
+} catch (error) {
+  console.error("Error processing attachment:", error);
+}
 ```

@@ -18,25 +18,20 @@ import { whopApi } from "@/lib/whop-api";
 //   // ... other fields as required
 // }
 
-const manageChat = async () => {
-  const input = {
-    experienceId: "exp_xxx", // Replace with actual Experience ID or other relevant ID
-    name: "Support Chat" // Optional
-  };
-
-  try {
-    const chat = (await whopApi.findOrCreateChat({input})).createChat;
-
-    if (chat) {
-      console.log("Chat ID:", chat.id);
-      console.log("Chat Link (if applicable):", chat.link);
-    } else {
-      console.log("Could not find or create chat.");
-    }
-  } catch (error) {
-    console.error("Error managing chat:", error);
-  }
+const input = {
+  experienceId: "exp_xxx", // Replace with actual Experience ID or other relevant ID
+  name: "Support Chat" // Optional
 };
 
-manageChat();
-```
+try {
+  const chat = (await whopApi.findOrCreateChat({input})).createChat;
+
+  if (chat) {
+    console.log("Chat ID:", chat.id);
+    console.log("Chat Link (if applicable):", chat.link);
+  } else {
+    console.log("Could not find or create chat.");
+  }
+} catch (error) {
+  console.error("Error managing chat:", error);
+}
