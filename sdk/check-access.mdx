@@ -26,40 +26,6 @@ if (!hasAccess.hasAccess) {
 }
 ```
 
-```javascript Node.js
-import axios from 'axios';
-
-const CHECK_ACCESS_QUERY = `
-  query CheckIfUserHasAccessToExperience($experienceId: ID!, $userId: ID) {
-    hasAccessToExperience(experienceId: $experienceId, userId: $userId) {
-      hasAccess
-      accessLevel
-    }
-  }
-`;
-
-async function checkAccess(userId, experienceId) {
-  const response = await axios.post(
-    'https://api.whop.com/public-graphql',
-    {
-      query: CHECK_ACCESS_QUERY,
-      variables: {
-        experienceId,
-        userId
-      }
-    },
-    {
-      headers: {
-        'Authorization': `Bearer ${process.env.WHOP_API_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    }
-  );
-
-  return response.data.data.hasAccessToExperience;
-}
-```
-
 ```ruby Ruby on Rails
 require 'typhoeus'
 

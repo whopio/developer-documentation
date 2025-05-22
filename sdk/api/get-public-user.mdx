@@ -1,5 +1,5 @@
 ---
-title: Get a current user
+title: Get public user
 description: Get the current user who is viewing your Whop App.
 ---
 
@@ -14,9 +14,11 @@ import { headers } from "next/headers";
 
 const { userId } = await verifyUserToken(headersList);
 
-if (!userId) {
-  return <p>You do not have access to view this page</p>;
-}
+// pass an ID or username
+
+const user = (await whopApi.GetPublicUser({userId: "steven"})).publicUser;
+
+console.log(user);
 ```
 
 ```ruby Ruby on Rails
@@ -167,9 +169,3 @@ def your_route():
 
 </CodeGroup>
 
-
-Now that you have a trustworthy user ID, you can check if they are an admin or customer, fetch their profile, or make calls on their behalf.
-
-### Next Steps
-
-- [Check a user's access](/sdk/check-access)

@@ -1,0 +1,62 @@
+---
+title: Get Current User
+description: Get information about the currently authenticated user.
+---
+
+<CodeGroup>
+
+```typescript @whop/api
+import { getCurrentUser } from "@whop/api";
+
+const user: User = await getCurrentUser();
+```
+
+```typescript GraphQL
+const query = `
+  query GetCurrentUser {
+    viewer {
+      user {
+        id
+        username
+        name
+        email
+        bio
+        phoneVerified
+        createdAt
+        dateOfBirthDay
+        dateOfBirthMonth
+        dateOfBirthYear
+        bannerImage
+        profilePicture {
+          sourceUrl
+        }
+        ledgerAccount {
+          balanceCaches {
+            nodes {
+              balance
+              currency
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const response = await fetch("https://api.whop.com/api/v2", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${process.env.WHOP_API_KEY}`
+  },
+  body: JSON.stringify({
+    query,
+    variables: {}
+  })
+});
+
+const { data } = await response.json();
+const user = data.viewer.user;
+```
+
+</CodeGroup> 

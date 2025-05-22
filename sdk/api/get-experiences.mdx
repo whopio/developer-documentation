@@ -1,0 +1,64 @@
+---
+title: Get Company Experiences
+description: Get all experiences associated with a company.
+---
+
+<CodeGroup>
+
+```typescript @whop/api
+import { getCompanyExperiences } from "@whop/api";
+
+const experiences: CompanyExperiences = await getCompanyExperiences({ 
+  companyId: "company_id" 
+});
+```
+
+```typescript GraphQL
+const query = `
+  query GetCompanyExperiences($companyId: ID!) {
+    company(id: $companyId) {
+      experiencesV2 {
+        totalCount
+        nodes {
+          id
+          name
+          description
+          logo {
+            sourceUrl
+          }
+          app {
+            id
+            name
+            icon {
+              sourceUrl
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+`;
+
+const response = await fetch("https://api.whop.com/api/v2", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${process.env.WHOP_API_KEY}`
+  },
+  body: JSON.stringify({
+    query,
+    variables: {
+      companyId: "company_id"
+    }
+  })
+});
+
+const { data } = await response.json();
+const experiences = data.company?.experiencesV2;
+```
+
+</CodeGroup> 

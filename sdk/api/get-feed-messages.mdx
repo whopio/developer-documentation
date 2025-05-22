@@ -1,0 +1,72 @@
+---
+title: Get Feed Messages
+description: Get messages from a specific feed.
+---
+
+<CodeGroup>
+
+```typescript @whop/api
+import { getFeedMessages } from "@whop/api";
+
+const messages: FeedMessages = await getFeedMessages({ 
+  feedId: "feed_id",
+  feedType: "chat_feed" // or "dms_feed" | "forum_feed" | "livestream_feed" | "universal_post" | "user"
+});
+```
+
+```typescript GraphQL
+const query = `
+  query GetFeedMessages($feedId: ID!, $feedType: FeedTypes!) {
+    feedPosts(feedId: $feedId, feedType: $feedType) {
+      posts {
+        id
+        createdAt
+        updatedAt
+        content
+        richContent
+        isDeleted
+        isEdited
+        isPinned
+        isEveryoneMentioned
+        mentionedUserIds
+        messageType
+        replyingToPostId
+        viewCount
+        attachments {
+          id
+          contentType
+          sourceUrl
+        }
+        user {
+          id
+          name
+          username
+          profilePicture {
+            sourceUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
+const response = await fetch("https://api.whop.com/api/v2", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${process.env.WHOP_API_KEY}`
+  },
+  body: JSON.stringify({
+    query,
+    variables: {
+      feedId: "feed_id",
+      feedType: "chat_feed" // or "dms_feed" | "forum_feed" | "livestream_feed" | "universal_post" | "user"
+    }
+  })
+});
+
+const { data } = await response.json();
+const messages = data.feedPosts;
+```
+
+</CodeGroup> 

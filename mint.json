@@ -36,12 +36,12 @@
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
-    },
-    {
       "name": "SDK Reference",
       "url": "sdk"
+    },
+    {
+      "name": "API Reference",
+      "url": "api-reference"
     }
   ],
   "redirects": [
@@ -66,8 +66,9 @@
     {
       "group": "Tutorials",
       "pages": [
-        "what-to-build/chat-bots",
-        "what-to-build/web-apps"
+        "tutorials/get-api-key",
+        "tutorials/chat-bots",
+        "tutorials/web-apps"
       ]
     },
     {
@@ -328,7 +329,7 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/installation", "sdk/proxy"]
+      "pages": ["sdk/installation", "sdk/local-development"]
     },
     {
       "group": "Authentication",
@@ -336,7 +337,37 @@
     },
     {
       "group": "API",
-      "pages": ["sdk/api"]
+      "pages": [
+        {
+          "group": "Identity",
+          "pages": [
+            "sdk/api/get-public-user",
+            "sdk/api/get-current-user",
+            "sdk/api/check-access"
+          ]
+        },
+        {
+          "group": "Payments",
+          "pages": [
+            "sdk/api/charge-user"
+          ]
+        },
+        {
+          "group": "Engagement",
+          "pages": [
+            "sdk/api/get-feed-messages",
+            "sdk/api/create-forum-post"
+          ]
+        },
+        {
+          "group": "Discovery",
+          "pages": [
+            "sdk/api/get-access-pass-details",
+            "sdk/api/get-experience",
+            "sdk/api/get-experiences"
+          ]
+        }
+      ]
     },
     {
       "group": "iFrame",
