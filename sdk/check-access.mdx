@@ -29,15 +29,6 @@ if (!hasAccess.hasAccess) {
 ```ruby Ruby on Rails
 require 'typhoeus'
 
-CHECK_ACCESS_QUERY = <<~GRAPHQL
-  query CheckIfUserHasAccessToExperience($experienceId: ID!, $userId: ID) {
-    hasAccessToExperience(experienceId: $experienceId, userId: $userId) {
-      hasAccess
-      accessLevel
-    }
-  }
-GRAPHQL
-
 def check_access(user_id, experience_id)
   response = Typhoeus.post(
     "https://api.whop.com/public-graphql",
@@ -46,7 +37,7 @@ def check_access(user_id, experience_id)
       "Content-Type" => "application/json"
     },
     body: {
-      query: CHECK_ACCESS_QUERY,
+      operationName: "CheckIfUserHasAccessToExperience",
       variables: {
         experienceId: experience_id,
         userId: user_id
@@ -65,25 +56,16 @@ end
 ```php PHP
 use GuzzleHttp\Client;
 
-$CHECK_ACCESS_QUERY = <<<'GRAPHQL'
-  query CheckIfUserHasAccessToExperience($experienceId: ID!, $userId: ID) {
-    hasAccessToExperience(experienceId: $experienceId, userId: $userId) {
-      hasAccess
-      accessLevel
-    }
-  }
-GRAPHQL;
-
 function checkAccess($userId, $experienceId) {
     $client = new Client();
-    
+
     $response = $client->post('https://api.whop.com/public-graphql', [
         'headers' => [
             'Authorization' => 'Bearer ' . $_ENV['WHOP_API_KEY'],
             'Content-Type' => 'application/json'
         ],
         'json' => [
-            'query' => $CHECK_ACCESS_QUERY,
+            'operationName' => "CheckIfUserHasAccessToExperience",
             'variables' => [
                 'experienceId' => $experienceId,
                 'userId' => $userId
@@ -106,18 +88,9 @@ import (
     "os"
 )
 
-const checkAccessQuery = `
-  query CheckIfUserHasAccessToExperience($experienceId: ID!, $userId: ID) {
-    hasAccessToExperience(experienceId: $experienceId, userId: $userId) {
-      hasAccess
-      accessLevel
-    }
-  }
-`
-
 type GraphQLRequest struct {
-    Query     string                 `json:"query"`
-    Variables map[string]interface{} `json:"variables"`
+    OperationName string                 `json:"operationName"`
+    Variables     map[string]interface{} `json:"variables"`
 }
 
 type AccessResponse struct {
@@ -131,7 +104,7 @@ type AccessResponse struct {
 
 func checkAccess(userID, experienceID string) (*AccessResponse, error) {
     reqBody := GraphQLRequest{
-        Query: checkAccessQuery,
+        OperationName: "CheckIfUserHasAccessToExperience",
         Variables: map[string]interface{}{
             "experienceId": experienceID,
             "userId":      userID,
@@ -171,20 +144,11 @@ func checkAccess(userID, experienceID string) (*AccessResponse, error) {
 import os
 import requests
 
-CHECK_ACCESS_QUERY = """
-  query CheckIfUserHasAccessToExperience($experienceId: ID!, $userId: ID) {
-    hasAccessToExperience(experienceId: $experienceId, userId: $userId) {
-      hasAccess
-      accessLevel
-    }
-  }
-"""
-
 def check_access(user_id: str, experience_id: str) -> dict:
     response = requests.post(
         'https://api.whop.com/public-graphql',
         json={
-            'query': CHECK_ACCESS_QUERY,
+            'operationName': "CheckIfUserHasAccessToExperience",
             'variables': {
                 'experienceId': experience_id,
                 'userId': user_id
@@ -195,9 +159,22 @@ def check_access(user_id: str, experience_id: str) -> dict:
             'Content-Type': 'application/json'
         }
     )
-    
+
     response.raise_for_status()
     return response.json()['data']['hasAccessToExperience']
+```
+
+```curl cURL
+curl --location 'https://api.whop.com/public-graphql' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR_API_KEY' \
+--data '{
+    "operationName": "CheckIfUserHasAccessToExperience",
+    "variables": {
+        "experienceId": "exp_123",
+        "userId": "user_123"
+    }
+}'
 ```
 
 </CodeGroup>
