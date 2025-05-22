@@ -344,7 +344,7 @@
       "pages": [
         {
           "group": "Users",
-          "pages": ["sdk/api/retrieve-user"]
+          "pages": ["sdk/api/get-user"]
         },
         {
           "group": "Payments",
@@ -356,11 +356,11 @@
         },
         {
           "group": "Access Passes",
-          "pages": ["sdk/api/get-access-pass-details"]
+          "pages": ["sdk/api/get-access-pass-details", "sdk/api/check-if-user-has-access-to-access-pass"]
         },
         {
           "group": "Experiences",
-          "pages": ["sdk/api/get-experience", "sdk/api/get-experiences"]
+          "pages": ["sdk/api/get-experience", "sdk/api/get-experiences", "sdk/api/check-if-user-has-access-to-experience"]
         }
       ]
     },

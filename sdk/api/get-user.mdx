@@ -1,5 +1,5 @@
 ---
-title: Retrieve User
+title: Get user
 description: Retrieve the public profile information for any user on Whop
 ---
 
@@ -8,11 +8,10 @@ description: Retrieve the public profile information for any user on Whop
 Use the following snippet to fetch a user's public profile information by their ID. Their id looks like `user_xxxx`.
 
 
-<CodeGroup>
-```javascript Typescript
+```typescript
 import { whopApi } from "@/lib/whop-api";
 
-const user = (await whopApi.retrieveUser({userId: "user_xxxx"})).publicUser;
+const user = (await whopApi.getUser({userId: "user_xxxx"})).publicUser;
 
 console.log(user);
 ```
@@ -22,40 +21,24 @@ curl --location 'https://api.whop.com/public-graphql' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer YOUR_API_KEY' \
 --data '{
-    "operationName": "retrieveUser",
+    "operationName": "getUser",
     "variables": {
         "userId": "user_123"
     }
 }'
 ```
 
-</CodeGroup>
 
 ## Fetch a user via username
 
 Use the following snippet to fetch a user's public profile information by their username.
 
 
-<CodeGroup>
-```javascript Typescript
+```typescript
 import { whopApi } from "@/lib/whop-api";
 
-const user = (await whopApi.retrieveUser({username: "jack"})).publicUser;
+const user = (await whopApi.getUser({username: "jack"})).publicUser;
 
 console.log(user);
 ```
-
-```curl
-curl --location 'https://api.whop.com/public-graphql' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer YOUR_API_KEY' \
---data '{
-    "operationName": "retrieveUser",
-    "variables": {
-        "username": "jack"
-    }
-}'
-```
-
-</CodeGroup>
 
