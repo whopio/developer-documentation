@@ -344,23 +344,20 @@
       "pages": [
         {
           "group": "Users",
-          "pages": ["sdk/api/get-user", "sdk/api/get-current-user"]
+          "pages": ["sdk/api/get-user", "sdk/api/get-current-user", "sdk/api/check-if-user-has-access-to-access-pass", "sdk/api/check-if-user-has-access-to-experience", "sdk/api/check-if-user-has-access-to-company"]
         },
         {
           "group": "Payments",
-          "pages": ["sdk/api/charge-user", "sdk/api/get-user-ledger-account", "sdk/api/transfer-funds"]
+          "pages": ["sdk/api/get-user-ledger-account",  "sdk/api/get-company-ledger-account", "sdk/api/charge-user", "sdk/api/transfer-funds"]
         },
-        {
-          "group": "Companies",
-          "pages": ["sdk/api/charge-user", "sdk/api/check-if-user-has-access-to-company", "sdk/api/get-company-ledger-account"]
-        },
+
         {
           "group": "Access Passes",
-          "pages": ["sdk/api/get-access-pass", "sdk/api/check-if-user-has-access-to-access-pass"]
+          "pages": ["sdk/api/get-access-pass"]
         },
         {
           "group": "Experiences",
-          "pages": ["sdk/api/get-experience", "sdk/api/check-if-user-has-access-to-experience", "sdk/api/list-experiences"]
+          "pages": ["sdk/api/get-experience", "sdk/api/list-experiences"]
         }
       ]
     },
