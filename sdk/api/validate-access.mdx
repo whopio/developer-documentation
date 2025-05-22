@@ -1,0 +1,100 @@
+---
+title: Validate Access
+description: Use this API to ensure users have access to use your app
+---
+
+The following APIs allow you to validate if a user has access to your app. Users gain access to your app via checkout.
+
+<strong>If your app is embedded in an iFrame within a whop</strong>, you will want to validateif the user has access to the `experience`. An experience is an instance of an app.
+
+<strong>If you are using Whop OAuth on your website</strong>, you will likely want to validate if the user has access to the `product`.
+
+
+## Validate access to an experience (recommended)
+
+You can check if a user has access to an experience using either the @whop/api package or by making a GraphQL query directly.
+
+<CodeGroup>
+
+```javascript Next.js
+import { whopApi } from "@/lib/whop-api";
+import { verifyUserToken } from "@whop/api";
+import { headers } from "next/headers";
+
+// The headers contains the user token
+const headersList = await headers();
+
+// The experienceId is a path param
+// This can be configured in the Whop Dashboard, when you define your app
+// TODO: EXPLAIN THIS
+// TODO: look at how Knock has a glossary
+const { experienceId } = await params;
+
+// The user token is in the headers
+const { userId } = await verifyUserToken(headersList);
+
+
+const result = await whopApi.checkIfUserHasAccessToExperience({
+  userId,
+  experienceId,
+});
+
+if (!result.hasAccessToExperience.hasAccess) {
+  return <div>You do not have access to this experience</div>;
+}
+
+// Either: 'admin' | 'customer' | 'no_access';
+// 'admin' means the user is an admin of the whop, such as an owner or moderator
+// 'customer' means the user is a common member in this whop
+// 'no_access' means the user does not have access to the whop
+const { accessLevel } = result.hasAccessToExperience;
+
+if (accessLevel === "admin") {
+  return <div>You are an admin of this experience</div>;
+}
+
+if (accessLevel === "customer") {
+  return <div>You are a customer of this experience</div>;
+}
+
+return <div>You do not have access to this experience</div>
+```
+
+
+
+```curl cURL
+curl --location 'https://api.whop.com/public-graphql' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR_API_KEY' \
+--data '{
+    "operationName": "CheckIfUserHasAccessToExperience",
+    "variables": {
+        "experienceId": "exp_123",
+        "userId": "user_123"
+    }
+}'
+```
+
+</CodeGroup>
+
+## Response
+
+The response will include whether the user has access and their access level:
+
+```json
+{
+  "hasAccess": true,
+  "accessLevel": "admin"
+}
+```
+
+### Access Levels
+
+- `admin`: The user is an admin of the experience
+- `customer`: The user is a customer of the experience
+- `no_access`: The user has no access to the experience
+
+### Next Steps
+
+- [Get current user](/sdk/current-user)
+- [Look at the endpoints](/sdk/api)

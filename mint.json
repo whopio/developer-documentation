@@ -333,7 +333,7 @@
     },
     {
       "group": "Authentication",
-      "pages": ["sdk/current-user", "sdk/check-access"]
+      "pages": [ "sdk/api/validate-access", "sdk/retrieve-current-user"]
     },
     {
       "group": "API",
@@ -341,9 +341,7 @@
         {
           "group": "Identity",
           "pages": [
-            "sdk/api/get-public-user",
-            "sdk/api/get-current-user",
-            "sdk/api/check-access"
+            "sdk/api/retrieve-user"
           ]
         },
         {
