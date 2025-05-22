@@ -329,41 +329,46 @@
     },
     {
       "group": "Getting started",
-      "pages": ["sdk/installation", "sdk/local-development"]
+      "pages": [
+        "sdk/installation",
+        "sdk/local-development",
+        "sdk/whop-api-client"
+      ]
     },
     {
       "group": "Authentication",
-      "pages": [  "sdk/retrieve-current-user", "sdk/api/validate-access"]
+      "pages": ["sdk/retrieve-current-user", "sdk/validate-access"]
     },
     {
       "group": "API",
       "pages": [
         {
-          "group": "Identity",
-          "pages": [
-            "sdk/api/retrieve-user"
-          ]
+          "group": "Users",
+          "pages": ["sdk/api/retrieve-user"]
         },
         {
           "group": "Payments",
-          "pages": [
-            "sdk/api/charge-user"
-          ]
+          "pages": ["sdk/api/charge-user"]
         },
         {
-          "group": "Engagement",
-          "pages": [
-            "sdk/api/get-feed-messages",
-            "sdk/api/create-forum-post"
-          ]
+          "group": "Access Passes",
+          "pages": ["sdk/api/get-access-pass-details"]
         },
         {
-          "group": "Discovery",
-          "pages": [
-            "sdk/api/get-access-pass-details",
-            "sdk/api/get-experience",
-            "sdk/api/get-experiences"
-          ]
+          "group": "Experiences",
+          "pages": ["sdk/api/get-experience", "sdk/api/get-experiences"]
+        },
+        {
+          "group": "Notifications",
+          "pages": []
+        },
+        {
+          "group": "Forums",
+          "pages": ["sdk/api/create-forum-post"]
+        },
+        {
+          "group": "Chat",
+          "pages": ["sdk/api/get-feed-messages"]
         }
       ]
     },

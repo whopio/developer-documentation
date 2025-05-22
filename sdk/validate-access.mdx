@@ -1,5 +1,5 @@
 ---
-title: Validate Access
+title: Validate access
 description: Use this API to ensure users have access to use your app
 ---
 
@@ -19,8 +19,6 @@ const headersList = await headers();
 
 // The experienceId is a path param
 // This can be configured in the Whop Dashboard, when you define your app
-// TODO: EXPLAIN THIS
-// TODO: look at how Knock has a glossary
 const { experienceId } = await params;
 
 // The user token is in the headers
@@ -53,41 +51,4 @@ if (accessLevel === "customer") {
 return <div>You do not have access to this experience</div>
 ```
 
-
-
-```curl cURL
-curl --location 'https://api.whop.com/public-graphql' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer YOUR_API_KEY' \
---data '{
-    "operationName": "CheckIfUserHasAccessToExperience",
-    "variables": {
-        "experienceId": "exp_123",
-        "userId": "user_123"
-    }
-}'
-```
-
 </CodeGroup>
-
-## Response
-
-The response will include whether the user has access and their access level:
-
-```json
-{
-  "hasAccess": true,
-  "accessLevel": "admin"
-}
-```
-
-### Access Levels
-
-- `admin`: The user is an admin of the experience
-- `customer`: The user is a customer of the experience
-- `no_access`: The user has no access to the experience
-
-### Next Steps
-
-- [Get current user](/sdk/current-user)
-- [Look at the endpoints](/sdk/api)
