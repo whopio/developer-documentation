@@ -3,26 +3,25 @@ title: Get user
 description: Retrieve the public profile information for any user on Whop
 ---
 
-## Fetch a user via ID
-
-Use the following snippet to fetch a user's public profile information by their ID. Their ID looks like `user_xxx`.
-
-
 ```typescript
 import { whopApi } from "@/lib/whop-api";
 
-const user = (await whopApi.getUser({userId: "user_xxx"})).publicUser;
+const user = (await whopApi.getUser({userId: "user_xxxx"})).publicUser;
 
 console.log(user);
 ```
 
-
-
-
-## Fetch a user via username
-
-Use the following snippet to fetch a user's public profile information by their username.
-
+```curl
+curl --location 'https://api.whop.com/public-graphql' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer YOUR_API_KEY' \
+--data '{
+    "operationName": "getUser",
+    "variables": {
+        "userId": "user_123"
+    }
+}'
+```
 
 ```typescript
 import { whopApi } from "@/lib/whop-api";

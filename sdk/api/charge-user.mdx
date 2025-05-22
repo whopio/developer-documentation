@@ -3,50 +3,32 @@ title: Charge user
 description: Initiate a payment by charging a user for a product or service.
 ---
 
-## Charge a User
-
-Use the following snippet to create a checkout session and charge a user. You'll need to provide input like the plan ID, user ID, and any other relevant details for `ChargeUserInput`.
-
 ```typescript
 import { whopApi } from "@/lib/whop-api";
 
-// The ChargeUserInput structure needs to be defined based on your GraphQL schema.
-// Example structure:
-// interface ChargeUserInput {
-//   planId: string;
-//   userId?: string; // Or other identifying information
-//   successUrl?: string;
-//   cancelUrl?: string;
-//   // ... other fields as required by your schema
-// }
-
-const createCharge = async () => {
-  const input = {
-    planId: "plan_xxx", // Replace with actual Plan ID
-    userId: "user_xxx",   // Replace with actual User ID if applicable
-    successUrl: "https://example.com/success",
-    cancelUrl: "https://example.com/cancel",
-    // Add other necessary fields for ChargeUserInput
-  };
-
-  try {
-    const response = (await whopApi.chargeUser({input})).chargeUser;
-
-    if (response.checkoutSession) {
-      console.log("Checkout Session ID:", response.checkoutSession.id);
-      console.log("Purchase URL:", response.checkoutSession.purchaseUrl);
-      console.log("Status:", response.status);
-      // Redirect the user to response.checkoutSession.purchaseUrl or use it in an iframe
-    } else {
-      console.log("Charge status:", response.status);
-      // Handle cases where checkoutSession might not be returned directly
-    }
-  } catch (error) {
-    console.error("Error creating charge:", error);
-  }
+const input = {
+  planId: "plan_xxx", // Replace with actual Plan ID
+  userId: "user_xxx",   // Replace with actual User ID if applicable
+  successUrl: "https://example.com/success",
+  cancelUrl: "https://example.com/cancel",
+  // Add other necessary fields for ChargeUserInput
 };
 
-createCharge();
+try {
+  const response = (await whopApi.chargeUser({input})).chargeUser;
+
+  if (response.checkoutSession) {
+    console.log("Checkout Session ID:", response.checkoutSession.id);
+    console.log("Purchase URL:", response.checkoutSession.purchaseUrl);
+    console.log("Status:", response.status);
+    // Redirect the user to response.checkoutSession.purchaseUrl or use it in an iframe
+  } else {
+    console.log("Charge status:", response.status);
+    // Handle cases where checkoutSession might not be returned directly
+  }
+} catch (error) {
+  console.error("Error creating charge:", error);
+}
 ```
 
 This mutation typically returns a `checkoutSession` which includes a `purchaseUrl` to redirect the user to complete the payment.

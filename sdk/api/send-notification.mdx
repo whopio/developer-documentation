@@ -3,24 +3,8 @@ title: Send notification
 description: Send a push notification to a user or a group of users.
 ---
 
-## Send Notification
-
-Use the following snippet to send a notification. You will need to construct the `SendNotificationInput` with details such as recipient(s), title, message, and any relevant links or metadata.
-
 ```typescript
 import { whopApi } from "@/lib/whop-api";
-
-// The SendNotificationInput structure needs to be defined based on your GraphQL schema.
-// Example structure:
-// interface SendNotificationInput {
-//   userId?: string;
-//   companyId?: string; // To send to all users of a company, or specific topic
-//   topic?: string; // e.g., company_all, experience_xxxx
-//   title: string;
-//   message: string;
-//   url?: string;
-//   // ... other fields as required by your schema
-// }
 
 const input = {
   userId: "user_xxx", // Or companyId/topic

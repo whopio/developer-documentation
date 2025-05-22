@@ -1,16 +1,18 @@
 ---
 title: Get current user
-description: Retrieve the details for the currently authenticated user.
+description: Retrieve the profile and ledger information for the currently authenticated user.
 ---
-
-## Get Current User Details
-
-Use the following snippet to fetch details for the current user. This will fetch more data than the `getUser` endpoint.
 
 ```typescript
 import { whopApi } from "@/lib/whop-api";
 
 const currentUser = (await whopApi.getCurrentUser()).viewer?.user;
 
-console.log(currentUser);
+if (currentUser) {
+  console.log(currentUser);
+  // Example: Accessing balance cache
+  // currentUser.ledgerAccount?.balanceCaches?.nodes.forEach(balance => {
+  //   console.log(balance.currency, balance.balance);
+  // });
+}
 ```
